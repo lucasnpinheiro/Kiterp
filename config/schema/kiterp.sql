@@ -622,6 +622,36 @@ LOCK TABLES `nota_fiscal_saidas_itens` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `parametros`
+--
+
+DROP TABLE IF EXISTS `parametros`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `parametros` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(255) DEFAULT NULL,
+  `chave` varchar(100) DEFAULT NULL,
+  `valor` text,
+  `tipo` int(1) DEFAULT NULL COMMENT '1 - Inteiro | 2 - String | 3 - Texto | 4 - Lista | 5 - Float',
+  `opcoes` text,
+  `grupo` varchar(100) DEFAULT NULL,
+  `root` int(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `parametros`
+--
+
+LOCK TABLES `parametros` WRITE;
+/*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
+INSERT  IGNORE INTO `parametros` (`id`, `nome`, `chave`, `valor`, `tipo`, `opcoes`, `grupo`, `root`) VALUES (1,'Liberar Desconto em','D_Pedido_Local','A',2,'{\"A\":\"Ambos\", \"I\":\"Item, \"P\":\"Pedido\"}','Pedido',0),(2,'Desconto no Item','D_Pedido_Item','10',1,NULL,'Pedido',0),(3,'Desconto no Total do Pedido','D_Pedido','5',1,NULL,'Pedido',0),(4,'Casas Decimais','N_Casas_Decimais','4',4,'[0,1,2,3,4]','Produtos',1),(5,'Codigo de Acesso','C_Acesso',NULL,2,NULL,'Sistema',1),(6,'Data do Ultimo Acesso','C_Acesso_Data',NULL,2,NULL,'Sistema',1),(7,'Codigo de Acesso da Empresa','C_Acesso_Empresa',NULL,1,NULL,'Sistema',1);
+/*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `pedidos`
 --
 
@@ -1060,6 +1090,7 @@ CREATE TABLE `usuarios` (
   `senha` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
+  `root` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -1082,4 +1113,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-04 18:31:39
+-- Dump completed on 2016-01-04 20:27:37
