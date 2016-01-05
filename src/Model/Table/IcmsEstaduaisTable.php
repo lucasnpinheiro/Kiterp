@@ -51,11 +51,11 @@ class IcmsEstaduaisTable extends Table
             ->allowEmpty('nome');
 
         $validator
-            ->add('icms_interno', 'valid', ['rule' => 'numeric'])
+            ->add('icms_interno', 'valid', ['rule' => 'money'])
             ->allowEmpty('icms_interno');
 
         $validator
-            ->add('icms_externo', 'valid', ['rule' => 'numeric'])
+            ->add('icms_externo', 'valid', ['rule' => 'money'])
             ->allowEmpty('icms_externo');
 
         return $validator;

@@ -81,7 +81,7 @@ class PedidosTable extends Table
                 ->allowEmpty('status');
 
         $validator
-                ->add('valor_total', 'valid', ['rule' => 'numeric'])
+                ->add('valor_total', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_total');
 
         $validator

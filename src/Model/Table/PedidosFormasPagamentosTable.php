@@ -53,7 +53,7 @@ class PedidosFormasPagamentosTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->add('valor', 'valid', ['rule' => 'numeric'])
+            ->add('valor', 'valid', ['rule' => 'money'])
             ->allowEmpty('valor');
 
         return $validator;

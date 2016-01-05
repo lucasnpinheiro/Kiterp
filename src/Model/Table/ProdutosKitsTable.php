@@ -59,7 +59,7 @@ class ProdutosKitsTable extends Table
                 ->allowEmpty('id', 'create');
 
         $validator
-                ->add('qtde', 'valid', ['rule' => 'numeric'])
+                ->add('qtde', 'valid', ['rule' => 'money'])
                 ->allowEmpty('qtde');
 
         return $validator;

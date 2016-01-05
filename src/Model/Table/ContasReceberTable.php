@@ -70,7 +70,7 @@ class ContasReceberTable extends Table
             ->allowEmpty('data_vencimento');
 
         $validator
-            ->add('valor_documento', 'valid', ['rule' => 'numeric'])
+            ->add('valor_documento', 'valid', ['rule' => 'money'])
             ->allowEmpty('valor_documento');
 
         $validator
@@ -82,7 +82,7 @@ class ContasReceberTable extends Table
             ->allowEmpty('data_recebimento');
 
         $validator
-            ->add('valor recebimento', 'valid', ['rule' => 'numeric'])
+            ->add('valor recebimento', 'valid', ['rule' => 'money'])
             ->allowEmpty('valor recebimento');
 
         $validator

@@ -71,7 +71,7 @@ class ContasPagarTable extends Table
                 ->allowEmpty('data_vencimento');
 
         $validator
-                ->add('valor_documento', 'valid', ['rule' => 'numeric'])
+                ->add('valor_documento', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_documento');
 
         $validator
@@ -83,7 +83,7 @@ class ContasPagarTable extends Table
                 ->allowEmpty('data_pagamento');
 
         $validator
-                ->add('valor_pagamento', 'valid', ['rule' => 'numeric'])
+                ->add('valor_pagamento', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_pagamento');
 
         return $validator;

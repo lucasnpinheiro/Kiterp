@@ -91,19 +91,19 @@ class NotaFiscalSaidasTable extends Table
                 ->allowEmpty('hora_saida');
 
         $validator
-                ->add('total_produtos', 'valid', ['rule' => 'numeric'])
+                ->add('total_produtos', 'valid', ['rule' => 'money'])
                 ->allowEmpty('total_produtos');
 
         $validator
-                ->add('total_nota', 'valid', ['rule' => 'numeric'])
+                ->add('total_nota', 'valid', ['rule' => 'money'])
                 ->allowEmpty('total_nota');
 
         $validator
-                ->add('base_icms', 'valid', ['rule' => 'numeric'])
+                ->add('base_icms', 'valid', ['rule' => 'money'])
                 ->allowEmpty('base_icms');
 
         $validator
-                ->add('valor_icms', 'valid', ['rule' => 'numeric'])
+                ->add('valor_icms', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_icms');
 
         $validator

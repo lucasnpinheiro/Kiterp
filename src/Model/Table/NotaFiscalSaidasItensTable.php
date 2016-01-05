@@ -57,23 +57,23 @@ class NotaFiscalSaidasItensTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->add('qtde', 'valid', ['rule' => 'numeric'])
+            ->add('qtde', 'valid', ['rule' => 'money'])
             ->allowEmpty('qtde');
 
         $validator
-            ->add('venda', 'valid', ['rule' => 'numeric'])
+            ->add('venda', 'valid', ['rule' => 'money'])
             ->allowEmpty('venda');
 
         $validator
-            ->add('total', 'valid', ['rule' => 'numeric'])
+            ->add('total', 'valid', ['rule' => 'money'])
             ->allowEmpty('total');
 
         $validator
-            ->add('base_icms', 'valid', ['rule' => 'numeric'])
+            ->add('base_icms', 'valid', ['rule' => 'money'])
             ->allowEmpty('base_icms');
 
         $validator
-            ->add('valor_icms', 'valid', ['rule' => 'numeric'])
+            ->add('valor_icms', 'valid', ['rule' => 'money'])
             ->allowEmpty('valor_icms');
 
         $validator
@@ -83,23 +83,23 @@ class NotaFiscalSaidasItensTable extends Table
             ->allowEmpty('origem');
 
         $validator
-            ->add('base_credito', 'valid', ['rule' => 'numeric'])
+            ->add('base_credito', 'valid', ['rule' => 'money'])
             ->allowEmpty('base_credito');
 
         $validator
-            ->add('valor_credito', 'valid', ['rule' => 'numeric'])
+            ->add('valor_credito', 'valid', ['rule' => 'money'])
             ->allowEmpty('valor_credito');
 
         $validator
-            ->add('base_st', 'valid', ['rule' => 'numeric'])
+            ->add('base_st', 'valid', ['rule' => 'money'])
             ->allowEmpty('base_st');
 
         $validator
-            ->add('valor_st', 'valid', ['rule' => 'numeric'])
+            ->add('valor_st', 'valid', ['rule' => 'money'])
             ->allowEmpty('valor_st');
 
         $validator
-            ->add('valor_tributo', 'valid', ['rule' => 'numeric'])
+            ->add('valor_tributo', 'valid', ['rule' => 'money'])
             ->allowEmpty('valor_tributo');
 
         return $validator;

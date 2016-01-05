@@ -53,15 +53,15 @@ class NotaFiscalEntradasItensTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->add('qtde', 'valid', ['rule' => 'numeric'])
+            ->add('qtde', 'valid', ['rule' => 'money'])
             ->allowEmpty('qtde');
 
         $validator
-            ->add('compra', 'valid', ['rule' => 'numeric'])
+            ->add('compra', 'valid', ['rule' => 'money'])
             ->allowEmpty('compra');
 
         $validator
-            ->add('total', 'valid', ['rule' => 'numeric'])
+            ->add('total', 'valid', ['rule' => 'money'])
             ->allowEmpty('total');
 
         return $validator;

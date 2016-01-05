@@ -60,19 +60,19 @@ class CaixasDiariosTable extends Table
             ->allowEmpty('data_encerramento');
 
         $validator
-            ->add('valor_inicial', 'valid', ['rule' => 'numeric'])
+            ->add('valor_inicial', 'valid', ['rule' => 'money'])
             ->allowEmpty('valor_inicial');
 
         $validator
-            ->add('total_entradas', 'valid', ['rule' => 'numeric'])
+            ->add('total_entradas', 'valid', ['rule' => 'money'])
             ->allowEmpty('total_entradas');
 
         $validator
-            ->add('total_saidas', 'valid', ['rule' => 'numeric'])
+            ->add('total_saidas', 'valid', ['rule' => 'money'])
             ->allowEmpty('total_saidas');
 
         $validator
-            ->add('total_saldo', 'valid', ['rule' => 'numeric'])
+            ->add('total_saldo', 'valid', ['rule' => 'money'])
             ->allowEmpty('total_saldo');
 
         $validator
@@ -80,15 +80,15 @@ class CaixasDiariosTable extends Table
             ->allowEmpty('encerrado');
 
         $validator
-            ->add('total_real', 'valid', ['rule' => 'numeric'])
+            ->add('total_real', 'valid', ['rule' => 'money'])
             ->allowEmpty('total_real');
 
         $validator
-            ->add('total_sobras', 'valid', ['rule' => 'numeric'])
+            ->add('total_sobras', 'valid', ['rule' => 'money'])
             ->allowEmpty('total_sobras');
 
         $validator
-            ->add('total_faltas', 'valid', ['rule' => 'numeric'])
+            ->add('total_faltas', 'valid', ['rule' => 'money'])
             ->allowEmpty('total_faltas');
 
         return $validator;

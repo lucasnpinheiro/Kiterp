@@ -78,23 +78,23 @@ class ProdutosValoresTable extends Table
                 ->allowEmpty('id', 'create');
 
         $validator
-                ->add('estoque_minimo', 'valid', ['rule' => 'numeric'])
+                ->add('estoque_minimo', 'valid', ['rule' => 'money'])
                 ->allowEmpty('estoque_minimo');
 
         $validator
-                ->add('estoque_atual', 'valid', ['rule' => 'numeric'])
+                ->add('estoque_atual', 'valid', ['rule' => 'money'])
                 ->allowEmpty('estoque_atual');
 
         $validator
-                ->add('valor_compras', 'valid', ['rule' => 'numeric'])
+                ->add('valor_compras', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_compras');
 
         $validator
-                ->add('margem', 'valid', ['rule' => 'numeric'])
+                ->add('margem', 'valid', ['rule' => 'money'])
                 ->allowEmpty('margem');
 
         $validator
-                ->add('valor_vendas', 'valid', ['rule' => 'numeric'])
+                ->add('valor_vendas', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_vendas');
 
         $validator
@@ -114,23 +114,23 @@ class ProdutosValoresTable extends Table
                 ->allowEmpty('cst_origem');
 
         $validator
-                ->add('percentual_icms', 'valid', ['rule' => 'numeric'])
+                ->add('percentual_icms', 'valid', ['rule' => 'money'])
                 ->allowEmpty('percentual_icms');
 
         $validator
-                ->add('percentual_pis', 'valid', ['rule' => 'numeric'])
+                ->add('percentual_pis', 'valid', ['rule' => 'money'])
                 ->allowEmpty('percentual_pis');
 
         $validator
-                ->add('percentual_cofins', 'valid', ['rule' => 'numeric'])
+                ->add('percentual_cofins', 'valid', ['rule' => 'money'])
                 ->allowEmpty('percentual_cofins');
 
         $validator
-                ->add('percentual_ipi', 'valid', ['rule' => 'numeric'])
+                ->add('percentual_ipi', 'valid', ['rule' => 'money'])
                 ->allowEmpty('percentual_ipi');
 
         $validator
-                ->add('percentuall_tributacao', 'valid', ['rule' => 'numeric'])
+                ->add('percentuall_tributacao', 'valid', ['rule' => 'money'])
                 ->allowEmpty('percentuall_tributacao');
 
         return $validator;

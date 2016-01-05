@@ -53,15 +53,15 @@ class PedidosItensTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->add('qtde', 'valid', ['rule' => 'numeric'])
+            ->add('qtde', 'valid', ['rule' => 'money'])
             ->allowEmpty('qtde');
 
         $validator
-            ->add('venda', 'valid', ['rule' => 'numeric'])
+            ->add('venda', 'valid', ['rule' => 'money'])
             ->allowEmpty('venda');
 
         $validator
-            ->add('total', 'valid', ['rule' => 'numeric'])
+            ->add('total', 'valid', ['rule' => 'money'])
             ->allowEmpty('total');
 
         return $validator;

@@ -75,39 +75,39 @@ class NotaFiscalEntradasTable extends Table
                 ->allowEmpty('data_entrada');
 
         $validator
-                ->add('total_produtos', 'valid', ['rule' => 'numeric'])
+                ->add('total_produtos', 'valid', ['rule' => 'money'])
                 ->allowEmpty('total_produtos');
 
         $validator
-                ->add('total_nota', 'valid', ['rule' => 'numeric'])
+                ->add('total_nota', 'valid', ['rule' => 'money'])
                 ->allowEmpty('total_nota');
 
         $validator
-                ->add('base_icms', 'valid', ['rule' => 'numeric'])
+                ->add('base_icms', 'valid', ['rule' => 'money'])
                 ->allowEmpty('base_icms');
 
         $validator
-                ->add('valor_icms', 'valid', ['rule' => 'numeric'])
+                ->add('valor_icms', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_icms');
 
         $validator
-                ->add('base_st', 'valid', ['rule' => 'numeric'])
+                ->add('base_st', 'valid', ['rule' => 'money'])
                 ->allowEmpty('base_st');
 
         $validator
-                ->add('valor_st', 'valid', ['rule' => 'numeric'])
+                ->add('valor_st', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_st');
 
         $validator
-                ->add('valor_ipi', 'valid', ['rule' => 'numeric'])
+                ->add('valor_ipi', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_ipi');
 
         $validator
-                ->add('valor_frete', 'valid', ['rule' => 'numeric'])
+                ->add('valor_frete', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_frete');
 
         $validator
-                ->add('valor_seguro', 'valid', ['rule' => 'numeric'])
+                ->add('valor_seguro', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor_seguro');
 
         return $validator;

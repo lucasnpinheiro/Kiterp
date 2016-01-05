@@ -53,7 +53,7 @@ class NcmIvaTable extends Table
             ->allowEmpty('id', 'create');
 
         $validator
-            ->add('iva', 'valid', ['rule' => 'numeric'])
+            ->add('iva', 'valid', ['rule' => 'money'])
             ->allowEmpty('iva');
 
         return $validator;
