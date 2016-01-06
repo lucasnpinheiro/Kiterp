@@ -7,7 +7,7 @@ $this->Html->addCrumb('Cadastrar', null);
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5><?= __('Cadastrar Usuário') ?></h5>
+                <h5><?= __('Cadastrar ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
                 <?= $this->Form->create($usuario) ?>
