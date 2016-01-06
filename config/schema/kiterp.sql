@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.24, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.6.24, for linux-glibc2.5 (x86_64)
 --
 -- Host: 127.0.0.1    Database: kiterp
 -- ------------------------------------------------------
--- Server version	5.6.26
+-- Server version	5.5.5-10.0.21-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `atividades` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,6 +37,7 @@ CREATE TABLE `atividades` (
 
 LOCK TABLES `atividades` WRITE;
 /*!40000 ALTER TABLE `atividades` DISABLE KEYS */;
+INSERT  IGNORE INTO `atividades` (`id`, `nome`, `created`, `modified`) VALUES (1,'teste de cadastro 1ª atividade','2016-01-06 14:19:05','2016-01-06 14:19:05');
 /*!40000 ALTER TABLE `atividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -327,6 +328,32 @@ LOCK TABLES `formas_pagamentos` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `grupos`
+--
+
+DROP TABLE IF EXISTS `grupos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `grupos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nome` varchar(100) DEFAULT NULL,
+  `status` int(1) DEFAULT '1',
+  `created` varchar(45) DEFAULT NULL,
+  `modified` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `grupos`
+--
+
+LOCK TABLES `grupos` WRITE;
+/*!40000 ALTER TABLE `grupos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `grupos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `grupos_estoques`
 --
 
@@ -404,6 +431,62 @@ CREATE TABLE `impostos` (
 LOCK TABLES `impostos` WRITE;
 /*!40000 ALTER TABLE `impostos` DISABLE KEYS */;
 /*!40000 ALTER TABLE `impostos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `menus`
+--
+
+DROP TABLE IF EXISTS `menus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `menus` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(255) NOT NULL,
+  `plugin` varchar(100) DEFAULT NULL,
+  `controller` varchar(100) NOT NULL,
+  `action` varchar(100) NOT NULL,
+  `status` int(1) NOT NULL DEFAULT '1',
+  `root` int(1) NOT NULL DEFAULT '0',
+  `item_menu` int(1) NOT NULL DEFAULT '1',
+  `groupo` varchar(100) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modifield` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menus`
+--
+
+LOCK TABLES `menus` WRITE;
+/*!40000 ALTER TABLE `menus` DISABLE KEYS */;
+/*!40000 ALTER TABLE `menus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `menus_grupos`
+--
+
+DROP TABLE IF EXISTS `menus_grupos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `menus_grupos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `menu_id` int(11) DEFAULT NULL,
+  `grupo_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `menus_grupos`
+--
+
+LOCK TABLES `menus_grupos` WRITE;
+/*!40000 ALTER TABLE `menus_grupos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `menus_grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -761,7 +844,7 @@ CREATE TABLE `pessoas` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -770,6 +853,7 @@ CREATE TABLE `pessoas` (
 
 LOCK TABLES `pessoas` WRITE;
 /*!40000 ALTER TABLE `pessoas` DISABLE KEYS */;
+INSERT  IGNORE INTO `pessoas` (`id`, `nome`, `tipo_pessoa`, `status`, `consumidor_final`, `tipo_contribuinte`, `created`, `modified`) VALUES (1,'Administrador',2,1,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `pessoas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1092,7 +1176,7 @@ CREATE TABLE `usuarios` (
   `modified` datetime DEFAULT NULL,
   `root` int(1) DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1101,7 +1185,34 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT  IGNORE INTO `usuarios` (`id`, `pessoa_id`, `nome`, `username`, `senha`, `created`, `modified`, `root`) VALUES (1,1,'Adminstrador do Sistema','super','$2y$10$WzDG4S8BW0afOwxxTVg3A.ZD8N9wCnma0Aaxu.pIU1UnLuL/Hla5S','2016-01-05 16:47:05','2016-01-05 16:53:50',0);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuarios_grupos`
+--
+
+DROP TABLE IF EXISTS `usuarios_grupos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `usuarios_grupos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `grupo_id` int(11) DEFAULT NULL,
+  `usuario_id` int(11) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `modified` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuarios_grupos`
+--
+
+LOCK TABLES `usuarios_grupos` WRITE;
+/*!40000 ALTER TABLE `usuarios_grupos` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuarios_grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -1113,4 +1224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-04 20:27:37
+-- Dump completed on 2016-01-06 14:50:15
