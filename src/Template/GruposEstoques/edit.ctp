@@ -1,23 +1,28 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $gruposEstoque->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $gruposEstoque->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Grupos Estoques'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="gruposEstoques form large-9 medium-8 columns content">
-    <?= $this->Form->create($gruposEstoque) ?>
-    <fieldset>
-        <legend><?= __('Edit Grupos Estoque') ?></legend>
-        <?php
-            echo $this->Form->input('nome');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<?php
+$this->assign('title', $title);
+$this->Html->addCrumb($this->fetch('title'), ['controller' => $this->request->params['controller'], 'action' => 'index']);
+$this->Html->addCrumb('Alterar', null);
+?>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><?= __('Alterar ' . $this->fetch('title')) ?></h5>
+            </div>
+            <div class="ibox-content">
+                <?= $this->Form->create($gruposEstoque) ?>
+                <?php
+                echo $this->Form->input('nome');
+                ?>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <?= $this->Form->end() ?>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,30 +1,33 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $formasPagamento->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $formasPagamento->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Formas Pagamentos'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Pedidos'), ['controller' => 'Pedidos', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Pedido'), ['controller' => 'Pedidos', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="formasPagamentos form large-9 medium-8 columns content">
-    <?= $this->Form->create($formasPagamento) ?>
-    <fieldset>
-        <legend><?= __('Edit Formas Pagamento') ?></legend>
-        <?php
-            echo $this->Form->input('nome');
-            echo $this->Form->input('abreviado');
-            echo $this->Form->input('qtde_dias');
-            echo $this->Form->input('qtde_taxas');
-            echo $this->Form->input('valor_taxas');
-            echo $this->Form->input('pedidos._ids', ['options' => $pedidos]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<?php
+$this->assign('title', $title);
+$this->Html->addCrumb($this->fetch('title'), ['controller' => $this->request->params['controller'], 'action' => 'index']);
+$this->Html->addCrumb('Alterar', null);
+?>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><?= __('Alterar ' . $this->fetch('title')) ?></h5>
+            </div>
+            <div class="ibox-content">
+                <?= $this->Form->create($formasPagamento) ?>
+                <?php
+                echo $this->Form->input('nome');
+                echo $this->Form->input('abreviado');
+                echo $this->Form->input('qtde_dias');
+                echo $this->Form->input('qtde_taxas');
+                echo $this->Form->input('valor_taxas');
+                echo $this->Form->input('pedidos._ids', ['options' => $pedidos]);
+                ?>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <?= $this->Form->end() ?>
+            </div>
+        </div>
+    </div>
 </div>

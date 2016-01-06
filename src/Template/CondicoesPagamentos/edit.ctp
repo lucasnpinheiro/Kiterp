@@ -1,26 +1,31 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Form->postLink(
-                __('Delete'),
-                ['action' => 'delete', $condicoesPagamento->id],
-                ['confirm' => __('Are you sure you want to delete # {0}?', $condicoesPagamento->id)]
-            )
-        ?></li>
-        <li><?= $this->Html->link(__('List Condicoes Pagamentos'), ['action' => 'index']) ?></li>
-    </ul>
-</nav>
-<div class="condicoesPagamentos form large-9 medium-8 columns content">
-    <?= $this->Form->create($condicoesPagamento) ?>
-    <fieldset>
-        <legend><?= __('Edit Condicoes Pagamento') ?></legend>
-        <?php
-            echo $this->Form->input('nome');
-            echo $this->Form->input('qtde_parcelas');
-            echo $this->Form->input('qtde_dias');
-            echo $this->Form->input('creatde');
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
+<?php
+$this->assign('title', $title);
+$this->Html->addCrumb($this->fetch('title'), ['controller' => $this->request->params['controller'], 'action' => 'index']);
+$this->Html->addCrumb('Alterar', null);
+?>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><?= __('Alterar ' . $this->fetch('title')) ?></h5>
+            </div>
+            <div class="ibox-content">
+                <?= $this->Form->create($condicoesPagamento) ?>
+                <?php
+                echo $this->Form->input('nome');
+                echo $this->Form->input('qtde_parcelas');
+                echo $this->Form->input('qtde_dias');
+                echo $this->Form->input('creatde');
+                ?>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <?= $this->Form->end() ?>
+            </div>
+        </div>
+    </div>
 </div>
