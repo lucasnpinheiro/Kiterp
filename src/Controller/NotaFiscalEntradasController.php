@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,19 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\NotaFiscalEntradasTable $NotaFiscalEntradas
  */
-class NotaFiscalEntradasController extends AppController
-{
+class NotaFiscalEntradasController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'Notas Fiscais de Entrada');
+    }
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Empresas', 'Pessoas', 'Cfops']
         ];
@@ -32,8 +36,7 @@ class NotaFiscalEntradasController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $notaFiscalEntrada = $this->NotaFiscalEntradas->get($id, [
             'contain' => ['Empresas', 'Pessoas', 'Cfops']
         ]);
@@ -46,8 +49,7 @@ class NotaFiscalEntradasController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $notaFiscalEntrada = $this->NotaFiscalEntradas->newEntity();
         if ($this->request->is('post')) {
             $notaFiscalEntrada = $this->NotaFiscalEntradas->patchEntity($notaFiscalEntrada, $this->request->data);
@@ -72,8 +74,7 @@ class NotaFiscalEntradasController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $notaFiscalEntrada = $this->NotaFiscalEntradas->get($id, [
             'contain' => []
         ]);
@@ -100,8 +101,7 @@ class NotaFiscalEntradasController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $notaFiscalEntrada = $this->NotaFiscalEntradas->get($id);
         if ($this->NotaFiscalEntradas->delete($notaFiscalEntrada)) {
@@ -111,4 +111,5 @@ class NotaFiscalEntradasController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
 }

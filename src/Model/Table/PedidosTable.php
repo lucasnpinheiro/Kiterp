@@ -46,7 +46,7 @@ class PedidosTable extends Table
         $this->belongsTo('CondicaoPagamentos', [
             'foreignKey' => 'condicao_pagamento_id'
         ]);
-        $this->belongsTo('Vendedors', [
+        $this->belongsTo('Vendedores', [
             'className' => 'Pessoas',
             'foreignKey' => 'pessoa_id'
         ]);

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,19 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\IcmsEstaduaisTable $IcmsEstaduais
  */
-class IcmsEstaduaisController extends AppController
-{
+class IcmsEstaduaisController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'ICMS Estaduais');
+    }
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $this->set('icmsEstaduais', $this->paginate($this->IcmsEstaduais));
         $this->set('_serialize', ['icmsEstaduais']);
     }
@@ -29,8 +33,7 @@ class IcmsEstaduaisController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $icmsEstaduai = $this->IcmsEstaduais->get($id, [
             'contain' => []
         ]);
@@ -43,8 +46,7 @@ class IcmsEstaduaisController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $icmsEstaduai = $this->IcmsEstaduais->newEntity();
         if ($this->request->is('post')) {
             $icmsEstaduai = $this->IcmsEstaduais->patchEntity($icmsEstaduai, $this->request->data);
@@ -66,8 +68,7 @@ class IcmsEstaduaisController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $icmsEstaduai = $this->IcmsEstaduais->get($id, [
             'contain' => []
         ]);
@@ -91,8 +92,7 @@ class IcmsEstaduaisController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $icmsEstaduai = $this->IcmsEstaduais->get($id);
         if ($this->IcmsEstaduais->delete($icmsEstaduai)) {
@@ -102,4 +102,5 @@ class IcmsEstaduaisController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
 }

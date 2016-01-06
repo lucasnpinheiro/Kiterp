@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,19 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\ProdutosTable $Produtos
  */
-class ProdutosController extends AppController
-{
+class ProdutosController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'Produtos');
+    }
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Grupos']
         ];
@@ -32,8 +36,7 @@ class ProdutosController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $produto = $this->Produtos->get($id, [
             'contain' => ['Grupos', 'NotaFiscalEntradasItens', 'NotaFiscalSaidasItens', 'PedidosItens']
         ]);
@@ -46,8 +49,7 @@ class ProdutosController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $produto = $this->Produtos->newEntity();
         if ($this->request->is('post')) {
             $produto = $this->Produtos->patchEntity($produto, $this->request->data);
@@ -70,8 +72,7 @@ class ProdutosController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $produto = $this->Produtos->get($id, [
             'contain' => []
         ]);
@@ -96,8 +97,7 @@ class ProdutosController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $produto = $this->Produtos->get($id);
         if ($this->Produtos->delete($produto)) {
@@ -107,4 +107,5 @@ class ProdutosController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
 }

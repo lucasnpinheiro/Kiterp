@@ -1,19 +1,17 @@
 <?php
+
 namespace App\Model\Table;
 
-use App\Model\Entity\Usuario;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
-use Cake\Validation\Validator;
+use Cake \Validation\Validator;
 
 /**
  * Usuarios Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Pessoas
  */
-class UsuariosTable extends Table
-{
+class UsuariosTable extends Table {
 
     /**
      * Initialize method
@@ -21,8 +19,7 @@ class UsuariosTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('usuarios');
@@ -42,20 +39,19 @@ class UsuariosTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('nome');
+                ->allowEmpty('nome');
 
         $validator
-            ->allowEmpty('username');
+                ->allowEmpty('username');
 
         $validator
-            ->allowEmpty('senha');
+                ->allowEmpty('senha');
 
         return $validator;
     }
@@ -67,10 +63,20 @@ class UsuariosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->isUnique(['username']));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
         return $rules;
     }
+
+    public function beforeSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity) {
+        if (!empty($entity->senha)) {
+            $senha = (new \Cake\Auth\DefaultPasswordHasher())->hash($entity->senha);
+            $entity->senha = $senha;
+        } else {
+            unset($entity->senha);
+        }
+        return true;
+    }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,19 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\AtividadesTable $Atividades
  */
-class AtividadesController extends AppController
-{
+class AtividadesController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'Atividades');
+    }
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $this->set('atividades', $this->paginate($this->Atividades));
         $this->set('_serialize', ['atividades']);
     }
@@ -29,8 +33,7 @@ class AtividadesController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $atividade = $this->Atividades->get($id, [
             'contain' => []
         ]);
@@ -43,8 +46,7 @@ class AtividadesController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $atividade = $this->Atividades->newEntity();
         if ($this->request->is('post')) {
             $atividade = $this->Atividades->patchEntity($atividade, $this->request->data);
@@ -66,8 +68,7 @@ class AtividadesController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $atividade = $this->Atividades->get($id, [
             'contain' => []
         ]);
@@ -91,8 +92,7 @@ class AtividadesController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $atividade = $this->Atividades->get($id);
         if ($this->Atividades->delete($atividade)) {
@@ -102,4 +102,5 @@ class AtividadesController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
 }

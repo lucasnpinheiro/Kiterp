@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,19 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\FormasPagamentosTable $FormasPagamentos
  */
-class FormasPagamentosController extends AppController
-{
+class FormasPagamentosController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'Formas de Pagamentos');
+    }
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $this->set('formasPagamentos', $this->paginate($this->FormasPagamentos));
         $this->set('_serialize', ['formasPagamentos']);
     }
@@ -29,8 +33,7 @@ class FormasPagamentosController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $formasPagamento = $this->FormasPagamentos->get($id, [
             'contain' => ['Pedidos']
         ]);
@@ -43,8 +46,7 @@ class FormasPagamentosController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $formasPagamento = $this->FormasPagamentos->newEntity();
         if ($this->request->is('post')) {
             $formasPagamento = $this->FormasPagamentos->patchEntity($formasPagamento, $this->request->data);
@@ -67,8 +69,7 @@ class FormasPagamentosController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $formasPagamento = $this->FormasPagamentos->get($id, [
             'contain' => ['Pedidos']
         ]);
@@ -93,8 +94,7 @@ class FormasPagamentosController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $formasPagamento = $this->FormasPagamentos->get($id);
         if ($this->FormasPagamentos->delete($formasPagamento)) {
@@ -104,4 +104,5 @@ class FormasPagamentosController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,19 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\EmpresasTable $Empresas
  */
-class EmpresasController extends AppController
-{
+class EmpresasController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'Empresas');
+    }
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Pessoas']
         ];
@@ -32,8 +36,7 @@ class EmpresasController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $empresa = $this->Empresas->get($id, [
             'contain' => ['Pessoas', 'ContasPagar', 'ContasReceber', 'NotaFiscalEntradas', 'NotaFiscalSaidas', 'Pedidos', 'ProdutosKits']
         ]);
@@ -46,8 +49,7 @@ class EmpresasController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $empresa = $this->Empresas->newEntity();
         if ($this->request->is('post')) {
             $empresa = $this->Empresas->patchEntity($empresa, $this->request->data);
@@ -70,8 +72,7 @@ class EmpresasController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $empresa = $this->Empresas->get($id, [
             'contain' => []
         ]);
@@ -96,8 +97,7 @@ class EmpresasController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $empresa = $this->Empresas->get($id);
         if ($this->Empresas->delete($empresa)) {
@@ -107,4 +107,5 @@ class EmpresasController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
 }

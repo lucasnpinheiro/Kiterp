@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,19 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\PedidosTable $Pedidos
  */
-class PedidosController extends AppController
-{
+class PedidosController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'Pedidos');
+    }
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Empresas', 'Pessoas', 'CondicaoPagamentos', 'Vendedors', 'Transportadoras']
         ];
@@ -32,8 +36,7 @@ class PedidosController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $pedido = $this->Pedidos->get($id, [
             'contain' => ['Empresas', 'Pessoas', 'CondicaoPagamentos', 'Vendedors', 'Transportadoras', 'FormasPagamentos']
         ]);
@@ -46,8 +49,7 @@ class PedidosController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $pedido = $this->Pedidos->newEntity();
         if ($this->request->is('post')) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
@@ -75,8 +77,7 @@ class PedidosController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $pedido = $this->Pedidos->get($id, [
             'contain' => ['FormasPagamentos']
         ]);
@@ -106,8 +107,7 @@ class PedidosController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $pedido = $this->Pedidos->get($id);
         if ($this->Pedidos->delete($pedido)) {
@@ -117,4 +117,5 @@ class PedidosController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
 }

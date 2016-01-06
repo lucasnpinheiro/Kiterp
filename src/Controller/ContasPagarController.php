@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,19 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\ContasPagarTable $ContasPagar
  */
-class ContasPagarController extends AppController
-{
+class ContasPagarController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'Contas a Pagar');
+    }
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Empresas', 'Pessoas', 'Bancos', 'Tradutoras']
         ];
@@ -32,8 +36,7 @@ class ContasPagarController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $contasPagar = $this->ContasPagar->get($id, [
             'contain' => ['Empresas', 'Pessoas', 'Bancos', 'Tradutoras']
         ]);
@@ -46,8 +49,7 @@ class ContasPagarController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $contasPagar = $this->ContasPagar->newEntity();
         if ($this->request->is('post')) {
             $contasPagar = $this->ContasPagar->patchEntity($contasPagar, $this->request->data);
@@ -73,8 +75,7 @@ class ContasPagarController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $contasPagar = $this->ContasPagar->get($id, [
             'contain' => []
         ]);
@@ -102,8 +103,7 @@ class ContasPagarController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $contasPagar = $this->ContasPagar->get($id);
         if ($this->ContasPagar->delete($contasPagar)) {
@@ -113,4 +113,5 @@ class ContasPagarController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
 }

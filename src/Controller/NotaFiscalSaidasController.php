@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,19 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\NotaFiscalSaidasTable $NotaFiscalSaidas
  */
-class NotaFiscalSaidasController extends AppController
-{
+class NotaFiscalSaidasController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'Notas Fiscais de Saída');
+    }
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $this->paginate = [
             'contain' => ['Empresas', 'Cfops', 'Pessoas', 'FormaPagamentos', 'Transportadoras', 'Vendedors']
         ];
@@ -32,8 +36,7 @@ class NotaFiscalSaidasController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $notaFiscalSaida = $this->NotaFiscalSaidas->get($id, [
             'contain' => ['Empresas', 'Cfops', 'Pessoas', 'FormaPagamentos', 'Transportadoras', 'Vendedors']
         ]);
@@ -46,8 +49,7 @@ class NotaFiscalSaidasController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $notaFiscalSaida = $this->NotaFiscalSaidas->newEntity();
         if ($this->request->is('post')) {
             $notaFiscalSaida = $this->NotaFiscalSaidas->patchEntity($notaFiscalSaida, $this->request->data);
@@ -75,8 +77,7 @@ class NotaFiscalSaidasController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $notaFiscalSaida = $this->NotaFiscalSaidas->get($id, [
             'contain' => []
         ]);
@@ -106,8 +107,7 @@ class NotaFiscalSaidasController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $notaFiscalSaida = $this->NotaFiscalSaidas->get($id);
         if ($this->NotaFiscalSaidas->delete($notaFiscalSaida)) {
@@ -117,4 +117,5 @@ class NotaFiscalSaidasController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use App\Controller\AppController;
@@ -8,16 +9,19 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\NcmTable $Ncm
  */
-class NcmController extends AppController
-{
+class NcmController extends AppController {
+
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('title', 'NCM');
+    }
 
     /**
      * Index method
      *
      * @return void
      */
-    public function index()
-    {
+    public function index() {
         $this->set('ncm', $this->paginate($this->Ncm));
         $this->set('_serialize', ['ncm']);
     }
@@ -29,8 +33,7 @@ class NcmController extends AppController
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null)
-    {
+    public function view($id = null) {
         $ncm = $this->Ncm->get($id, [
             'contain' => ['ProdutosValores']
         ]);
@@ -43,8 +46,7 @@ class NcmController extends AppController
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
+    public function add() {
         $ncm = $this->Ncm->newEntity();
         if ($this->request->is('post')) {
             $ncm = $this->Ncm->patchEntity($ncm, $this->request->data);
@@ -66,8 +68,7 @@ class NcmController extends AppController
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
-    {
+    public function edit($id = null) {
         $ncm = $this->Ncm->get($id, [
             'contain' => []
         ]);
@@ -91,8 +92,7 @@ class NcmController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null)
-    {
+    public function delete($id = null) {
         $this->request->allowMethod(['post', 'delete']);
         $ncm = $this->Ncm->get($id);
         if ($this->Ncm->delete($ncm)) {
@@ -102,4 +102,5 @@ class NcmController extends AppController
         }
         return $this->redirect(['action' => 'index']);
     }
+
 }
