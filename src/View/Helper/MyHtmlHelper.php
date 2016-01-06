@@ -226,4 +226,27 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         }
     }
 
+    public function listaMenus() {
+        $sql = 'SELECT 
+                    Menu.titulo,
+                    Menu.plugin,
+                    Menu.controller,
+                    Menu.action,
+                    Menu.grupos,
+                    Menu.icone
+                FROM
+                    menus AS Menu
+                        INNER JOIN
+                    menus_grupos AS MenusGrupo ON MenusGrupo.menu_id = Menu.id
+                        INNER JOIN
+                    usuarios_grupos AS UsuariosGrupo ON UsuariosGrupo.grupo_id = MenusGrupo.grupo_id
+                WHERE
+                    UsuariosGrupo.usuario_id = ' . $this->request->session()->read('Auth.User.id') . '
+                        AND Menu.status = 1
+                        AND Menu.root ' . ($this->request->session()->read('Auth.User.root') == 1 ? 'IN(0,1)' : '= 0') . '
+                        AND Menu.item_menu = 1';
+        $menus = \Cake\Datasource\ConnectionManager::get('default');
+        return $menus->execute($sql)->fetchAll('assoc');
+    }
+
 }

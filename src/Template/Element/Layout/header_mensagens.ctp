@@ -6,7 +6,7 @@
         <?php echo $this->element('Layout/header_mensagens_1'); ?>
         <?php echo $this->element('Layout/header_mensagens_2'); ?>
         <li>
-            <a href="<?php echo $this->Url->build('/usuarios/view/' . $this->request->session()->read('Auth.User.id')) ?>">
+            <a href="<?php echo $this->Url->build('/usuarios/edit/' . $this->request->session()->read('Auth.User.id')) ?>">
                 <i class="fa fa-user"></i> <?php echo $this->request->session()->read('Auth.User.nome'); ?>
             </a>
         </li>
