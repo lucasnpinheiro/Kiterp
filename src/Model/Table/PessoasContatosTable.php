@@ -35,8 +35,8 @@ class PessoasContatosTable extends Table
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoa_id'
         ]);
-        $this->belongsTo('TipoContatos', [
-            'foreignKey' => 'tipo_contato_id'
+        $this->belongsTo('TiposContatos', [
+            'foreignKey' => 'tipos_contato_id'
         ]);
     }
 
@@ -71,8 +71,8 @@ class PessoasContatosTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
-        $rules->add($rules->existsIn(['tipo_contato_id'], 'TipoContatos'));
+        //$rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
+        //$rules->add($rules->existsIn(['tipos_contato_id'], 'TipoContatos'));
         return $rules;
     }
 }

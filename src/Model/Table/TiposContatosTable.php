@@ -25,7 +25,7 @@ class TiposContatosTable extends Table
         parent::initialize($config);
 
         $this->table('tipos_contatos');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

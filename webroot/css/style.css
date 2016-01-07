@@ -8233,3 +8233,13 @@ th.actions,
 td.actions{
     text-align: right;
 }
+
+
+.class-button-contatos{
+    padding-top: 21px;
+}
+.class-button-enderecos{
+    top: -305px;
+    float: right;
+    right: -13px;
+}

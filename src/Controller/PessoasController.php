@@ -27,6 +27,35 @@ class PessoasController extends AppController {
     }
 
     /**
+     * Index method
+     *
+     * @return void
+     */
+    public function verifica() {
+        $this->loadModel('PessoasFisicas');
+        $this->loadModel('PessoasJuridicas');
+        $retorno = [
+            'cod' => 111,
+            'id' => null
+        ];
+        $find = [];
+        $valor = str_replace(['.', '-', '/'], '', $this->request->data('valor'));
+        if ($this->request->data('tipo') === 'fisica') {
+            $find = $this->PessoasFisicas->find('all')->where(['PessoasFisicas.cpf' => $valor])->first();
+        } else {
+            $find = $this->PessoasJuridicas->find('all')->where(['PessoasJuridicas.cnpj' => $valor])->first();
+        }
+        if (count($find) > 0) {
+            $retorno = [
+                'cod' => 999,
+                'id' => $find->pessoa_id
+            ];
+        }
+        echo json_encode($retorno);
+        exit;
+    }
+
+    /**
      * View method
      *
      * @param string|null $id Pessoa id.
@@ -57,7 +86,9 @@ class PessoasController extends AppController {
                 $this->Flash->error(__('The pessoa could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('pessoa'));
+        $this->loadModel('TiposContatos');
+        $tipos_contatos = $this->TiposContatos->find('list');
+        $this->set(compact('pessoa', 'tipos_contatos'));
         $this->set('_serialize', ['pessoa']);
     }
 
@@ -81,7 +112,9 @@ class PessoasController extends AppController {
                 $this->Flash->error(__('The pessoa could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('pessoa'));
+        $this->loadModel('TiposContatos');
+        $tipos_contatos = $this->TiposContatos->find('list');
+        $this->set(compact('pessoa', 'tipos_contatos'));
         $this->set('_serialize', ['pessoa']);
     }
 

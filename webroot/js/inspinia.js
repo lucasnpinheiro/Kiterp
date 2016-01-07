@@ -17,7 +17,7 @@ $(document).ready(function () {
     }
 
     // MetsiMenu
-    $('#side-menu').metisMenu();
+    //$('#side-menu').metisMenu();
 
     // Collapse ibox function
     $('.collapse-link').click(function () {
@@ -58,10 +58,10 @@ $(document).ready(function () {
     });
 
     // Run menu of canvas
-    $('body.canvas-menu .sidebar-collapse').slimScroll({
+    /*$('body.canvas-menu .sidebar-collapse').slimScroll({
         height: '100%',
         railOpacity: 0.9
-    });
+    });*/
 
     // Open close right sidebar
     $('.right-sidebar-toggle').click(function () {
@@ -69,11 +69,11 @@ $(document).ready(function () {
     });
 
     // Initialize slimscroll for right sidebar
-    $('.sidebar-container').slimScroll({
+    /*$('.sidebar-container').slimScroll({
         height: '100%',
         railOpacity: 0.4,
         wheelStep: 10
-    });
+    });*/
 
     // Open close small chat
     $('.open-small-chat').click(function () {
@@ -82,10 +82,10 @@ $(document).ready(function () {
     });
 
     // Initialize slimscroll for small chat
-    $('.small-chat-box .content').slimScroll({
+    /*$('.small-chat-box .content').slimScroll({
         height: '234px',
         railOpacity: 0.4
-    });
+    });*/
 
     // Small todo handler
     $('.check-link').click(function () {
@@ -177,9 +177,9 @@ $(document).ready(function () {
         .popover();
 
     // Add slimscroll to element
-    $('.full-height-scroll').slimscroll({
+    /*$('.full-height-scroll').slimscroll({
         height: '100%'
-    })
+    })*/
 });
 
 

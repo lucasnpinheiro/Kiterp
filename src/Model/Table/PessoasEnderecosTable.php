@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use App\Model\Entity\PessoasEndereco;
@@ -12,8 +13,7 @@ use Cake\Validation\Validator;
  *
  * @property \Cake\ORM\Association\BelongsTo $Pessoas
  */
-class PessoasEnderecosTable extends Table
-{
+class PessoasEnderecosTable extends Table {
 
     /**
      * Initialize method
@@ -21,12 +21,11 @@ class PessoasEnderecosTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('pessoas_enderecos');
-        $this->displayField('id');
+        $this->displayField('endereco');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
@@ -42,44 +41,43 @@ class PessoasEnderecosTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->add('tipo_endereco', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('tipo_endereco');
+                ->add('tipo_endereco', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('tipo_endereco');
 
         $validator
-            ->allowEmpty('cep');
+                ->allowEmpty('cep');
 
         $validator
-            ->allowEmpty('endereco');
+                ->allowEmpty('endereco');
 
         $validator
-            ->allowEmpty('numero');
+                ->allowEmpty('numero');
 
         $validator
-            ->allowEmpty('complemento');
+                ->allowEmpty('complemento');
 
         $validator
-            ->allowEmpty('bairro');
+                ->allowEmpty('bairro');
 
         $validator
-            ->allowEmpty('cidade');
+                ->allowEmpty('cidade');
 
         $validator
-            ->allowEmpty('estado');
+                ->allowEmpty('estado');
 
         $validator
-            ->add('principal', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('principal');
+                ->add('principal', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('principal');
 
         $validator
-            ->add('status', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('status');
+                ->add('status', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('status');
 
         return $validator;
     }
@@ -91,9 +89,9 @@ class PessoasEnderecosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
+    public function buildRules(RulesChecker $rules) {
+        //$rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
         return $rules;
     }
+
 }

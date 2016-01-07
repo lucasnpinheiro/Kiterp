@@ -75,9 +75,36 @@ class MyFormHelper extends BootstrapFormHelper {
             'options' => [
                 0 => __('Inativo'),
                 1 => __('Ativo'),
-                9 => __('Excluido'),
+                //9 => __('Excluido'),
             ],
             'empty' => __('Selecionar uma Situação')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
+    public function tipoPessoa($fieldName, array $options = array()) {
+        $options += [
+            'type' => 'select',
+            'options' => [
+                1 => __('Fisica'),
+                2 => __('Juridica'),
+            ],
+            'empty' => __('Selecionar um Tipo de Pessoa')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
+    public function tipoEndereco($fieldName, array $options = array()) {
+        $options += [
+            'type' => 'select',
+            'options' => [
+                1 => __('Residencial'),
+                2 => __('Comercial'),
+                3 => __('Cobrança'),
+                4 => __('Recado'),
+                5 => __('Outros'),
+            ],
+            'empty' => __('Selecionar um Tipo de Endereço')
         ];
         return $this->input($fieldName, $options);
     }
