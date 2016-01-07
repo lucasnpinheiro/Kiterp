@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.24, for linux-glibc2.5 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.24, for Win32 (x86)
 --
 -- Host: 127.0.0.1    Database: kiterp
 -- ------------------------------------------------------
--- Server version	5.5.5-10.0.21-MariaDB
+-- Server version	5.6.26
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `atividades` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,7 +37,6 @@ CREATE TABLE `atividades` (
 
 LOCK TABLES `atividades` WRITE;
 /*!40000 ALTER TABLE `atividades` DISABLE KEYS */;
-INSERT INTO `atividades` VALUES (1,'teste de cadastro 1ª atividade','2016-01-06 14:19:05','2016-01-06 14:19:05');
 /*!40000 ALTER TABLE `atividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +92,7 @@ CREATE TABLE `caixas_diarios` (
   `total_entradas` float(10,2) DEFAULT NULL,
   `total_saidas` float(10,2) DEFAULT NULL,
   `total_saldo` float(10,2) DEFAULT NULL,
-  `encerrado` int(1) DEFAULT NULL,
+  `encerrado` int(1) DEFAULT NULL COMMENT '1 - Não | 2 - Sim',
   `total_real` float(10,2) DEFAULT NULL,
   `total_sobras` float(10,2) DEFAULT NULL,
   `total_faltas` float(10,2) DEFAULT NULL,
@@ -124,9 +123,9 @@ CREATE TABLE `caixas_movimentos` (
   `caixa_diario_id` int(11) DEFAULT NULL,
   `data_movimento` datetime DEFAULT NULL,
   `numero documento` varchar(12) DEFAULT NULL,
-  `tipo_lancamento` int(1) DEFAULT NULL,
+  `tipo_lancamento` int(1) DEFAULT NULL COMMENT '1 - Credito | 2 - Debito',
   `valor` float(10,2) DEFAULT NULL,
-  `modalidade` int(1) DEFAULT NULL,
+  `modalidade` int(1) DEFAULT NULL COMMENT '1 - Dinheiro | 2 - Cheques | 3 - Cartao Credito | 4 - Cartao Credito | 9 - Outros',
   `historico` varchar(65) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
@@ -215,7 +214,7 @@ CREATE TABLE `contas_pagar` (
   `pessoa_id` int(11) DEFAULT NULL,
   `banco_id` int(11) DEFAULT NULL,
   `tradutora_id` int(11) DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '1 - Aberto | 2 - baixado | 3 - Cancelado',
   `data_pagamento` date DEFAULT NULL,
   `valor_pagamento` float(10,2) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
@@ -249,7 +248,7 @@ CREATE TABLE `contas_receber` (
   `pessoa_id` int(11) DEFAULT NULL,
   `banco_id` int(11) DEFAULT NULL,
   `tradutora_id` int(11) DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '1 - Aberto | 2 - baixado | 3 - Cancelado',
   `data_recebimento` date DEFAULT NULL,
   `valor recebimento` float(10,2) DEFAULT NULL,
   `numero_pedido` int(11) DEFAULT NULL,
@@ -281,10 +280,10 @@ CREATE TABLE `empresas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pessoa_id` int(11) DEFAULT NULL,
   `codigo_cidade` int(11) DEFAULT NULL,
-  `regime_tributario` int(1) DEFAULT NULL,
+  `regime_tributario` int(1) DEFAULT NULL COMMENT '1 - Simples Nacional | 2 - Simples Nacional com Excesso | 3 - Regime Normal',
   `versao_sefaz` varchar(10) DEFAULT NULL,
   `perentual_tributo` float(4,2) DEFAULT NULL,
-  `hora_tzd` varchar(6) DEFAULT NULL,
+  `hora_tzd` varchar(6) DEFAULT NULL COMMENT '1 - -03:00 - Horario Normal | 2 - -02:00 - Horario Verao',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -350,7 +349,7 @@ CREATE TABLE `grupos` (
 
 LOCK TABLES `grupos` WRITE;
 /*!40000 ALTER TABLE `grupos` DISABLE KEYS */;
-INSERT INTO `grupos` VALUES (1,'Administrador',1,'2016-01-06 16:06:18','2016-01-06 16:06:18');
+INSERT  IGNORE INTO `grupos` (`id`, `nome`, `status`, `created`, `modified`) VALUES (1,'Administrador',1,'2016-01-06 16:06:18','2016-01-06 16:06:18');
 /*!40000 ALTER TABLE `grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -416,7 +415,7 @@ DROP TABLE IF EXISTS `impostos`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `impostos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `tipo_imposto` int(2) DEFAULT NULL,
+  `tipo_imposto` int(2) DEFAULT NULL COMMENT '1 - Icms Simples Nacional | 2 - Icms Regime Normal | 3- Ipi | 4 - Cst Pis | 5 - Cst Cofins | 6 - Icms Origem | 7 - Tabela Cfop',
   `codigo` varchar(5) DEFAULT NULL,
   `nome` varchar(255) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
@@ -464,7 +463,7 @@ CREATE TABLE `menus` (
 
 LOCK TABLES `menus` WRITE;
 /*!40000 ALTER TABLE `menus` DISABLE KEYS */;
-INSERT INTO `menus` VALUES (1,'Consultar',NULL,'Atividades','index',1,0,1,'Atividades',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(2,'Cadastrar',NULL,'Atividades','add',1,0,1,'Atividades',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(3,'Alrerar',NULL,'Atividades','edit',1,0,0,'Atividades',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(4,'Excluir',NULL,'Atividades','delete',1,0,0,'Atividades',NULL,'2016-01-06 15:44:18','2016-01-06 15:44:18'),(5,'Consultar',NULL,'Bancos','index',1,0,1,'Bancos',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(6,'Cadastrar',NULL,'Bancos','add',1,0,1,'Bancos',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(7,'Alrerar',NULL,'Bancos','edit',1,0,0,'Bancos',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(8,'Excluir',NULL,'Bancos','delete',1,0,0,'Bancos',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(9,'Consultar',NULL,'CaixasDiarios','index',1,0,1,'Caixas Diarios',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(10,'Cadastrar',NULL,'CaixasDiarios','add',1,0,1,'Caixas Diarios',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(11,'Alrerar',NULL,'CaixasDiarios','edit',1,0,0,'Caixas Diarios',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(12,'Excluir',NULL,'CaixasDiarios','delete',1,0,0,'Caixas Diarios',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(13,'Consultar',NULL,'CaixasMovimentos','index',1,0,1,'Caixas Movimentos',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(14,'Cadastrar',NULL,'CaixasMovimentos','add',1,0,1,'Caixas Movimentos',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(15,'Alrerar',NULL,'CaixasMovimentos','edit',1,0,0,'Caixas Movimentos',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(16,'Excluir',NULL,'CaixasMovimentos','delete',1,0,0,'Caixas Movimentos',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(17,'Consultar',NULL,'CondicoesPagamentos','index',1,0,1,'Condições de Pagamentos',NULL,'2016-01-06 15:46:58','2016-01-06 15:46:58'),(18,'Cadastrar',NULL,'CondicoesPagamentos','add',1,0,1,'Condições de Pagamentos',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(19,'Alrerar',NULL,'CondicoesPagamentos','edit',1,0,0,'Condições de Pagamentos',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(20,'Excluir',NULL,'CondicoesPagamentos','delete',1,0,0,'Condições de Pagamentos',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(21,'Consultar',NULL,'Contas','index',1,0,1,'Contas',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(22,'Cadastrar',NULL,'Contas','add',1,0,1,'Contas',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(23,'Alrerar',NULL,'Contas','edit',1,0,0,'Contas',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(24,'Excluir',NULL,'Contas','delete',1,0,0,'Contas',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(25,'Consultar',NULL,'ContasPagar','index',1,0,1,'Contas a Pagar',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(26,'Cadastrar',NULL,'ContasPagar','add',1,0,1,'Contas a Pagar',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(27,'Alrerar',NULL,'ContasPagar','edit',1,0,0,'Contas a Pagar',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(28,'Excluir',NULL,'ContasPagar','delete',1,0,0,'Contas a Pagar',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(29,'Consultar',NULL,'ContasReceber','index',1,0,1,'Contas a Receber',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(30,'Cadastrar',NULL,'ContasReceber','add',1,0,1,'Contas a Receber',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(31,'Alrerar',NULL,'ContasReceber','edit',1,0,0,'Contas a Receber',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(32,'Excluir',NULL,'ContasReceber','delete',1,0,0,'Contas a Receber',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(33,'Consultar',NULL,'Empresas','index',1,0,1,'Empresas',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(34,'Cadastrar',NULL,'Empresas','add',1,0,1,'Empresas',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(35,'Alrerar',NULL,'Empresas','edit',1,0,0,'Empresas',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(36,'Excluir',NULL,'Empresas','delete',1,0,0,'Empresas',NULL,'2016-01-06 15:48:31','2016-01-06 15:48:31'),(37,'Consultar',NULL,'FormasPagamentos','index',1,0,1,'Formas de Pagamentos',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(38,'Cadastrar',NULL,'FormasPagamentos','add',1,0,1,'Formas de Pagamentos',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(39,'Alrerar',NULL,'FormasPagamentos','edit',1,0,0,'Formas de Pagamentos',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(40,'Excluir',NULL,'FormasPagamentos','delete',1,0,0,'Formas de Pagamentos',NULL,'2016-01-06 15:48:54','2016-01-06 15:48:54'),(41,'Consultar',NULL,'GruposEstoques','index',1,0,1,'Grupos de Estoques',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(42,'Cadastrar',NULL,'GruposEstoques','add',1,0,1,'Grupos de Estoques',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(43,'Alrerar',NULL,'GruposEstoques','edit',1,0,0,'Grupos de Estoques',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(44,'Excluir',NULL,'GruposEstoques','delete',1,0,0,'Grupos de Estoques',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(45,'Consultar',NULL,'IcmsEstaduais','index',1,0,1,'Icms Estaduais',NULL,'2016-01-06 15:49:54','2016-01-06 15:49:54'),(46,'Cadastrar',NULL,'IcmsEstaduais','add',1,0,1,'Icms Estaduais',NULL,'2016-01-06 15:49:54','2016-01-06 15:49:54'),(47,'Alrerar',NULL,'IcmsEstaduais','edit',1,0,0,'Icms Estaduais',NULL,'2016-01-06 15:49:55','2016-01-06 15:49:55'),(48,'Excluir',NULL,'IcmsEstaduais','delete',1,0,0,'Icms Estaduais',NULL,'2016-01-06 15:49:55','2016-01-06 15:49:55'),(49,'Consultar',NULL,'Impostos','index',1,0,1,'Impostos',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(50,'Cadastrar',NULL,'Impostos','add',1,0,1,'Impostos',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(51,'Alrerar',NULL,'Impostos','edit',1,0,0,'Impostos',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(52,'Excluir',NULL,'Impostos','delete',1,0,0,'Impostos',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(53,'Consultar',NULL,'Ncm','index',1,0,1,'NCM',NULL,'2016-01-06 15:50:29','2016-01-06 15:50:29'),(54,'Cadastrar',NULL,'Ncm','add',1,0,1,'NCM',NULL,'2016-01-06 15:50:29','2016-01-06 15:50:29'),(55,'Alrerar',NULL,'Ncm','edit',1,0,0,'NCM',NULL,'2016-01-06 15:50:30','2016-01-06 15:50:30'),(56,'Excluir',NULL,'Ncm','delete',1,0,0,'NCM',NULL,'2016-01-06 15:50:30','2016-01-06 15:50:30'),(57,'Consultar',NULL,'NcmIva','index',1,0,1,'NCM IVA',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(58,'Cadastrar',NULL,'NcmIva','add',1,0,1,'NCM IVA',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(59,'Alrerar',NULL,'NcmIva','edit',1,0,0,'NCM IVA',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(60,'Excluir',NULL,'NcmIva','delete',1,0,0,'NCM IVA',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(61,'Consultar',NULL,'NotasFiscaisEntadas','index',1,0,1,'Notas Fiscais de Entadas',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(62,'Cadastrar',NULL,'NotasFiscaisEntadas','add',1,0,1,'Notas Fiscais de Entadas',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(63,'Alrerar',NULL,'NotasFiscaisEntadas','edit',1,0,0,'Notas Fiscais de Entadas',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(64,'Excluir',NULL,'NotasFiscaisEntadas','delete',1,0,0,'Notas Fiscais de Entadas',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(65,'Consultar',NULL,'NotasFiscaisSaidas','index',1,0,1,'Notas Fiscais de Saidas',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(66,'Cadastrar',NULL,'NotasFiscaisSaidas','add',1,0,1,'Notas Fiscais de Saidas',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(67,'Alrerar',NULL,'NotasFiscaisSaidas','edit',1,0,0,'Notas Fiscais de Saidas',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(68,'Excluir',NULL,'NotasFiscaisSaidas','delete',1,0,0,'Notas Fiscais de Saidas',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(69,'Consultar',NULL,'Pedidos','index',1,0,1,'Pedidos',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(70,'Cadastrar',NULL,'Pedidos','add',1,0,1,'Pedidos',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(71,'Alrerar',NULL,'Pedidos','edit',1,0,0,'Pedidos',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(72,'Excluir',NULL,'Pedidos','delete',1,0,0,'Pedidos',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(73,'Consultar',NULL,'Pessoas','index',1,0,1,'Pessoas',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(74,'Cadastrar',NULL,'Pessoas','add',1,0,1,'Pessoas',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(75,'Alrerar',NULL,'Pessoas','edit',1,0,0,'Pessoas',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(76,'Excluir',NULL,'Pessoas','delete',1,0,0,'Pessoas',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(77,'Consultar',NULL,'Produtos','index',1,0,1,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(78,'Cadastrar',NULL,'Produtos','add',1,0,1,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(79,'Alrerar',NULL,'Produtos','edit',1,0,0,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(80,'Excluir',NULL,'Produtos','delete',1,0,0,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(81,'Consultar',NULL,'ProdutosKits','index',1,0,1,'Produtos Kits',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(82,'Cadastrar',NULL,'ProdutosKits','add',1,0,1,'Produtos Kits',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(83,'Alrerar',NULL,'ProdutosKits','edit',1,0,0,'Produtos Kits',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(84,'Excluir',NULL,'ProdutosKits','delete',1,0,0,'Produtos Kits',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(85,'Consultar',NULL,'TiposContatos','index',1,0,1,'Tipos de Contatos',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(86,'Cadastrar',NULL,'TiposContatos','add',1,0,1,'Tipos de Contatos',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(87,'Alrerar',NULL,'TiposContatos','edit',1,0,0,'Tipos de Contatos',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(88,'Excluir',NULL,'TiposContatos','delete',1,0,0,'Tipos de Contatos',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(89,'Consultar',NULL,'Transportadoras','index',1,0,1,'Transportadoras',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(90,'Cadastrar',NULL,'Transportadoras','add',1,0,1,'Transportadoras',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(91,'Alrerar',NULL,'Transportadoras','edit',1,0,0,'Transportadoras',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(92,'Excluir',NULL,'Transportadoras','delete',1,0,0,'Transportadoras',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(93,'Consultar',NULL,'Usuarios','index',1,0,1,'Usuários',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(94,'Cadastrar',NULL,'Usuarios','add',1,0,1,'Usuários',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(95,'Alrerar',NULL,'Usuarios','edit',1,0,0,'Usuários',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(96,'Excluir',NULL,'Usuarios','delete',1,0,0,'Usuários',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02');
+INSERT  IGNORE INTO `menus` (`id`, `titulo`, `plugin`, `controller`, `action`, `status`, `root`, `item_menu`, `grupos`, `icone`, `created`, `modifield`) VALUES (1,'Consultar',NULL,'Atividades','index',1,0,1,'Atividades',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(2,'Cadastrar',NULL,'Atividades','add',1,0,1,'Atividades',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(3,'Alrerar',NULL,'Atividades','edit',1,0,0,'Atividades',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(4,'Excluir',NULL,'Atividades','delete',1,0,0,'Atividades',NULL,'2016-01-06 15:44:18','2016-01-06 15:44:18'),(5,'Consultar',NULL,'Bancos','index',1,0,1,'Bancos',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(6,'Cadastrar',NULL,'Bancos','add',1,0,1,'Bancos',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(7,'Alrerar',NULL,'Bancos','edit',1,0,0,'Bancos',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(8,'Excluir',NULL,'Bancos','delete',1,0,0,'Bancos',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(9,'Consultar',NULL,'CaixasDiarios','index',1,0,1,'Caixas Diarios',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(10,'Cadastrar',NULL,'CaixasDiarios','add',1,0,1,'Caixas Diarios',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(11,'Alrerar',NULL,'CaixasDiarios','edit',1,0,0,'Caixas Diarios',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(12,'Excluir',NULL,'CaixasDiarios','delete',1,0,0,'Caixas Diarios',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(13,'Consultar',NULL,'CaixasMovimentos','index',1,0,1,'Caixas Movimentos',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(14,'Cadastrar',NULL,'CaixasMovimentos','add',1,0,1,'Caixas Movimentos',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(15,'Alrerar',NULL,'CaixasMovimentos','edit',1,0,0,'Caixas Movimentos',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(16,'Excluir',NULL,'CaixasMovimentos','delete',1,0,0,'Caixas Movimentos',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(17,'Consultar',NULL,'CondicoesPagamentos','index',1,0,1,'Condições de Pagamentos',NULL,'2016-01-06 15:46:58','2016-01-06 15:46:58'),(18,'Cadastrar',NULL,'CondicoesPagamentos','add',1,0,1,'Condições de Pagamentos',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(19,'Alrerar',NULL,'CondicoesPagamentos','edit',1,0,0,'Condições de Pagamentos',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(20,'Excluir',NULL,'CondicoesPagamentos','delete',1,0,0,'Condições de Pagamentos',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(21,'Consultar',NULL,'Contas','index',1,0,1,'Contas',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(22,'Cadastrar',NULL,'Contas','add',1,0,1,'Contas',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(23,'Alrerar',NULL,'Contas','edit',1,0,0,'Contas',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(24,'Excluir',NULL,'Contas','delete',1,0,0,'Contas',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(25,'Consultar',NULL,'ContasPagar','index',1,0,1,'Contas a Pagar',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(26,'Cadastrar',NULL,'ContasPagar','add',1,0,1,'Contas a Pagar',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(27,'Alrerar',NULL,'ContasPagar','edit',1,0,0,'Contas a Pagar',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(28,'Excluir',NULL,'ContasPagar','delete',1,0,0,'Contas a Pagar',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(29,'Consultar',NULL,'ContasReceber','index',1,0,1,'Contas a Receber',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(30,'Cadastrar',NULL,'ContasReceber','add',1,0,1,'Contas a Receber',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(31,'Alrerar',NULL,'ContasReceber','edit',1,0,0,'Contas a Receber',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(32,'Excluir',NULL,'ContasReceber','delete',1,0,0,'Contas a Receber',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(33,'Consultar',NULL,'Empresas','index',1,0,1,'Empresas',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(34,'Cadastrar',NULL,'Empresas','add',1,0,1,'Empresas',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(35,'Alrerar',NULL,'Empresas','edit',1,0,0,'Empresas',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(36,'Excluir',NULL,'Empresas','delete',1,0,0,'Empresas',NULL,'2016-01-06 15:48:31','2016-01-06 15:48:31'),(37,'Consultar',NULL,'FormasPagamentos','index',1,0,1,'Formas de Pagamentos',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(38,'Cadastrar',NULL,'FormasPagamentos','add',1,0,1,'Formas de Pagamentos',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(39,'Alrerar',NULL,'FormasPagamentos','edit',1,0,0,'Formas de Pagamentos',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(40,'Excluir',NULL,'FormasPagamentos','delete',1,0,0,'Formas de Pagamentos',NULL,'2016-01-06 15:48:54','2016-01-06 15:48:54'),(41,'Consultar',NULL,'GruposEstoques','index',1,0,1,'Grupos de Estoques',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(42,'Cadastrar',NULL,'GruposEstoques','add',1,0,1,'Grupos de Estoques',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(43,'Alrerar',NULL,'GruposEstoques','edit',1,0,0,'Grupos de Estoques',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(44,'Excluir',NULL,'GruposEstoques','delete',1,0,0,'Grupos de Estoques',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(45,'Consultar',NULL,'IcmsEstaduais','index',1,0,1,'Icms Estaduais',NULL,'2016-01-06 15:49:54','2016-01-06 15:49:54'),(46,'Cadastrar',NULL,'IcmsEstaduais','add',1,0,1,'Icms Estaduais',NULL,'2016-01-06 15:49:54','2016-01-06 15:49:54'),(47,'Alrerar',NULL,'IcmsEstaduais','edit',1,0,0,'Icms Estaduais',NULL,'2016-01-06 15:49:55','2016-01-06 15:49:55'),(48,'Excluir',NULL,'IcmsEstaduais','delete',1,0,0,'Icms Estaduais',NULL,'2016-01-06 15:49:55','2016-01-06 15:49:55'),(49,'Consultar',NULL,'Impostos','index',1,0,1,'Impostos',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(50,'Cadastrar',NULL,'Impostos','add',1,0,1,'Impostos',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(51,'Alrerar',NULL,'Impostos','edit',1,0,0,'Impostos',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(52,'Excluir',NULL,'Impostos','delete',1,0,0,'Impostos',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(53,'Consultar',NULL,'Ncm','index',1,0,1,'NCM',NULL,'2016-01-06 15:50:29','2016-01-06 15:50:29'),(54,'Cadastrar',NULL,'Ncm','add',1,0,1,'NCM',NULL,'2016-01-06 15:50:29','2016-01-06 15:50:29'),(55,'Alrerar',NULL,'Ncm','edit',1,0,0,'NCM',NULL,'2016-01-06 15:50:30','2016-01-06 15:50:30'),(56,'Excluir',NULL,'Ncm','delete',1,0,0,'NCM',NULL,'2016-01-06 15:50:30','2016-01-06 15:50:30'),(57,'Consultar',NULL,'NcmIva','index',1,0,1,'NCM IVA',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(58,'Cadastrar',NULL,'NcmIva','add',1,0,1,'NCM IVA',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(59,'Alrerar',NULL,'NcmIva','edit',1,0,0,'NCM IVA',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(60,'Excluir',NULL,'NcmIva','delete',1,0,0,'NCM IVA',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(61,'Consultar',NULL,'NotasFiscaisEntadas','index',1,0,1,'Notas Fiscais de Entadas',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(62,'Cadastrar',NULL,'NotasFiscaisEntadas','add',1,0,1,'Notas Fiscais de Entadas',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(63,'Alrerar',NULL,'NotasFiscaisEntadas','edit',1,0,0,'Notas Fiscais de Entadas',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(64,'Excluir',NULL,'NotasFiscaisEntadas','delete',1,0,0,'Notas Fiscais de Entadas',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(65,'Consultar',NULL,'NotasFiscaisSaidas','index',1,0,1,'Notas Fiscais de Saidas',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(66,'Cadastrar',NULL,'NotasFiscaisSaidas','add',1,0,1,'Notas Fiscais de Saidas',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(67,'Alrerar',NULL,'NotasFiscaisSaidas','edit',1,0,0,'Notas Fiscais de Saidas',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(68,'Excluir',NULL,'NotasFiscaisSaidas','delete',1,0,0,'Notas Fiscais de Saidas',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(69,'Consultar',NULL,'Pedidos','index',1,0,1,'Pedidos',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(70,'Cadastrar',NULL,'Pedidos','add',1,0,1,'Pedidos',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(71,'Alrerar',NULL,'Pedidos','edit',1,0,0,'Pedidos',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(72,'Excluir',NULL,'Pedidos','delete',1,0,0,'Pedidos',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(73,'Consultar',NULL,'Pessoas','index',1,0,1,'Pessoas',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(74,'Cadastrar',NULL,'Pessoas','add',1,0,1,'Pessoas',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(75,'Alrerar',NULL,'Pessoas','edit',1,0,0,'Pessoas',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(76,'Excluir',NULL,'Pessoas','delete',1,0,0,'Pessoas',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(77,'Consultar',NULL,'Produtos','index',1,0,1,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(78,'Cadastrar',NULL,'Produtos','add',1,0,1,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(79,'Alrerar',NULL,'Produtos','edit',1,0,0,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(80,'Excluir',NULL,'Produtos','delete',1,0,0,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(81,'Consultar',NULL,'ProdutosKits','index',1,0,1,'Produtos Kits',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(82,'Cadastrar',NULL,'ProdutosKits','add',1,0,1,'Produtos Kits',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(83,'Alrerar',NULL,'ProdutosKits','edit',1,0,0,'Produtos Kits',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(84,'Excluir',NULL,'ProdutosKits','delete',1,0,0,'Produtos Kits',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(85,'Consultar',NULL,'TiposContatos','index',1,0,1,'Tipos de Contatos',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(86,'Cadastrar',NULL,'TiposContatos','add',1,0,1,'Tipos de Contatos',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(87,'Alrerar',NULL,'TiposContatos','edit',1,0,0,'Tipos de Contatos',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(88,'Excluir',NULL,'TiposContatos','delete',1,0,0,'Tipos de Contatos',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(89,'Consultar',NULL,'Transportadoras','index',1,0,1,'Transportadoras',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(90,'Cadastrar',NULL,'Transportadoras','add',1,0,1,'Transportadoras',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(91,'Alrerar',NULL,'Transportadoras','edit',1,0,0,'Transportadoras',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(92,'Excluir',NULL,'Transportadoras','delete',1,0,0,'Transportadoras',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(93,'Consultar',NULL,'Usuarios','index',1,0,1,'Usuários',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(94,'Cadastrar',NULL,'Usuarios','add',1,0,1,'Usuários',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(95,'Alrerar',NULL,'Usuarios','edit',1,0,0,'Usuários',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(96,'Excluir',NULL,'Usuarios','delete',1,0,0,'Usuários',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02');
 /*!40000 ALTER TABLE `menus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -489,7 +488,7 @@ CREATE TABLE `menus_grupos` (
 
 LOCK TABLES `menus_grupos` WRITE;
 /*!40000 ALTER TABLE `menus_grupos` DISABLE KEYS */;
-INSERT INTO `menus_grupos` VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,5,1),(6,6,1),(7,7,1),(8,8,1),(9,9,1),(10,10,1),(11,11,1),(12,12,1),(13,13,1),(14,14,1),(15,15,1),(16,16,1),(17,17,1),(18,18,1),(19,19,1),(20,20,1),(21,21,1),(22,22,1),(23,23,1),(24,24,1),(25,25,1),(26,26,1),(27,27,1),(28,28,1),(29,29,1),(30,30,1),(31,31,1),(32,32,1),(33,33,1),(34,34,1),(35,35,1),(36,36,1),(37,37,1),(38,38,1),(39,39,1),(40,40,1),(41,41,1),(42,42,1),(43,43,1),(44,44,1),(45,45,1),(46,46,1),(47,47,1),(48,48,1),(49,49,1),(50,50,1),(51,51,1),(52,52,1),(53,53,1),(54,54,1),(55,55,1),(56,56,1),(57,57,1),(58,58,1),(59,59,1),(60,60,1),(61,61,1),(62,62,1),(63,63,1),(64,64,1),(65,65,1),(66,66,1),(67,67,1),(68,68,1),(69,69,1),(70,70,1),(71,71,1),(72,72,1),(73,73,1),(74,74,1),(75,75,1),(76,76,1),(77,77,1),(78,78,1),(79,79,1),(80,80,1),(81,81,1),(82,82,1),(83,83,1),(84,84,1),(85,85,1),(86,86,1),(87,87,1),(88,88,1),(89,89,1),(90,90,1),(91,91,1),(92,92,1),(93,93,1),(94,94,1),(95,95,1),(96,96,1);
+INSERT  IGNORE INTO `menus_grupos` (`id`, `menu_id`, `grupo_id`) VALUES (1,1,1),(2,2,1),(3,3,1),(4,4,1),(5,5,1),(6,6,1),(7,7,1),(8,8,1),(9,9,1),(10,10,1),(11,11,1),(12,12,1),(13,13,1),(14,14,1),(15,15,1),(16,16,1),(17,17,1),(18,18,1),(19,19,1),(20,20,1),(21,21,1),(22,22,1),(23,23,1),(24,24,1),(25,25,1),(26,26,1),(27,27,1),(28,28,1),(29,29,1),(30,30,1),(31,31,1),(32,32,1),(33,33,1),(34,34,1),(35,35,1),(36,36,1),(37,37,1),(38,38,1),(39,39,1),(40,40,1),(41,41,1),(42,42,1),(43,43,1),(44,44,1),(45,45,1),(46,46,1),(47,47,1),(48,48,1),(49,49,1),(50,50,1),(51,51,1),(52,52,1),(53,53,1),(54,54,1),(55,55,1),(56,56,1),(57,57,1),(58,58,1),(59,59,1),(60,60,1),(61,61,1),(62,62,1),(63,63,1),(64,64,1),(65,65,1),(66,66,1),(67,67,1),(68,68,1),(69,69,1),(70,70,1),(71,71,1),(72,72,1),(73,73,1),(74,74,1),(75,75,1),(76,76,1),(77,77,1),(78,78,1),(79,79,1),(80,80,1),(81,81,1),(82,82,1),(83,83,1),(84,84,1),(85,85,1),(86,86,1),(87,87,1),(88,88,1),(89,89,1),(90,90,1),(91,91,1),(92,92,1),(93,93,1),(94,94,1),(95,95,1),(96,96,1);
 /*!40000 ALTER TABLE `menus_grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -507,7 +506,7 @@ CREATE TABLE `ncm` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -516,6 +515,7 @@ CREATE TABLE `ncm` (
 
 LOCK TABLES `ncm` WRITE;
 /*!40000 ALTER TABLE `ncm` DISABLE KEYS */;
+INSERT  IGNORE INTO `ncm` (`id`, `ncm`, `nome`, `created`, `modified`) VALUES (1,'20122599','bla bla bal','2016-01-04 23:29:49','2016-01-04 23:29:49');
 /*!40000 ALTER TABLE `ncm` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -639,10 +639,10 @@ CREATE TABLE `nota_fiscal_saidas` (
   `valor_icms` float(10,2) DEFAULT NULL,
   `transportadora_id` int(11) DEFAULT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
-  `cancelada` int(1) DEFAULT NULL,
+  `cancelada` int(1) DEFAULT NULL COMMENT '1 - Nao | 2 - Sim',
   `data_cancelada` date DEFAULT NULL,
   `numero_pedido` int(11) DEFAULT NULL,
-  `frete` int(1) DEFAULT NULL,
+  `frete` int(1) DEFAULT NULL COMMENT '0 - Cif Emitente | 1 - Fob Destinatario',
   `qtde_volumes` int(11) DEFAULT NULL,
   `especie` varchar(45) DEFAULT NULL,
   `base_st` float(10,2) DEFAULT NULL,
@@ -734,7 +734,7 @@ CREATE TABLE `parametros` (
 
 LOCK TABLES `parametros` WRITE;
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
-INSERT INTO `parametros` VALUES (1,'Liberar Desconto em','D_Pedido_Local','A',2,'{\"A\":\"Ambos\", \"I\":\"Item, \"P\":\"Pedido\"}','Pedido',0),(2,'Desconto no Item','D_Pedido_Item','10',1,NULL,'Pedido',0),(3,'Desconto no Total do Pedido','D_Pedido','5',1,NULL,'Pedido',0),(4,'Casas Decimais','N_Casas_Decimais','4',4,'[0,1,2,3,4]','Produtos',1),(5,'Codigo de Acesso','C_Acesso',NULL,2,NULL,'Sistema',1),(6,'Data do Ultimo Acesso','C_Acesso_Data',NULL,2,NULL,'Sistema',1),(7,'Codigo de Acesso da Empresa','C_Acesso_Empresa',NULL,1,NULL,'Sistema',1);
+INSERT  IGNORE INTO `parametros` (`id`, `nome`, `chave`, `valor`, `tipo`, `opcoes`, `grupo`, `root`) VALUES (1,'Liberar Desconto em','D_Pedido_Local','A',2,'{\"A\":\"Ambos\", \"I\":\"Item, \"P\":\"Pedido\"}','Pedido',0),(2,'Desconto no Item','D_Pedido_Item','10',1,NULL,'Pedido',0),(3,'Desconto no Total do Pedido','D_Pedido','5',1,NULL,'Pedido',0),(4,'Casas Decimais','N_Casas_Decimais','4',4,'[0,1,2,3,4]','Produtos',1),(5,'Codigo de Acesso','C_Acesso',NULL,2,NULL,'Sistema',1),(6,'Data do Ultimo Acesso','C_Acesso_Data',NULL,2,NULL,'Sistema',1),(7,'Codigo de Acesso da Empresa','C_Acesso_Empresa',NULL,1,NULL,'Sistema',1);
 /*!40000 ALTER TABLE `parametros` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -749,7 +749,7 @@ CREATE TABLE `pedidos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `empresa_id` int(11) DEFAULT NULL,
   `data_pedido` datetime DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '1 - Aberto | 2 - Emitido | 3 - Recebido | 4 - Orcamento | 5 - Nota Fiscal',
   `pessoa_id` int(11) DEFAULT NULL,
   `condicao_pagamento_id` int(11) DEFAULT NULL,
   `vendedor_id` int(11) DEFAULT NULL,
@@ -841,12 +841,13 @@ DROP TABLE IF EXISTS `pessoas`;
 CREATE TABLE `pessoas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(255) DEFAULT NULL,
-  `tipo_pessoa` int(1) DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
-  `consumidor_final` int(1) DEFAULT NULL,
-  `tipo_contribuinte` int(1) DEFAULT NULL,
+  `tipo_pessoa` int(1) DEFAULT NULL COMMENT '1 - Fisica | 2 - Juridica',
+  `status` int(1) DEFAULT NULL COMMENT '1 - Ativo | 2 - Inativo | 3 - Excluido',
+  `consumidor_final` int(1) DEFAULT NULL COMMENT '0 - Nao | 1 - Sim',
+  `tipo_contribuinte` int(1) DEFAULT NULL COMMENT '1 - Contribuinte Icms | 2 - Contribuinte Isento | 3 - Nao Contribuinte',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
+  `observacoes` text,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -857,7 +858,7 @@ CREATE TABLE `pessoas` (
 
 LOCK TABLES `pessoas` WRITE;
 /*!40000 ALTER TABLE `pessoas` DISABLE KEYS */;
-INSERT INTO `pessoas` VALUES (1,'Administrador',2,1,NULL,NULL,NULL,NULL);
+INSERT  IGNORE INTO `pessoas` (`id`, `nome`, `tipo_pessoa`, `status`, `consumidor_final`, `tipo_contribuinte`, `created`, `modified`, `observacoes`) VALUES (1,'Administrador',1,1,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `pessoas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -871,8 +872,8 @@ DROP TABLE IF EXISTS `pessoas_associacoes`;
 CREATE TABLE `pessoas_associacoes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pessoa_id` int(11) DEFAULT NULL,
-  `tipo_associacao` int(1) DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
+  `tipo_associacao` int(1) DEFAULT NULL COMMENT '1 - Empresa | 2 - Cliente | 3 - Fornecedor | 4 - Vendedor | 5 - Representante | 6 - Funcionario ',
+  `status` int(1) DEFAULT NULL COMMENT '1 - Ativo | 2 - Inativo | 3 - Excluido',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -900,7 +901,7 @@ CREATE TABLE `pessoas_contatos` (
   `pessoa_id` int(11) DEFAULT NULL,
   `tipo_contato_id` int(11) DEFAULT NULL,
   `valor` varchar(45) DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
+  `status` int(1) DEFAULT NULL COMMENT '1 - Ativo | 2 - Inativo | 3 - Excluido',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -926,7 +927,7 @@ DROP TABLE IF EXISTS `pessoas_enderecos`;
 CREATE TABLE `pessoas_enderecos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `pessoa_id` int(11) DEFAULT NULL,
-  `tipo_endereco` int(1) DEFAULT NULL,
+  `tipo_endereco` int(1) DEFAULT NULL COMMENT '1 - Comercial | 2 - Residencial | 3 - Entrega | 4 - Cobranca | 9 - Outros',
   `cep` varchar(10) DEFAULT NULL,
   `endereco` varchar(255) DEFAULT NULL,
   `numero` varchar(15) DEFAULT NULL,
@@ -934,8 +935,8 @@ CREATE TABLE `pessoas_enderecos` (
   `bairro` varchar(45) DEFAULT NULL,
   `cidade` varchar(65) DEFAULT NULL,
   `estado` varchar(2) DEFAULT NULL,
-  `principal` int(1) DEFAULT NULL,
-  `status` int(1) DEFAULT NULL,
+  `principal` int(1) DEFAULT NULL COMMENT '1 - Sim | 2 - Nao',
+  `status` int(1) DEFAULT NULL COMMENT '1 - Ativo | 2 - Inativo | 3 - Excluido',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1022,7 +1023,7 @@ CREATE TABLE `produtos` (
   `nome` varchar(255) DEFAULT NULL,
   `unidade` varchar(4) DEFAULT NULL,
   `grupo_id` int(11) DEFAULT NULL,
-  `produto_kit` int(1) DEFAULT NULL,
+  `produto_kit` int(1) DEFAULT NULL COMMENT '1 - Sim | 2 - Nao',
   `foto` varchar(65) DEFAULT NULL,
   `descricao` text,
   `created` datetime DEFAULT NULL,
@@ -1189,7 +1190,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,1,'Adminstrador do Sistema','super','$2y$10$WzDG4S8BW0afOwxxTVg3A.ZD8N9wCnma0Aaxu.pIU1UnLuL/Hla5S','2016-01-05 16:47:05','2016-01-05 16:53:50',0);
+INSERT  IGNORE INTO `usuarios` (`id`, `pessoa_id`, `nome`, `username`, `senha`, `created`, `modified`, `root`) VALUES (1,1,'Adminstrador do Sistema','super','$2y$10$WzDG4S8BW0afOwxxTVg3A.ZD8N9wCnma0Aaxu.pIU1UnLuL/Hla5S','2016-01-05 16:47:05','2016-01-05 16:53:50',0);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1216,7 +1217,7 @@ CREATE TABLE `usuarios_grupos` (
 
 LOCK TABLES `usuarios_grupos` WRITE;
 /*!40000 ALTER TABLE `usuarios_grupos` DISABLE KEYS */;
-INSERT INTO `usuarios_grupos` VALUES (1,1,1,'2016-01-06 16:08:09','2016-01-06 16:08:09');
+INSERT  IGNORE INTO `usuarios_grupos` (`id`, `grupo_id`, `usuario_id`, `created`, `modified`) VALUES (1,1,1,'2016-01-06 16:08:09','2016-01-06 16:08:09');
 /*!40000 ALTER TABLE `usuarios_grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1229,4 +1230,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-06 16:46:14
+-- Dump completed on 2016-01-06 22:44:06
