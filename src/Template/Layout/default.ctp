@@ -12,6 +12,7 @@
         <?php echo $this->Html->css('/font-awesome/css/font-awesome.css') ?>
         <?php echo $this->Html->css('/css/animate.css') ?>
         <?php echo $this->Html->css('/js/plugins/bootstrap-datepicker/bootstrap-datepicker.css') ?>
+        <?php echo $this->Html->css('/css/plugins/toastr/toastr.min.css') ?>
         <?php echo $this->Html->css('/css/style.css') ?>
 
         <?php echo $this->fetch('meta') ?>
@@ -51,11 +52,14 @@
 
         <?php echo $this->Html->script('/js/jquery-2.1.1.js') ?>
         <?php echo $this->Html->script('/js/bootstrap.min.js') ?>
+        <?php echo $this->Html->script('/js/plugins/metisMenu/jquery.metisMenu.js') ?>
+        <?php echo $this->Html->script('/js/plugins/slimscroll/jquery.slimscroll.min.js') ?>
         <?php echo $this->Html->script('/js/plugins/pace/pace.min.js') ?>
         <?php echo $this->Html->script('/js/jquery.maskMoney.min.js') ?>
         <?php echo $this->Html->script('/js/jquery.mask.min.js') ?>
         <?php echo $this->Html->script('/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js') ?>
         <?php echo $this->Html->script('/js/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.js') ?>
+        <?php echo $this->Html->script('/js/plugins/toastr/toastr.min.js') ?>
         <?php echo $this->Html->script('/js/inspinia.js') ?>
         <?php echo $this->Html->script('/js/Funcoes.js') ?>
         <?php echo $this->fetch('script') ?>

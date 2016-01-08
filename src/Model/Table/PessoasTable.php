@@ -61,6 +61,21 @@ class PessoasTable extends Table {
         $this->hasMany('Usuarios', [
             'foreignKey' => 'pessoa_id'
         ]);
+        $this->hasMany('PessoasEnderecos', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->hasMany('PessoasContatos', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->hasMany('PessoasFisicas', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->hasMany('PessoasJuridicas', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->hasMany('PessoasAssociacoes', [
+            'foreignKey' => 'pessoa_id'
+        ]);
     }
 
     /**
@@ -102,6 +117,7 @@ class PessoasTable extends Table {
         $PessoasJuridicas = TableRegistry::get('PessoasJuridicas');
         $PessoasContatos = TableRegistry::get('PessoasContatos');
         $PessoasEnderecos = TableRegistry::get('PessoasEnderecos');
+        $Usuarios = TableRegistry::get('Usuarios');
         if ($entity->tipo_pessoa === 1) {
             $pessoa = $PessoasFisicas->newEntity();
             foreach ($entity->PessoasFisica as $key => $value) {
@@ -163,6 +179,14 @@ class PessoasTable extends Table {
                     $PessoasAssociacoes->save($pessoa);
                 }
             }
+        }
+        if (count($entity->Usuario)) {
+            $pessoa = $Usuarios->newEntity();
+            foreach ($entity->Usuario as $key => $value) {
+                $pessoa->{$key} = $value;
+            }
+            $pessoa->pessoa_id = $entity->id;
+            $Usuarios->save($pessoa);
         }
     }
 

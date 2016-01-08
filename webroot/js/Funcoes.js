@@ -5,6 +5,54 @@ cake.util.numero = function (e) {
         return false;
     }
 };
+cake.msg = {};
+cake.msg.sucesso = function (titulo, mensagem, tempo) {
+    cake.msg._run(titulo, mensagem, 'success', tempo);
+}
+cake.msg.erro = function (titulo, mensagem, tempo) {
+    cake.msg._run(titulo, mensagem, 'error', tempo);
+}
+cake.msg._run = function (titulo, mensagem, tipo, tempo) {
+    if (!tempo) {
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            showMethod: 'slideDown',
+            timeOut: 10000
+        };
+        switch (tipo) {
+            case 'success':
+                toastr.success(mensagem, titulo);
+                break;
+
+            case 'error':
+                toastr.error(mensagem, titulo);
+                break;
+
+        }
+
+    } else {
+        setTimeout(function () {
+            toastr.options = {
+                closeButton: true,
+                progressBar: true,
+                showMethod: 'slideDown',
+                timeOut: 10000
+            };
+            switch (tipo) {
+                case 'success':
+                    toastr.success(mensagem, titulo);
+                    break;
+
+                case 'error':
+                    toastr.error(mensagem, titulo);
+                    break;
+
+            }
+
+        }, 1300);
+    }
+}
 cake.util.mascaras = function () {
     $('.numero').keypress(cake.util.numero);
     $('.cep').mask('99999-999');

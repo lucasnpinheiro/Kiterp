@@ -10,20 +10,22 @@ $this->Html->addCrumb('Cadastrar', null);
                 <h5><?= __('Cadastrar ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
-                <?= $this->Form->create($pessoa) ?>
+                <?= $this->Form->create($pessoa, ['id' => 'cadastro_pessoa']) ?>
                 <?php
-                echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12']]);
-                echo $this->Form->tipoPessoa('tipo_pessoa', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->simNao('consumidor_final', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('tipo_contribuinte', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12']]);
+                echo $this->Form->tipoPessoa('tipo_pessoa', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->status('status', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->simNao('consumidor_final', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('tipo_contribuinte', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
                 echo $this->element('Pessoas/associacao');
                 ?>
                 <div class="clearfix"></div>
                 <div class="hr-line-dashed"></div>
                 <div class="clearfix"></div>
+                <?php echo $this->element('Usuarios/usuarios'); ?>
                 <?php echo $this->element('Pessoas/fisica'); ?>
                 <?php echo $this->element('Pessoas/juridica'); ?>
+
 
                 <div>
 

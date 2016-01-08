@@ -101,7 +101,7 @@ class PessoasController extends AppController {
      */
     public function edit($id = null) {
         $pessoa = $this->Pessoas->get($id, [
-            'contain' => []
+            'contain' => ['Usuarios', 'PessoasContatos', 'PessoasEnderecos', 'PessoasFisicas', 'PessoasJuridicas', 'PessoasAssociacoes']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->data);

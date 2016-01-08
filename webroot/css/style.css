@@ -8243,3 +8243,7 @@ td.actions{
     float: right;
     right: -13px;
 }
+
+:required{
+    border-left: 2px solid red;
+}
