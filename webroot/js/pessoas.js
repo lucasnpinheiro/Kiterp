@@ -33,16 +33,15 @@ cake.pessoas.tipoPessoa = function () {
     });
 
 }
-cake.pessoas.clone = function (tipo) {
-    cake.pessoas[tipo] = $('.' + tipo + '-multi-field').length;
+cake.pessoas.clone = function (tipo, busca) {
+    cake.pessoas[tipo] = parseInt($('.' + tipo + '-multi-field').length) - 1;
     var $wrapper = $('.' + tipo + '-multi-fields').find('.' + tipo + '-multi-field').eq(0).html();
     $("." + tipo + "-add-field").click(function (e) {
         e.preventDefault();
-        cake.pessoas[tipo]++;
+        cake.pessoas[tipo] = parseInt(cake.pessoas[tipo]) + 1;
         var input = $wrapper;
         input = input.replace(/\[0\]/g, '[' + cake.pessoas[tipo] + ']');
-        input = input.replace(/PessoasContato.0/g, 'PessoasContato.' + cake.pessoas[tipo]);
-        input = input.replace(/pessoascontato-0/g, 'pessoascontato-' + cake.pessoas[tipo]);
+        input = input.replace(/\-0\-/g, '-' + cake.pessoas[tipo] + '-');
 
         $('.' + tipo + '-multi-fields').append('<div class="' + tipo + '-multi-field col-xs-12"><div class="clearfix"></div><div class="hr-line-dashed"></div>' + input + '<div class="form-group text col-xs-12 col-md-1 class-button-' + tipo + '"><button type="button" class="btn btn-danger ' + tipo + '-remove-field">X</button></div></div>');
         $('.' + tipo + '-remove-field').click(function (e) {
@@ -100,22 +99,23 @@ cake.pessoas.usuarios = function () {
 
 $(function () {
     cake.pessoas.tipoPessoa();
-    cake.pessoas.clone('contatos');
-    cake.pessoas.clone('enderecos');
+    cake.pessoas.clone('contatos', 'PessoasContato');
+    cake.pessoas.clone('enderecos', 'PessoasEndereco');
     cake.pessoas.usuarios();
     $('#cadastro_pessoa').submit(function (e) {
-
-        var total = 0;
-        $('.checkbox :input').each(function (a, b) {
-            console.log(a);
-            console.log(b);
-            if ($(this).is(':checked')) {
-                total++;
+        if (router.params.controller != 'Empresas') {
+            var total = 0;
+            $('.checkbox :input').each(function (a, b) {
+                console.log(a);
+                console.log(b);
+                if ($(this).is(':checked')) {
+                    total++;
+                }
+            });
+            if (total < 1) {
+                e.preventDefault();
+                cake.msg.erro('Erro ao gravar os dados.', 'Não foi selecionado nenhum tipo de associação.');
             }
-        });
-        if (total < 1) {
-            e.preventDefault();
-            cake.msg.erro('Erro ao gravar os dados.', 'Não foi selecionado nenhum tipo de associação.');
         }
     });
 });

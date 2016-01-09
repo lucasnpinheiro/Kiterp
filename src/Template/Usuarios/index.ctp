@@ -39,7 +39,7 @@ $this->Html->addCrumb('Consultar', null);
                             <?php foreach ($usuarios as $usuario): ?>
                                 <tr>
                                     <td><?= $this->Number->format($usuario->id) ?></td>
-                                    <td><?= $this->Html->link($usuario->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'view', $usuario->pessoa->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($usuario->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $usuario->pessoa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= h($usuario->nome) ?></td>
                                     <td><?= h($usuario->username) ?></td>
                                     <td class="actions">

@@ -176,6 +176,10 @@ class PessoasTable extends Table {
                     $pessoa->tipo_associacao = $v;
                     $pessoa->pessoa_id = $entity->id;
                     $pessoa->status = 1;
+                    $find = $PessoasAssociacoes->find('all')->where(['pessoa_id' => $entity->id, 'tipo_associacao' => $v])->first();
+                    if (count($find) > 0) {
+                        $pessoa->id = $find->id;
+                    }
                     $PessoasAssociacoes->save($pessoa);
                 }
             }
@@ -188,6 +192,16 @@ class PessoasTable extends Table {
             $pessoa->pessoa_id = $entity->id;
             $Usuarios->save($pessoa);
         }
+    }
+
+    public function beforeFind(Event $event, Query $query, ArrayObject $options) {
+        $query->join([
+            'table' => 'pessoas_associacoes',
+            'alias' => 'PessoasAssociacoes',
+            'type' => 'INNER',
+            'conditions' => ['PessoasAssociacoes.pessoa_id = Pessoas.id', 'PessoasAssociacoes.tipo_associacao !=' => 1, 'PessoasAssociacoes.status !=' => 9],
+        ]);
+        $query->group('Pessoas.id');
     }
 
 }

@@ -108,8 +108,11 @@ class AppController extends Controller {
         if (!is_null($this->Auth->user())) {
             $this->Auth->allow();
         } else {
-            //$this->Auth->allow('login');
-            $this->Auth->allow();
+            if ($this->request->params['controller'] != 'Usuarios') {
+                $this->redirect(['plugin' => false, 'controller' => 'Usuarios', 'action' => 'login']);
+            }
+            $this->Auth->allow('login');
+            //$this->Auth->allow();
         }
     }
 

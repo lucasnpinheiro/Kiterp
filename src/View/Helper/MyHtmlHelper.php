@@ -26,15 +26,6 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         parent::__construct($view, $config);
     }
 
-    public function statusLance($id) {
-        $r = [
-            0 => ['text' => __('Não aceito'), 'class' => 'danger'],
-            1 => ['text' => __('Agardando aceitação'), 'class' => 'info'],
-            2 => ['text' => __('Aceito'), 'class' => 'success'],
-        ];
-        return $this->label($r[$id]['text'], $r[$id]['class']);
-    }
-
     public function status($id) {
         $r = [
             0 => ['text' => __('Inativo'), 'class' => 'danger'],
@@ -43,33 +34,16 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         ];
         return $this->label($r[$id]['text'], $r[$id]['class']);
     }
-
-    public function statusTipoUser($id) {
+    
+    public function tipoPessoa($id) {
         $r = [
-            0 => ['text' => __('Administrador'), 'class' => 'primary'],
-            1 => ['text' => __('Cliente'), 'class' => 'info'],
-            2 => ['text' => __('Fornecedor'), 'class' => 'success'],
+            1 => ['text' => __('Física'), 'class' => 'primary'],
+            2 => ['text' => __('Jurídica'), 'class' => 'success'],
         ];
         return $this->label($r[$id]['text'], $r[$id]['class']);
     }
 
-    public function statusPagSeguro($id) {
-        $r = [
-            1 => ['text' => __('Aguardando pagamento'), 'title' => 'O comprador iniciou a transação, mas até o momento o PagSeguro não recebeu nenhuma informação sobre o pagamento.', 'class' => 'default'],
-            2 => ['text' => __('Em análise'), 'title' => 'O comprador optou por pagar com um cartão de crédito e o PagSeguro está analisando o risco da transação.', 'class' => 'info'],
-            3 => ['text' => __('Paga'), 'title' => 'A transação foi paga pelo comprador e o PagSeguro já recebeu uma confirmação da instituição financeira responsável pelo processamento.', 'class' => 'success'],
-            4 => ['text' => __('Disponível'), 'title' => 'A transação foi paga e chegou ao final de seu prazo de liberação sem ter sido retornada e sem que haja nenhuma disputa aberta.', 'class' => 'success'],
-            5 => ['text' => __('Em disputa'), 'title' => 'O comprador, dentro do prazo de liberação da transação, abriu uma disputa.', 'class' => 'warning'],
-            6 => ['text' => __('Devolvida'), 'title' => 'O valor da transação foi devolvido para o comprador.', 'class' => 'danger'],
-            7 => ['text' => __('Cancelada'), 'title' => 'A transação foi cancelada sem ter sido finalizada.', 'class' => 'danger'],
-            8 => ['text' => __('Chargeback debitado'), 'title' => 'O valor da transação foi devolvido para o comprador.', 'class' => 'danger'],
-            9 => ['text' => __('Em contestação'), 'title' => 'O comprador abriu uma solicitação de chargeback junto à operadora do cartão de crédito.', 'class' => 'warning'],
-        ];
-        return $this->label($r[$id]['text'], $r[$id]['class'], ['title' => $r[$id]['title']]);
-    }
-
     public function link($title, $url = null, array $options = array()) {
-
         $default = [
             'iconDirection' => 'left',
             'class' => '',
@@ -144,8 +118,14 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         return $this->label($r[$id]['text'], $r[$id]['class']);
     }
 
-    public function data($data) {
-        return date('d/m/Y', strtotime($data));
+    public function tzd($id) {
+        $r = [
+            '-01:00' => ['text' => '-01:00', 'class' => 'defautl'],
+            '-02:00' => ['text' => '-02:00 (Fernando de Noranha)', 'class' => 'defautl'],
+            '-03:00' => ['text' => '-03:00 (Brasília)', 'class' => 'defautl'],
+            '-04:00' => ['text' => '-04:00 (Manaus)', 'class' => 'defautl'],
+        ];
+        return $this->label($r[$id]['text'], $r[$id]['class']);
     }
 
     public function moeda($value, $options = []) {
@@ -171,10 +151,6 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         ];
         $currency = \Cake\Utility\Hash::merge($currency, $options);
         return $this->Number->format($value, $currency);
-    }
-
-    public function dataHora($data) {
-        return date('d/m/Y H:i:s', strtotime($data));
     }
 
     public function mask($val, $mask) {

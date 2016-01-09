@@ -45,12 +45,12 @@ $this->Html->addCrumb('Consultar', null);
                             <?php foreach ($contasPagar as $contasPagar): ?>
                                 <tr>
                                     <td><?= $this->Number->format($contasPagar->id) ?></td>
-                                    <td><?= $this->Html->link($contasPagar->empresa->nome, ['controller' => 'Empresas', 'action' => 'view', $contasPagar->empresa->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($contasPagar->empresa->nome, ['controller' => 'Empresas', 'action' => 'edit', $contasPagar->empresa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= h($contasPagar->numero_documento) ?></td>
                                     <td><?= h($contasPagar->data_vencimento) ?></td>
                                     <td><?= $this->Number->format($contasPagar->valor_documento) ?></td>
-                                    <td><?= $this->Html->link($contasPagar->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'view', $contasPagar->pessoa->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td><?= $this->Html->link($contasPagar->banco->nome, ['controller' => 'Bancos', 'action' => 'view', $contasPagar->banco->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($contasPagar->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $contasPagar->pessoa->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($contasPagar->banco->nome, ['controller' => 'Bancos', 'action' => 'edit', $contasPagar->banco->id], ['icon' => 'external-link-square']) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $contasPagar->id]) ?>
                                         <?= $this->Form->postLink('Excluir', ['action' => 'delete', $contasPagar->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contasPagar->id)]) ?>

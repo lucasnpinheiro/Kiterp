@@ -5,6 +5,20 @@ cake.util.numero = function (e) {
         return false;
     }
 };
+cake.util.getCep = function (cep, before) {
+    if (!before) {
+        before = '';
+    }
+    $.getJSON(router.url + "utilits/cep/" + cep, function (data) {
+        if (data.retorno.result.status == 'OK') {
+            $('#' + before + 'endereco').val(data.retorno.result.Cep.logradouro);
+            $('#' + before + 'bairro').val(data.retorno.result.Cep.bairro);
+            $('#' + before + 'cidade').val(data.retorno.result.Cep.cidade);
+            $('#' + before + 'estado').val(data.retorno.result.Cep.uf);
+            $('#' + before + 'numero').focus();
+        }
+    });
+}
 cake.msg = {};
 cake.msg.sucesso = function (titulo, mensagem, tempo) {
     cake.msg._run(titulo, mensagem, 'success', tempo);

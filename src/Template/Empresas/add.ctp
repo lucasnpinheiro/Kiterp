@@ -10,16 +10,47 @@ $this->Html->addCrumb('Cadastrar', null);
                 <h5><?= __('Cadastrar ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
-                <?= $this->Form->create($empresa) ?>
+                <?= $this->Form->create($pessoa, ['id' => 'cadastro_pessoa']) ?>
                 <?php
-                echo $this->Form->input('pessoa_id', ['options' => $pessoas, 'empty' => true]);
-                echo $this->Form->input('codigo_cidade');
-                echo $this->Form->input('regime_tributario');
-                echo $this->Form->input('versao_sefaz');
-                echo $this->Form->input('perentual_tributo');
-                echo $this->Form->input('hora_tzd');
+                echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12']]);
+                echo $this->Form->tipoPessoa('tipo_pessoa', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->status('status', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->simNao('consumidor_final', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('tipo_contribuinte', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('Empresa.pessoa_id', ['type' => 'hidden']);
+                echo $this->Form->input('Empresa.codigo_cidade', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('Empresa.regime_tributario', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('Empresa.versao_sefaz', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('Empresa.perentual_tributo', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('Empresa.hora_tzd', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                //echo $this->element('Pessoas/associacao');
                 ?>
+                <div class="clearfix"></div>
                 <div class="hr-line-dashed"></div>
+                <div class="clearfix"></div>
+                <?php //echo $this->element('Usuarios/usuarios'); ?>
+                <?php echo $this->element('Pessoas/fisica'); ?>
+                <?php echo $this->element('Pessoas/juridica'); ?>
+
+
+                <div>
+
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#PessoasContato" aria-controls="PessoasContato" role="tab" data-toggle="tab">Contatos</a></li>
+                        <li role="presentation"><a href="#PessoasEndereco" aria-controls="PessoasEndereco" role="tab" data-toggle="tab">Endereços</a></li>
+                    </ul>
+
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="PessoasContato"><?php echo $this->element('Pessoas/contatos'); ?></div>
+                        <div role="tabpanel" class="tab-pane" id="PessoasEndereco"><?php echo $this->element('Pessoas/enderecos'); ?></div>
+                    </div>
+
+                </div>
+
+
+                <div class="clearfix"></div>
                 <div class="form-group">
                     <div class="col-sm-12 text-right">
                         <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
@@ -30,4 +61,9 @@ $this->Html->addCrumb('Cadastrar', null);
             </div>
         </div>
     </div>
+
 </div>
+
+<?php
+echo $this->Html->script('/js/pessoas.js', ['block' => 'script']);
+?>

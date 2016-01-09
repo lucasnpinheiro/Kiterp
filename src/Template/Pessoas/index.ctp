@@ -44,9 +44,9 @@ $this->Html->addCrumb('Consultar', null);
                                 <tr>
                                     <td><?= $this->Number->format($pessoa->id) ?></td>
                                     <td><?= h($pessoa->nome) ?></td>
-                                    <td><?= $this->Number->format($pessoa->tipo_pessoa) ?></td>
-                                    <td><?= $this->Number->format($pessoa->status) ?></td>
-                                    <td><?= $this->Number->format($pessoa->consumidor_final) ?></td>
+                                    <td><?= $this->Html->tipoPessoa($pessoa->tipo_pessoa) ?></td>
+                                    <td><?= $this->Html->status($pessoa->status) ?></td>
+                                    <td><?= $this->Html->simNao($pessoa->consumidor_final) ?></td>
                                     <td><?= $this->Number->format($pessoa->tipo_contribuinte) ?></td>
                                     <td><?= h($pessoa->created) ?></td>
                                     <td class="actions">

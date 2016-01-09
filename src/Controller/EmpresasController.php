@@ -50,18 +50,29 @@ class EmpresasController extends AppController {
      * @return void Redirects on successful add, renders view otherwise.
      */
     public function add() {
+        $this->loadModel('Pessoas');
+        $pessoa = $this->Pessoas->newEntity();
         $empresa = $this->Empresas->newEntity();
+
+
         if ($this->request->is('post')) {
-            $empresa = $this->Empresas->patchEntity($empresa, $this->request->data);
-            if ($this->Empresas->save($empresa)) {
-                $this->Flash->success(__('The empresa has been saved.'));
-                return $this->redirect(['action' => 'index']);
+            $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->data);
+            if ($this->Pessoas->save($pessoa)) {
+                $this->request->data['Empresa']['pessoa_id'] = $pessoa->id;
+                $empresa = $this->Empresas->patchEntity($empresa, $this->request->data['Empresa']);
+                if ($this->Empresas->save($empresa)) {
+                    $this->Flash->success(__('The empresa has been saved.'));
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error(__('The empresa could not be saved. Please, try again.'));
+                }
             } else {
                 $this->Flash->error(__('The empresa could not be saved. Please, try again.'));
             }
         }
-        $pessoas = $this->Empresas->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('empresa', 'pessoas'));
+        $this->loadModel('TiposContatos');
+        $tipos_contatos = $this->TiposContatos->find('list');
+        $this->set(compact('empresa', 'pessoa', 'tipos_contatos'));
         $this->set('_serialize', ['empresa']);
     }
 
@@ -73,21 +84,33 @@ class EmpresasController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null) {
+        $this->loadModel('Pessoas');
         $empresa = $this->Empresas->get($id, [
             'contain' => []
         ]);
+
+        $pessoa = $this->Pessoas->get($empresa->pessoa_id, [
+            'contain' => ['Usuarios', 'PessoasContatos', 'PessoasEnderecos', 'PessoasFisicas', 'PessoasJuridicas', 'PessoasAssociacoes']
+        ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $empresa = $this->Empresas->patchEntity($empresa, $this->request->data);
-            if ($this->Empresas->save($empresa)) {
-                $this->Flash->success(__('The empresa has been saved.'));
-                return $this->redirect(['action' => 'index']);
+            $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->data);
+            if ($this->Pessoas->save($pessoa)) {
+                $this->request->data['Empresa']['pessoa_id'] = $pessoa->id;
+                $empresa = $this->Empresas->patchEntity($empresa, $this->request->data['Empresa']);
+                if ($this->Empresas->save($empresa)) {
+                    $this->Flash->success(__('The empresa has been saved.'));
+                    return $this->redirect(['action' => 'index']);
+                } else {
+                    $this->Flash->error(__('The empresa could not be saved. Please, try again.'));
+                }
             } else {
                 $this->Flash->error(__('The empresa could not be saved. Please, try again.'));
             }
         }
-        $pessoas = $this->Empresas->Pessoas->find('list', ['limit' => 200]);
-        $this->set(compact('empresa', 'pessoas'));
-        $this->set('_serialize', ['empresa']);
+        $this->loadModel('TiposContatos');
+        $tipos_contatos = $this->TiposContatos->find('list');
+        $this->set(compact('empresa', 'pessoa', 'tipos_contatos'));
+        $this->set('_serialize', ['pessoa']);
     }
 
     /**

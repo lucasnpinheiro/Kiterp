@@ -75,7 +75,7 @@ class MyFormHelper extends BootstrapFormHelper {
             'options' => [
                 0 => __('Inativo'),
                 1 => __('Ativo'),
-                //9 => __('Excluido'),
+            //9 => __('Excluido'),
             ],
             'empty' => __('Selecionar uma Situação')
         ];
@@ -86,8 +86,8 @@ class MyFormHelper extends BootstrapFormHelper {
         $options += [
             'type' => 'select',
             'options' => [
-                1 => __('Fisica'),
-                2 => __('Juridica'),
+                1 => __('Física'),
+                2 => __('Jurídica'),
             ],
             'empty' => __('Selecionar um Tipo de Pessoa')
         ];
@@ -105,21 +105,6 @@ class MyFormHelper extends BootstrapFormHelper {
                 5 => __('Outros'),
             ],
             'empty' => __('Selecionar um Tipo de Endereço')
-        ];
-        return $this->input($fieldName, $options);
-    }
-
-    public function periodoEmissao($fieldName, array $options = array()) {
-        //1 - Mensal | 2 - Trimestral | 3 - Semestral | 1 - Anual
-        $options += [
-            'type' => 'select',
-            'options' => [
-                1 => __('Mensal'),
-                2 => __('Trimestral'),
-                3 => __('Semestral'),
-                4 => __('Anual'),
-            ],
-            'empty' => __('Selecionar um periodo')
         ];
         return $this->input($fieldName, $options);
     }
@@ -146,32 +131,6 @@ class MyFormHelper extends BootstrapFormHelper {
         return parent::postLink($title, $url, $options);
     }
 
-    /**
-     * Returns an HTML FORM element.
-     *
-     * ### Options:
-     *
-     * - `type` Form method defaults to autodetecting based on the form context. If
-     *   the form context's isCreate() method returns false, a PUT request will be done.
-     * - `action` The controller action the form submits to, (optional). Use this option if you
-     *   don't need to change the controller from the current request's controller.
-     * - `url` The URL the form submits to. Can be a string or a URL array. If you use 'url'
-     *    you should leave 'action' undefined.
-     * - `encoding` Set the accept-charset encoding for the form. Defaults to `Configure::read('App.encoding')`
-     * - `templates` The templates you want to use for this form. Any templates will be merged on top of
-     *   the already loaded templates. This option can either be a filename in /config that contains
-     *   the templates you want to load, or an array of templates to use.
-     * - `context` Additional options for the context class. For example the EntityContext accepts a 'table'
-     *   option that allows you to set the specific Table class the form should be based on.
-     * - `idPrefix` Prefix for generated ID attributes.
-     *
-     * @param mixed $model The context for which the form is being defined. Can
-     *   be an ORM entity, ORM resultset, or an array of meta data. You can use false or null
-     *   to make a model-less form.
-     * @param array $options An array of html attributes and options.
-     * @return string An formatted opening FORM tag.
-     * @link http://book.cakephp.org/3.0/en/views/helpers/form.html#Cake\View\Helper\FormHelper::create
-     */
     public function create($model = null, array $options = []) {
         if (is_null($model) OR trim($model) == '') {
             $_id = 'MyFormCakePhp' . time();
@@ -183,14 +142,6 @@ class MyFormHelper extends BootstrapFormHelper {
         return parent::create($model, $options);
     }
 
-    /**
-     * Creates file input widget.
-     *
-     * @param string $fieldName Name of a field, in the form "modelname.fieldname"
-     * @param array $options Array of HTML attributes.
-     * @return string A generated file input.
-     * @link http://book.cakephp.org/3.0/en/views/helpers/form.html#creating-file-inputs
-     */
     public function file($fieldName, array $options = []) {
         $this->_customFileInput = true;
         if (!$this->_customFileInput || (isset($options['default']) && $options['default'])) {
@@ -359,18 +310,6 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function cpfCnpj($fieldName, array $options = array()) {
-        $default = [
-            'label' => 'CPF/CNPJ',
-            'type' => 'text',
-            'prepend' => $this->Html->icon('user'),
-            'class' => 'cpf_cnpj',
-            'maxlength' => 18,
-        ];
-        $options = \Cake\Utility\Hash::merge($default, $options);
-        return $this->input($fieldName, $options);
-    }
-
     public function cpf($fieldName, array $options = array()) {
         $default = [
             'label' => 'CPF',
@@ -417,13 +356,14 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function receber($fieldName, array $options = array()) {
+    public function tzd($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',
             'options' => [
-                'A' => __('Aberto'),
-                'B' => __('Fechado'),
-                'C' => __('Cancelado'),
+                '-01:00' => '-01:00',
+                '-02:00' => '-02:00 (Fernando de Noranha)',
+                '-03:00' => '-03:00 (Brasília)',
+                '-04:00' => '-04:00 (Manaus)',
             ],
             'empty' => __('Selecionar uma opção')
         ];
@@ -480,21 +420,6 @@ class MyFormHelper extends BootstrapFormHelper {
         return $retorno;
     }
 
-    /**
-     * 
-     * Create & return a twitter bootstrap dropdown button. This function is a shortcut for:
-     * 
-     *   $this->Form->$buttonGroup([
-     *     $this->Form->button($title, $options), 
-     *     $this->Html->dropdown($menu, [])
-     *   ]);
-     * 
-     * @param $title The text in the button
-     * @param $menu HTML tags corresponding to menu options (which will be wrapped
-     * 		 into <li> tag). To add separator, pass 'divider'.
-     * @param $options Options for button
-     * 
-     */
     public function dropdownButton($title, array $menu = [], array $options = []) {
 
         $options['type'] = false;

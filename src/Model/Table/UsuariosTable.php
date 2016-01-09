@@ -5,6 +5,9 @@ namespace App\Model\Table;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake \Validation\Validator;
+use Cake\Event\Event;
+use Cake\Database\Query;
+use ArrayObject;
 
 /**
  * Usuarios Model
@@ -77,6 +80,16 @@ class UsuariosTable extends Table {
             unset($entity->senha);
         }
         return true;
+    }
+
+    public function beforeFind(Event $event, Query $query, ArrayObject $options) {
+        $query->join([
+            'table' => 'pessoas_associacoes',
+            'alias' => 'PessoasAssociacoes',
+            'type' => 'INNER',
+            'conditions' => ['PessoasAssociacoes.pessoa_id = Usuarios.pessoa_id', 'PessoasAssociacoes.tipo_associacao' => 7, 'PessoasAssociacoes.status !=' => 9],
+        ]);
+        $query->group('Usuarios.pessoa_id');
     }
 
 }

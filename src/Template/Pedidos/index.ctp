@@ -45,12 +45,12 @@ $this->Html->addCrumb('Consultar', null);
                             <?php foreach ($pedidos as $pedido): ?>
                                 <tr>
                                     <td><?= $this->Number->format($pedido->id) ?></td>
-                                    <td><?= $this->Html->link($pedido->empresa->nome, ['controller' => 'Empresas', 'action' => 'view', $pedido->empresa->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($pedido->empresa->nome, ['controller' => 'Empresas', 'action' => 'edit', $pedido->empresa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= h($pedido->data_pedido) ?></td>
                                     <td><?= $this->Number->format($pedido->status) ?></td>
-                                    <td><?= $this->Html->link($pedido->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'view', $pedido->pessoa->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($pedido->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $pedido->pessoa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Number->format($pedido->condicao_pagamento_id) ?></td>
-                                    <td><?= $this->Html->link($pedido->vendedor->nome, ['controller' => 'Pessoas', 'action' => 'view', $pedido->vendedor->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($pedido->vendedor->nome, ['controller' => 'Pessoas', 'action' => 'edit', $pedido->vendedor->id], ['icon' => 'external-link-square']) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $pedido->id]) ?>
                                         <?= $this->Form->postLink('Excluir', ['action' => 'delete', $pedido->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pedido->id)]) ?>

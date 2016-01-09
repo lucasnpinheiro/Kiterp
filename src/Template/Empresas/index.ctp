@@ -41,11 +41,11 @@ $this->Html->addCrumb('Consultar', null);
                             <?php foreach ($empresas as $empresa): ?>
                                 <tr>
                                     <td><?= $this->Number->format($empresa->id) ?></td>
-                                    <td><?= $empresa->has('pessoa') ? $this->Html->link($empresa->pessoa->id, ['controller' => 'Pessoas', 'action' => 'view', $empresa->pessoa->id]) : '' ?></td>
-                                    <td><?= $this->Number->format($empresa->codigo_cidade) ?></td>
-                                    <td><?= $this->Number->format($empresa->regime_tributario) ?></td>
+                                    <td><?= $this->Html->link($empresa->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $empresa->pessoa->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= h($empresa->codigo_cidade) ?></td>
+                                    <td><?= $this->Html->simNao($empresa->regime_tributario) ?></td>
                                     <td><?= h($empresa->versao_sefaz) ?></td>
-                                    <td><?= $this->Number->format($empresa->perentual_tributo) ?></td>
+                                    <td><?= $this->Html->porcentagem($empresa->perentual_tributo) ?></td>
                                     <td><?= h($empresa->hora_tzd) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $empresa->id]) ?>

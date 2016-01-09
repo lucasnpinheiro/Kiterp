@@ -29,8 +29,8 @@ $this->Html->addCrumb('Consultar', null);
                             <?php foreach ($produtosKits as $produtosKit): ?>
                                 <tr>
                                     <td><?= $this->Number->format($produtosKit->id) ?></td>
-                                    <td><?= $produtosKit->has('empresa') ? $this->Html->link($produtosKit->empresa->id, ['controller' => 'Empresas', 'action' => 'view', $produtosKit->empresa->id]) : '' ?></td>
-                                    <td><?= $produtosKit->has('produto') ? $this->Html->link($produtosKit->produto->id, ['controller' => 'Produtos', 'action' => 'view', $produtosKit->produto->id]) : '' ?></td>
+                                    <td><?= $produtosKit->has('empresa') ? $this->Html->link($produtosKit->empresa->id, ['controller' => 'Empresas', 'action' => 'edit', $produtosKit->empresa->id]) : '' ?></td>
+                                    <td><?= $produtosKit->has('produto') ? $this->Html->link($produtosKit->produto->id, ['controller' => 'Produtos', 'action' => 'edit', $produtosKit->produto->id]) : '' ?></td>
                                     <td><?= $this->Number->format($produtosKit->kit_id) ?></td>
                                     <td><?= $this->Number->format($produtosKit->qtde) ?></td>
                                     <td><?= h($produtosKit->created) ?></td>

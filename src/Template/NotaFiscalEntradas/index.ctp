@@ -44,10 +44,10 @@ $this->Html->addCrumb('Consultar', null);
                             <?php foreach ($notaFiscalEntradas as $notaFiscalEntrada): ?>
                                 <tr>
                                     <td><?= $this->Number->format($notaFiscalEntrada->id) ?></td>
-                                    <td><?= $this->Html->link($notaFiscalEntrada->empresa->nome, ['controller' => 'Empresas', 'action' => 'view', $notaFiscalEntrada->empresa->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($notaFiscalEntrada->empresa->nome, ['controller' => 'Empresas', 'action' => 'edit', $notaFiscalEntrada->empresa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Number->format($notaFiscalEntrada->numero_nota_fiscal) ?></td>
                                     <td><?= h($notaFiscalEntrada->serie) ?></td>
-                                    <td><?= $this->Html->link($notaFiscalEntrada->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'view', $notaFiscalEntrada->pessoa->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($notaFiscalEntrada->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $notaFiscalEntrada->pessoa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Number->format($notaFiscalEntrada->cfop_id) ?></td>
                                     <td><?= h($notaFiscalEntrada->data_emissao) ?></td>
                                     <td class="actions">
