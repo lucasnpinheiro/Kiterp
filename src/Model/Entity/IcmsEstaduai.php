@@ -28,6 +28,5 @@ class IcmsEstaduai extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
     ];
 }

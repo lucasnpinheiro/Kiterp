@@ -94,6 +94,23 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
+    public function associacao($fieldName, array $options = array()) {
+        //1 - Empresa | 2 - Cliente | 3 - Fornecedor | 4 - Vendedor | 5 - Representante | 6 - Funcionario | 7 - Usuários
+        $options += [
+            'type' => 'select',
+            'options' => [
+                2 => __('Cliente'),
+                3 => __('Fornecedor'),
+                4 => __('Vendedor'),
+                5 => __('Representante'),
+                6 => __('Funcionario'),
+                7 => __('Usuários'),
+            ],
+            'empty' => __('Selecionar um Tipo de Associação')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
     public function tipoEndereco($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',

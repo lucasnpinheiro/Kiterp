@@ -27,6 +27,5 @@ class Imposto extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
     ];
 }

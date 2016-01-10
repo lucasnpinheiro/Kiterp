@@ -35,6 +35,5 @@ class Empresa extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
     ];
 }

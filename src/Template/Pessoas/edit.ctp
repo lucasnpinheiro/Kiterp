@@ -18,6 +18,7 @@ $this->Html->addCrumb('Alterar', null);
                 echo $this->Form->status('status', ['div' => ['required' => true, 'class' => 'col-xs-12 col-md-3']]);
                 echo $this->Form->simNao('consumidor_final', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
                 echo $this->Form->input('tipo_contribuinte', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('observacao', ['type' => 'textarea', 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 echo $this->element('Pessoas/associacao');
                 ?>
                 <div class="clearfix"></div>

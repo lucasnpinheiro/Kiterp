@@ -49,13 +49,14 @@ class EmpresasController extends AppController {
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add($id = null) {
         $this->loadModel('Pessoas');
-        $pessoa = $this->Pessoas->newEntity();
+
         $empresa = $this->Empresas->newEntity();
-
-
-        if ($this->request->is('post')) {
+        $pessoa = $this->Pessoas->get($id, [
+            'contain' => ['Usuarios', 'PessoasContatos', 'PessoasEnderecos', 'PessoasFisicas', 'PessoasJuridicas', 'PessoasAssociacoes']
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->data);
             if ($this->Pessoas->save($pessoa)) {
                 $this->request->data['Empresa']['pessoa_id'] = $pessoa->id;

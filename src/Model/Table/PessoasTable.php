@@ -11,6 +11,7 @@ use Cake\Event\Event;
 use Cake\Datasource\EntityInterface;
 use ArrayObject;
 use Cake\ORM\TableRegistry;
+use Search\Manager;
 
 /**
  * Pessoas Model
@@ -74,134 +75,177 @@ class PessoasTable extends Table {
             'foreignKey' => 'pessoa_id'
         ]);
         $this->hasMany('PessoasAssociacoes', [
-            'foreignKey' => 'pessoa_id'
+            'foreignKey' => 'pessoa_id',
+            'dependent' => false,
         ]);
+
+        $this->addBehavior('Search.Search');
     }
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator) {
-        $validator
-                ->add('id', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('id', 'create');
-
-        $validator
-                ->allowEmpty('nome');
-
-        $validator
-                ->add('tipo_pessoa', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('tipo_pessoa');
-
-        $validator
-                ->add('status', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('status');
-
-        $validator
-                ->add('consumidor_final', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('consumidor_final');
-
-        $validator
-                ->add('tipo_contribuinte', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('tipo_contribuinte');
-
-        return $validator;
+    public function searchConfiguration() {
+        return $this->searchConfigurationDynamic();
     }
 
-    public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options) {
-        $PessoasAssociacoes = TableRegistry::get('PessoasAssociacoes');
-        $PessoasFisicas = TableRegistry::get('PessoasFisicas');
-        $PessoasJuridicas = TableRegistry::get('PessoasJuridicas');
-        $PessoasContatos = TableRegistry::get('PessoasContatos');
-        $PessoasEnderecos = TableRegistry::get('PessoasEnderecos');
-        $Usuarios = TableRegistry::get('Usuarios');
-        if ($entity->tipo_pessoa === 1) {
-            $pessoa = $PessoasFisicas->newEntity();
-            foreach ($entity->PessoasFisica as $key => $value) {
-                $pessoa->{$key} = $value;
+    private function searchConfigurationDynamic() {
+        $search = new Manager($this);
+        $c = $this->schema()->columns();
+        foreach ($c as $key => $value) {
+            $t = $this->schema()->columnType($value);
+            if ($t != 'string' AND $t != 'text') {
+                $search->value($value, ['field' => $this->aliasField($value)]);
+            } else {
+                $search->like($value, ['before' => true, 'after' => true, 'field' => $this->aliasField($value)]);
             }
-            $pessoa->pessoa_id = $entity->id;
-            $pessoa->cpf = str_replace(['.', '-'], '', $pessoa->cpf);
-            $pessoa->data_nascimento = implode('-', array_reverse(explode('/', $pessoa->data_nascimento)));
-            if ($pessoa->id < 1) {
-                unset($pessoa->id);
-            }
-            $PessoasFisicas->save($pessoa);
-        } else if ($entity->tipo_pessoa === 2) {
-            $pessoa = $PessoasJuridicas->newEntity();
-            foreach ($entity->PessoasJuridica as $key => $value) {
-                $pessoa->{$key} = $value;
-            }
-            $pessoa->pessoa_id = $entity->id;
-            $pessoa->cnpj = str_replace(['.', '-', '/'], '', $pessoa->cnpj);
-            $pessoa->data_abertura = implode('-', array_reverse(explode('/', $pessoa->data_abertura)));
-            $PessoasJuridicas->save($pessoa);
         }
+        $search->callback('associacao', [
+            'callback' => function ($query, $args, $manager) {
+                return $query->join([
+                            'table' => 'pessoas_associacoes',
+                            'alias' => 'PessoasAssociacoesPesquisa',
+                            'type' => 'INNER',
+                            'conditions' => ['PessoasAssociacoesPesquisa.pessoa_id = Pessoas.id', 'PessoasAssociacoesPesquisa.tipo_associacao' => $args['associacao'], 'PessoasAssociacoesPesquisa.status !=' => 9],
+                ]);
+            }
+                ]);
+                return $search;
+            }
 
-        $PessoasContatos->updateAll(['status' => 9], ['pessoa_id' => $entity->id]);
+            /**
+             * Default validation rules.
+             *
+             * @param \Cake\Validation\Validator $validator Validator instance.
+             * @return \Cake\Validation\Validator
+             */
+            public function validationDefault(Validator $validator) {
+                $validator
+                        ->add('id', 'valid', ['rule' => 'numeric'])
+                        ->allowEmpty('id', 'create');
 
-        if (count($entity->PessoasContato)) {
-            foreach ($entity->PessoasContato as $key => $value) {
-                $pessoa = $PessoasContatos->newEntity();
-                foreach ($value as $k => $v) {
-                    $pessoa->{$k} = $v;
-                }
-                $pessoa->pessoa_id = $entity->id;
-                $pessoa->status = 1;
-                $pessoa->tipos_contato_id = $pessoa->tipo_contato_id;
-                unset($pessoa->tipo_contato_id);
-                $PessoasContatos->save($pessoa);
+                $validator
+                        ->allowEmpty('nome');
+
+                $validator
+                        ->add('tipo_pessoa', 'valid', ['rule' => 'numeric'])
+                        ->allowEmpty('tipo_pessoa');
+
+                $validator
+                        ->add('status', 'valid', ['rule' => 'numeric'])
+                        ->allowEmpty('status');
+
+                $validator
+                        ->add('consumidor_final', 'valid', ['rule' => 'numeric'])
+                        ->allowEmpty('consumidor_final');
+
+                $validator
+                        ->add('tipo_contribuinte', 'valid', ['rule' => 'numeric'])
+                        ->allowEmpty('tipo_contribuinte');
+
+                return $validator;
             }
-        }
-        $PessoasEnderecos->updateAll(['status' => 9], ['pessoa_id' => $entity->id]);
-        if (count($entity->PessoasEndereco)) {
-            foreach ($entity->PessoasEndereco as $key => $value) {
-                $pessoa = $PessoasEnderecos->newEntity();
-                foreach ($value as $k => $v) {
-                    $pessoa->{$k} = $v;
-                }
-                $pessoa->pessoa_id = $entity->id;
-                $pessoa->status = 1;
-                $PessoasEnderecos->save($pessoa);
-            }
-        }
-        $PessoasAssociacoes->updateAll(['status' => 9], ['pessoa_id' => $entity->id]);
-        if (count($entity->PessoasAssociacao)) {
-            foreach ($entity->PessoasAssociacao as $key => $value) {
-                foreach ($value as $k => $v) {
-                    $pessoa = $PessoasAssociacoes->newEntity();
-                    $pessoa->tipo_associacao = $v;
-                    $pessoa->pessoa_id = $entity->id;
-                    $pessoa->status = 1;
-                    $find = $PessoasAssociacoes->find('all')->where(['pessoa_id' => $entity->id, 'tipo_associacao' => $v])->first();
-                    if (count($find) > 0) {
-                        $pessoa->id = $find->id;
+
+            public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options) {
+                $PessoasAssociacoes = TableRegistry::get('PessoasAssociacoes');
+                $PessoasFisicas = TableRegistry::get('PessoasFisicas');
+                $PessoasJuridicas = TableRegistry::get('PessoasJuridicas');
+                $PessoasContatos = TableRegistry::get('PessoasContatos');
+                $PessoasEnderecos = TableRegistry::get('PessoasEnderecos');
+                $Usuarios = TableRegistry::get('Usuarios');
+
+                if ($entity->tipo_pessoa === 1) {
+                    $pessoa = $PessoasFisicas->newEntity();
+                    foreach ($entity->PessoasFisica as $key => $value) {
+                        $pessoa->{$key} = $value;
                     }
-                    $PessoasAssociacoes->save($pessoa);
+                    $pessoa->pessoa_id = $entity->id;
+                    $pessoa->cpf = str_replace(['.', '-'], '', $pessoa->cpf);
+                    $pessoa->data_nascimento = implode('-', array_reverse(explode('/', $pessoa->data_nascimento)));
+                    if ($pessoa->id < 1) {
+                        unset($pessoa->id);
+                    }
+                    $PessoasFisicas->save($pessoa);
+                } else if ($entity->tipo_pessoa === 2) {
+                    $pessoa = $PessoasJuridicas->newEntity();
+                    foreach ($entity->PessoasJuridica as $key => $value) {
+                        $pessoa->{$key} = $value;
+                    }
+                    $pessoa->pessoa_id = $entity->id;
+                    $pessoa->cnpj = str_replace(['.', '-', '/'], '', $pessoa->cnpj);
+                    $pessoa->data_abertura = implode('-', array_reverse(explode('/', $pessoa->data_abertura)));
+                    $PessoasJuridicas->save($pessoa);
+                }
+
+                $PessoasContatos->updateAll(['status' => 9], ['pessoa_id' => $entity->id]);
+
+                if (count($entity->PessoasContato)) {
+                    foreach ($entity->PessoasContato as $key => $value) {
+                        $pessoa = $PessoasContatos->newEntity();
+                        foreach ($value as $k => $v) {
+                            $pessoa->{$k} = $v;
+                        }
+                        $pessoa->pessoa_id = $entity->id;
+                        $pessoa->status = 1;
+                        $pessoa->tipos_contato_id = $pessoa->tipos_contato_id;
+                        unset($pessoa->tipo_contato_id);
+                        $PessoasContatos->save($pessoa);
+                    }
+                }
+
+                $PessoasEnderecos->updateAll(['status' => 9], ['pessoa_id' => $entity->id]);
+
+                if (count($entity->PessoasEndereco)) {
+                    foreach ($entity->PessoasEndereco as $key => $value) {
+                        $pessoa = $PessoasEnderecos->newEntity();
+                        foreach ($value as $k => $v) {
+                            $pessoa->{$k} = $v;
+                        }
+                        $pessoa->pessoa_id = $entity->id;
+                        $pessoa->status = 1;
+                        $PessoasEnderecos->save($pessoa);
+                    }
+                }
+
+                if (count($entity->PessoasAssociacao)) {
+                    foreach ($entity->PessoasAssociacao as $key => $value) {
+                        foreach ($value as $k => $v) {
+                            $pessoa = $PessoasAssociacoes->newEntity();
+                            $pessoa->tipo_associacao = $v;
+                            $pessoa->pessoa_id = $entity->id;
+                            $pessoa->status = 1;
+                            $findAssociacao = $PessoasAssociacoes->find()->where(['PessoasAssociacoes.pessoa_id' => $entity->id, 'PessoasAssociacoes.tipo_associacao' => $v])->first();
+                            if (count($findAssociacao) > 0) {
+                                $pessoa->id = $findAssociacao->id;
+                            }
+                            $PessoasAssociacoes->save($pessoa);
+                        }
+                    }
+                }
+
+                if (count($entity->Usuario) > 0) {
+                    if (trim($entity->Usuario['username']) != '') {
+                        $pessoa = $Usuarios->newEntity();
+                        foreach ($entity->Usuario as $key => $value) {
+                            $pessoa->{$key} = $value;
+                        }
+                        $pessoa->pessoa_id = $entity->id;
+                        $pessoa->nome = $entity->nome;
+                        $find = $Usuarios->find('all')->where(['Usuarios.pessoa_id' => $entity->id])->first();
+                        if (count($find) > 0) {
+                            $pessoa->id = $find->id;
+                        }
+                        $Usuarios->save($pessoa);
+                    }
                 }
             }
-        }
-        if (count($entity->Usuario)) {
-            $pessoa = $Usuarios->newEntity();
-            foreach ($entity->Usuario as $key => $value) {
-                $pessoa->{$key} = $value;
+
+            public function beforeFind(Event $event, Query $query, ArrayObject $options) {
+                $query->join([
+                    'table' => 'pessoas_associacoes',
+                    'alias' => 'PessoasAssociacoes',
+                    'type' => 'INNER',
+                    'conditions' => ['PessoasAssociacoes.pessoa_id = Pessoas.id', 'PessoasAssociacoes.tipo_associacao !=' => 1, 'PessoasAssociacoes.status !=' => 9],
+                ]);
+                $query->group('Pessoas.id');
             }
-            $pessoa->pessoa_id = $entity->id;
-            $Usuarios->save($pessoa);
+
         }
-    }
-
-    public function beforeFind(Event $event, Query $query, ArrayObject $options) {
-        $query->join([
-            'table' => 'pessoas_associacoes',
-            'alias' => 'PessoasAssociacoes',
-            'type' => 'INNER',
-            'conditions' => ['PessoasAssociacoes.pessoa_id = Pessoas.id', 'PessoasAssociacoes.tipo_associacao !=' => 1, 'PessoasAssociacoes.status !=' => 9],
-        ]);
-        $query->group('Pessoas.id');
-    }
-
-}
+        

@@ -52,31 +52,37 @@ cake.pessoas.clone = function (tipo, busca) {
 
 }
 cake.pessoas.consulta = function (tipo) {
-    if ($('#PessoaId').val() == '') {
-        var v = null;
-        if (tipo == 'fisica') {
-            v = $('#pessoasfisica-cpf');
-        } else {
-            v = $('#pessoasjuridica-cnpj');
-        }
-        v.change(function (e) {
-            e.preventDefault();
-            $.ajax({
-                method: "POST",
-                type: "POST",
-                dataType: "json",
-                url: router.url + 'pessoas/verifica',
-                data: {
-                    tipo: tipo, valor: $(this).val()
-                },
-                success: function (d) {
-                    if (d.cod == 999) {
-                        window.location.href = router.url + 'pessoas/edit/' + d.id;
+    var v = null;
+    if (tipo == 'fisica') {
+        v = $('#pessoasfisica-cpf');
+    } else {
+        v = $('#pessoasjuridica-cnpj');
+    }
+    v.change(function (e) {
+        e.preventDefault();
+        $.ajax({
+            method: "POST",
+            type: "POST",
+            dataType: "json",
+            url: router.url + 'pessoas/verifica',
+            data: {
+                tipo: tipo, valor: $(this).val()
+            },
+            success: function (d) {
+                if (d.cod == 999) {
+                    if ($('#PessoaId').val() != d.id) {
+                        if (router.params.controller == 'Empresas') {
+                            if (router.params.pass.length == 0) {
+                                window.location.href = router.url + (router.params.controller.toLowerCase()) + '/add/' + d.id;
+                            }
+                        } else {
+                            window.location.href = router.url + (router.params.controller.toLowerCase()) + '/edit/' + d.id;
+                        }
                     }
                 }
-            })
-        });
-    }
+            }
+        })
+    });
 }
 
 cake.pessoas.usuarios = function () {

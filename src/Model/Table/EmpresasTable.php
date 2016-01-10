@@ -120,14 +120,4 @@ class EmpresasTable extends Table {
         }
     }
 
-    public function beforeFind(Event $event, Query $query, ArrayObject $options) {
-        $query->join([
-            'table' => 'pessoas_associacoes',
-            'alias' => 'PessoasAssociacoes',
-            'type' => 'INNER',
-            'conditions' => ['PessoasAssociacoes.pessoa_id = Empresas.pessoa_id', 'PessoasAssociacoes.tipo_associacao' => 1, 'PessoasAssociacoes.status !=' => 9],
-        ]);
-        $query->group('Empresas.pessoa_id');
-    }
-
 }

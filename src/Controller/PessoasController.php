@@ -22,7 +22,8 @@ class PessoasController extends AppController {
      * @return void
      */
     public function index() {
-        $this->set('pessoas', $this->paginate($this->Pessoas));
+        $query = $this->Pessoas->find('search', $this->Pessoas->filterParams($this->request->query));
+        $this->set('pessoas', $this->paginate($query));
         $this->set('_serialize', ['pessoas']);
     }
 
@@ -104,7 +105,17 @@ class PessoasController extends AppController {
             'contain' => ['Usuarios', 'PessoasContatos', 'PessoasEnderecos', 'PessoasFisicas', 'PessoasJuridicas', 'PessoasAssociacoes']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->loadModel('PessoasAssociacoes');
+
+            $diff = array_diff([2, 3, 4, 5, 6, 7], $this->request->data['PessoasAssociacao']['tipo_associacao']);
+
+            if ($diff > 0) {
+                foreach ($diff as $key => $value) {
+                    $this->PessoasAssociacoes->deleteAll(['pessoa_id' => $id, 'tipo_associacao' => $value]);
+                }
+            }
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->data);
+
             if ($this->Pessoas->save($pessoa)) {
                 $this->Flash->success(__('The pessoa has been saved.'));
                 return $this->redirect(['action' => 'index']);

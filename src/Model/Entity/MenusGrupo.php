@@ -26,6 +26,5 @@ class MenusGrupo extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
     ];
 }

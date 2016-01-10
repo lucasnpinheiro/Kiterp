@@ -10,13 +10,13 @@
                     echo $this->Form->input('Usuario.id', ['type' => 'hidden', 'value' => $value->id]);
                     echo $this->Form->input('Usuario.pessoa_id', ['type' => 'hidden', 'value' => $value->pessoa_id]);
                     echo $this->Form->input('Usuario.username', ['div' => ['class' => 'col-xs-12 col-md-6'], 'value' => $value->username]);
-                    echo $this->Form->input('Usuario.senha', ['value' => '', 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                    echo $this->Form->input('Usuario.senha', ['type' => 'password', 'value' => '', 'div' => ['class' => 'col-xs-12 col-md-6']]);
                 }
             } else {
                 echo $this->Form->input('Usuario.id', ['type' => 'hidden']);
                 echo $this->Form->input('Usuario.pessoa_id', ['type' => 'hidden']);
                 echo $this->Form->input('Usuario.username', ['div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->input('Usuario.senha', ['value' => '', 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('Usuario.senha', ['type' => 'password', 'value' => '', 'div' => ['class' => 'col-xs-12 col-md-6']]);
             }
             ?>
         </div>

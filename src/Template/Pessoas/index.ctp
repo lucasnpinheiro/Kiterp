@@ -18,8 +18,9 @@ $this->Html->addCrumb('Consultar', null);
                         'label' => false
                     ]);
                     echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
-                    echo $this->Form->input('tipo_pessoa', ['label' => false, 'placeholder' => 'Tipo de Pessoa']);
-                    echo $this->Form->input('status', ['label' => false, 'placeholder' => 'Situação']);
+                    echo $this->Form->tipoPessoa('tipo_pessoa', ['label' => false, 'placeholder' => 'Tipo de Pessoa']);
+                    echo $this->Form->status('status', ['label' => false, 'placeholder' => 'Situação']);
+                    echo $this->Form->associacao('associacao', ['label' => false, 'placeholder' => 'Associação']);
                     echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>

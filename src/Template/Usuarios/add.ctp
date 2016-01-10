@@ -15,7 +15,7 @@ $this->Html->addCrumb('Cadastrar', null);
                 echo $this->Form->input('pessoa_id', ['type' => 'hidden', 'value' => $pessoa_id]);
                 echo $this->Form->input('nome');
                 echo $this->Form->input('username');
-                echo $this->Form->input('senha', ['value' => '']);
+                echo $this->Form->input('senha', ['type' => 'password', 'value' => '']);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

@@ -27,6 +27,5 @@ class Ncm extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false,
     ];
 }
