@@ -188,8 +188,6 @@ class PessoasTable extends Table {
                         }
                         $pessoa->pessoa_id = $entity->id;
                         $pessoa->status = 1;
-                        $pessoa->tipos_contato_id = $pessoa->tipos_contato_id;
-                        unset($pessoa->tipo_contato_id);
                         $PessoasContatos->save($pessoa);
                     }
                 }
