@@ -188,7 +188,9 @@ class PessoasTable extends Table {
                         }
                         $pessoa->pessoa_id = $entity->id;
                         $pessoa->status = 1;
-                        $PessoasContatos->save($pessoa);
+                        if ($pessoa->valor != '' AND $pessoa->tipos_contato_id != '') {
+                            $PessoasContatos->save($pessoa);
+                        }
                     }
                 }
 
@@ -206,7 +208,7 @@ class PessoasTable extends Table {
                     }
                 }
 
-                if (count($entity->PessoasAssociacao)) {
+                if (count($entity->PessoasAssociacao['tipo_associacao']) > 0) {
                     foreach ($entity->PessoasAssociacao as $key => $value) {
                         foreach ($value as $k => $v) {
                             $pessoa = $PessoasAssociacoes->newEntity();
@@ -220,21 +222,20 @@ class PessoasTable extends Table {
                             $PessoasAssociacoes->save($pessoa);
                         }
                     }
-                }
-
-                if (count($entity->Usuario) > 0) {
-                    if (trim($entity->Usuario['username']) != '') {
-                        $pessoa = $Usuarios->newEntity();
-                        foreach ($entity->Usuario as $key => $value) {
-                            $pessoa->{$key} = $value;
+                    if (count($entity->Usuario) > 0) {
+                        if (trim($entity->Usuario['username']) != '') {
+                            $pessoa = $Usuarios->newEntity();
+                            foreach ($entity->Usuario as $key => $value) {
+                                $pessoa->{$key} = $value;
+                            }
+                            $pessoa->pessoa_id = $entity->id;
+                            $pessoa->nome = $entity->nome;
+                            $find = $Usuarios->find('all')->where(['Usuarios.pessoa_id' => $entity->id])->first();
+                            if (count($find) > 0) {
+                                $pessoa->id = $find->id;
+                            }
+                            $Usuarios->save($pessoa);
                         }
-                        $pessoa->pessoa_id = $entity->id;
-                        $pessoa->nome = $entity->nome;
-                        $find = $Usuarios->find('all')->where(['Usuarios.pessoa_id' => $entity->id])->first();
-                        if (count($find) > 0) {
-                            $pessoa->id = $find->id;
-                        }
-                        $Usuarios->save($pessoa);
                     }
                 }
             }
