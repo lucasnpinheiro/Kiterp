@@ -158,7 +158,9 @@ class PessoasTable extends Table {
                     }
                     $pessoa->pessoa_id = $entity->id;
                     $pessoa->cpf = str_replace(['.', '-'], '', $pessoa->cpf);
-                    $pessoa->data_nascimento = implode('-', array_reverse(explode('/', $pessoa->data_nascimento)));
+                    if ($pessoa->data_nascimento != '') {
+                        $pessoa->data_nascimento = implode('-', array_reverse(explode('/', $pessoa->data_nascimento)));
+                    }
                     if ($pessoa->id < 1) {
                         unset($pessoa->id);
                     }
@@ -170,7 +172,9 @@ class PessoasTable extends Table {
                     }
                     $pessoa->pessoa_id = $entity->id;
                     $pessoa->cnpj = str_replace(['.', '-', '/'], '', $pessoa->cnpj);
-                    $pessoa->data_abertura = implode('-', array_reverse(explode('/', $pessoa->data_abertura)));
+                    if ($pessoa->data_abertura != '') {
+                        $pessoa->data_abertura = implode('-', array_reverse(explode('/', $pessoa->data_abertura)));
+                    }
                     $PessoasJuridicas->save($pessoa);
                 }
 
