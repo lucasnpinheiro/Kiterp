@@ -13,9 +13,10 @@ $this->Html->addCrumb('Alterar', null);
                 <?= $this->Form->create($usuario) ?>
                 <?php
                 echo $this->Form->input('pessoa_id', ['type' => 'hidden']);
-                echo $this->Form->input('nome');
-                echo $this->Form->input('username');
-                echo $this->Form->input('senha', ['type' => 'password', 'value' => '']);
+                echo $this->Form->input('nome', [ 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                echo $this->Form->input('username', [ 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('senha', ['type' => 'password', 'value' => '', 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->select2('grupo_id', ['multiple' => true, 'value' => $usuarios_grupo, 'options' => $grupo, 'div' => ['class' => 'col-xs-12 col-md-12']], ['tags' => true]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

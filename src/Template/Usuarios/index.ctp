@@ -43,8 +43,12 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($usuario->nome) ?></td>
                                     <td><?= h($usuario->username) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $usuario->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $usuario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $usuario->id)]) ?>
+                                        <?= $this->Html->linkPermissao('Alterar', ['action' => 'edit', $usuario->id]) ?>
+                                        <?php
+                                        if ($this->request->session()->read('Auth.User.id') != $usuario->id) {
+                                            echo $this->Form->postLinkPermissao('Excluir', ['action' => 'delete', $usuario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $usuario->id)]);
+                                        }
+                                        ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

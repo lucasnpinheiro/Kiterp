@@ -110,7 +110,11 @@ class UsuariosController extends AppController {
                 $this->Flash->error(__('The usuario could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('usuario'));
+        $this->loadModel('Grupos');
+        $this->loadModel('UsuariosGrupos');
+        $grupo = $this->Grupos->find('list')->toArray();
+        $usuarios_grupo = $this->UsuariosGrupos->find('list')->where(['usuario_id' => $id])->toArray();
+        $this->set(compact('usuario', 'grupo','usuarios_grupo'));
         $this->set('_serialize', ['usuario']);
     }
 

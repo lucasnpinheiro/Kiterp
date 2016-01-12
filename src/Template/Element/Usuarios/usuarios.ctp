@@ -5,7 +5,7 @@
         </div>
         <div class="ibox-content">
             <?php
-            if (count($pessoa->usuarios) > 0) {
+            if (isset($pessoa->usuarios) AND count($pessoa->usuarios) > 0) {
                 foreach ($pessoa->usuarios as $key => $value) {
                     echo $this->Form->input('Usuario.id', ['type' => 'hidden', 'value' => $value->id]);
                     echo $this->Form->input('Usuario.pessoa_id', ['type' => 'hidden', 'value' => $value->pessoa_id]);

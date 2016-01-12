@@ -11,7 +11,7 @@
                 <div class="contatos-multi-fields">
                     <div class="contatos-multi-field col-xs-12">
                         <?php
-                        if (count($pessoa->pessoas_contatos) > 0) {
+                        if (isset($pessoa->pessoas_contatos) AND count($pessoa->pessoas_contatos) > 0) {
                             foreach ($pessoa->pessoas_contatos as $key => $value) {
                                 echo $this->Form->input('PessoasContato.' . $key . '.id', ['type' => 'hidden', 'value' => $value->id]);
                                 echo $this->Form->input('PessoasContato.' . $key . '.pessoa_id', ['type' => 'hidden', 'value' => $value->pessoa_id]);

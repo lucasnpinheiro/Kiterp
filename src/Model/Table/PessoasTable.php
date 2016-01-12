@@ -8,7 +8,7 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Cake\Event\Event;
-use Cake\Datasource\EntityInterface;
+use Cake\ORM\Entity;
 use ArrayObject;
 use Cake\ORM\TableRegistry;
 use Search\Manager;
@@ -143,7 +143,7 @@ class PessoasTable extends Table {
                 return $validator;
             }
 
-            public function afterSave(Event $event, EntityInterface $entity, ArrayObject $options) {
+            public function afterSave(Event $event, Entity $entity, ArrayObject $options) {
                 $PessoasAssociacoes = TableRegistry::get('PessoasAssociacoes');
                 $PessoasFisicas = TableRegistry::get('PessoasFisicas');
                 $PessoasJuridicas = TableRegistry::get('PessoasJuridicas');
@@ -215,26 +215,29 @@ class PessoasTable extends Table {
                             $pessoa->tipo_associacao = $v;
                             $pessoa->pessoa_id = $entity->id;
                             $pessoa->status = 1;
-                            $findAssociacao = $PessoasAssociacoes->find()->where(['PessoasAssociacoes.pessoa_id' => $entity->id, 'PessoasAssociacoes.tipo_associacao' => $v])->first();
-                            if (count($findAssociacao) > 0) {
-                                $pessoa->id = $findAssociacao->id;
-                            }
+                            /* $findAssociacao = $PessoasAssociacoes->find()->where(['PessoasAssociacoes.pessoa_id' => $entity->id, 'PessoasAssociacoes.tipo_associacao' => $v])->first();
+                              if (count($findAssociacao) > 0) {
+                              $pessoa->id = $findAssociacao->id;
+                              } */
                             $PessoasAssociacoes->save($pessoa);
                         }
                     }
                     if (count($entity->Usuario) > 0) {
-                        if (trim($entity->Usuario['username']) != '') {
-                            $pessoa = $Usuarios->newEntity();
-                            foreach ($entity->Usuario as $key => $value) {
-                                $pessoa->{$key} = $value;
+                        $findAssociacao = $PessoasAssociacoes->find()->where(['PessoasAssociacoes.pessoa_id' => $entity->id, 'PessoasAssociacoes.tipo_associacao' => 7])->first();
+                        if (count($findAssociacao) > 0) {
+                            if (trim($entity->Usuario['username']) != '') {
+                                $pessoa = $Usuarios->newEntity();
+                                foreach ($entity->Usuario as $key => $value) {
+                                    $pessoa->{$key} = $value;
+                                }
+                                $pessoa->pessoa_id = $entity->id;
+                                $pessoa->nome = $entity->nome;
+                                $find = $Usuarios->find('all')->where(['Usuarios.pessoa_id' => $entity->id])->first();
+                                if (count($find) > 0) {
+                                    $pessoa->id = $find->id;
+                                }
+                                $Usuarios->save($pessoa);
                             }
-                            $pessoa->pessoa_id = $entity->id;
-                            $pessoa->nome = $entity->nome;
-                            $find = $Usuarios->find('all')->where(['Usuarios.pessoa_id' => $entity->id])->first();
-                            if (count($find) > 0) {
-                                $pessoa->id = $find->id;
-                            }
-                            $Usuarios->save($pessoa);
                         }
                     }
                 }
@@ -245,9 +248,9 @@ class PessoasTable extends Table {
                     'table' => 'pessoas_associacoes',
                     'alias' => 'PessoasAssociacoes',
                     'type' => 'INNER',
-                    'conditions' => ['PessoasAssociacoes.pessoa_id = Pessoas.id', 'PessoasAssociacoes.tipo_associacao !=' => 1, 'PessoasAssociacoes.status !=' => 9],
+                    'conditions' => ['PessoasAssociacoes.pessoa_id = ' . $this->alias() . '.id', 'PessoasAssociacoes.tipo_associacao !=' => 1, 'PessoasAssociacoes.status !=' => 9],
                 ]);
-                $query->group('Pessoas.id');
+                $query->group($this->alias() . '.id');
             }
 
         }

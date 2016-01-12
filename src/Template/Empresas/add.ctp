@@ -23,7 +23,7 @@ $this->Html->addCrumb('Cadastrar', null);
                 echo $this->Form->simNao('Empresa.regime_tributario', ['value' => $empresa->regime_tributario, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->Form->input('Empresa.versao_sefaz', ['value' => $empresa->versao_sefaz, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->Form->juros('Empresa.perentual_tributo', ['value' => $empresa->perentual_tributo, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
-                echo $this->Form->input('Empresa.hora_tzd', ['value' => $empresa->hora_tzd, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->tzd('Empresa.hora_tzd', ['value' => $empresa->hora_tzd, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 //echo $this->element('Pessoas/associacao');
                 ?>
                 <div class="clearfix"></div>

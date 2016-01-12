@@ -23,7 +23,7 @@ class PedidosController extends AppController {
      */
     public function index() {
         $this->paginate = [
-            'contain' => ['Empresas', 'Pessoas', 'CondicaoPagamentos', 'Vendedors', 'Transportadoras']
+            //'contain' => ['Empresas', 'Pessoas', 'CondicoesPagamentos', 'Vendedores', 'Transportadoras']
         ];
         $this->set('pedidos', $this->paginate($this->Pedidos));
         $this->set('_serialize', ['pedidos']);
@@ -38,7 +38,7 @@ class PedidosController extends AppController {
      */
     public function view($id = null) {
         $pedido = $this->Pedidos->get($id, [
-            'contain' => ['Empresas', 'Pessoas', 'CondicaoPagamentos', 'Vendedors', 'Transportadoras', 'FormasPagamentos']
+            'contain' => ['Empresas', 'Pessoas', 'CondicoesPagamentos', 'Vendedores', 'Transportadoras', 'FormasPagamentos']
         ]);
         $this->set('pedido', $pedido);
         $this->set('_serialize', ['pedido']);
@@ -62,8 +62,8 @@ class PedidosController extends AppController {
         }
         $empresas = $this->Pedidos->Empresas->find('list', ['limit' => 200]);
         $pessoas = $this->Pedidos->Pessoas->find('list', ['limit' => 200]);
-        $condicaoPagamentos = $this->Pedidos->CondicaoPagamentos->find('list', ['limit' => 200]);
-        $vendedors = $this->Pedidos->Vendedors->find('list', ['limit' => 200]);
+        $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list', ['limit' => 200]);
+        $vendedors = $this->Pedidos->Vendedores->find('list', ['limit' => 200]);
         $transportadoras = $this->Pedidos->Transportadoras->find('list', ['limit' => 200]);
         $formasPagamentos = $this->Pedidos->FormasPagamentos->find('list', ['limit' => 200]);
         $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors', 'transportadoras', 'formasPagamentos'));
@@ -92,8 +92,8 @@ class PedidosController extends AppController {
         }
         $empresas = $this->Pedidos->Empresas->find('list', ['limit' => 200]);
         $pessoas = $this->Pedidos->Pessoas->find('list', ['limit' => 200]);
-        $condicaoPagamentos = $this->Pedidos->CondicaoPagamentos->find('list', ['limit' => 200]);
-        $vendedors = $this->Pedidos->Vendedors->find('list', ['limit' => 200]);
+        $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list', ['limit' => 200]);
+        $vendedors = $this->Pedidos->Vendedores->find('list', ['limit' => 200]);
         $transportadoras = $this->Pedidos->Transportadoras->find('list', ['limit' => 200]);
         $formasPagamentos = $this->Pedidos->FormasPagamentos->find('list', ['limit' => 200]);
         $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors', 'transportadoras', 'formasPagamentos'));

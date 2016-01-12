@@ -30,6 +30,17 @@ class ProdutosController extends AppController {
     }
 
     /**
+     * Consultar method
+     *
+     * @return void
+     */
+    public function consultar() {
+        debug($this->request);
+        exit;
+        $this->Produtos->where(['nome' => '']);
+    }
+
+    /**
      * View method
      *
      * @param string|null $id Produto id.

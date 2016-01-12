@@ -11,7 +11,7 @@
         6 => null,
         7 => null,
     ];
-    if (count($pessoa->pessoas_associacoes)) {
+    if (isset($pessoa->pessoas_associacoes) AND count($pessoa->pessoas_associacoes)) {
         foreach ($pessoa->pessoas_associacoes as $key => $value) {
             $_associacoes[(int) $value->tipo_associacao] = 'checked="checked"';
         }

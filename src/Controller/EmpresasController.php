@@ -51,11 +51,13 @@ class EmpresasController extends AppController {
      */
     public function add($id = null) {
         $this->loadModel('Pessoas');
-
+        $pessoa = null;
         $empresa = $this->Empresas->newEntity();
-        $pessoa = $this->Pessoas->get($id, [
-            'contain' => ['Usuarios', 'PessoasContatos', 'PessoasEnderecos', 'PessoasFisicas', 'PessoasJuridicas', 'PessoasAssociacoes']
-        ]);
+        if (!is_null($id)) {
+            $pessoa = $this->Pessoas->get($id, [
+                'contain' => ['Usuarios', 'PessoasContatos', 'PessoasEnderecos', 'PessoasFisicas', 'PessoasJuridicas', 'PessoasAssociacoes']
+            ]);
+        }
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pessoa = $this->Pessoas->patchEntity($pessoa, $this->request->data);
             if ($this->Pessoas->save($pessoa)) {

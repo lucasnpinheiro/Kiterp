@@ -94,6 +94,19 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
+    public function tipoContribuinte($fieldName, array $options = array()) {
+        $options += [
+            'type' => 'select',
+            'options' => [
+                1 => __('Contribuinte Icms'),
+                2 => __('Contribuinte Isento'),
+                3 => __('Não Contribuinte'),
+            ],
+            'empty' => __('Selecionar um Tipo de Contribuinte')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
     public function associacao($fieldName, array $options = array()) {
         //1 - Empresa | 2 - Cliente | 3 - Fornecedor | 4 - Vendedor | 5 - Representante | 6 - Funcionario | 7 - Usuários
         $options += [
@@ -118,8 +131,9 @@ class MyFormHelper extends BootstrapFormHelper {
                 1 => __('Residencial'),
                 2 => __('Comercial'),
                 3 => __('Cobrança'),
-                4 => __('Recado'),
-                5 => __('Outros'),
+                4 => __('Entrega'),
+                5 => __('Recado'),
+                6 => __('Outros'),
             ],
             'empty' => __('Selecionar um Tipo de Endereço')
         ];
@@ -400,9 +414,9 @@ class MyFormHelper extends BootstrapFormHelper {
             $options['help'] = 'Tipo(s) de separador(es) "' . implode('" ', $config['tokenSeparators']) . '"';
         }
 
-        $this->Html->css('/plugins/select2/select2.min.css', ['block' => 'css']);
-        $this->Html->script('/plugins/select2/select2.full.min.js', ['block' => 'script']);
-        $this->Html->script('/plugins/select2/i18n/pt-BR.js', ['block' => 'script']);
+        $this->Html->css('/js/plugins/select2/select2.min.css', ['block' => 'css']);
+        $this->Html->script('/js/plugins/select2/select2.full.min.js', ['block' => 'script']);
+        $this->Html->script('/js/plugins/select2/i18n/pt-BR.js', ['block' => 'script']);
         $this->Html->scriptBlock("
             jQuery('document').ready(function(){
                 $('#" . $options['id'] . "').select2(" . json_encode($config) . ");
@@ -447,6 +461,44 @@ class MyFormHelper extends BootstrapFormHelper {
                     $this->button($title . ' <span class="caret"></span>', $options),
                     $this->Html->dropdown($menu)
         ]);
+    }
+
+    public function postLinkPermissao($title, $url = null, array $options = array()) {
+        $default = [
+            'plugin' => $this->request->param('plugin'),
+            'controller' => $this->request->param('controller'),
+            'action' => $this->request->param('action'),
+        ];
+        $url = \Cake\Utility\Hash::merge($default, $url);
+        $sql = 'SELECT 
+                    COUNT(*) AS total
+                FROM
+                    menus AS Menu
+                        INNER JOIN
+                    menus_grupos AS MenusGrupo ON MenusGrupo.menu_id = Menu.id
+                        INNER JOIN
+                    usuarios_grupos AS UsuariosGrupo ON UsuariosGrupo.grupo_id = MenusGrupo.grupo_id
+                WHERE
+                    UsuariosGrupo.usuario_id = ' . $this->request->session()->read('Auth.User.id') . '
+                        AND Menu.action = "' . $url['action'] . '"
+                        AND Menu.controller = "' . $url['controller'] . '"
+                        ' . ($url['plugin'] != '' ? ' AND Menu.plugin = "' . $url['plugin'] . '"' : '') . '
+                        AND Menu.status = 1
+                        AND Menu.root ' . ($this->request->session()->read('Auth.User.root') == 1 ? 'IN(0,1)' : '= 0');
+        if (is_null($this->request->session()->read(md5($sql)))) {
+            $menus = \Cake\Datasource\ConnectionManager::get('default');
+            $r = $menus->execute($sql)->fetch('assoc');
+
+            $this->request->session()->write(md5($sql), $r['total']);
+            if ($r['total'] > 0) {
+                return $this->postLink($title, $url, $options);
+            }
+        } else {
+            if ($this->request->session()->read(md5($sql)) > 0) {
+                return $this->postLink($title, $url, $options);
+            }
+        }
+        return null;
     }
 
 }

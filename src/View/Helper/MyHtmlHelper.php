@@ -34,11 +34,21 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         ];
         return $this->label($r[$id]['text'], $r[$id]['class']);
     }
-    
+
     public function tipoPessoa($id) {
         $r = [
             1 => ['text' => __('Física'), 'class' => 'primary'],
             2 => ['text' => __('Jurídica'), 'class' => 'success'],
+        ];
+        return $this->label($r[$id]['text'], $r[$id]['class']);
+    }
+    
+    
+    public function tipoContribuinte($id) {
+        $r = [
+            1 => ['text' => __('Contribuinte Icms'), 'class' => 'primary'],
+            2 => ['text' => __('Contribuinte Isento'), 'class' => 'success'],
+            3 => ['text' => __('Não Contribuinte'), 'class' => 'warning'],
         ];
         return $this->label($r[$id]['text'], $r[$id]['class']);
     }
@@ -220,9 +230,49 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
                     UsuariosGrupo.usuario_id = ' . $this->request->session()->read('Auth.User.id') . '
                         AND Menu.status = 1
                         AND Menu.root ' . ($this->request->session()->read('Auth.User.root') == 1 ? 'IN(0,1)' : '= 0') . '
-                        AND Menu.item_menu = 1';
+                        AND Menu.item_menu = 1
+                GROUP BY Menu.id ORDER BY Menu.grupos ASC, Menu.titulo ASC';
         $menus = \Cake\Datasource\ConnectionManager::get('default');
         return $menus->execute($sql)->fetchAll('assoc');
+    }
+
+    public function linkPermissao($title, $url = null, array $options = array()) {
+        $default = [
+            'plugin' => $this->request->param('plugin'),
+            'controller' => $this->request->param('controller'),
+            'action' => $this->request->param('action'),
+        ];
+        $url = \Cake\Utility\Hash::merge($default, $url);
+        $sql = 'SELECT 
+                    COUNT(*) AS total
+                FROM
+                    menus AS Menu
+                        INNER JOIN
+                    menus_grupos AS MenusGrupo ON MenusGrupo.menu_id = Menu.id
+                        INNER JOIN
+                    usuarios_grupos AS UsuariosGrupo ON UsuariosGrupo.grupo_id = MenusGrupo.grupo_id
+                WHERE
+                    UsuariosGrupo.usuario_id = ' . $this->request->session()->read('Auth.User.id') . '
+                        AND Menu.action = "' . $url['action'] . '"
+                        AND Menu.controller = "' . $url['controller'] . '"
+                        ' . ($url['plugin'] != '' ? ' AND Menu.plugin = "' . $url['plugin'] . '"' : '') . '
+                        AND Menu.status = 1
+                        AND Menu.root ' . ($this->request->session()->read('Auth.User.root') == 1 ? 'IN(0,1)' : '= 0');
+
+        if (is_null($this->request->session()->read(md5($sql)))) {
+            $menus = \Cake\Datasource\ConnectionManager::get('default');
+            $r = $menus->execute($sql)->fetch('assoc');
+
+            $this->request->session()->write(md5($sql), $r['total']);
+            if ($r['total'] > 0) {
+                return $this->link($title, $url, $options);
+            }
+        } else {
+            if ($this->request->session()->read(md5($sql)) > 0) {
+                return $this->link($title, $url, $options);
+            }
+        }
+        return null;
     }
 
 }

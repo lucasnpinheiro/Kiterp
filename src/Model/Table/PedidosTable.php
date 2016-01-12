@@ -18,8 +18,7 @@ use Cake\Validation\Validator;
  * @property \Cake\ORM\Association\BelongsTo $Transportadoras
  * @property \Cake\ORM\Association\BelongsToMany $FormasPagamentos
  */
-class PedidosTable extends Table
-{
+class PedidosTable extends Table {
 
     /**
      * Initialize method
@@ -27,8 +26,7 @@ class PedidosTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('pedidos');
@@ -38,17 +36,19 @@ class PedidosTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Empresas', [
-            'foreignKey' => 'empresa_id'
+            'foreignKey' => 'empresa_id',
         ]);
         $this->belongsTo('Pessoas', [
-            'foreignKey' => 'pessoa_id'
+            'foreignKey' => 'pessoa_id',
+            'conditions' => ['PessoasAssociacoes.tipo_associacao' => 2, 'Pessoas.status' => 1],
         ]);
-        $this->belongsTo('CondicaoPagamentos', [
+        $this->belongsTo('CondicoesPagamentos', [
             'foreignKey' => 'condicao_pagamento_id'
         ]);
         $this->belongsTo('Vendedores', [
             'className' => 'Pessoas',
-            'foreignKey' => 'pessoa_id'
+            'foreignKey' => 'vendedor_id',
+            'conditions' => ['PessoasAssociacoes.tipo_associacao' => 4, 'Vendedores.status' => 1],
         ]);
         $this->belongsTo('Transportadoras', [
             'foreignKey' => 'transportadora_id'
@@ -66,8 +66,7 @@ class PedidosTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
                 ->add('id', 'valid', ['rule' => 'numeric'])
                 ->allowEmpty('id', 'create');
@@ -112,8 +111,7 @@ class PedidosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
         $rules->add($rules->existsIn(['condicao_pagamento_id'], 'CondicaoPagamentos'));

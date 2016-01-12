@@ -8,6 +8,8 @@ use Cake \Validation\Validator;
 use Cake\Event\Event;
 use Cake\Database\Query;
 use ArrayObject;
+use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * Usuarios Model
@@ -72,7 +74,7 @@ class UsuariosTable extends Table {
         return $rules;
     }
 
-    public function beforeSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity) {
+    public function beforeSave(Event $event, Entity $entity) {
         if (!empty($entity->senha)) {
             $senha = (new \Cake\Auth\DefaultPasswordHasher())->hash($entity->senha);
             $entity->senha = $senha;
@@ -80,6 +82,21 @@ class UsuariosTable extends Table {
             unset($entity->senha);
         }
         return true;
+    }
+
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options) {
+        $UsuariosGrupos = TableRegistry::get('UsuariosGrupos');
+
+        $UsuariosGrupos->deleteAll(['usuario_id' => (int) $entity->id]);
+
+        if (isset($entity->grupo_id) AND count($entity->grupo_id) > 0) {
+            foreach ($entity->grupo_id as $key => $value) {
+                $usuario = $UsuariosGrupos->newEntity();
+                $usuario->usuario_id = (int) $entity->id;
+                $usuario->grupo_id = (int) $value;
+                $UsuariosGrupos->save($usuario);
+            }
+        }
     }
 
     public function beforeFind(Event $event, Query $query, ArrayObject $options) {

@@ -27,7 +27,7 @@ class UsuariosGruposTable extends Table
         parent::initialize($config);
 
         $this->table('usuarios_grupos');
-        $this->displayField('id');
+        $this->displayField('grupo_id');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

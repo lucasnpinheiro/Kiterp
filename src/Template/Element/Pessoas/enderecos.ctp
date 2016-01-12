@@ -12,7 +12,7 @@
                     <div class="enderecos-multi-field col-xs-12">
 
                         <?php
-                        if (count($pessoa->pessoas_enderecos) > 0) {
+                        if (isset($pessoa->pessoas_enderecos) AND count($pessoa->pessoas_enderecos) > 0) {
                             foreach ($pessoa->pessoas_enderecos as $key => $value) {
                                 echo $this->Form->input('PessoasEndereco.' . $key . '.id', ['type' => 'hidden', 'value' => $value->id]);
                                 echo $this->Form->input('PessoasEndereco.' . $key . '.pessoa_id', ['type' => 'hidden', 'value' => $value->pessoa_id]);
