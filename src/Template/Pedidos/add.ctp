@@ -12,21 +12,17 @@ $this->Html->addCrumb('Cadastrar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($pedido) ?>
                 <?php
-                echo $this->Form->input('empresa_id', ['options' => $empresas, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->data('data_pedido', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->status('status', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('pessoa_id', ['options' => $pessoas, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('condicao_pagamento_id', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('vendedor_id', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('transportadora_id', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('empresa_id', ['required' => true, 'options' => $empresas, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->inputStatic('data_pedido', date('d/m/Y'), ['label' => 'Data do Pedido', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->inputStatic('status', $this->Html->label('Aberto', 'info'), ['label' => 'Situação', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('condicao_pagamento_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('vendedor_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('transportadora_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
                 echo $this->Form->moeda('valor_total', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                //echo $this->Form->numero('numero_cupom', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                //echo $this->Form->numero('nota_fiscal', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                //echo $this->Form->input('serie', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->numero('numero_caixa', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->numero('numero_caixa', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
                 echo $this->Form->cpf('cpf', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('formas_pagamentos._ids', ['options' => $formasPagamentos, 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('add_produto', ['type' => 'select', 'label' => 'Adicionar produto', 'class' => 'adicionar-produto', 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                echo $this->Form->input('formas_pagamentos._ids', ['required' => true, 'options' => $formasPagamentos, 'div' => ['class' => 'col-xs-12 col-md-3']]);
                 ?>
                 <div class="clearfix"></div>
                 <div class="hr-line-dashed"></div>

@@ -244,12 +244,21 @@ class PessoasTable extends Table {
             }
 
             public function beforeFind(Event $event, Query $query, ArrayObject $options) {
-                $query->join([
-                    'table' => 'pessoas_associacoes',
-                    'alias' => 'PessoasAssociacoes',
-                    'type' => 'INNER',
-                    'conditions' => ['PessoasAssociacoes.pessoa_id = ' . $this->alias() . '.id', 'PessoasAssociacoes.tipo_associacao !=' => 1, 'PessoasAssociacoes.status !=' => 9],
-                ]);
+                if (stripos($query->sql(), 'PessoasAssociacoes.tipo_associacao') !== FALSE) {
+                    $query->join([
+                        'table' => 'pessoas_associacoes',
+                        'alias' => 'PessoasAssociacoes',
+                        'type' => 'INNER',
+                        'conditions' => ['PessoasAssociacoes.pessoa_id = ' . $this->alias() . '.id', 'PessoasAssociacoes.status !=' => 9],
+                    ]);
+                } else {
+                    $query->join([
+                        'table' => 'pessoas_associacoes',
+                        'alias' => 'PessoasAssociacoes',
+                        'type' => 'INNER',
+                        'conditions' => ['PessoasAssociacoes.pessoa_id = ' . $this->alias() . '.id', 'PessoasAssociacoes.tipo_associacao !=' => 1, 'PessoasAssociacoes.status !=' => 9],
+                    ]);
+                }
                 $query->group($this->alias() . '.id');
             }
 

@@ -35,9 +35,32 @@ class ProdutosController extends AppController {
      * @return void
      */
     public function consultar() {
-        debug($this->request);
-        exit;
-        $this->Produtos->where(['nome' => '']);
+        $this->viewBuilder()->layout('ajax');
+        $retorno = [
+            'cod' => 111,
+            'msg' => 'Produto não encontrado',
+            'individual' => 1
+        ];
+        $codigo = trim($this->request->data('codigo'));
+        if (is_numeric($codigo)) {
+            if (strlen($codigo) >= 13) {
+                $find = $this->Produtos->find()->where(['Produtos.barra' => $codigo])->contain('ProdutosValores')->first();
+            } else {
+                $find = $this->Produtos->find()->where(['Produtos.codigo_interno' => $codigo])->contain('ProdutosValores')->first();
+            }
+        } else {
+            $find = $this->Produtos->find()->where(['Produtos.nome RLIKE' => $codigo])->contain('ProdutosValores')->all();
+            $retorno['individual'] = 0;
+        }
+        if (count($find) > 0) {
+            $retorno = [
+                'cod' => 999,
+                'msg' => 'Produto localizado',
+                'individual' => (string) $retorno['individual'],
+                'produto' => $find->toArray()
+            ];
+        }
+        $this->set('retorno', $retorno);
     }
 
     /**

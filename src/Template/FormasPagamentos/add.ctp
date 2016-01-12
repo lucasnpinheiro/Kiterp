@@ -17,7 +17,6 @@ $this->Html->addCrumb('Cadastrar', null);
                 echo $this->Form->input('qtde_dias');
                 echo $this->Form->input('qtde_taxas');
                 echo $this->Form->input('valor_taxas');
-                echo $this->Form->input('pedidos._ids', ['options' => $pedidos]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

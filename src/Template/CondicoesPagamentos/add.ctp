@@ -15,7 +15,6 @@ $this->Html->addCrumb('Cadastrar', null);
                 echo $this->Form->input('nome');
                 echo $this->Form->input('qtde_parcelas');
                 echo $this->Form->input('qtde_dias');
-                echo $this->Form->input('creatde');
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

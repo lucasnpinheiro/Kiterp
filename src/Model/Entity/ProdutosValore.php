@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -28,8 +29,7 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  */
-class ProdutosValore extends Entity
-{
+class ProdutosValore extends Entity {
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -43,4 +43,10 @@ class ProdutosValore extends Entity
     protected $_accessible = [
         '*' => true,
     ];
+    protected $_virtual = ['valor_vendas_formatado'];
+
+    protected function _getValorVendasFormatado() {
+        return number_format($this->_properties['valor_vendas'], 2, ',', '.');
+    }
+
 }

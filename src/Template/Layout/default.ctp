@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <?php echo $this->Html->script('/js/jquery-2.1.1.js') ?>
+        <?php echo $this->Html->script('/js/jquery.js') ?>
         <?php echo $this->Html->script('/js/bootstrap.min.js') ?>
         <?php echo $this->Html->script('/js/plugins/metisMenu/jquery.metisMenu.js') ?>
         <?php echo $this->Html->script('/js/plugins/slimscroll/jquery.slimscroll.min.js') ?>
@@ -61,6 +61,7 @@
         <?php echo $this->Html->script('/js/plugins/bootstrap-datepicker/bootstrap-datepicker.js') ?>
         <?php echo $this->Html->script('/js/plugins/bootstrap-datepicker/locales/bootstrap-datepicker.pt-BR.js') ?>
         <?php echo $this->Html->script('/js/plugins/toastr/toastr.min.js') ?>
+        <?php echo $this->Html->script('/js/bootbox.min.js') ?>
         <?php echo $this->Html->script('/js/inspinia.js') ?>
         <?php echo $this->Html->script('/js/Funcoes.js') ?>
         <?php echo $this->fetch('script') ?>

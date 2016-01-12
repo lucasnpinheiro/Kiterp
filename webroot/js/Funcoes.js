@@ -5,6 +5,40 @@ cake.util.numero = function (e) {
         return false;
     }
 };
+cake.util.convertFloat = function (valor) {
+    if (valor === "") {
+        valor = 0;
+    } else {
+        valor = valor.replace(".", "");
+        valor = valor.replace(",", ".");
+        valor = valor.replace('R$', '');
+        valor = $.trim(valor);
+    }
+    return parseFloat(valor);
+};
+cake.util.loading = {
+    show: function (input) {
+        $(input).remove('img.img-loading');
+        $(input).closest('div').prepend('<img src="' + router.url + 'img/loading.gif" class="img-loading" style="margin-top: 5px; position: absolute; right: 17px;" />');
+    },
+    hide: function (input) {
+        $(input).closest('div').find('.img-loading').remove();
+    }
+}
+
+cake.util.pularCampo = function () {
+    $(':input:not(textarea)').keydown(function (e) {
+        var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+        if (key == 13) {
+            e.preventDefault();
+            var inputs = $(this).closest('form').find(':input:visible:enabled');
+            if ((inputs.length - 1) == inputs.index(this))
+                $(':input:enabled:visible:first').focus();
+            else
+                inputs.eq(inputs.index(this) + 1).focus();
+        }
+    });
+};
 cake.util.getCep = function (cep, before) {
     if (!before) {
         before = '';

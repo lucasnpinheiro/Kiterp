@@ -34,9 +34,7 @@ class FormasPagamentosController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function view($id = null) {
-        $formasPagamento = $this->FormasPagamentos->get($id, [
-            'contain' => ['Pedidos']
-        ]);
+        $formasPagamento = $this->FormasPagamentos->get($id);
         $this->set('formasPagamento', $formasPagamento);
         $this->set('_serialize', ['formasPagamento']);
     }
@@ -70,9 +68,7 @@ class FormasPagamentosController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function edit($id = null) {
-        $formasPagamento = $this->FormasPagamentos->get($id, [
-            'contain' => ['Pedidos']
-        ]);
+        $formasPagamento = $this->FormasPagamentos->get($id);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $formasPagamento = $this->FormasPagamentos->patchEntity($formasPagamento, $this->request->data);
             if ($this->FormasPagamentos->save($formasPagamento)) {

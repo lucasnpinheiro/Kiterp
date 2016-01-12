@@ -42,6 +42,8 @@ cake.pessoas.clone = function (tipo, busca) {
         var input = $wrapper;
         input = input.replace(/\[0\]/g, '[' + cake.pessoas[tipo] + ']');
         input = input.replace(/\-0\-/g, '-' + cake.pessoas[tipo] + '-');
+        input = input.replace(/\[0\]/g, '[' + cake.pessoas[tipo] + ']');
+        input = input.replace(/\.0\./g, '.' + cake.pessoas[tipo] + '.');
 
         $('.' + tipo + '-multi-fields').append('<div class="' + tipo + '-multi-field col-xs-12"><div class="clearfix"></div><div class="hr-line-dashed"></div>' + input + '<div class="form-group text col-xs-12 col-md-1 class-button-' + tipo + '"><button type="button" class="btn btn-danger ' + tipo + '-remove-field">X</button></div></div>');
         $('.' + tipo + '-remove-field').click(function (e) {

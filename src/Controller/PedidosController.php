@@ -23,7 +23,7 @@ class PedidosController extends AppController {
      */
     public function index() {
         $this->paginate = [
-            //'contain' => ['Empresas', 'Pessoas', 'CondicoesPagamentos', 'Vendedores', 'Transportadoras']
+                //'contain' => ['Empresas', 'Pessoas', 'CondicoesPagamentos', 'Vendedores', 'Transportadoras']
         ];
         $this->set('pedidos', $this->paginate($this->Pedidos));
         $this->set('_serialize', ['pedidos']);
@@ -60,12 +60,13 @@ class PedidosController extends AppController {
                 $this->Flash->error(__('The pedido could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->Pedidos->Empresas->find('list', ['limit' => 200]);
-        $pessoas = $this->Pedidos->Pessoas->find('list', ['limit' => 200]);
-        $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list', ['limit' => 200]);
-        $vendedors = $this->Pedidos->Vendedores->find('list', ['limit' => 200]);
-        $transportadoras = $this->Pedidos->Transportadoras->find('list', ['limit' => 200]);
-        $formasPagamentos = $this->Pedidos->FormasPagamentos->find('list', ['limit' => 200]);
+        $this->loadModel('Pessoas');
+        $empresas = $this->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 1]);
+        $pessoas = $this->Pedidos->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
+        $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list');
+        $vendedors = $this->Pedidos->Vendedores->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
+        $transportadoras = $this->Pedidos->Transportadoras->find('list');
+        $formasPagamentos = $this->Pedidos->FormasPagamentos->find('list');
         $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors', 'transportadoras', 'formasPagamentos'));
         $this->set('_serialize', ['pedido']);
     }

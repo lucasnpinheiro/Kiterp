@@ -220,6 +220,7 @@ class MyFormHelper extends BootstrapFormHelper {
             $this->templates(['inputContainer' => '<div ' . $_div . '>{{content}}</div>']);
             unset($_div);
         }
+
         $options['title'] = $fieldName;
         if (isset($options['label']) AND $options['label'] != false) {
             $options['title'] = $options['label'];
@@ -263,7 +264,7 @@ class MyFormHelper extends BootstrapFormHelper {
         if (trim($options['value']) != '') {
             //$options['value'] = $this->Html->data($options['value']);
         }
-        $options['class'] .= ' ' . $default['class'];
+        $options = $this->mergeClassCss($default, $options);
         $options['div']['class'] .= ' ' . $default['div']['class'];
 
         return $this->input($fieldName, $options);
@@ -276,7 +277,9 @@ class MyFormHelper extends BootstrapFormHelper {
             'append' => '0-9',
             'maxlength' => 5,
         ];
+
         $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
         return $this->input($fieldName, $options);
     }
 
@@ -287,6 +290,7 @@ class MyFormHelper extends BootstrapFormHelper {
             'append' => '<i class="fa fa-phone"></i>'
         ];
         $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
         return $this->input($fieldName, $options);
     }
 
@@ -298,6 +302,7 @@ class MyFormHelper extends BootstrapFormHelper {
             'append' => '0-9'
         ];
         $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
         return $this->input($fieldName, $options);
     }
 
@@ -318,6 +323,7 @@ class MyFormHelper extends BootstrapFormHelper {
             'value' => ($val->val($fieldName) ? $this->Number->format($val->val($fieldName), $currency) : null)
         ];
         $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
         return $this->input($fieldName, $options);
     }
 
@@ -338,6 +344,7 @@ class MyFormHelper extends BootstrapFormHelper {
         ];
 
         $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
         return $this->input($fieldName, $options);
     }
 
@@ -350,6 +357,7 @@ class MyFormHelper extends BootstrapFormHelper {
             'maxlength' => 14,
         ];
         $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
         return $this->input($fieldName, $options);
     }
 
@@ -362,6 +370,7 @@ class MyFormHelper extends BootstrapFormHelper {
             'maxlength' => 18,
         ];
         $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
         return $this->input($fieldName, $options);
     }
 
@@ -372,6 +381,7 @@ class MyFormHelper extends BootstrapFormHelper {
             'prepend' => '<i class="fa fa-unlock-alt"></i>'
         ];
         $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
         return $this->input($fieldName, $options);
     }
 
@@ -499,6 +509,29 @@ class MyFormHelper extends BootstrapFormHelper {
             }
         }
         return null;
+    }
+
+    private function mergeClassCss($default, $options) {
+        if (isset($options['class'])) {
+            $options['class'] .= ' ' . $default['class'];
+        }
+        return $options;
+    }
+
+    public function inputStatic($field, $value, $options = array()) {
+        $default = [
+            'class' => 'form-control-static',
+            'label' => false
+        ];
+        $divDefault = [];
+        $div = $this->_extractOption('div', $options, '');
+        $div = \Cake\Utility\Hash::merge($divDefault, $div);
+        unset($options['div']);
+        $options = $this->mergeClassCss($default, $options);
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        $label = $this->label($field, $options['label'], $divDefault);
+        unset($options['label']);
+        return $this->Html->tag('div', $label . $this->Html->tag('p', $value, $options), $div);
     }
 
 }

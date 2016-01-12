@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use App\Model\Entity\CondicoesPagamento;
@@ -11,8 +12,7 @@ use Cake\Validation\Validator;
  * CondicoesPagamentos Model
  *
  */
-class CondicoesPagamentosTable extends Table
-{
+class CondicoesPagamentosTable extends Table {
 
     /**
      * Initialize method
@@ -20,16 +20,14 @@ class CondicoesPagamentosTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('condicoes_pagamentos');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
-
     }
 
     /**
@@ -38,27 +36,23 @@ class CondicoesPagamentosTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('nome');
+                ->allowEmpty('nome');
 
         $validator
-            ->add('qtde_parcelas', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('qtde_parcelas');
+                ->add('qtde_parcelas', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('qtde_parcelas');
 
         $validator
-            ->add('qtde_dias', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('qtde_dias');
-
-        $validator
-            ->add('creatde', 'valid', ['rule' => 'datetime'])
-            ->allowEmpty('creatde');
+                ->add('qtde_dias', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('qtde_dias');
 
         return $validator;
     }
+
 }

@@ -46,6 +46,9 @@ class ProdutosTable extends Table
         $this->hasMany('PedidosItens', [
             'foreignKey' => 'produto_id'
         ]);
+        $this->hasMany('ProdutosValores', [
+            'foreignKey' => 'produto_id'
+        ]);
     }
 
     /**
