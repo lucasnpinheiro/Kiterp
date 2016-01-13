@@ -60,12 +60,12 @@ class NotaFiscalSaidasController extends AppController {
                 $this->Flash->error(__('The nota fiscal saida could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->NotaFiscalSaidas->Empresas->find('list', ['limit' => 200]);
-        $cfops = $this->NotaFiscalSaidas->Cfops->find('list', ['limit' => 200]);
-        $pessoas = $this->NotaFiscalSaidas->Pessoas->find('list', ['limit' => 200]);
-        $formaPagamentos = $this->NotaFiscalSaidas->FormaPagamentos->find('list', ['limit' => 200]);
-        $transportadoras = $this->NotaFiscalSaidas->Transportadoras->find('list', ['limit' => 200]);
-        $vendedors = $this->NotaFiscalSaidas->Vendedors->find('list', ['limit' => 200]);
+        $empresas = $this->NotaFiscalSaidas->Empresas->find('list');
+        $cfops = $this->NotaFiscalSaidas->Cfops->find('list');
+        $pessoas = $this->NotaFiscalSaidas->Pessoas->find('list');
+        $formaPagamentos = $this->NotaFiscalSaidas->FormaPagamentos->find('list');
+        $transportadoras = $this->NotaFiscalSaidas->Transportadoras->find('list');
+        $vendedors = $this->NotaFiscalSaidas->Vendedors->find('list');
         $this->set(compact('notaFiscalSaida', 'empresas', 'cfops', 'pessoas', 'formaPagamentos', 'transportadoras', 'vendedors'));
         $this->set('_serialize', ['notaFiscalSaida']);
     }
@@ -90,12 +90,12 @@ class NotaFiscalSaidasController extends AppController {
                 $this->Flash->error(__('The nota fiscal saida could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->NotaFiscalSaidas->Empresas->find('list', ['limit' => 200]);
-        $cfops = $this->NotaFiscalSaidas->Cfops->find('list', ['limit' => 200]);
-        $pessoas = $this->NotaFiscalSaidas->Pessoas->find('list', ['limit' => 200]);
-        $formaPagamentos = $this->NotaFiscalSaidas->FormaPagamentos->find('list', ['limit' => 200]);
-        $transportadoras = $this->NotaFiscalSaidas->Transportadoras->find('list', ['limit' => 200]);
-        $vendedors = $this->NotaFiscalSaidas->Vendedors->find('list', ['limit' => 200]);
+        $empresas = $this->NotaFiscalSaidas->Empresas->find('list');
+        $cfops = $this->NotaFiscalSaidas->Cfops->find('list');
+        $pessoas = $this->NotaFiscalSaidas->Pessoas->find('list');
+        $formaPagamentos = $this->NotaFiscalSaidas->FormaPagamentos->find('list');
+        $transportadoras = $this->NotaFiscalSaidas->Transportadoras->find('list');
+        $vendedors = $this->NotaFiscalSaidas->Vendedors->find('list');
         $this->set(compact('notaFiscalSaida', 'empresas', 'cfops', 'pessoas', 'formaPagamentos', 'transportadoras', 'vendedors'));
         $this->set('_serialize', ['notaFiscalSaida']);
     }

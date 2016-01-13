@@ -57,8 +57,8 @@ class GruposController extends AppController {
                 $this->Flash->error(__('The grupo could not be saved. Please, try again.'));
             }
         }
-        $menus = $this->Grupos->Menus->find('list', ['limit' => 200]);
-        $usuarios = $this->Grupos->Usuarios->find('list', ['limit' => 200]);
+        $menus = $this->Grupos->Menus->find('list');
+        $usuarios = $this->Grupos->Usuarios->find('list');
         $this->set(compact('grupo', 'menus', 'usuarios'));
         $this->set('_serialize', ['grupo']);
     }
@@ -83,8 +83,8 @@ class GruposController extends AppController {
                 $this->Flash->error(__('The grupo could not be saved. Please, try again.'));
             }
         }
-        $menus = $this->Grupos->Menus->find('list', ['limit' => 200]);
-        $usuarios = $this->Grupos->Usuarios->find('list', ['limit' => 200]);
+        $menus = $this->Grupos->Menus->find('list');
+        $usuarios = $this->Grupos->Usuarios->find('list');
         $this->set(compact('grupo', 'menus', 'usuarios'));
         $this->set('_serialize', ['grupo']);
     }

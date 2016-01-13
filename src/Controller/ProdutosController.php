@@ -94,7 +94,7 @@ class ProdutosController extends AppController {
                 $this->Flash->error(__('The produto could not be saved. Please, try again.'));
             }
         }
-        $grupos = $this->Produtos->Grupos->find('list', ['limit' => 200]);
+        $grupos = $this->Produtos->Grupos->find('list');
         $this->set(compact('produto', 'grupos'));
         $this->set('_serialize', ['produto']);
     }
@@ -119,7 +119,7 @@ class ProdutosController extends AppController {
                 $this->Flash->error(__('The produto could not be saved. Please, try again.'));
             }
         }
-        $grupos = $this->Produtos->Grupos->find('list', ['limit' => 200]);
+        $grupos = $this->Produtos->Grupos->find('list');
         $this->set(compact('produto', 'grupos'));
         $this->set('_serialize', ['produto']);
     }

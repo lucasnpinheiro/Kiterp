@@ -60,10 +60,10 @@ class ContasReceberController extends AppController {
                 $this->Flash->error(__('The contas receber could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->ContasReceber->Empresas->find('list', ['limit' => 200]);
-        $pessoas = $this->ContasReceber->Pessoas->find('list', ['limit' => 200]);
-        $bancos = $this->ContasReceber->Bancos->find('list', ['limit' => 200]);
-        $tradutoras = $this->ContasReceber->Tradutoras->find('list', ['limit' => 200]);
+        $empresas = $this->ContasReceber->Empresas->find('list');
+        $pessoas = $this->ContasReceber->Pessoas->find('list');
+        $bancos = $this->ContasReceber->Bancos->find('list');
+        $tradutoras = $this->ContasReceber->Tradutoras->find('list');
         $this->set(compact('contasReceber', 'empresas', 'pessoas', 'bancos', 'tradutoras'));
         $this->set('_serialize', ['contasReceber']);
     }
@@ -88,10 +88,10 @@ class ContasReceberController extends AppController {
                 $this->Flash->error(__('The contas receber could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->ContasReceber->Empresas->find('list', ['limit' => 200]);
-        $pessoas = $this->ContasReceber->Pessoas->find('list', ['limit' => 200]);
-        $bancos = $this->ContasReceber->Bancos->find('list', ['limit' => 200]);
-        $tradutoras = $this->ContasReceber->Tradutoras->find('list', ['limit' => 200]);
+        $empresas = $this->ContasReceber->Empresas->find('list');
+        $pessoas = $this->ContasReceber->Pessoas->find('list');
+        $bancos = $this->ContasReceber->Bancos->find('list');
+        $tradutoras = $this->ContasReceber->Tradutoras->find('list');
         $this->set(compact('contasReceber', 'empresas', 'pessoas', 'bancos', 'tradutoras'));
         $this->set('_serialize', ['contasReceber']);
     }

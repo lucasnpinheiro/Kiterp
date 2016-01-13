@@ -60,10 +60,10 @@ class ContasPagarController extends AppController {
                 $this->Flash->error(__('The contas pagar could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->ContasPagar->Empresas->find('list', ['limit' => 200]);
-        $pessoas = $this->ContasPagar->Pessoas->find('list', ['limit' => 200]);
-        $bancos = $this->ContasPagar->Bancos->find('list', ['limit' => 200]);
-        $tradutoras = $this->ContasPagar->Tradutoras->find('list', ['limit' => 200]);
+        $empresas = $this->ContasPagar->Empresas->find('list');
+        $pessoas = $this->ContasPagar->Pessoas->find('list');
+        $bancos = $this->ContasPagar->Bancos->find('list');
+        $tradutoras = $this->ContasPagar->Tradutoras->find('list');
         $this->set(compact('contasPagar', 'empresas', 'pessoas', 'bancos', 'tradutoras'));
         $this->set('_serialize', ['contasPagar']);
     }
@@ -88,10 +88,10 @@ class ContasPagarController extends AppController {
                 $this->Flash->error(__('The contas pagar could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->ContasPagar->Empresas->find('list', ['limit' => 200]);
-        $pessoas = $this->ContasPagar->Pessoas->find('list', ['limit' => 200]);
-        $bancos = $this->ContasPagar->Bancos->find('list', ['limit' => 200]);
-        $tradutoras = $this->ContasPagar->Tradutoras->find('list', ['limit' => 200]);
+        $empresas = $this->ContasPagar->Empresas->find('list');
+        $pessoas = $this->ContasPagar->Pessoas->find('list');
+        $bancos = $this->ContasPagar->Bancos->find('list');
+        $tradutoras = $this->ContasPagar->Tradutoras->find('list');
         $this->set(compact('contasPagar', 'empresas', 'pessoas', 'bancos', 'tradutoras'));
         $this->set('_serialize', ['contasPagar']);
     }

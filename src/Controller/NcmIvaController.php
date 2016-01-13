@@ -22,11 +22,14 @@ class NcmIvaController extends AppController {
      * @return void
      */
     public function index() {
-        $this->paginate = [
-            'contain' => ['Ncms', 'IcmsEstaduals']
-        ];
-        $this->set('ncmIva', $this->paginate($this->NcmIva));
+        $query = $this->NcmIva->find('search', $this->NcmIva->filterParams($this->request->query))->contain(['Ncm', 'IcmsEstaduais']);
+        $this->set('ncmIva', $this->paginate($query));
         $this->set('_serialize', ['ncmIva']);
+        $this->loadModel('Ncm');
+        $this->loadModel('IcmsEstaduais');
+        $ncm = $this->Ncm->find('list');
+        $icmsEstaduais = $this->IcmsEstaduais->find('list');
+        $this->set(compact('ncm', 'icmsEstaduais'));
     }
 
     /**
@@ -38,7 +41,7 @@ class NcmIvaController extends AppController {
      */
     public function view($id = null) {
         $ncmIva = $this->NcmIva->get($id, [
-            'contain' => ['Ncms', 'IcmsEstaduals']
+            'contain' => ['Ncm', 'IcmsEstaduais']
         ]);
         $this->set('ncmIva', $ncmIva);
         $this->set('_serialize', ['ncmIva']);
@@ -49,20 +52,28 @@ class NcmIvaController extends AppController {
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add($estado = null) {
         $ncmIva = $this->NcmIva->newEntity();
         if ($this->request->is('post')) {
-            $ncmIva = $this->NcmIva->patchEntity($ncmIva, $this->request->data);
-            if ($this->NcmIva->save($ncmIva)) {
-                $this->Flash->success(__('The ncm iva has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The ncm iva could not be saved. Please, try again.'));
-            }
+            /* $ncmIva = $this->NcmIva->patchEntity($ncmIva, $this->request->data);
+              if ($this->NcmIva->save($ncmIva)) {
+              $this->Flash->success(__('The ncm iva has been saved.'));
+              return $this->redirect(['action' => 'index']);
+              } else {
+              $this->Flash->error(__('The ncm iva could not be saved. Please, try again.'));
+              } */
+            $this->saveLote($this->request->data);
+            return $this->redirect(['action' => 'add', $estado]);
         }
-        $ncms = $this->NcmIva->Ncms->find('list', ['limit' => 200]);
-        $icmsEstaduals = $this->NcmIva->IcmsEstaduals->find('list', ['limit' => 200]);
-        $this->set(compact('ncmIva', 'ncms', 'icmsEstaduals'));
+        $this->loadModel('Ncm');
+        $this->loadModel('IcmsEstaduais');
+        $ncm = $this->Ncm->find('list');
+        $icmsEstaduais = $this->IcmsEstaduais->find('list');
+        $ncmIvaLista = null;
+        if ($estado > 0) {
+            $ncmIvaLista = $this->NcmIva->find('all')->where(['icms_estadual_id' => $estado])->all();
+        }
+        $this->set(compact('ncmIva', 'ncm', 'icmsEstaduais', 'ncmIvaLista', 'estado'));
         $this->set('_serialize', ['ncmIva']);
     }
 
@@ -86,10 +97,26 @@ class NcmIvaController extends AppController {
                 $this->Flash->error(__('The ncm iva could not be saved. Please, try again.'));
             }
         }
-        $ncms = $this->NcmIva->Ncms->find('list', ['limit' => 200]);
-        $icmsEstaduals = $this->NcmIva->IcmsEstaduals->find('list', ['limit' => 200]);
-        $this->set(compact('ncmIva', 'ncms', 'icmsEstaduals'));
+        $ncm = $this->NcmIva->Ncm->find('list');
+        $icmsEstaduais = $this->NcmIva->IcmsEstaduais->find('list');
+        $this->set(compact('ncmIva', 'ncm', 'icmsEstaduais'));
         $this->set('_serialize', ['ncmIva']);
+    }
+
+    private function saveLote($dados) {
+        if (count($dados['ncm']) > 0) {
+            foreach ($dados['ncm'] as $key => $value) {
+                $ncmIva = $this->NcmIva->newEntity();
+                $find = $this->NcmIva->find('all')->where(['ncm_id' => $value['id'], 'icms_estadual_id' => $dados['icms_estadual_id']])->first();
+                if (count($find) > 0) {
+                    $ncmIva = $this->NcmIva->patchEntity($ncmIva, $find->toArray());
+                }
+                $ncmIva->iva = str_replace(',', '.', str_replace('.', '', $value['valor']));
+                $ncmIva->icms_estadual_id = $dados['icms_estadual_id'];
+                $ncmIva->ncm_id = $value['id'];
+                $this->NcmIva->save($ncmIva);
+            }
+        }
     }
 
     /**

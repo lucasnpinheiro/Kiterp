@@ -55,7 +55,7 @@ class FormasPagamentosController extends AppController {
                 $this->Flash->error(__('The formas pagamento could not be saved. Please, try again.'));
             }
         }
-        $pedidos = $this->FormasPagamentos->Pedidos->find('list', ['limit' => 200]);
+        $pedidos = $this->FormasPagamentos->Pedidos->find('list');
         $this->set(compact('formasPagamento', 'pedidos'));
         $this->set('_serialize', ['formasPagamento']);
     }
@@ -78,7 +78,7 @@ class FormasPagamentosController extends AppController {
                 $this->Flash->error(__('The formas pagamento could not be saved. Please, try again.'));
             }
         }
-        $pedidos = $this->FormasPagamentos->Pedidos->find('list', ['limit' => 200]);
+        $pedidos = $this->FormasPagamentos->Pedidos->find('list');
         $this->set(compact('formasPagamento', 'pedidos'));
         $this->set('_serialize', ['formasPagamento']);
     }

@@ -60,9 +60,9 @@ class ProdutosKitsController extends AppController {
                 $this->Flash->error(__('The produtos kit could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->ProdutosKits->Empresas->find('list', ['limit' => 200]);
-        $produtos = $this->ProdutosKits->Produtos->find('list', ['limit' => 200]);
-        $kits = $this->ProdutosKits->Kits->find('list', ['limit' => 200]);
+        $empresas = $this->ProdutosKits->Empresas->find('list');
+        $produtos = $this->ProdutosKits->Produtos->find('list');
+        $kits = $this->ProdutosKits->Kits->find('list');
         $this->set(compact('produtosKit', 'empresas', 'produtos', 'kits'));
         $this->set('_serialize', ['produtosKit']);
     }
@@ -87,9 +87,9 @@ class ProdutosKitsController extends AppController {
                 $this->Flash->error(__('The produtos kit could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->ProdutosKits->Empresas->find('list', ['limit' => 200]);
-        $produtos = $this->ProdutosKits->Produtos->find('list', ['limit' => 200]);
-        $kits = $this->ProdutosKits->Kits->find('list', ['limit' => 200]);
+        $empresas = $this->ProdutosKits->Empresas->find('list');
+        $produtos = $this->ProdutosKits->Produtos->find('list');
+        $kits = $this->ProdutosKits->Kits->find('list');
         $this->set(compact('produtosKit', 'empresas', 'produtos', 'kits'));
         $this->set('_serialize', ['produtosKit']);
     }

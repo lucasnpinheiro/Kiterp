@@ -60,9 +60,9 @@ class NotaFiscalEntradasController extends AppController {
                 $this->Flash->error(__('The nota fiscal entrada could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->NotaFiscalEntradas->Empresas->find('list', ['limit' => 200]);
-        $pessoas = $this->NotaFiscalEntradas->Pessoas->find('list', ['limit' => 200]);
-        $cfops = $this->NotaFiscalEntradas->Cfops->find('list', ['limit' => 200]);
+        $empresas = $this->NotaFiscalEntradas->Empresas->find('list');
+        $pessoas = $this->NotaFiscalEntradas->Pessoas->find('list');
+        $cfops = $this->NotaFiscalEntradas->Cfops->find('list');
         $this->set(compact('notaFiscalEntrada', 'empresas', 'pessoas', 'cfops'));
         $this->set('_serialize', ['notaFiscalEntrada']);
     }
@@ -87,9 +87,9 @@ class NotaFiscalEntradasController extends AppController {
                 $this->Flash->error(__('The nota fiscal entrada could not be saved. Please, try again.'));
             }
         }
-        $empresas = $this->NotaFiscalEntradas->Empresas->find('list', ['limit' => 200]);
-        $pessoas = $this->NotaFiscalEntradas->Pessoas->find('list', ['limit' => 200]);
-        $cfops = $this->NotaFiscalEntradas->Cfops->find('list', ['limit' => 200]);
+        $empresas = $this->NotaFiscalEntradas->Empresas->find('list');
+        $pessoas = $this->NotaFiscalEntradas->Pessoas->find('list');
+        $cfops = $this->NotaFiscalEntradas->Cfops->find('list');
         $this->set(compact('notaFiscalEntrada', 'empresas', 'pessoas', 'cfops'));
         $this->set('_serialize', ['notaFiscalEntrada']);
     }
