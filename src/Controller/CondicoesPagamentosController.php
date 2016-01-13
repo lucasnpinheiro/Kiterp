@@ -22,7 +22,8 @@ class CondicoesPagamentosController extends AppController {
      * @return void
      */
     public function index() {
-        $this->set('condicoesPagamentos', $this->paginate($this->CondicoesPagamentos));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('condicoesPagamentos', $this->paginate($query));
         $this->set('_serialize', ['condicoesPagamentos']);
     }
 

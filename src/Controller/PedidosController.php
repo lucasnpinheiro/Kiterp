@@ -22,10 +22,8 @@ class PedidosController extends AppController {
      * @return void
      */
     public function index() {
-        $this->paginate = [
-                //'contain' => ['Empresas', 'Pessoas', 'CondicoesPagamentos', 'Vendedores', 'Transportadoras']
-        ];
-        $this->set('pedidos', $this->paginate($this->Pedidos));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('pedidos', $this->paginate($query));
         $this->set('_serialize', ['pedidos']);
     }
 

@@ -22,7 +22,8 @@ class NcmController extends AppController {
      * @return void
      */
     public function index() {
-        $this->set('ncm', $this->paginate($this->Ncm));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('ncm', $this->paginate($query));
         $this->set('_serialize', ['ncm']);
     }
 

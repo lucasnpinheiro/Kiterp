@@ -10,6 +10,8 @@ use Cake\Database\Query;
 use ArrayObject;
 use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
+use Search\Manager;
+
 
 /**
  * Usuarios Model
@@ -36,7 +38,28 @@ class UsuariosTable extends Table {
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoa_id'
         ]);
+            $this->addBehavior('Search.Search');
     }
+
+    public function searchConfiguration() {
+        return $this->searchConfigurationDynamic();
+    }
+
+    private function searchConfigurationDynamic() {
+        $search = new Manager($this);
+        $c = $this->schema()->columns();
+        foreach ($c as $key => $value) {
+            $t = $this->schema()->columnType($value);
+            if ($t != 'string' AND $t != 'text') {
+                $search->value($value, ['field' => $this->aliasField($value)]);
+            } else {
+                $search->like($value, ['before' => true, 'after' => true, 'field' => $this->aliasField($value)]);
+            }
+        }
+
+        return $search;
+    }
+
 
     /**
      * Default validation rules.

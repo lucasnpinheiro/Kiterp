@@ -22,10 +22,8 @@ class ProdutosController extends AppController {
      * @return void
      */
     public function index() {
-        $this->paginate = [
-            'contain' => ['Grupos']
-        ];
-        $this->set('produtos', $this->paginate($this->Produtos));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('produtos', $this->paginate($query));
         $this->set('_serialize', ['produtos']);
     }
 

@@ -22,7 +22,8 @@ class TransportadorasController extends AppController {
      * @return void
      */
     public function index() {
-        $this->set('transportadoras', $this->paginate($this->Transportadoras));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('transportadoras', $this->paginate($query));
         $this->set('_serialize', ['transportadoras']);
     }
 

@@ -22,7 +22,7 @@ class NcmIvaController extends AppController {
      * @return void
      */
     public function index() {
-        $query = $this->NcmIva->find('search', $this->NcmIva->filterParams($this->request->query))->contain(['Ncm', 'IcmsEstaduais']);
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Ncm', 'IcmsEstaduais']);
         $this->set('ncmIva', $this->paginate($query));
         $this->set('_serialize', ['ncmIva']);
         $this->loadModel('Ncm');

@@ -22,7 +22,8 @@ class ParametrosController extends AppController {
      * @return void
      */
     public function index() {
-        $this->set('parametros', $this->paginate($this->Parametros));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('parametros', $this->paginate($query));
         $this->set('_serialize', ['parametros']);
     }
 

@@ -22,7 +22,8 @@ class IcmsEstaduaisController extends AppController {
      * @return void
      */
     public function index() {
-        $this->set('icmsEstaduais', $this->paginate($this->IcmsEstaduais));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('icmsEstaduais', $this->paginate($query));
         $this->set('_serialize', ['icmsEstaduais']);
     }
 

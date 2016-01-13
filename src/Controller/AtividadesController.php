@@ -22,7 +22,8 @@ class AtividadesController extends AppController {
      * @return void
      */
     public function index() {
-        $this->set('atividades', $this->paginate($this->Atividades));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('atividades', $this->paginate($query));
         $this->set('_serialize', ['atividades']);
     }
 

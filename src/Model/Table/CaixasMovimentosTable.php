@@ -11,6 +11,8 @@ use Cake\Event\Event;
 use Cake\ORM\Entity;
 use ArrayObject;
 use Cake\ORM\TableRegistry;
+use Search\Manager;
+
 
 /**
  * CaixasMovimentos Model
@@ -37,6 +39,26 @@ class CaixasMovimentosTable extends Table {
         $this->belongsTo('CaixaDiarios', [
             'foreignKey' => 'caixa_diario_id'
         ]);
+        $this->addBehavior('Search.Search');
+    }
+
+    public function searchConfiguration() {
+        return $this->searchConfigurationDynamic();
+    }
+
+    private function searchConfigurationDynamic() {
+        $search = new Manager($this);
+        $c = $this->schema()->columns();
+        foreach ($c as $key => $value) {
+            $t = $this->schema()->columnType($value);
+            if ($t != 'string' AND $t != 'text') {
+                $search->value($value, ['field' => $this->aliasField($value)]);
+            } else {
+                $search->like($value, ['before' => true, 'after' => true, 'field' => $this->aliasField($value)]);
+            }
+        }
+
+        return $search;
     }
 
     /**

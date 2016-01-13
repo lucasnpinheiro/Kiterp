@@ -22,10 +22,8 @@ class ContasPagarController extends AppController {
      * @return void
      */
     public function index() {
-        $this->paginate = [
-            'contain' => ['Empresas', 'Pessoas', 'Bancos', 'Tradutoras']
-        ];
-        $this->set('contasPagar', $this->paginate($this->ContasPagar));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('contasPagar', $this->paginate($query));
         $this->set('_serialize', ['contasPagar']);
     }
 

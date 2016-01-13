@@ -22,7 +22,8 @@ class ImpostosController extends AppController
      */
     public function index()
     {
-        $this->set('impostos', $this->paginate($this->Impostos));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('impostos', $this->paginate($query));
         $this->set('_serialize', ['impostos']);
     }
 

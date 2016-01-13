@@ -22,7 +22,8 @@ class TiposContatosController extends AppController
      */
     public function index()
     {
-        $this->set('tiposContatos', $this->paginate($this->TiposContatos));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('tiposContatos', $this->paginate($query));
         $this->set('_serialize', ['tiposContatos']);
     }
 

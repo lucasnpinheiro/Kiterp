@@ -22,10 +22,8 @@ class NotaFiscalSaidasController extends AppController {
      * @return void
      */
     public function index() {
-        $this->paginate = [
-            'contain' => ['Empresas', 'Cfops', 'Pessoas', 'FormaPagamentos', 'Transportadoras', 'Vendedors']
-        ];
-        $this->set('notaFiscalSaidas', $this->paginate($this->NotaFiscalSaidas));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('notaFiscalSaidas', $this->paginate($query));
         $this->set('_serialize', ['notaFiscalSaidas']);
     }
 

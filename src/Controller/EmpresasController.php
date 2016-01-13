@@ -22,10 +22,8 @@ class EmpresasController extends AppController {
      * @return void
      */
     public function index() {
-        $this->paginate = [
-            'contain' => ['Pessoas']
-        ];
-        $this->set('empresas', $this->paginate($this->Empresas));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('empresas', $this->paginate($query));
         $this->set('_serialize', ['empresas']);
     }
 

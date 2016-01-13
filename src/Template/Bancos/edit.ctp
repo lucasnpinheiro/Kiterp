@@ -12,17 +12,17 @@ $this->Html->addCrumb('Alterar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($banco) ?>
                 <?php
-                echo $this->Form->input('codigo_banco');
-                echo $this->Form->input('nome');
-                echo $this->Form->input('agencia');
-                echo $this->Form->input('conta_corrente');
-                echo $this->Form->input('sequencial_arquivo');
-                echo $this->Form->input('caminho_arquivo');
-                echo $this->Form->input('sacador_avalista');
-                echo $this->Form->input('cnpj_sacador');
-                echo $this->Form->input('contrato');
-                echo $this->Form->input('carteira');
-                echo $this->Form->input('convenio');
+                echo $this->Form->numero('codigo_banco', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('agencia', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('conta_corrente', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->numero('sequencial_arquivo', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('caminho_arquivo', ['readonly' => true, 'value' => ROOT . DS . 'webroot' . DS . 'Banco' . DS . '{id}' . DS, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('sacador_avalista', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->cnpj('cnpj_sacador', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('contrato', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('carteira', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('convenio', ['div' => ['class' => 'col-xs-12 col-md-4']]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

@@ -22,7 +22,8 @@ class ContasController extends AppController {
      * @return void
      */
     public function index() {
-        $this->set('contas', $this->paginate($this->Contas));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('contas', $this->paginate($query));
         $this->set('_serialize', ['contas']);
     }
 

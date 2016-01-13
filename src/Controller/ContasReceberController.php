@@ -22,10 +22,8 @@ class ContasReceberController extends AppController {
      * @return void
      */
     public function index() {
-        $this->paginate = [
-            'contain' => ['Empresas', 'Pessoas', 'Bancos', 'Tradutoras']
-        ];
-        $this->set('contasReceber', $this->paginate($this->ContasReceber));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('contasReceber', $this->paginate($query));
         $this->set('_serialize', ['contasReceber']);
     }
 

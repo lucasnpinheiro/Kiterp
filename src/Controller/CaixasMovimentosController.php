@@ -22,10 +22,8 @@ class CaixasMovimentosController extends AppController {
      * @return void
      */
     public function index() {
-        $this->paginate = [
-            'contain' => ['CaixaDiarios']
-        ];
-        $this->set('caixasMovimentos', $this->paginate($this->CaixasMovimentos));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $this->set('caixasMovimentos', $this->paginate($query));
         $this->set('_serialize', ['caixasMovimentos']);
     }
 
