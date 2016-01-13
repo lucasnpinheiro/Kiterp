@@ -28,7 +28,7 @@ CREATE TABLE `atividades` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `atividades` (
 
 LOCK TABLES `atividades` WRITE;
 /*!40000 ALTER TABLE `atividades` DISABLE KEYS */;
+INSERT  IGNORE INTO `atividades` (`id`, `nome`, `created`, `modified`) VALUES (1,'Supermercado','2016-01-13 10:23:21','2016-01-13 10:23:21'),(2,'Farmacia','2016-01-13 10:23:38','2016-01-13 10:23:38');
 /*!40000 ALTER TABLE `atividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -64,7 +65,7 @@ CREATE TABLE `bancos` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,6 +75,7 @@ CREATE TABLE `bancos` (
 
 LOCK TABLES `bancos` WRITE;
 /*!40000 ALTER TABLE `bancos` DISABLE KEYS */;
+INSERT  IGNORE INTO `bancos` (`id`, `codigo_banco`, `nome`, `agencia`, `conta_corrente`, `sequencial_arquivo`, `caminho_arquivo`, `sacador_avalista`, `cnpj_sacador`, `contrato`, `carteira`, `convenio`, `created`, `modified`) VALUES (1,1,'Banco do Brasil','1234-0','43686880-x',100,'/var/www/html/Kiterp/webroot/Banco/{id}/','Meu no na conta do Banco','12782342394723','8797767','8768769','6865','2016-01-13 10:40:41','2016-01-13 10:40:41'),(2,3453,'dsfadf','345345','3445325',35234,'/var/www/html/Kiterp/webroot/Banco/{id}/','23453vgdffgs','32554655786583','sdgsdg','ewrtdf','bcbfdg','2016-01-13 10:51:34','2016-01-13 10:52:07');
 /*!40000 ALTER TABLE `bancos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -101,7 +103,7 @@ CREATE TABLE `caixas_diarios` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,6 +113,7 @@ CREATE TABLE `caixas_diarios` (
 
 LOCK TABLES `caixas_diarios` WRITE;
 /*!40000 ALTER TABLE `caixas_diarios` DISABLE KEYS */;
+INSERT  IGNORE INTO `caixas_diarios` (`id`, `numero_caixa`, `operador`, `data_abertura`, `data_encerramento`, `valor_inicial`, `total_entradas`, `total_saidas`, `total_saldo`, `encerrado`, `total_real`, `total_sobras`, `total_faltas`, `created`, `modified`) VALUES (1,NULL,'26',NULL,NULL,37.99,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-12 21:01:32','2016-01-12 21:01:32'),(5,5,'26','2016-01-12 00:00:00','2016-01-12 21:16:00',986.78,1.23,999.00,9.00,1,89.00,6.00,76.00,'2016-01-12 21:06:51','2016-01-12 21:16:00'),(6,6,'26','2016-01-12 21:18:53',NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,'2016-01-12 21:18:53','2016-01-12 21:18:53'),(7,7,'26','2016-01-12 22:15:05','2016-01-12 22:16:08',0.65,NULL,NULL,NULL,1,NULL,NULL,NULL,'2016-01-12 22:15:04','2016-01-12 22:16:08');
 /*!40000 ALTER TABLE `caixas_diarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -410,7 +413,7 @@ CREATE TABLE `icms_estaduais` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -420,6 +423,7 @@ CREATE TABLE `icms_estaduais` (
 
 LOCK TABLES `icms_estaduais` WRITE;
 /*!40000 ALTER TABLE `icms_estaduais` DISABLE KEYS */;
+INSERT  IGNORE INTO `icms_estaduais` (`id`, `estado`, `nome`, `icms_interno`, `icms_externo`, `created`, `modified`) VALUES (1,'AC','Acre',17.00,18.00,NULL,NULL),(2,'AL','Alagoas',17.00,18.00,NULL,NULL),(3,'AM','Amazonas',17.00,18.00,NULL,NULL),(4,'AP','Amapá',17.00,18.00,NULL,NULL),(5,'BA','Bahia',17.00,18.00,NULL,NULL),(6,'CE','Ceará',17.00,18.00,NULL,NULL),(7,'DF','Distrito Federal',17.00,18.00,NULL,NULL),(8,'ES','Espírito Santo',17.00,18.00,NULL,NULL),(9,'GO','Goiás',17.00,18.00,NULL,NULL),(10,'MA','Maranhão',17.00,18.00,NULL,NULL),(11,'MG','Minas Gerais',18.00,18.00,NULL,NULL),(12,'MS','Mato Grosso do Sul',17.00,18.00,NULL,NULL),(13,'MT','Mato Grosso',17.00,18.00,NULL,NULL),(14,'PA','Pará',17.00,18.00,NULL,NULL),(15,'PB','Paraíba',17.00,18.00,NULL,NULL),(16,'PE','Pernambuco',17.00,18.00,NULL,NULL),(17,'PI','Piauí',17.00,18.00,NULL,NULL),(18,'PR','Paraná',18.00,18.00,NULL,NULL),(19,'RJ','Rio de Janeiro',19.00,18.00,NULL,NULL),(20,'RN','Rio Grande do Norte',17.00,18.00,NULL,NULL),(21,'RO','Rondônia',17.00,18.00,NULL,NULL),(22,'RR','Roraima',17.00,18.00,NULL,NULL),(23,'RS','Rio Grande do Sul',17.00,18.00,NULL,NULL),(24,'SC','Santa Catarina',17.00,18.00,NULL,NULL),(25,'SE','Sergipe',17.00,18.00,NULL,NULL),(26,'SP','São Paulo',18.00,18.00,NULL,NULL),(27,'TO','Tocantins',17.00,18.00,NULL,NULL);
 /*!40000 ALTER TABLE `icms_estaduais` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -526,7 +530,7 @@ CREATE TABLE `ncm` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -536,7 +540,7 @@ CREATE TABLE `ncm` (
 
 LOCK TABLES `ncm` WRITE;
 /*!40000 ALTER TABLE `ncm` DISABLE KEYS */;
-INSERT  IGNORE INTO `ncm` (`id`, `ncm`, `nome`, `created`, `modified`) VALUES (1,'20122599','bla bla bal','2016-01-04 23:29:49','2016-01-04 23:29:49');
+INSERT  IGNORE INTO `ncm` (`id`, `ncm`, `nome`, `created`, `modified`) VALUES (1,'20122599','bla bla bal','2016-01-04 23:29:49','2016-01-04 23:29:49'),(2,'123456','teste de cadastro e alteração','2016-01-13 08:31:13','2016-01-13 08:37:50');
 /*!40000 ALTER TABLE `ncm` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -555,7 +559,7 @@ CREATE TABLE `ncm_iva` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -565,6 +569,7 @@ CREATE TABLE `ncm_iva` (
 
 LOCK TABLES `ncm_iva` WRITE;
 /*!40000 ALTER TABLE `ncm_iva` DISABLE KEYS */;
+INSERT  IGNORE INTO `ncm_iva` (`id`, `ncm_id`, `icms_estadual_id`, `iva`, `created`, `modified`) VALUES (1,1,26,12.01,NULL,'2016-01-13 09:25:13'),(2,2,26,34.06,'2016-01-13 09:25:13','2016-01-13 09:25:13'),(3,1,1,2.30,'2016-01-13 09:40:38','2016-01-13 09:40:38'),(4,2,1,49.79,'2016-01-13 09:40:38','2016-01-13 09:40:38');
 /*!40000 ALTER TABLE `ncm_iva` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1282,4 +1287,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-12 19:45:36
+-- Dump completed on 2016-01-13 15:43:55
