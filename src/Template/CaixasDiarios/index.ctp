@@ -30,7 +30,6 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('numero_caixa') ?></th>
                                 <th><?= $this->Paginator->sort('operador') ?></th>
                                 <th><?= $this->Paginator->sort('data_abertura') ?></th>
@@ -43,16 +42,14 @@ $this->Html->addCrumb('Consultar', null);
                         <tbody>
                             <?php foreach ($caixasDiarios as $caixasDiario): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($caixasDiario->id) ?></td>
                                     <td><?= $this->Number->format($caixasDiario->numero_caixa) ?></td>
-                                    <td><?= h($caixasDiario->operador) ?></td>
+                                    <td><?= $this->Html->link($caixasDiario->operadore->nome, ['controller' => 'Pessoas', 'action' => 'edit', $caixasDiario->operadore->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= h($caixasDiario->data_abertura) ?></td>
                                     <td><?= h($caixasDiario->data_encerramento) ?></td>
-                                    <td><?= $this->Number->format($caixasDiario->valor_inicial) ?></td>
-                                    <td><?= $this->Number->format($caixasDiario->total_entradas) ?></td>
+                                    <td><?= $this->Html->moeda($caixasDiario->valor_inicial) ?></td>
+                                    <td><?= $this->Html->moeda($caixasDiario->total_entradas) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $caixasDiario->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $caixasDiario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $caixasDiario->id)]) ?>
+                                        <?= $this->Html->linkPermissao('Alterar', ['action' => 'edit', $caixasDiario->id]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

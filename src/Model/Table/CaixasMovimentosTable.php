@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use App\Model\Entity\CaixasMovimento;
@@ -6,14 +7,17 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Event\Event;
+use Cake\ORM\Entity;
+use ArrayObject;
+use Cake\ORM\TableRegistry;
 
 /**
  * CaixasMovimentos Model
  *
  * @property \Cake\ORM\Association\BelongsTo $CaixaDiarios
  */
-class CaixasMovimentosTable extends Table
-{
+class CaixasMovimentosTable extends Table {
 
     /**
      * Initialize method
@@ -21,8 +25,7 @@ class CaixasMovimentosTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('caixas_movimentos');
@@ -42,33 +45,32 @@ class CaixasMovimentosTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->add('data_movimento', 'valid', ['rule' => 'datetime'])
-            ->allowEmpty('data_movimento');
+                ->add('data_movimento', 'valid', ['rule' => 'datetime'])
+                ->allowEmpty('data_movimento');
 
         $validator
-            ->allowEmpty('numero documento');
+                ->allowEmpty('numero documento');
 
         $validator
-            ->add('tipo_lancamento', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('tipo_lancamento');
+                ->add('tipo_lancamento', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('tipo_lancamento');
 
         $validator
-            ->add('valor', 'valid', ['rule' => 'money'])
-            ->allowEmpty('valor');
+                ->add('valor', 'valid', ['rule' => 'money'])
+                ->allowEmpty('valor');
 
         $validator
-            ->add('modalidade', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('modalidade');
+                ->add('modalidade', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('modalidade');
 
         $validator
-            ->allowEmpty('historico');
+                ->allowEmpty('historico');
 
         return $validator;
     }
@@ -80,9 +82,14 @@ class CaixasMovimentosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['caixa_diario_id'], 'CaixaDiarios'));
         return $rules;
     }
+
+    public function afterSave(Event $event, Entity $entity, ArrayObject $options) {
+        debug($entity);
+        exit;
+    }
+
 }

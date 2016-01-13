@@ -12,18 +12,9 @@ $this->Html->addCrumb('Cadastrar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($caixasDiario) ?>
                 <?php
-                echo $this->Form->input('numero_caixa');
-                echo $this->Form->input('operador');
-                echo $this->Form->input('data_abertura');
-                echo $this->Form->input('data_encerramento');
-                echo $this->Form->input('valor_inicial');
-                echo $this->Form->input('total_entradas');
-                echo $this->Form->input('total_saidas');
-                echo $this->Form->input('total_saldo');
-                echo $this->Form->input('encerrado');
-                echo $this->Form->input('total_real');
-                echo $this->Form->input('total_sobras');
-                echo $this->Form->input('total_faltas');
+                echo $this->Form->input('operador', ['required' => true, 'options' => $vendedor, 'empty' => 'Selecione um operador', 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('encerrado', ['value' => 0, 'type' => 'hidden']);
+                echo $this->Form->moeda('valor_inicial', ['div' => ['class' => 'col-xs-12 col-md-6']]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

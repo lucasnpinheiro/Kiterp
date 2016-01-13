@@ -22,6 +22,9 @@ class CaixasDiariosController extends AppController {
      * @return void
      */
     public function index() {
+        $this->paginate = [
+            'contain' => ['Operadores']
+        ];
         $this->set('caixasDiarios', $this->paginate($this->CaixasDiarios));
         $this->set('_serialize', ['caixasDiarios']);
     }
@@ -51,13 +54,18 @@ class CaixasDiariosController extends AppController {
         if ($this->request->is('post')) {
             $caixasDiario = $this->CaixasDiarios->patchEntity($caixasDiario, $this->request->data);
             if ($this->CaixasDiarios->save($caixasDiario)) {
+                $caixasDiario->numero_caixa = $caixasDiario->id;
+                $caixasDiario->data_abertura = date('Y-m-d H:i:s');
+                $this->CaixasDiarios->save($caixasDiario);
                 $this->Flash->success(__('The caixas diario has been saved.'));
                 return $this->redirect(['action' => 'index']);
             } else {
                 $this->Flash->error(__('The caixas diario could not be saved. Please, try again.'));
             }
         }
-        $this->set(compact('caixasDiario'));
+        $this->loadModel('Pessoas');
+        $vendedor = $this->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
+        $this->set(compact('caixasDiario', 'vendedor'));
         $this->set('_serialize', ['caixasDiario']);
     }
 
@@ -70,10 +78,11 @@ class CaixasDiariosController extends AppController {
      */
     public function edit($id = null) {
         $caixasDiario = $this->CaixasDiarios->get($id, [
-            'contain' => []
+             'contain' => ['Operadores']
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $caixasDiario = $this->CaixasDiarios->patchEntity($caixasDiario, $this->request->data);
+            $caixasDiario->data_encerramento = date('Y-m-d H:i:s');
             if ($this->CaixasDiarios->save($caixasDiario)) {
                 $this->Flash->success(__('The caixas diario has been saved.'));
                 return $this->redirect(['action' => 'index']);
