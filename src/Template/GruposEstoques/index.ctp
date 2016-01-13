@@ -27,20 +27,14 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($gruposEstoques as $gruposEstoque): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($gruposEstoque->id) ?></td>
                                     <td><?= h($gruposEstoque->nome) ?></td>
-                                    <td><?= h($gruposEstoque->created) ?></td>
-                                    <td><?= h($gruposEstoque->modified) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $gruposEstoque->id]) ?>
                                         <?= $this->Form->postLink('Excluir', ['action' => 'delete', $gruposEstoque->id], ['confirm' => __('Are you sure you want to delete # {0}?', $gruposEstoque->id)]) ?>

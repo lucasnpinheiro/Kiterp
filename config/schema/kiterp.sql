@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.24, for linux-glibc2.5 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.24, for Win32 (x86)
 --
 -- Host: 127.0.0.1    Database: kiterp
 -- ------------------------------------------------------
--- Server version	5.5.5-10.0.21-MariaDB
+-- Server version	5.6.26
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,17 +28,16 @@ CREATE TABLE `atividades` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `atividades`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `atividades` WRITE;
 /*!40000 ALTER TABLE `atividades` DISABLE KEYS */;
-INSERT  IGNORE INTO `atividades` (`id`, `nome`, `created`, `modified`) VALUES (1,'Supermercado','2016-01-13 10:23:21','2016-01-13 10:23:21'),(2,'Farmacia','2016-01-13 10:23:38','2016-01-13 10:23:38');
+INSERT  IGNORE INTO `atividades` (`id`, `nome`, `created`, `modified`) VALUES (1,'Supermercado','2016-01-13 10:23:21','2016-01-13 10:23:21'),(2,'Farmacia','2016-01-13 10:23:38','2016-01-13 10:23:38'),(3,'Loja Conveniencia','2016-01-13 17:26:11','2016-01-13 17:26:11'),(4,'Conveniencia Loja','2016-01-13 17:28:05','2016-01-13 17:28:05');
 /*!40000 ALTER TABLE `atividades` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -55,7 +54,7 @@ CREATE TABLE `bancos` (
   `nome` varchar(65) DEFAULT NULL,
   `agencia` varchar(45) DEFAULT NULL,
   `conta_corrente` varchar(45) DEFAULT NULL,
-  `sequencial_arquivo` int(11) DEFAULT NULL,
+  `sequencial_arquivo` int(11) DEFAULT '1',
   `caminho_arquivo` varchar(65) DEFAULT NULL,
   `sacador_avalista` varchar(65) DEFAULT NULL,
   `cnpj_sacador` varchar(18) DEFAULT NULL,
@@ -65,17 +64,16 @@ CREATE TABLE `bancos` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `bancos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `bancos` WRITE;
 /*!40000 ALTER TABLE `bancos` DISABLE KEYS */;
-INSERT  IGNORE INTO `bancos` (`id`, `codigo_banco`, `nome`, `agencia`, `conta_corrente`, `sequencial_arquivo`, `caminho_arquivo`, `sacador_avalista`, `cnpj_sacador`, `contrato`, `carteira`, `convenio`, `created`, `modified`) VALUES (1,1,'Banco do Brasil','1234-0','43686880-x',100,'/var/www/html/Kiterp/webroot/Banco/{id}/','Meu no na conta do Banco','12782342394723','8797767','8768769','6865','2016-01-13 10:40:41','2016-01-13 10:40:41'),(2,3453,'dsfadf','345345','3445325',35234,'/var/www/html/Kiterp/webroot/Banco/{id}/','23453vgdffgs','32554655786583','sdgsdg','ewrtdf','bcbfdg','2016-01-13 10:51:34','2016-01-13 10:52:07');
+INSERT  IGNORE INTO `bancos` (`id`, `codigo_banco`, `nome`, `agencia`, `conta_corrente`, `sequencial_arquivo`, `caminho_arquivo`, `sacador_avalista`, `cnpj_sacador`, `contrato`, `carteira`, `convenio`, `created`, `modified`) VALUES (1,1,'Banco do Brasil','1234-0','43686880-x',100,'/var/www/html/Kiterp/webroot/Banco/{id}/','Meu no na conta do Banco','12782342394723','8797767','8768769','6865','2016-01-13 10:40:41','2016-01-13 10:40:41'),(2,3453,'dsfadf','345345','3445325',35234,'/var/www/html/Kiterp/webroot/Banco/{id}/','23453vgdffgs','32554655786583','sdgsdg','ewrtdf','bcbfdg','2016-01-13 10:51:34','2016-01-13 10:52:07'),(3,237,'Banco Bradesco ','','',1,'C:\\xampp\\htdocs\\Kiterp\\webroot\\Banco\\{id}-{nome}\\','','','','','','2016-01-13 17:19:10','2016-01-13 17:19:10'),(4,237,'Banco Bradesco ','','',1,'C:\\xampp\\htdocs\\Kiterp\\webroot\\Banco\\{id}-{nome}\\','','','','','','2016-01-13 17:19:48','2016-01-13 17:19:48');
 /*!40000 ALTER TABLE `bancos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,17 +101,16 @@ CREATE TABLE `caixas_diarios` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `caixas_diarios`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `caixas_diarios` WRITE;
 /*!40000 ALTER TABLE `caixas_diarios` DISABLE KEYS */;
-INSERT  IGNORE INTO `caixas_diarios` (`id`, `numero_caixa`, `operador`, `data_abertura`, `data_encerramento`, `valor_inicial`, `total_entradas`, `total_saidas`, `total_saldo`, `encerrado`, `total_real`, `total_sobras`, `total_faltas`, `created`, `modified`) VALUES (1,NULL,'26',NULL,NULL,37.99,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-12 21:01:32','2016-01-12 21:01:32'),(5,5,'26','2016-01-12 00:00:00','2016-01-12 21:16:00',986.78,1.23,999.00,9.00,1,89.00,6.00,76.00,'2016-01-12 21:06:51','2016-01-12 21:16:00'),(6,6,'26','2016-01-12 21:18:53',NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,'2016-01-12 21:18:53','2016-01-12 21:18:53'),(7,7,'26','2016-01-12 22:15:05','2016-01-12 22:16:08',0.65,NULL,NULL,NULL,1,NULL,NULL,NULL,'2016-01-12 22:15:04','2016-01-12 22:16:08');
+INSERT  IGNORE INTO `caixas_diarios` (`id`, `numero_caixa`, `operador`, `data_abertura`, `data_encerramento`, `valor_inicial`, `total_entradas`, `total_saidas`, `total_saldo`, `encerrado`, `total_real`, `total_sobras`, `total_faltas`, `created`, `modified`) VALUES (1,NULL,'26','2016-01-12 00:00:00','2016-01-12 21:16:00',37.99,NULL,NULL,NULL,1,NULL,NULL,NULL,'2016-01-12 21:01:32','2016-01-12 21:01:32'),(5,5,'26','2016-01-12 00:00:00','2016-01-12 21:16:00',986.78,1.23,999.00,9.00,1,89.00,6.00,76.00,'2016-01-12 21:06:51','2016-01-12 21:16:00'),(6,6,'26','2016-01-12 21:18:53','2016-01-12 21:16:00',NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,'2016-01-12 21:18:53','2016-01-12 21:18:53'),(7,7,'26','2016-01-12 22:15:05','2016-01-12 22:16:08',0.65,NULL,NULL,NULL,1,NULL,NULL,NULL,'2016-01-12 22:15:04','2016-01-12 22:16:08'),(8,8,'26','2016-01-13 18:54:56',NULL,5464.65,NULL,NULL,NULL,0,NULL,NULL,NULL,'2016-01-13 18:54:56','2016-01-13 18:54:56');
 /*!40000 ALTER TABLE `caixas_diarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -142,7 +139,6 @@ CREATE TABLE `caixas_movimentos` (
 --
 -- Dumping data for table `caixas_movimentos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `caixas_movimentos` WRITE;
 /*!40000 ALTER TABLE `caixas_movimentos` DISABLE KEYS */;
@@ -171,7 +167,6 @@ CREATE TABLE `condicoes_pagamentos` (
 --
 -- Dumping data for table `condicoes_pagamentos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `condicoes_pagamentos` WRITE;
 /*!40000 ALTER TABLE `condicoes_pagamentos` DISABLE KEYS */;
@@ -201,7 +196,6 @@ CREATE TABLE `contas` (
 --
 -- Dumping data for table `contas`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `contas` WRITE;
 /*!40000 ALTER TABLE `contas` DISABLE KEYS */;
@@ -236,7 +230,6 @@ CREATE TABLE `contas_pagar` (
 --
 -- Dumping data for table `contas_pagar`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `contas_pagar` WRITE;
 /*!40000 ALTER TABLE `contas_pagar` DISABLE KEYS */;
@@ -274,7 +267,6 @@ CREATE TABLE `contas_receber` (
 --
 -- Dumping data for table `contas_receber`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `contas_receber` WRITE;
 /*!40000 ALTER TABLE `contas_receber` DISABLE KEYS */;
@@ -303,7 +295,6 @@ CREATE TABLE `empresas` (
 --
 -- Dumping data for table `empresas`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `empresas` WRITE;
 /*!40000 ALTER TABLE `empresas` DISABLE KEYS */;
@@ -325,6 +316,7 @@ CREATE TABLE `formas_pagamentos` (
   `qtde_dias` int(4) DEFAULT NULL,
   `qtde_taxas` int(4) DEFAULT NULL,
   `valor_taxas` text,
+  `grupo` int(1) DEFAULT NULL COMMENT '1 - Cartao | 2 - A Vista | 3 - A Prazo | ',
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -334,11 +326,10 @@ CREATE TABLE `formas_pagamentos` (
 --
 -- Dumping data for table `formas_pagamentos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `formas_pagamentos` WRITE;
 /*!40000 ALTER TABLE `formas_pagamentos` DISABLE KEYS */;
-INSERT  IGNORE INTO `formas_pagamentos` (`id`, `nome`, `abreviado`, `qtde_dias`, `qtde_taxas`, `valor_taxas`, `created`, `modified`) VALUES (1,'Avista','Avista',0,0,NULL,NULL,NULL),(2,'Cartão Visa Credito','Visa',30,3,'{0:\"2.90\",1:\"3.90\",2:\"4.90\"}',NULL,NULL);
+INSERT  IGNORE INTO `formas_pagamentos` (`id`, `nome`, `abreviado`, `qtde_dias`, `qtde_taxas`, `valor_taxas`, `grupo`, `created`, `modified`) VALUES (1,'Avista','Avista',0,0,NULL,NULL,NULL,NULL),(2,'Cartão Visa Credito','Visa',30,3,'{0:\"2.90\",1:\"3.90\",2:\"4.90\"}',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `formas_pagamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -362,7 +353,6 @@ CREATE TABLE `grupos` (
 --
 -- Dumping data for table `grupos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `grupos` WRITE;
 /*!40000 ALTER TABLE `grupos` DISABLE KEYS */;
@@ -383,17 +373,16 @@ CREATE TABLE `grupos_estoques` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `grupos_estoques`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `grupos_estoques` WRITE;
 /*!40000 ALTER TABLE `grupos_estoques` DISABLE KEYS */;
-INSERT  IGNORE INTO `grupos_estoques` (`id`, `nome`, `created`, `modified`) VALUES (1,'Laticinios',NULL,NULL);
+INSERT  IGNORE INTO `grupos_estoques` (`id`, `nome`, `created`, `modified`) VALUES (1,'Laticinios',NULL,NULL),(2,'hortifruti','2016-01-13 18:26:48','2016-01-13 18:26:48'),(3,'Padaria','2016-01-13 18:28:09','2016-01-13 18:28:09');
 /*!40000 ALTER TABLE `grupos_estoques` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -419,7 +408,6 @@ CREATE TABLE `icms_estaduais` (
 --
 -- Dumping data for table `icms_estaduais`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `icms_estaduais` WRITE;
 /*!40000 ALTER TABLE `icms_estaduais` DISABLE KEYS */;
@@ -448,7 +436,6 @@ CREATE TABLE `impostos` (
 --
 -- Dumping data for table `impostos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `impostos` WRITE;
 /*!40000 ALTER TABLE `impostos` DISABLE KEYS */;
@@ -482,7 +469,6 @@ CREATE TABLE `menus` (
 --
 -- Dumping data for table `menus`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `menus` WRITE;
 /*!40000 ALTER TABLE `menus` DISABLE KEYS */;
@@ -508,7 +494,6 @@ CREATE TABLE `menus_grupos` (
 --
 -- Dumping data for table `menus_grupos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `menus_grupos` WRITE;
 /*!40000 ALTER TABLE `menus_grupos` DISABLE KEYS */;
@@ -536,7 +521,6 @@ CREATE TABLE `ncm` (
 --
 -- Dumping data for table `ncm`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `ncm` WRITE;
 /*!40000 ALTER TABLE `ncm` DISABLE KEYS */;
@@ -556,20 +540,20 @@ CREATE TABLE `ncm_iva` (
   `ncm_id` int(11) DEFAULT NULL,
   `icms_estadual_id` int(11) DEFAULT NULL,
   `iva` float(4,2) DEFAULT NULL,
+  `perc_tributo` float(4,2) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `ncm_iva`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `ncm_iva` WRITE;
 /*!40000 ALTER TABLE `ncm_iva` DISABLE KEYS */;
-INSERT  IGNORE INTO `ncm_iva` (`id`, `ncm_id`, `icms_estadual_id`, `iva`, `created`, `modified`) VALUES (1,1,26,12.01,NULL,'2016-01-13 09:25:13'),(2,2,26,34.06,'2016-01-13 09:25:13','2016-01-13 09:25:13'),(3,1,1,2.30,'2016-01-13 09:40:38','2016-01-13 09:40:38'),(4,2,1,49.79,'2016-01-13 09:40:38','2016-01-13 09:40:38');
+INSERT  IGNORE INTO `ncm_iva` (`id`, `ncm_id`, `icms_estadual_id`, `iva`, `perc_tributo`, `created`, `modified`) VALUES (1,1,26,12.01,NULL,NULL,'2016-01-13 09:25:13'),(2,2,26,34.06,NULL,'2016-01-13 09:25:13','2016-01-13 09:25:13'),(3,1,1,2.30,NULL,'2016-01-13 09:40:38','2016-01-13 09:40:38'),(4,2,1,49.79,NULL,'2016-01-13 09:40:38','2016-01-13 09:40:38'),(5,1,11,58.68,27.14,'2016-01-13 16:57:20','2016-01-13 16:57:20'),(6,2,11,64.12,38.17,'2016-01-13 16:57:20','2016-01-13 16:57:20');
 /*!40000 ALTER TABLE `ncm_iva` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -607,7 +591,6 @@ CREATE TABLE `nota_fiscal_entradas` (
 --
 -- Dumping data for table `nota_fiscal_entradas`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `nota_fiscal_entradas` WRITE;
 /*!40000 ALTER TABLE `nota_fiscal_entradas` DISABLE KEYS */;
@@ -637,7 +620,6 @@ CREATE TABLE `nota_fiscal_entradas_itens` (
 --
 -- Dumping data for table `nota_fiscal_entradas_itens`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `nota_fiscal_entradas_itens` WRITE;
 /*!40000 ALTER TABLE `nota_fiscal_entradas_itens` DISABLE KEYS */;
@@ -692,7 +674,6 @@ CREATE TABLE `nota_fiscal_saidas` (
 --
 -- Dumping data for table `nota_fiscal_saidas`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `nota_fiscal_saidas` WRITE;
 /*!40000 ALTER TABLE `nota_fiscal_saidas` DISABLE KEYS */;
@@ -732,7 +713,6 @@ CREATE TABLE `nota_fiscal_saidas_itens` (
 --
 -- Dumping data for table `nota_fiscal_saidas_itens`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `nota_fiscal_saidas_itens` WRITE;
 /*!40000 ALTER TABLE `nota_fiscal_saidas_itens` DISABLE KEYS */;
@@ -762,7 +742,6 @@ CREATE TABLE `parametros` (
 --
 -- Dumping data for table `parametros`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `parametros` WRITE;
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
@@ -801,7 +780,6 @@ CREATE TABLE `pedidos` (
 --
 -- Dumping data for table `pedidos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
@@ -829,7 +807,6 @@ CREATE TABLE `pedidos_formas_pagamentos` (
 --
 -- Dumping data for table `pedidos_formas_pagamentos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `pedidos_formas_pagamentos` WRITE;
 /*!40000 ALTER TABLE `pedidos_formas_pagamentos` DISABLE KEYS */;
@@ -859,7 +836,6 @@ CREATE TABLE `pedidos_itens` (
 --
 -- Dumping data for table `pedidos_itens`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `pedidos_itens` WRITE;
 /*!40000 ALTER TABLE `pedidos_itens` DISABLE KEYS */;
@@ -890,7 +866,6 @@ CREATE TABLE `pessoas` (
 --
 -- Dumping data for table `pessoas`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `pessoas` WRITE;
 /*!40000 ALTER TABLE `pessoas` DISABLE KEYS */;
@@ -919,7 +894,6 @@ CREATE TABLE `pessoas_associacoes` (
 --
 -- Dumping data for table `pessoas_associacoes`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `pessoas_associacoes` WRITE;
 /*!40000 ALTER TABLE `pessoas_associacoes` DISABLE KEYS */;
@@ -949,7 +923,6 @@ CREATE TABLE `pessoas_contatos` (
 --
 -- Dumping data for table `pessoas_contatos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `pessoas_contatos` WRITE;
 /*!40000 ALTER TABLE `pessoas_contatos` DISABLE KEYS */;
@@ -986,7 +959,6 @@ CREATE TABLE `pessoas_enderecos` (
 --
 -- Dumping data for table `pessoas_enderecos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `pessoas_enderecos` WRITE;
 /*!40000 ALTER TABLE `pessoas_enderecos` DISABLE KEYS */;
@@ -1016,7 +988,6 @@ CREATE TABLE `pessoas_fisicas` (
 --
 -- Dumping data for table `pessoas_fisicas`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `pessoas_fisicas` WRITE;
 /*!40000 ALTER TABLE `pessoas_fisicas` DISABLE KEYS */;
@@ -1048,7 +1019,6 @@ CREATE TABLE `pessoas_juridicas` (
 --
 -- Dumping data for table `pessoas_juridicas`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `pessoas_juridicas` WRITE;
 /*!40000 ALTER TABLE `pessoas_juridicas` DISABLE KEYS */;
@@ -1082,7 +1052,6 @@ CREATE TABLE `produtos` (
 --
 -- Dumping data for table `produtos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `produtos` WRITE;
 /*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
@@ -1112,7 +1081,6 @@ CREATE TABLE `produtos_kits` (
 --
 -- Dumping data for table `produtos_kits`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `produtos_kits` WRITE;
 /*!40000 ALTER TABLE `produtos_kits` DISABLE KEYS */;
@@ -1154,7 +1122,6 @@ CREATE TABLE `produtos_valores` (
 --
 -- Dumping data for table `produtos_valores`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `produtos_valores` WRITE;
 /*!40000 ALTER TABLE `produtos_valores` DISABLE KEYS */;
@@ -1181,7 +1148,6 @@ CREATE TABLE `tipos_contatos` (
 --
 -- Dumping data for table `tipos_contatos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `tipos_contatos` WRITE;
 /*!40000 ALTER TABLE `tipos_contatos` DISABLE KEYS */;
@@ -1206,16 +1172,16 @@ CREATE TABLE `transportadoras` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `transportadoras`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `transportadoras` WRITE;
 /*!40000 ALTER TABLE `transportadoras` DISABLE KEYS */;
+INSERT  IGNORE INTO `transportadoras` (`id`, `nome`, `contado`, `telefone1`, `telefone2`, `cnpj`, `created`, `modified`) VALUES (1,'O proprio','','','','','2016-01-13 18:33:40','2016-01-13 18:33:40'),(2,'Rodonaves Transportes','','','','','2016-01-13 18:34:08','2016-01-13 18:34:08'),(3,'correios','','','','','2016-01-13 18:34:22','2016-01-13 18:34:22');
 /*!40000 ALTER TABLE `transportadoras` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1242,7 +1208,6 @@ CREATE TABLE `usuarios` (
 --
 -- Dumping data for table `usuarios`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
@@ -1270,7 +1235,6 @@ CREATE TABLE `usuarios_grupos` (
 --
 -- Dumping data for table `usuarios_grupos`
 --
--- ORDER BY:  `id`
 
 LOCK TABLES `usuarios_grupos` WRITE;
 /*!40000 ALTER TABLE `usuarios_grupos` DISABLE KEYS */;
@@ -1287,4 +1251,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-13 15:43:55
+-- Dump completed on 2016-01-13 19:09:20

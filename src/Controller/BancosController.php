@@ -22,7 +22,7 @@ class BancosController extends AppController {
      * @return void
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order('nome')->order('codigo_banco');
         $this->set('bancos', $this->paginate($query));
         $this->set('codigos', $this->Bancos->find('list')->group('codigo_banco'));
         $this->set('_serialize', ['bancos']);

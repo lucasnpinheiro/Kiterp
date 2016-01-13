@@ -115,6 +115,7 @@ class BancosTable extends Table {
 
     public function beforeSave(Event $event, Entity $entity) {
         $entity->cnpj_sacador = str_replace(['.', '-', '/'], '', $entity->cnpj_sacador);
+        $entity->caminho_arquivo = ROOT . DS . 'webroot' . DS . 'Banco' . DS . '{id}-{nome}' . DS;
     }
 
 }

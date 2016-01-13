@@ -26,7 +26,7 @@ class NcmTable extends Table {
         parent::initialize($config);
 
         $this->table('ncm');
-        $this->displayField('nome');
+        $this->displayField('ncm');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

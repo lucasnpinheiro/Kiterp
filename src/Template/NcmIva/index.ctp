@@ -32,6 +32,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('ncm_id', 'NCM') ?></th>
                                 <th><?= $this->Paginator->sort('icms_estadual_id', 'Estado') ?></th>
                                 <th><?= $this->Paginator->sort('iva', 'IVA') ?></th>
+                                <th><?= $this->Paginator->sort('perc_tributo', 'Tributo') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
@@ -42,7 +43,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($ncmIva->ncm->nome) ?></td>
                                     <td><?= h($ncmIva->ncm->ncm) ?></td>
                                     <td><?= h($ncmIva->icms_estaduai->nome) ?></td>
-                                    <td><?= $this->Number->format($ncmIva->iva) ?></td>
+                                    <td><?= $this->Html->porcentagem($ncmIva->iva) ?></td>
+                                    <td><?= $this->Html->porcentagem($ncmIva->perc_tributo) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->linkPermissao('Alterar', ['action' => 'add', $ncmIva->icms_estadual_id], ['class' => 'btn-warning btn btn-xs', 'icon' => 'pencil']) ?>
                                     </td>

@@ -28,7 +28,6 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('contado') ?></th>
                                 <th><?= $this->Paginator->sort('telefone1') ?></th>
@@ -40,7 +39,6 @@ $this->Html->addCrumb('Consultar', null);
                         <tbody>
                             <?php foreach ($transportadoras as $transportadora): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($transportadora->id) ?></td>
                                     <td><?= h($transportadora->nome) ?></td>
                                     <td><?= h($transportadora->contado) ?></td>
                                     <td><?= h($transportadora->telefone1) ?></td>

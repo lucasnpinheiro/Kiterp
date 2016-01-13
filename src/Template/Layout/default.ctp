@@ -40,6 +40,7 @@
                 </div>
 
                 <div class="wrapper wrapper-content">
+                    <?= $this->Flash->render() ?>
                     <?php echo $this->fetch('content') ?>
                 </div>
                 <div class="footer">

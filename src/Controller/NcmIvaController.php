@@ -112,6 +112,7 @@ class NcmIvaController extends AppController {
                     $ncmIva = $this->NcmIva->patchEntity($ncmIva, $find->toArray());
                 }
                 $ncmIva->iva = str_replace(',', '.', str_replace('.', '', $value['valor']));
+                $ncmIva->perc_tributo = str_replace(',', '.', str_replace('.', '', $value['tributo']));
                 $ncmIva->icms_estadual_id = $dados['icms_estadual_id'];
                 $ncmIva->ncm_id = $value['id'];
                 $this->NcmIva->save($ncmIva);

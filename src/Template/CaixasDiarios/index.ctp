@@ -49,10 +49,15 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->moeda($caixasDiario->valor_inicial) ?></td>
                                     <td><?= $this->Html->moeda($caixasDiario->total_entradas) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->linkPermissao('Alterar', ['action' => 'edit', $caixasDiario->id]) ?>
+                                        <?php
+                                        if ($caixasDiario->encerrado != 1)
+                                        {
+                                            echo $this->Html->linkPermissao('Encerrar', ['action' => 'edit', $caixasDiario->id]);
+                                        }
+                                        ?>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?>
+<?php endforeach; ?>
                         </tbody>
                     </table>
                 </div>

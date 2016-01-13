@@ -17,7 +17,8 @@ $this->Html->addCrumb('Cadastrar/Alterar', null);
 
                 if (!empty($ncmIvaLista)) {
                     foreach ($ncmIvaLista as $key => $value) {
-                        $valoresIva[$value->ncm_id] = $this->Html->moeda($value->iva, ['before' => null]);
+                        $valoresIva[$value->ncm_id]['valor'] = $this->Html->porcentagem($value->iva, ['after' => null]);
+                        $valoresIva[$value->ncm_id]['tributo'] = $this->Html->porcentagem($value->perc_tributo, ['after' => null]);
                     }
                 }
                 ?>
@@ -26,6 +27,7 @@ $this->Html->addCrumb('Cadastrar/Alterar', null);
                         <tr>
                             <th>NCM</th>
                             <th>Valor do IVA</th>
+                            <th>Valor do Tributo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -38,7 +40,10 @@ $this->Html->addCrumb('Cadastrar/Alterar', null);
                                     <?php echo $value; ?>
                                 </td>
                                 <td>
-                                    <?php echo $this->Form->moeda('ncm.' . $key . '.valor', ['value' => (isset($valoresIva[$key]) ? $valoresIva[$key] : ''), 'label' => false]); ?>
+                                    <?php echo $this->Form->juros('ncm.' . $key . '.valor', ['value' => (isset($valoresIva[$key]['valor']) ? $valoresIva[$key]['valor'] : ''), 'label' => false]); ?>
+                                </td>
+                                <td>
+                                    <?php echo $this->Form->juros('ncm.' . $key . '.tributo', ['value' => (isset($valoresIva[$key]['tributo']) ? $valoresIva[$key]['tributo'] : ''), 'label' => false]); ?>
                                 </td>
                             </tr>
                             <?php

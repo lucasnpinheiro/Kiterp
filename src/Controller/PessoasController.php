@@ -88,7 +88,7 @@ class PessoasController extends AppController {
             }
         }
         $this->loadModel('TiposContatos');
-        $tipos_contatos = $this->TiposContatos->find('list');
+        $tipos_contatos = $this->TiposContatos->find('list')->order('nome');
         $this->set(compact('pessoa', 'tipos_contatos'));
         $this->set('_serialize', ['pessoa']);
     }
@@ -124,7 +124,7 @@ class PessoasController extends AppController {
             }
         }
         $this->loadModel('TiposContatos');
-        $tipos_contatos = $this->TiposContatos->find('list');
+        $tipos_contatos = $this->TiposContatos->find('list')->order('nome');
         $this->set(compact('pessoa', 'tipos_contatos'));
         $this->set('_serialize', ['pessoa']);
     }

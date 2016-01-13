@@ -22,7 +22,7 @@ class GruposEstoquesController extends AppController {
      * @return void
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order('nome');
         $this->set('gruposEstoques', $this->paginate($query));
         $this->set('_serialize', ['gruposEstoques']);
     }
