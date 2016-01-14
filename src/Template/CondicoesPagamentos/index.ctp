@@ -27,24 +27,22 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
-                                <th><?= $this->Paginator->sort('qtde_parcelas') ?></th>
-                                <th><?= $this->Paginator->sort('qtde_dias') ?></th>
-                                <th><?= $this->Paginator->sort('creatde') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
+                                <th><?= $this->Paginator->sort('qtde_parcelas', 'Parcelas') ?></th>
+                                <th><?= $this->Paginator->sort('qtde_dias', 'Dias corridos') ?></th>
+                                <th><?= $this->Paginator->sort('avista', 'Entrada da primeira parcela') ?></th>
+                                <th><?= $this->Paginator->sort('parcelas') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($condicoesPagamentos as $condicoesPagamento): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($condicoesPagamento->id) ?></td>
                                     <td><?= h($condicoesPagamento->nome) ?></td>
                                     <td><?= $this->Number->format($condicoesPagamento->qtde_parcelas) ?></td>
                                     <td><?= $this->Number->format($condicoesPagamento->qtde_dias) ?></td>
-                                    <td><?= h($condicoesPagamento->creatde) ?></td>
-                                    <td><?= h($condicoesPagamento->modified) ?></td>
+                                    <td><?= $this->Html->simNao($condicoesPagamento->avista) ?></td>
+                                    <td><?= implode(' / ',$condicoesPagamento->parcelas) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $condicoesPagamento->id]) ?>
                                         <?= $this->Form->postLink('Excluir', ['action' => 'delete', $condicoesPagamento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $condicoesPagamento->id)]) ?>

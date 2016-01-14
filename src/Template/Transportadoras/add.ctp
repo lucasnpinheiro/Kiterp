@@ -12,11 +12,11 @@ $this->Html->addCrumb('Cadastrar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($transportadora) ?>
                 <?php
-                echo $this->Form->input('nome');
-                echo $this->Form->input('contado');
-                echo $this->Form->input('telefone1');
-                echo $this->Form->input('telefone2');
-                echo $this->Form->input('cnpj');
+                echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                echo $this->Form->input('contado', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->telefone('telefone1', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->telefone('telefone2', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->cnpj('cnpj', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

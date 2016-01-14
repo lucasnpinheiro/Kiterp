@@ -11,6 +11,10 @@ use App\Controller\AppController;
  */
 class IcmsEstaduaisController extends AppController {
 
+    public $paginate = [
+        'limit' => 50
+    ];
+
     public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
         parent::__construct($request, $response, $name, $eventManager, $components);
         $this->set('title', 'ICMS Estaduais');
@@ -22,7 +26,7 @@ class IcmsEstaduaisController extends AppController {
      * @return void
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order('nome');
         $this->set('icmsEstaduais', $this->paginate($query));
         $this->set('_serialize', ['icmsEstaduais']);
     }

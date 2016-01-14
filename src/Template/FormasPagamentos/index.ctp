@@ -33,8 +33,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('abreviado') ?></th>
                                 <th><?= $this->Paginator->sort('qtde_dias') ?></th>
                                 <th><?= $this->Paginator->sort('qtde_taxas') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
+                                <th><?= $this->Paginator->sort('valor_taxas', 'Taxas') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
@@ -46,8 +45,7 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($formasPagamento->abreviado) ?></td>
                                     <td><?= $this->Number->format($formasPagamento->qtde_dias) ?></td>
                                     <td><?= $this->Number->format($formasPagamento->qtde_taxas) ?></td>
-                                    <td><?= h($formasPagamento->created) ?></td>
-                                    <td><?= h($formasPagamento->modified) ?></td>
+                                    <td><?= $this->Html->jsonToLista($formasPagamento->valor_taxas) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $formasPagamento->id]) ?>
                                         <?= $this->Form->postLink('Excluir', ['action' => 'delete', $formasPagamento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $formasPagamento->id)]) ?>

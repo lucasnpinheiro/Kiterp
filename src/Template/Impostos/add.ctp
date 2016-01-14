@@ -12,9 +12,9 @@ $this->Html->addCrumb('Cadastrar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($imposto) ?>
                 <?php
-                echo $this->Form->input('tipo_imposto');
-                echo $this->Form->input('codigo');
-                echo $this->Form->input('nome');
+                echo $this->Form->tipoImpostos('tipo_imposto', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('codigo', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-5']]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

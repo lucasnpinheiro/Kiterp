@@ -10,15 +10,16 @@ $this->Html->addCrumb('Cadastrar', null);
                 <h5><?= __('Cadastrar ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
-                <?= $this->Form->create($produto) ?>
+                <?= $this->Form->create($produto, ['type' => 'file']) ?>
                 <?php
-                echo $this->Form->input('barra');
-                echo $this->Form->input('nome');
-                echo $this->Form->input('unidade');
-                echo $this->Form->input('grupo_id');
-                echo $this->Form->input('produto_kit');
-                echo $this->Form->input('foto');
-                echo $this->Form->input('descricao');
+                echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                echo $this->Form->numero('barra', ['div' => ['maxlength' => 13, 'class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->numero('codigo_interno', ['maxlength' => 13, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('unidade', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->input('grupo_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->simNao('produto_kit', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->fileUpload('foto', ['type' => 'file', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                echo $this->Form->input('descricao', ['label' => 'Descrição', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

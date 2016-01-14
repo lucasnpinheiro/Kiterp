@@ -27,7 +27,6 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('estado') ?></th>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('icms_interno') ?></th>
@@ -38,11 +37,10 @@ $this->Html->addCrumb('Consultar', null);
                         <tbody>
                             <?php foreach ($icmsEstaduais as $icmsEstaduai): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($icmsEstaduai->id) ?></td>
                                     <td><?= h($icmsEstaduai->estado) ?></td>
                                     <td><?= h($icmsEstaduai->nome) ?></td>
-                                    <td><?= $this->Number->format($icmsEstaduai->icms_interno) ?></td>
-                                    <td><?= $this->Number->format($icmsEstaduai->icms_externo) ?></td>
+                                    <td><?= $this->Html->porcentagem($icmsEstaduai->icms_interno) ?></td>
+                                    <td><?= $this->Html->porcentagem($icmsEstaduai->icms_externo) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $icmsEstaduai->id]) ?>
                                     </td>

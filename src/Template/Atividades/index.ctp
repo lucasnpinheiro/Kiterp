@@ -27,7 +27,6 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
@@ -35,7 +34,6 @@ $this->Html->addCrumb('Consultar', null);
                         <tbody>
                             <?php foreach ($atividades as $atividade): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($atividade->id) ?></td>
                                     <td><?= h($atividade->nome) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $atividade->id]) ?>

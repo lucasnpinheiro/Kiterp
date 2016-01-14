@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use App\Model\Entity\FormasPagamento;
@@ -7,15 +8,15 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Search\Manager;
-
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 
 /**
  * FormasPagamentos Model
  *
  * @property \Cake\ORM\Association\BelongsToMany $Pedidos
  */
-class FormasPagamentosTable extends Table
-{
+class FormasPagamentosTable extends Table {
 
     /**
      * Initialize method
@@ -23,8 +24,7 @@ class FormasPagamentosTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('formas_pagamentos');
@@ -66,29 +66,41 @@ class FormasPagamentosTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('nome');
+                ->allowEmpty('nome');
 
         $validator
-            ->allowEmpty('abreviado');
+                ->allowEmpty('abreviado');
 
         $validator
-            ->add('qtde_dias', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('qtde_dias');
+                ->add('qtde_dias', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('qtde_dias');
 
         $validator
-            ->add('qtde_taxas', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('qtde_taxas');
+                ->add('qtde_taxas', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('qtde_taxas');
 
         $validator
-            ->allowEmpty('valor_taxas');
+                ->allowEmpty('valor_taxas');
 
         return $validator;
     }
+
+    public function beforeSave(Event $event, Entity $entity) {
+        $entity->valor_taxas = null;
+        if (isset($entity->valor) AND count($entity->valor) > 0) {
+            $taxas = [];
+            foreach ($entity->valor as $key => $value) {
+                $taxas[] = str_replace(',', '.', str_replace('.', '', $value['taxa']));
+            }
+            $entity->valor_taxas = json_encode($taxas);
+        }
+        return true;
+    }
+
 }

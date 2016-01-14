@@ -78,4 +78,9 @@ class ImpostosTable extends Table
 
         return $validator;
     }
+    
+    /*public function buildRules(RulesChecker $rules) {
+        $rules->add($rules->isUnique(['codigo']));
+        return $rules;
+    }*/
 }

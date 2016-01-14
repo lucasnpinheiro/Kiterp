@@ -94,6 +94,23 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
+    public function tipoImpostos($fieldName, array $options = array()) {
+        $options += [
+            'type' => 'select',
+            'options' => [
+                1 => __('Icms Simples Nacional'),
+                2 => __('Icms Regime Normal'),
+                3 => __('Ipi'),
+                4 => __('Cst Pis'),
+                5 => __('Cst Cofins'),
+                6 => __('Icms Origem'),
+                7 => __('Tabela Cfop'),
+            ],
+            'empty' => __('Selecionar um Tipo de Imposto')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
     public function tipoContribuinte($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',
@@ -440,14 +457,14 @@ class MyFormHelper extends BootstrapFormHelper {
         if (isset($options['value']) AND ! empty($options['value'])) {
             $file = ltrim($options['value'], '/');
             $list = pathinfo(WWW_ROOT . $file);
-            $image = '<span><img class="img-lg img-border img-circle" src="data:image/' . $list['extension'] . ';base64,' . base64_encode(file_get_contents($list['dirname'] . '/' . $list['basename'])) . '" title="' . $options['value'] . '"></span>';
+            $image = '<span><img class="" src="data:image/' . $list['extension'] . ';base64,' . base64_encode(file_get_contents($list['dirname'] . '/' . $list['basename'])) . '" title="' . $options['value'] . '"></span>';
         }
         unset($options['value']);
         $id = $this->_domId($fieldName);
         $this->Html->script('/js/upload.js', ['block' => 'script']);
         $this->Html->css('/css/upload.css', ['block' => 'css']);
         $this->Html->scriptBlock("document.getElementById('" . $id . "').addEventListener('change', handleFileSelect, false);", ['block' => 'script']);
-        return $this->input($fieldName, $options) . '<output id="listFileUpload">' . $image . '</output>';
+        return '<div class="col-xs-12"><output id="listFileUpload">' . $image . '</output>' . $this->input($fieldName, $options) . '</div>';
     }
 
     public function complementoSelect2($dados) {

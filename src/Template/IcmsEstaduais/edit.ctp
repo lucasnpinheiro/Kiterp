@@ -12,10 +12,10 @@ $this->Html->addCrumb('Alterar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($icmsEstaduai) ?>
                 <?php
-                echo $this->Form->input('estado');
-                echo $this->Form->input('nome');
-                echo $this->Form->input('icms_interno');
-                echo $this->Form->input('icms_externo');
+                echo $this->Form->input('estado', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->juros('icms_interno', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->juros('icms_externo', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

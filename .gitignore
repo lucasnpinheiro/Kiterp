@@ -3,6 +3,7 @@ CakePHP 3
 /vendor/*
 /tmp/*
 /logs/*
+/config/app.php
 
 CakePHP 2
 

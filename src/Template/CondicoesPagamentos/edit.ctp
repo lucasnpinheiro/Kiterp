@@ -12,10 +12,13 @@ $this->Html->addCrumb('Alterar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($condicoesPagamento) ?>
                 <?php
-                echo $this->Form->input('nome');
-                echo $this->Form->input('qtde_parcelas');
-                echo $this->Form->input('qtde_dias');
+                echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->numero('qtde_parcelas', ['label' => 'Parcelas', 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->numero('qtde_dias', ['label' => 'Dias corridos', 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->simNao('avista', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->inputStatic('parcela', implode(' / ', $condicoesPagamento->parcelas), ['label' => 'Parcelas', 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 ?>
+                <div class="clearfix"></div>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <div class="col-sm-12 text-right">

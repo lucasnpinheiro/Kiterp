@@ -42,8 +42,20 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         ];
         return $this->label($r[$id]['text'], $r[$id]['class']);
     }
-    
-    
+
+    public function tipoImpostos($id) {
+        $r = [
+            1 => ['text' => __('Icms Simples Nacional'), 'class' => 'info'],
+            2 => ['text' => __('Icms Regime Normal'), 'class' => 'info'],
+            3 => ['text' => __('Ipi'), 'class' => 'info'],
+            4 => ['text' => __('Cst Pis'), 'class' => 'info'],
+            5 => ['text' => __('Cst Cofins'), 'class' => 'info'],
+            6 => ['text' => __('Icms Origem'), 'class' => 'info'],
+            7 => ['text' => __('Tabela Cfop'), 'class' => 'info'],
+        ];
+        return $this->label($r[$id]['text'], $r[$id]['class']);
+    }
+
     public function tipoContribuinte($id) {
         $r = [
             1 => ['text' => __('Contribuinte Icms'), 'class' => 'primary'],
@@ -273,6 +285,18 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
             }
         }
         return null;
+    }
+
+    public function jsonToLista($dados) {
+        if (trim($dados) == '') {
+            return null;
+        }
+        $dados = json_decode($dados, true);
+        $lista = [];
+        foreach ($dados as $key => $value) {
+            $lista[] = '<li>Taxa ' . ($key + 1) . ': ' . $this->moeda($value) . '</li>';
+        }
+        return '<ul class="list-unstyled">' . implode('', $lista) . '</ul>';
     }
 
 }

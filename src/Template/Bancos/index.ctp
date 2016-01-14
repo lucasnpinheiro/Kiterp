@@ -27,26 +27,22 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('codigo_banco') ?></th>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('agencia') ?></th>
                                 <th><?= $this->Paginator->sort('conta_corrente') ?></th>
                                 <th><?= $this->Paginator->sort('sequencial_arquivo') ?></th>
-                                <th><?= $this->Paginator->sort('caminho_arquivo') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($bancos as $banco): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($banco->id) ?></td>
                                     <td><?= $this->Number->format($banco->codigo_banco) ?></td>
                                     <td><?= h($banco->nome) ?></td>
                                     <td><?= h($banco->agencia) ?></td>
                                     <td><?= h($banco->conta_corrente) ?></td>
                                     <td><?= $this->Number->format($banco->sequencial_arquivo) ?></td>
-                                    <td><?= h($banco->caminho_arquivo) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $banco->id]) ?>
                                         <?= $this->Form->postLink('Excluir', ['action' => 'delete', $banco->id], ['confirm' => __('Are you sure you want to delete # {0}?', $banco->id)]) ?>

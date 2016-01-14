@@ -1,0 +1,14 @@
+.thumb { 
+    height: 100px;     
+}
+div.file{
+    border: none;
+}
+.listFileUpload{
+    border: none;
+}
+.listFileUpload img{
+    max-height: 150px;
+    border: 1px solid;
+    padding: 15px;
+}
