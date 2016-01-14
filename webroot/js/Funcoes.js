@@ -113,20 +113,43 @@ cake.util.mascaras = function () {
         format: 'dd/mm/yyyy',
         language: 'pt-BR'
     });
-    $(".moeda").maskMoney({
-        prefix: 'R$ ',
-        allowNegative: true,
-        thousands: '.',
-        decimal: ',',
-        affixesStay: false
+    $(".moeda").each(function () {
+        if ($(this).prop('readonly') == false) {
+            $(this).maskMoney({
+                prefix: '',
+                allowNegative: true,
+                thousands: '.',
+                decimal: ',',
+                affixesStay: false
+            });
+        }
     });
-    $(".juros").maskMoney({
-        suffix: ' %',
-        allowNegative: false,
-        thousands: '.',
-        decimal: ',',
-        affixesStay: false
+    $(".juros").each(function () {
+        if ($(this).prop('readonly') == false) {
+            $(this).maskMoney({
+                suffix: '',
+                allowNegative: false,
+                thousands: '',
+                decimal: ',',
+                affixesStay: false,
+                precision: 4
+            });
+        }
     });
+    $(".quantidade").each(function () {
+        if ($(this).prop('readonly') == false) {
+            var casas = $(this).attr('casas');
+            $(this).maskMoney({
+                suffix: '',
+                allowNegative: false,
+                thousands: '',
+                decimal: ',',
+                affixesStay: false,
+                precision: parseInt(casas)
+            });
+        }
+    });
+
 
 };
 

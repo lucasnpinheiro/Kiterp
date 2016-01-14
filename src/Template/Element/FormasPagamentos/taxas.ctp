@@ -9,7 +9,7 @@
 
                 <div class="multi-field col-xs-3">
                     <?php
-                    echo $this->Form->moeda('valor.' . $key . '.taxa', ['value' => $this->Html->moeda($value), 'type' => 'text', 'div' => ['class' => 'col-xs-12']]);
+                    echo $this->Form->juros('valor.' . $key . '.taxa', ['value' => $this->Html->juros($value), 'type' => 'text', 'div' => ['class' => 'col-xs-12']]);
                     ?>
                 </div>
                 <?php
@@ -18,7 +18,7 @@
             ?>
             <div class="multi-field col-xs-3">
                 <?php
-                echo $this->Form->moeda('valor.0.taxa', ['type' => 'text', 'div' => ['class' => 'col-xs-12']]);
+                echo $this->Form->juros('valor.0.taxa', ['type' => 'text', 'div' => ['class' => 'col-xs-12']]);
                 ?>
             </div>
 

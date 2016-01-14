@@ -39,8 +39,8 @@ $this->Html->addCrumb('Consultar', null);
                                 <tr>
                                     <td><?= h($icmsEstaduai->estado) ?></td>
                                     <td><?= h($icmsEstaduai->nome) ?></td>
-                                    <td><?= $this->Html->porcentagem($icmsEstaduai->icms_interno) ?></td>
-                                    <td><?= $this->Html->porcentagem($icmsEstaduai->icms_externo) ?></td>
+                                    <td><?= $this->Html->juros($icmsEstaduai->icms_interno) ?></td>
+                                    <td><?= $this->Html->juros($icmsEstaduai->icms_externo) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $icmsEstaduai->id]) ?>
                                     </td>

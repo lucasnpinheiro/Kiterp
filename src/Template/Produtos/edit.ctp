@@ -10,25 +10,32 @@ $this->Html->addCrumb('Alterar', null);
                 <h5><?= __('Alterar ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
-                <?= $this->Form->create($produto) ?>
+                <?= $this->Form->create($produto, ['type' => 'file']) ?>
                 <?php
-                echo $this->Form->input('barra');
-                echo $this->Form->input('nome');
-                echo $this->Form->input('unidade');
-                echo $this->Form->input('grupo_id');
-                echo $this->Form->input('produto_kit');
-                echo $this->Form->input('foto');
-                echo $this->Form->input('descricao');
+                echo $this->Form->numero('barra', ['maxlength' => 13, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->numero('codigo_interno', ['maxlength' => 13, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('unidade', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->input('grupo_id', ['empty' => 'Selecione um Grupo', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->simNao('produto_kit', ['value' => '0', 'label' => 'KIT', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->fileUpload('foto', ['value' => ROOT . DS . 'webroot' . DS . 'ImagemProdutos' . DS . $produto->foto, 'type' => 'file', 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                echo $this->Form->input('descricao', ['label' => 'Descrição', 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 ?>
+                <div class="hr-line-dashed"></div>
+                <div class="clearfix"></div>
+                <?php echo $this->element('Produtos/valores'); ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <div class="col-sm-12 text-right">
-                        <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+<?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <?= $this->Form->end() ?>
+<?= $this->Form->end() ?>
             </div>
         </div>
     </div>
 </div>
+<?php
+echo $this->Html->script('/js/produtos.js', ['block' => 'script']);
+?>

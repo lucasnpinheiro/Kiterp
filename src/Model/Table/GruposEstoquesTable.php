@@ -27,7 +27,7 @@ class GruposEstoquesTable extends Table
         parent::initialize($config);
 
         $this->table('grupos_estoques');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

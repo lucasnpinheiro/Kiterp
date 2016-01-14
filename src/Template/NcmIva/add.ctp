@@ -17,8 +17,8 @@ $this->Html->addCrumb('Cadastrar/Alterar', null);
 
                 if (!empty($ncmIvaLista)) {
                     foreach ($ncmIvaLista as $key => $value) {
-                        $valoresIva[$value->ncm_id]['valor'] = $this->Html->porcentagem($value->iva, ['after' => null]);
-                        $valoresIva[$value->ncm_id]['tributo'] = $this->Html->porcentagem($value->perc_tributo, ['after' => null]);
+                        $valoresIva[$value->ncm_id]['valor'] = $this->Html->juros($value->iva, ['after' => null]);
+                        $valoresIva[$value->ncm_id]['tributo'] = $this->Html->juros($value->perc_tributo, ['after' => null]);
                     }
                 }
                 ?>

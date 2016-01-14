@@ -153,8 +153,8 @@ class ProdutosValoresTable extends Table
                 ->allowEmpty('percentual_ipi');
 
         $validator
-                ->add('percentuall_tributacao', 'valid', ['rule' => 'money'])
-                ->allowEmpty('percentuall_tributacao');
+                ->add('percentual_tributacao', 'valid', ['rule' => 'money'])
+                ->allowEmpty('percentual_tributacao');
 
         return $validator;
     }
@@ -170,7 +170,7 @@ class ProdutosValoresTable extends Table
     {
         $rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
         $rules->add($rules->existsIn(['produto_id'], 'Produtos'));
-        $rules->add($rules->existsIn(['ncm_id'], 'Ncms'));
+        //$rules->add($rules->existsIn(['ncm_id'], 'Ncms'));
         return $rules;
     }
 

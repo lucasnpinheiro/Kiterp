@@ -162,13 +162,26 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         return $this->Number->format($value, $currency);
     }
 
-    public function porcentagem($value, $options = []) {
+    public function juros($value, $options = []) {
         $currency = [
             'before' => '',
             'after' => '%',
-            'zero' => '00',
-            'places' => '2',
-            'precision' => '3',
+            'zero' => '0,0000',
+            'places' => '4',
+            'precision' => '4',
+            'locale' => 'pt_BR',
+        ];
+        $currency = \Cake\Utility\Hash::merge($currency, $options);
+        return $this->Number->format($value, $currency);
+    }
+
+    public function quantidade($value, $options = []) {
+        $currency = [
+            'before' => '',
+            'after' => '',
+            'zero' => '0,000',
+            'places' => '3',
+            'precision' => '4',
             'locale' => 'pt_BR',
         ];
         $currency = \Cake\Utility\Hash::merge($currency, $options);
@@ -287,14 +300,15 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         return null;
     }
 
-    public function jsonToLista($dados) {
+    public function jsonToLista($dados,$dias=0) {
+        if ($dias===0){return null;}
         if (trim($dados) == '') {
             return null;
         }
         $dados = json_decode($dados, true);
         $lista = [];
         foreach ($dados as $key => $value) {
-            $lista[] = '<li>Taxa ' . ($key + 1) . ': ' . $this->moeda($value) . '</li>';
+            $lista[] = '<li>Taxa ' . ($key + 1) . ': ' . $this->porcentagem($value) . '</li>';
         }
         return '<ul class="list-unstyled">' . implode('', $lista) . '</ul>';
     }

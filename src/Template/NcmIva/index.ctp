@@ -43,8 +43,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($ncmIva->ncm->nome) ?></td>
                                     <td><?= h($ncmIva->ncm->ncm) ?></td>
                                     <td><?= h($ncmIva->icms_estaduai->nome) ?></td>
-                                    <td><?= $this->Html->porcentagem($ncmIva->iva) ?></td>
-                                    <td><?= $this->Html->porcentagem($ncmIva->perc_tributo) ?></td>
+                                    <td><?= $this->Html->juros($ncmIva->iva) ?></td>
+                                    <td><?= $this->Html->juros($ncmIva->perc_tributo) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->linkPermissao('Alterar', ['action' => 'add', $ncmIva->icms_estadual_id], ['class' => 'btn-warning btn btn-xs', 'icon' => 'pencil']) ?>
                                     </td>

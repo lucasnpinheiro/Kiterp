@@ -25,7 +25,7 @@ use Cake\ORM\Entity;
  * @property float $percentual_pis
  * @property float $percentual_cofins
  * @property float $percentual_ipi
- * @property float $percentuall_tributacao
+ * @property float $percentual_tributacao
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  */

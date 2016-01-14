@@ -45,7 +45,7 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($empresa->codigo_cidade) ?></td>
                                     <td><?= $this->Html->simNao($empresa->regime_tributario) ?></td>
                                     <td><?= h($empresa->versao_sefaz) ?></td>
-                                    <td><?= $this->Html->porcentagem($empresa->perentual_tributo) ?></td>
+                                    <td><?= $this->Html->juros($empresa->perentual_tributo) ?></td>
                                     <td><?= h($empresa->hora_tzd) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $empresa->id]) ?>

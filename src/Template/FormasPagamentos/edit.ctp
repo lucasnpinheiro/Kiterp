@@ -14,8 +14,8 @@ $this->Html->addCrumb('Alterar', null);
                 <?php
                 echo $this->Form->input('nome', ['autofocus' => true, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 echo $this->Form->input('abreviado', ['label' => 'Nome abreviado', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
-                echo $this->Form->numero('qtde_dias', ['label' => 'Quantidade(s) de dia(s)', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
-                echo $this->Form->numero('qtde_taxas', ['label' => 'Quantidade(s) de taxa(s)', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->numero('qtde_dias', ['label' => 'Dias a Receber', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->numero('qtde_taxas', ['label' => 'Quantidade de Parcelas', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->element('FormasPagamentos/taxas');
                 ?>
                 <div class="clearfix"></div>
