@@ -6,10 +6,10 @@ cake.produtos.calcularPorcentagem = function () {
         var compra = cake.util.convertFloat($(this).closest('.tab-pane').find('.valor-compra').val());
         var calculo = (((venda - compra) / venda) * 100).toFixed(4);
         calculo = calculo.toString().replace('.', ',');
-        console.log(venda);
-        console.log(compra);
-        console.log(calculo);
         $(this).closest('.tab-pane').find('.margem').val(calculo);
+        if(venda < compra){
+            cake.msg.erro('Erro de calculo.', 'O valor da VENDA está menor que o de COMPRA.');
+        }
     });
 }
 

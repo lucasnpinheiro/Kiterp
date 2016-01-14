@@ -52,10 +52,11 @@ class ParametrosController extends AppController {
         if ($this->request->is('post')) {
             $parametro = $this->Parametros->patchEntity($parametro, $this->request->data);
             if ($this->Parametros->save($parametro)) {
-                $this->Flash->success(__('The parametro has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The parametro could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('parametro'));
@@ -76,10 +77,11 @@ class ParametrosController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $parametro = $this->Parametros->patchEntity($parametro, $this->request->data);
             if ($this->Parametros->save($parametro)) {
-                $this->Flash->success(__('The parametro has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The parametro could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('parametro'));
@@ -97,9 +99,10 @@ class ParametrosController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $parametro = $this->Parametros->get($id);
         if ($this->Parametros->delete($parametro)) {
-            $this->Flash->success(__('The parametro has been deleted.'));
-        } else {
-            $this->Flash->error(__('The parametro could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

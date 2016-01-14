@@ -52,10 +52,11 @@ class NotaFiscalEntradasController extends AppController {
         if ($this->request->is('post')) {
             $notaFiscalEntrada = $this->NotaFiscalEntradas->patchEntity($notaFiscalEntrada, $this->request->data);
             if ($this->NotaFiscalEntradas->save($notaFiscalEntrada)) {
-                $this->Flash->success(__('The nota fiscal entrada has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The nota fiscal entrada could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $empresas = $this->NotaFiscalEntradas->Empresas->find('list');
@@ -79,10 +80,11 @@ class NotaFiscalEntradasController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $notaFiscalEntrada = $this->NotaFiscalEntradas->patchEntity($notaFiscalEntrada, $this->request->data);
             if ($this->NotaFiscalEntradas->save($notaFiscalEntrada)) {
-                $this->Flash->success(__('The nota fiscal entrada has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The nota fiscal entrada could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $empresas = $this->NotaFiscalEntradas->Empresas->find('list');
@@ -103,9 +105,10 @@ class NotaFiscalEntradasController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $notaFiscalEntrada = $this->NotaFiscalEntradas->get($id);
         if ($this->NotaFiscalEntradas->delete($notaFiscalEntrada)) {
-            $this->Flash->success(__('The nota fiscal entrada has been deleted.'));
-        } else {
-            $this->Flash->error(__('The nota fiscal entrada could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

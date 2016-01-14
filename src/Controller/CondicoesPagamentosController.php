@@ -52,10 +52,10 @@ class CondicoesPagamentosController extends AppController {
         if ($this->request->is('post')) {
             $condicoesPagamento = $this->CondicoesPagamentos->patchEntity($condicoesPagamento, $this->request->data);
             if ($this->CondicoesPagamentos->save($condicoesPagamento)) {
-                $this->Flash->success(__('The condicoes pagamento has been saved.'));
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The condicoes pagamento could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('condicoesPagamento'));
@@ -76,10 +76,10 @@ class CondicoesPagamentosController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $condicoesPagamento = $this->CondicoesPagamentos->patchEntity($condicoesPagamento, $this->request->data);
             if ($this->CondicoesPagamentos->save($condicoesPagamento)) {
-                $this->Flash->success(__('The condicoes pagamento has been saved.'));
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The condicoes pagamento could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('condicoesPagamento'));
@@ -97,9 +97,10 @@ class CondicoesPagamentosController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $condicoesPagamento = $this->CondicoesPagamentos->get($id);
         if ($this->CondicoesPagamentos->delete($condicoesPagamento)) {
-            $this->Flash->success(__('The condicoes pagamento has been deleted.'));
-        } else {
-            $this->Flash->error(__('The condicoes pagamento could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

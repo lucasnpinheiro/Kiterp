@@ -52,10 +52,10 @@ class ContasPagarController extends AppController {
         if ($this->request->is('post')) {
             $contasPagar = $this->ContasPagar->patchEntity($contasPagar, $this->request->data);
             if ($this->ContasPagar->save($contasPagar)) {
-                $this->Flash->success(__('The contas pagar has been saved.'));
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The contas pagar could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $empresas = $this->ContasPagar->Empresas->find('list');
@@ -80,10 +80,10 @@ class ContasPagarController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $contasPagar = $this->ContasPagar->patchEntity($contasPagar, $this->request->data);
             if ($this->ContasPagar->save($contasPagar)) {
-                $this->Flash->success(__('The contas pagar has been saved.'));
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
                 return $this->redirect(['action' => 'index']);
             } else {
-                $this->Flash->error(__('The contas pagar could not be saved. Please, try again.'));
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $empresas = $this->ContasPagar->Empresas->find('list');
@@ -105,9 +105,10 @@ class ContasPagarController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $contasPagar = $this->ContasPagar->get($id);
         if ($this->ContasPagar->delete($contasPagar)) {
-            $this->Flash->success(__('The contas pagar has been deleted.'));
-        } else {
-            $this->Flash->error(__('The contas pagar could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

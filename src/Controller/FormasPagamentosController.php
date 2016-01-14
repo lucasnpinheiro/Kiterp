@@ -50,10 +50,11 @@ class FormasPagamentosController extends AppController {
         if ($this->request->is('post')) {
             $formasPagamento = $this->FormasPagamentos->patchEntity($formasPagamento, $this->request->data);
             if ($this->FormasPagamentos->save($formasPagamento)) {
-                $this->Flash->success(__('The formas pagamento has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The formas pagamento could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $pedidos = $this->FormasPagamentos->Pedidos->find('list');
@@ -73,10 +74,11 @@ class FormasPagamentosController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $formasPagamento = $this->FormasPagamentos->patchEntity($formasPagamento, $this->request->data);
             if ($this->FormasPagamentos->save($formasPagamento)) {
-                $this->Flash->success(__('The formas pagamento has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The formas pagamento could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $pedidos = $this->FormasPagamentos->Pedidos->find('list');
@@ -95,9 +97,10 @@ class FormasPagamentosController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $formasPagamento = $this->FormasPagamentos->get($id);
         if ($this->FormasPagamentos->delete($formasPagamento)) {
-            $this->Flash->success(__('The formas pagamento has been deleted.'));
-        } else {
-            $this->Flash->error(__('The formas pagamento could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

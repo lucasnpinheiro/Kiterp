@@ -129,6 +129,11 @@ class ProdutosTable extends Table
         return $rules;
     }
 
+    public function beforeSave(Event $event, Entity $entity)
+    {
+        $entity->unidade = strtoupper($entity->unidade);
+    }
+
     public function afterSave(Event $event, Entity $entity)
     {
         $ProdutosValores = TableRegistry::get('ProdutosValores');

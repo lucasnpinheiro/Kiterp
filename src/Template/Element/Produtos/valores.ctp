@@ -7,9 +7,10 @@ if (isset($produto->produtos_valores) and count($produto->produtos_valores) > 0)
         $lista_produtos_valores[$value->empresa_id] = $value;
     }
 }
+
 function prde($lista_produtos_valores, $empresa, $campo)
 {
-    if ($lista_produtos_valores[$empresa][$campo])
+    if (isset($lista_produtos_valores[$empresa][$campo]))
     {
         return$lista_produtos_valores[$empresa][$campo];
     }

@@ -26,7 +26,7 @@ class ProdutosController extends AppController
      */
     public function index()
     {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order('nome');
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order('Produtos.nome')->contain('GruposEstoques');
         $this->set('produtos', $this->paginate($query));
         $this->set('_serialize', ['produtos']);
     }
@@ -101,11 +101,11 @@ class ProdutosController extends AppController
             if ($this->Produtos->save($produto))
             {
                 $this->Produtos->updateAll(['foto' => $this->upload($produto->id)], ['id' => $produto->id]);
-                $this->Flash->success(__('The produto has been saved.'));
-                return $this->redirect(['plugin' => false, 'controller' => 'Produtos', 'action' => 'edit', $produto->id]);
-            } else
-            {
-                $this->Flash->error(__('The produto could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->loadModel('Empresas');
@@ -141,11 +141,11 @@ class ProdutosController extends AppController
 
             if ($this->Produtos->save($produto))
             {
-                $this->Flash->success(__('The produto has been saved.'));
-                return $this->redirect(['plugin' => false, 'controller' => 'Produtos', 'action' => 'edit', $id]);
-            } else
-            {
-                $this->Flash->error(__('The produto could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->loadModel('Empresas');
@@ -168,10 +168,10 @@ class ProdutosController extends AppController
         $produto = $this->Produtos->get($id);
         if ($this->Produtos->delete($produto))
         {
-            $this->Flash->success(__('The produto has been deleted.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
         } else
         {
-            $this->Flash->error(__('The produto could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

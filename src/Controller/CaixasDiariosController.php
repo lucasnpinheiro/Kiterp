@@ -62,11 +62,10 @@ class CaixasDiariosController extends AppController
                 $caixasDiario->numero_caixa = $caixasDiario->id;
                 $caixasDiario->data_abertura = date('Y-m-d H:i:s');
                 $this->CaixasDiarios->save($caixasDiario);
-                $this->Flash->success(__('The caixas diario has been saved.'));
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
                 return $this->redirect(['action' => 'index']);
-            } else
-            {
-                $this->Flash->error(__('The caixas diario could not be saved. Please, try again.'));
+            } else {
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         } else
         {
@@ -100,11 +99,10 @@ class CaixasDiariosController extends AppController
             $caixasDiario->data_encerramento = date('Y-m-d H:i:s');
             if ($this->CaixasDiarios->save($caixasDiario))
             {
-                $this->Flash->success(__('The caixas diario has been saved.'));
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
                 return $this->redirect(['action' => 'index']);
-            } else
-            {
-                $this->Flash->error(__('The caixas diario could not be saved. Please, try again.'));
+            } else {
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('caixasDiario'));
@@ -124,10 +122,10 @@ class CaixasDiariosController extends AppController
         $caixasDiario = $this->CaixasDiarios->get($id);
         if ($this->CaixasDiarios->delete($caixasDiario))
         {
-            $this->Flash->success(__('The caixas diario has been deleted.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
         } else
         {
-            $this->Flash->error(__('The caixas diario could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

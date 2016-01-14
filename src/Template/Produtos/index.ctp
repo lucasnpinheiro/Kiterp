@@ -28,26 +28,24 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
+                                <th><?= $this->Paginator->sort('foto') ?></th>
                                 <th><?= $this->Paginator->sort('barra') ?></th>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('unidade') ?></th>
                                 <th><?= $this->Paginator->sort('grupo_id') ?></th>
                                 <th><?= $this->Paginator->sort('produto_kit') ?></th>
-                                <th><?= $this->Paginator->sort('foto') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($produtos as $produto): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($produto->id) ?></td>
+                                    <td><?= $this->Html->image('/ImagemProdutos/' . $produto->foto, ['style'=>'max-height: 50px;','class' => 'img-responsive img-thumbnail']) ?></td>
                                     <td><?= h($produto->barra) ?></td>
                                     <td><?= h($produto->nome) ?></td>
                                     <td><?= h($produto->unidade) ?></td>
-                                    <td><?= $this->Number->format($produto->grupo_id) ?></td>
-                                    <td><?= $this->Number->format($produto->produto_kit) ?></td>
-                                    <td><?= h($produto->foto) ?></td>
+                                    <td><?= h($produto->grupos_estoque->nome) ?></td>
+                                    <td><?= $this->Html->simNao($produto->produto_kit) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $produto->id]) ?>
                                         <?= $this->Form->postLink('Excluir', ['action' => 'delete', $produto->id], ['confirm' => __('Are you sure you want to delete # {0}?', $produto->id)]) ?>

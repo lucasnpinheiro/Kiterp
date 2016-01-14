@@ -18,12 +18,10 @@ $this->Html->addCrumb('Cadastrar', null);
                 echo $this->Form->input('unidade', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->input('grupo_id', ['empty' => 'Selecione um Grupo', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->simNao('produto_kit', ['value' => '0', 'label' => 'KIT', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->element('Produtos/valores');
                 echo $this->Form->fileUpload('foto', ['type' => 'file', 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 echo $this->Form->input('descricao', ['label' => 'Descrição', 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 ?>
-                <div class="hr-line-dashed"></div>
-                <div class="clearfix"></div>
-                <?php echo $this->element('Produtos/valores'); ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <div class="col-sm-12 text-right">

@@ -52,10 +52,11 @@ class PedidosController extends AppController {
         if ($this->request->is('post')) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
-                $this->Flash->success(__('The pedido has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The pedido could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->loadModel('Pessoas');
@@ -83,10 +84,11 @@ class PedidosController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
-                $this->Flash->success(__('The pedido has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The pedido could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $empresas = $this->Pedidos->Empresas->find('list');
@@ -110,9 +112,10 @@ class PedidosController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $pedido = $this->Pedidos->get($id);
         if ($this->Pedidos->delete($pedido)) {
-            $this->Flash->success(__('The pedido has been deleted.'));
-        } else {
-            $this->Flash->error(__('The pedido could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

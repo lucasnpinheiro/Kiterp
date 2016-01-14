@@ -9,9 +9,11 @@ use App\Controller\AppController;
  *
  * @property \App\Model\Table\AtividadesTable $Atividades
  */
-class AtividadesController extends AppController {
+class AtividadesController extends AppController
+{
 
-    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null)
+    {
         parent::__construct($request, $response, $name, $eventManager, $components);
         $this->set('title', 'Atividades');
     }
@@ -21,7 +23,8 @@ class AtividadesController extends AppController {
      *
      * @return void
      */
-    public function index() {
+    public function index()
+    {
         $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order('nome');
         $this->set('atividades', $this->paginate($query));
         $this->set('_serialize', ['atividades']);
@@ -34,7 +37,8 @@ class AtividadesController extends AppController {
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
         $atividade = $this->Atividades->get($id, [
             'contain' => []
         ]);
@@ -47,15 +51,19 @@ class AtividadesController extends AppController {
      *
      * @return void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
         $atividade = $this->Atividades->newEntity();
-        if ($this->request->is('post')) {
+        if ($this->request->is('post'))
+        {
             $atividade = $this->Atividades->patchEntity($atividade, $this->request->data);
-            if ($this->Atividades->save($atividade)) {
-                $this->Flash->success(__('The atividade has been saved.'));
+            if ($this->Atividades->save($atividade))
+            {
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The atividade could not be saved. Please, try again.'));
+            } else
+            {
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('atividade'));
@@ -69,17 +77,21 @@ class AtividadesController extends AppController {
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null) {
+    public function edit($id = null)
+    {
         $atividade = $this->Atividades->get($id, [
             'contain' => []
         ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        if ($this->request->is(['patch', 'post', 'put']))
+        {
             $atividade = $this->Atividades->patchEntity($atividade, $this->request->data);
-            if ($this->Atividades->save($atividade)) {
-                $this->Flash->success(__('The atividade has been saved.'));
+            if ($this->Atividades->save($atividade))
+            {
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
                 return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The atividade could not be saved. Please, try again.'));
+            } else
+            {
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('atividade'));
@@ -93,13 +105,16 @@ class AtividadesController extends AppController {
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         $this->request->allowMethod(['post', 'delete']);
         $atividade = $this->Atividades->get($id);
-        if ($this->Atividades->delete($atividade)) {
-            $this->Flash->success(__('The atividade has been deleted.'));
-        } else {
-            $this->Flash->error(__('The atividade could not be deleted. Please, try again.'));
+        if ($this->Atividades->delete($atividade))
+        {
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

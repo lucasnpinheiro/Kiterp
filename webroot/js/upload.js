@@ -17,7 +17,7 @@ function handleFileSelect(evt) {
             return function (e) {
                 // Render thumbnail.
                 var span = document.createElement('span');
-                span.innerHTML = ['<img class=\"\" src=\"', e.target.result, '\" title=\"', escape(theFile.name), '\"/>'].join('');
+                span.innerHTML = ['<img style=\"max-height: 150px;\" class=\"img-responsive img-thumbnail\" src=\"', e.target.result, '\" title=\"', escape(theFile.name), '\"/>'].join('');
                 document.getElementById('listFileUpload').insertBefore(span, null);
             };
         })(f);

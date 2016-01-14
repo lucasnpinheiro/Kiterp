@@ -52,10 +52,11 @@ class ProdutosKitsController extends AppController {
         if ($this->request->is('post')) {
             $produtosKit = $this->ProdutosKits->patchEntity($produtosKit, $this->request->data);
             if ($this->ProdutosKits->save($produtosKit)) {
-                $this->Flash->success(__('The produtos kit has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The produtos kit could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $empresas = $this->ProdutosKits->Empresas->find('list');
@@ -79,10 +80,11 @@ class ProdutosKitsController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $produtosKit = $this->ProdutosKits->patchEntity($produtosKit, $this->request->data);
             if ($this->ProdutosKits->save($produtosKit)) {
-                $this->Flash->success(__('The produtos kit has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The produtos kit could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $empresas = $this->ProdutosKits->Empresas->find('list');
@@ -103,9 +105,10 @@ class ProdutosKitsController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $produtosKit = $this->ProdutosKits->get($id);
         if ($this->ProdutosKits->delete($produtosKit)) {
-            $this->Flash->success(__('The produtos kit has been deleted.'));
-        } else {
-            $this->Flash->error(__('The produtos kit could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

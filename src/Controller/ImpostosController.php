@@ -54,10 +54,11 @@ class ImpostosController extends AppController
         if ($this->request->is('post')) {
             $imposto = $this->Impostos->patchEntity($imposto, $this->request->data);
             if ($this->Impostos->save($imposto)) {
-                $this->Flash->success(__('The imposto has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The imposto could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('imposto'));
@@ -79,10 +80,11 @@ class ImpostosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $imposto = $this->Impostos->patchEntity($imposto, $this->request->data);
             if ($this->Impostos->save($imposto)) {
-                $this->Flash->success(__('The imposto has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The imposto could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('imposto'));
@@ -101,9 +103,10 @@ class ImpostosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $imposto = $this->Impostos->get($id);
         if ($this->Impostos->delete($imposto)) {
-            $this->Flash->success(__('The imposto has been deleted.'));
-        } else {
-            $this->Flash->error(__('The imposto could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

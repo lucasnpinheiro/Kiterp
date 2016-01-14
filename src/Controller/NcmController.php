@@ -52,10 +52,11 @@ class NcmController extends AppController {
         if ($this->request->is('post')) {
             $ncm = $this->Ncm->patchEntity($ncm, $this->request->data);
             if ($this->Ncm->save($ncm)) {
-                $this->Flash->success(__('The ncm has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The ncm could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('ncm'));
@@ -76,10 +77,11 @@ class NcmController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $ncm = $this->Ncm->patchEntity($ncm, $this->request->data);
             if ($this->Ncm->save($ncm)) {
-                $this->Flash->success(__('The ncm has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The ncm could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('ncm'));
@@ -97,9 +99,10 @@ class NcmController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $ncm = $this->Ncm->get($id);
         if ($this->Ncm->delete($ncm)) {
-            $this->Flash->success(__('The ncm has been deleted.'));
-        } else {
-            $this->Flash->error(__('The ncm could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

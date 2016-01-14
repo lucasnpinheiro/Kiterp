@@ -54,10 +54,11 @@ class TiposContatosController extends AppController
         if ($this->request->is('post')) {
             $tiposContato = $this->TiposContatos->patchEntity($tiposContato, $this->request->data);
             if ($this->TiposContatos->save($tiposContato)) {
-                $this->Flash->success(__('The tipos contato has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The tipos contato could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('tiposContato'));
@@ -79,10 +80,11 @@ class TiposContatosController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $tiposContato = $this->TiposContatos->patchEntity($tiposContato, $this->request->data);
             if ($this->TiposContatos->save($tiposContato)) {
-                $this->Flash->success(__('The tipos contato has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The tipos contato could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('tiposContato'));
@@ -101,9 +103,10 @@ class TiposContatosController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $tiposContato = $this->TiposContatos->get($id);
         if ($this->TiposContatos->delete($tiposContato)) {
-            $this->Flash->success(__('The tipos contato has been deleted.'));
-        } else {
-            $this->Flash->error(__('The tipos contato could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

@@ -52,10 +52,11 @@ class GruposController extends AppController {
         if ($this->request->is('post')) {
             $grupo = $this->Grupos->patchEntity($grupo, $this->request->data);
             if ($this->Grupos->save($grupo)) {
-                $this->Flash->success(__('The grupo has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The grupo could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $menus = $this->Grupos->Menus->find('list');
@@ -78,10 +79,11 @@ class GruposController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $grupo = $this->Grupos->patchEntity($grupo, $this->request->data);
             if ($this->Grupos->save($grupo)) {
-                $this->Flash->success(__('The grupo has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The grupo could not be saved. Please, try again.'));
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index']);
+                } else
+                {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $menus = $this->Grupos->Menus->find('list');
@@ -101,9 +103,10 @@ class GruposController extends AppController {
         $this->request->allowMethod(['post', 'delete']);
         $grupo = $this->Grupos->get($id);
         if ($this->Grupos->delete($grupo)) {
-            $this->Flash->success(__('The grupo has been deleted.'));
-        } else {
-            $this->Flash->error(__('The grupo could not be deleted. Please, try again.'));
+            $this->Flash->success(__('Registro Excluido com Sucesso.'));
+        } else
+        {
+            $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
     }

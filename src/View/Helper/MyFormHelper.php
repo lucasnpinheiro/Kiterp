@@ -525,8 +525,11 @@ class MyFormHelper extends BootstrapFormHelper
         $image = '';
         if (isset($options['value']) AND ! empty($options['value']))
         {
-            $list = pathinfo($options['value']);
-            $image = '<span><img class="" src="data:image/' . $list['extension'] . ';base64,' . base64_encode(file_get_contents($list['dirname'] . '/' . $list['basename'])) . '" title="' . $options['value'] . '"></span>';
+            if (file_exists($options['value']) and ! is_dir($options['value']))
+            {
+                $list = pathinfo($options['value']);
+                $image = '<span><img style="max-height: 150px;" class="img-responsive img-thumbnail" src="data:image/' . $list['extension'] . ';base64,' . base64_encode(file_get_contents($list['dirname'] . '/' . $list['basename'])) . '" title="' . $options['value'] . '"></span>';
+            }
         }
         $options['type'] = 'file';
         unset($options['value']);
