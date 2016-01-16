@@ -37,7 +37,7 @@ if (count($lista_menus)) {
         <ul class="nav navbar-top-links navbar-right">
             <li>
                 <a href="<?php echo $this->Url->build('/usuarios/edit/' . $this->request->session()->read('Auth.User.id')) ?>">
-                    <i class="fa fa-user"></i> <?php echo $this->request->session()->read('Auth.User.nome'); ?>
+                    <i class="fa fa-user"></i> <?php echo $this->request->session()->read('Auth.User.username'); ?>
                 </a>
             </li>
             <li>

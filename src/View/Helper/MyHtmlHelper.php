@@ -257,6 +257,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
                     Menu.controller,
                     Menu.action,
                     Menu.grupos,
+                    Menu.sub_grupos,
                     Menu.icone
                 FROM
                     menus AS Menu
@@ -269,7 +270,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
                         AND Menu.status = 1
                         AND Menu.root ' . ($this->request->session()->read('Auth.User.root') == 1 ? 'IN(0,1)' : '= 0') . '
                         AND Menu.item_menu = 1
-                GROUP BY Menu.id ORDER BY Menu.grupos ASC, Menu.titulo ASC';
+                GROUP BY Menu.id ORDER BY Menu.ordem ASC, Menu.grupos ASC, Menu.titulo ASC';
         $menus = \Cake\Datasource\ConnectionManager::get('default');
         return $menus->execute($sql)->fetchAll('assoc');
     }

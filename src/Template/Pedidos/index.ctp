@@ -36,8 +36,6 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('data_pedido') ?></th>
                                 <th><?= $this->Paginator->sort('status') ?></th>
                                 <th><?= $this->Paginator->sort('pessoa_id', 'Cliente') ?></th>
-                                <th><?= $this->Paginator->sort('condicao_pagamento_id') ?></th>
-                                <th><?= $this->Paginator->sort('vendedor_id') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
@@ -49,8 +47,6 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($pedido->data_pedido) ?></td>
                                     <td><?= $this->Html->statusPedido($pedido->status) ?></td>
                                     <td><?= $this->Html->link($pedido->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $pedido->pessoa->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td><?= $this->Number->format($pedido->condicao_pagamento_id) ?></td>
-                                    <td><?= $this->Html->link($pedido->vendedore->nome, ['controller' => 'Pessoas', 'action' => 'edit', $pedido->vendedore->id], ['icon' => 'external-link-square']) ?></td>
                                     <td class="actions">
                                         <?= $this->Html->link('Alterar', ['action' => 'edit', $pedido->id]) ?>
                                         <?= $this->Form->postLink('Excluir', ['action' => 'delete', $pedido->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pedido->id)]) ?>
