@@ -22,7 +22,9 @@ class PedidosController extends AppController {
      * @return void
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Pessoas', 'Vendedores','Empresas'=> function($q) {
+        return $q->contain('Pessoas')->autoFields(true);
+    }]);
         $this->set('pedidos', $this->paginate($query));
         $this->set('_serialize', ['pedidos']);
     }

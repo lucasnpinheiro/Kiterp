@@ -41,7 +41,7 @@ class PedidosTable extends Table {
         ]);
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoa_id',
-            'conditions' => ['PessoasAssociacoes.tipo_associacao' => 2, 'Pessoas.status' => 1],
+            //'conditions' => ['PessoasAssociacoes.tipo_associacao' => 2, 'Pessoas.status' => 1],
         ]);
         $this->belongsTo('CondicoesPagamentos', [
             'foreignKey' => 'condicao_pagamento_id'
@@ -49,7 +49,7 @@ class PedidosTable extends Table {
         $this->belongsTo('Vendedores', [
             'className' => 'Pessoas',
             'foreignKey' => 'vendedor_id',
-            'conditions' => ['PessoasAssociacoes.tipo_associacao' => 4, 'Vendedores.status' => 1],
+            //'conditions' => ['PessoasAssociacoes.tipo_associacao' => 4, 'Vendedores.status' => 1],
         ]);
         $this->belongsTo('Transportadoras', [
             'foreignKey' => 'transportadora_id'

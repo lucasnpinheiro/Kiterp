@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.24, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.6.24, for linux-glibc2.5 (x86_64)
 --
 -- Host: 127.0.0.1    Database: kiterp
 -- ------------------------------------------------------
--- Server version	5.6.26
+-- Server version	5.5.5-10.0.21-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -34,6 +34,7 @@ CREATE TABLE `atividades` (
 --
 -- Dumping data for table `atividades`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `atividades` WRITE;
 /*!40000 ALTER TABLE `atividades` DISABLE KEYS */;
@@ -70,6 +71,7 @@ CREATE TABLE `bancos` (
 --
 -- Dumping data for table `bancos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `bancos` WRITE;
 /*!40000 ALTER TABLE `bancos` DISABLE KEYS */;
@@ -107,6 +109,7 @@ CREATE TABLE `caixas_diarios` (
 --
 -- Dumping data for table `caixas_diarios`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `caixas_diarios` WRITE;
 /*!40000 ALTER TABLE `caixas_diarios` DISABLE KEYS */;
@@ -139,6 +142,7 @@ CREATE TABLE `caixas_movimentos` (
 --
 -- Dumping data for table `caixas_movimentos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `caixas_movimentos` WRITE;
 /*!40000 ALTER TABLE `caixas_movimentos` DISABLE KEYS */;
@@ -167,6 +171,7 @@ CREATE TABLE `condicoes_pagamentos` (
 --
 -- Dumping data for table `condicoes_pagamentos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `condicoes_pagamentos` WRITE;
 /*!40000 ALTER TABLE `condicoes_pagamentos` DISABLE KEYS */;
@@ -197,6 +202,7 @@ CREATE TABLE `contas` (
 --
 -- Dumping data for table `contas`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `contas` WRITE;
 /*!40000 ALTER TABLE `contas` DISABLE KEYS */;
@@ -231,6 +237,7 @@ CREATE TABLE `contas_pagar` (
 --
 -- Dumping data for table `contas_pagar`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `contas_pagar` WRITE;
 /*!40000 ALTER TABLE `contas_pagar` DISABLE KEYS */;
@@ -268,6 +275,7 @@ CREATE TABLE `contas_receber` (
 --
 -- Dumping data for table `contas_receber`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `contas_receber` WRITE;
 /*!40000 ALTER TABLE `contas_receber` DISABLE KEYS */;
@@ -291,16 +299,17 @@ CREATE TABLE `empresas` (
   `perentual_tributo` float(4,2) DEFAULT NULL,
   `hora_tzd` varchar(6) DEFAULT NULL COMMENT '-03:00 - Horario Normal | -02:00 - Horario Verao',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `empresas`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `empresas` WRITE;
 /*!40000 ALTER TABLE `empresas` DISABLE KEYS */;
-INSERT  IGNORE INTO `empresas` (`id`, `pessoa_id`, `codigo_cidade`, `regime_tributario`, `produto`, `versao_sefaz`, `perentual_tributo`, `hora_tzd`) VALUES (1,28,123456,1,1,'1235',18.00,'-03:00'),(2,25,123,0,1,'123',18.00,'-03:00');
+INSERT  IGNORE INTO `empresas` (`id`, `pessoa_id`, `codigo_cidade`, `regime_tributario`, `produto`, `versao_sefaz`, `perentual_tributo`, `hora_tzd`) VALUES (1,28,123456,1,1,'1235',18.00,'-03:00');
 /*!40000 ALTER TABLE `empresas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -328,6 +337,7 @@ CREATE TABLE `formas_pagamentos` (
 --
 -- Dumping data for table `formas_pagamentos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `formas_pagamentos` WRITE;
 /*!40000 ALTER TABLE `formas_pagamentos` DISABLE KEYS */;
@@ -355,6 +365,7 @@ CREATE TABLE `grupos` (
 --
 -- Dumping data for table `grupos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `grupos` WRITE;
 /*!40000 ALTER TABLE `grupos` DISABLE KEYS */;
@@ -381,6 +392,7 @@ CREATE TABLE `grupos_estoques` (
 --
 -- Dumping data for table `grupos_estoques`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `grupos_estoques` WRITE;
 /*!40000 ALTER TABLE `grupos_estoques` DISABLE KEYS */;
@@ -410,6 +422,7 @@ CREATE TABLE `icms_estaduais` (
 --
 -- Dumping data for table `icms_estaduais`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `icms_estaduais` WRITE;
 /*!40000 ALTER TABLE `icms_estaduais` DISABLE KEYS */;
@@ -438,6 +451,7 @@ CREATE TABLE `impostos` (
 --
 -- Dumping data for table `impostos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `impostos` WRITE;
 /*!40000 ALTER TABLE `impostos` DISABLE KEYS */;
@@ -472,10 +486,11 @@ CREATE TABLE `menus` (
 --
 -- Dumping data for table `menus`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `menus` WRITE;
 /*!40000 ALTER TABLE `menus` DISABLE KEYS */;
-INSERT  IGNORE INTO `menus` (`id`, `titulo`, `plugin`, `controller`, `action`, `status`, `root`, `item_menu`, `grupos`, `icone`, `created`, `modifield`) VALUES (1,'Atividades',NULL,'Atividades','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(2,'Cadastrar',NULL,'Atividades','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(3,'Alrerar',NULL,'Atividades','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(4,'Excluir',NULL,'Atividades','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:44:18','2016-01-06 15:44:18'),(5,'Bancos',NULL,'Bancos','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(6,'Cadastrar',NULL,'Bancos','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(7,'Alrerar',NULL,'Bancos','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(8,'Excluir',NULL,'Bancos','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(9,'Abertura',NULL,'CaixasDiarios','index',1,0,1,'Caixa Diário',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(10,'Cadastrar',NULL,'CaixasDiarios','add',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(11,'Alrerar',NULL,'CaixasDiarios','edit',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(12,'Excluir',NULL,'CaixasDiarios','delete',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(13,'Movimentação',NULL,'CaixasMovimentos','index',1,0,1,'Caixa Diário',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(14,'Cadastrar',NULL,'CaixasMovimentos','add',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(15,'Alrerar',NULL,'CaixasMovimentos','edit',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(16,'Excluir',NULL,'CaixasMovimentos','delete',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(17,'Condições de pagamentos',NULL,'CondicoesPagamentos','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:46:58','2016-01-06 15:46:58'),(18,'Cadastrar',NULL,'CondicoesPagamentos','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(19,'Alrerar',NULL,'CondicoesPagamentos','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(20,'Excluir',NULL,'CondicoesPagamentos','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(21,'Contas',NULL,'Contas','index',1,0,1,'Financeiro',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(22,'Cadastrar',NULL,'Contas','add',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(23,'Alrerar',NULL,'Contas','edit',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(24,'Excluir',NULL,'Contas','delete',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(25,'Pagar',NULL,'ContasPagar','index',1,0,1,'Financeiro',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(26,'Cadastrar',NULL,'ContasPagar','add',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(27,'Alrerar',NULL,'ContasPagar','edit',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(28,'Excluir',NULL,'ContasPagar','delete',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(29,'Receber',NULL,'ContasReceber','index',1,0,1,'Financeiro',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(30,'Cadastrar',NULL,'ContasReceber','add',1,0,0,'Financeiro',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(31,'Alrerar',NULL,'ContasReceber','edit',1,0,0,'Financeiro',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(32,'Excluir',NULL,'ContasReceber','delete',1,0,0,'Financeiro',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(33,'Empresas',NULL,'Empresas','index',1,0,1,'Parâmetros',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(34,'Cadastrar',NULL,'Empresas','add',1,0,0,'Parâmetros',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(35,'Alrerar',NULL,'Empresas','edit',1,0,0,'Parâmetros',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(36,'Excluir',NULL,'Empresas','delete',1,0,0,'Parâmetros',NULL,'2016-01-06 15:48:31','2016-01-06 15:48:31'),(37,'Formas de pagamentos',NULL,'FormasPagamentos','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(38,'Cadastrar',NULL,'FormasPagamentos','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(39,'Alrerar',NULL,'FormasPagamentos','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(40,'Excluir',NULL,'FormasPagamentos','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:48:54','2016-01-06 15:48:54'),(41,'Grupos de estoques',NULL,'GruposEstoques','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(42,'Cadastrar',NULL,'GruposEstoques','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(43,'Alrerar',NULL,'GruposEstoques','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(44,'Excluir',NULL,'GruposEstoques','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(45,'Icms Estaduais',NULL,'IcmsEstaduais','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:49:54','2016-01-06 15:49:54'),(46,'Cadastrar',NULL,'IcmsEstaduais','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:49:54','2016-01-06 15:49:54'),(47,'Alrerar',NULL,'IcmsEstaduais','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:49:55','2016-01-06 15:49:55'),(48,'Excluir',NULL,'IcmsEstaduais','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:49:55','2016-01-06 15:49:55'),(49,'Impostos',NULL,'Impostos','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(50,'Cadastrar',NULL,'Impostos','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(51,'Alrerar',NULL,'Impostos','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(52,'Excluir',NULL,'Impostos','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(53,'NCM',NULL,'Ncm','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:50:29','2016-01-06 15:50:29'),(54,'Cadastrar',NULL,'Ncm','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:29','2016-01-06 15:50:29'),(55,'Alrerar',NULL,'Ncm','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:30','2016-01-06 15:50:30'),(56,'Excluir',NULL,'Ncm','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:30','2016-01-06 15:50:30'),(57,'NCM IVA',NULL,'NcmIva','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(58,'Cadastrar',NULL,'NcmIva','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(59,'Alrerar',NULL,'NcmIva','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(60,'Excluir',NULL,'NcmIva','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(61,'Nfe Entradas',NULL,'NotasFiscaisEntadas','index',1,0,1,'Compras',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(62,'Cadastrar',NULL,'NotasFiscaisEntadas','add',1,0,0,'Compras',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(63,'Alrerar',NULL,'NotasFiscaisEntadas','edit',1,0,0,'Compras',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(64,'Excluir',NULL,'NotasFiscaisEntadas','delete',1,0,0,'Compras',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(65,'Digitar Nfe',NULL,'NotasFiscaisSaidas','index',1,0,1,'Fiscal',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(66,'Cadastrar',NULL,'NotasFiscaisSaidas','add',1,0,0,'Fiscal',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(67,'Alrerar',NULL,'NotasFiscaisSaidas','edit',1,0,0,'Fiscal',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(68,'Excluir',NULL,'NotasFiscaisSaidas','delete',1,0,0,'Fiscal',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(69,'Listar pedidos',NULL,'Pedidos','index',1,0,1,'Vendas',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(70,'Novo pedido',NULL,'Pedidos','add',1,0,1,'Vendas',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(71,'Alrerar',NULL,'Pedidos','edit',1,0,0,'Vendas',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(72,'Excluir',NULL,'Pedidos','delete',1,0,0,'Vendas',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(73,'Pessoas',NULL,'Pessoas','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(74,'Cadastrar',NULL,'Pessoas','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(75,'Alrerar',NULL,'Pessoas','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(76,'Excluir',NULL,'Pessoas','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(77,'Produtos',NULL,'Produtos','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(78,'Cadastrar',NULL,'Produtos','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(79,'Alrerar',NULL,'Produtos','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(80,'Excluir',NULL,'Produtos','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(81,'Kits',NULL,'ProdutosKits','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(82,'Cadastrar',NULL,'ProdutosKits','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(83,'Alrerar',NULL,'ProdutosKits','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(84,'Excluir',NULL,'ProdutosKits','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(85,'Tipos de contatos',NULL,'TiposContatos','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(86,'Cadastrar',NULL,'TiposContatos','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(87,'Alrerar',NULL,'TiposContatos','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(88,'Excluir',NULL,'TiposContatos','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(89,'Transportadoras',NULL,'Transportadoras','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(90,'Cadastrar',NULL,'Transportadoras','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(91,'Alrerar',NULL,'Transportadoras','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(92,'Excluir',NULL,'Transportadoras','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(93,'Usuários',NULL,'Usuarios','index',1,0,1,'Parâmetros',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(94,'Cadastrar',NULL,'Usuarios','add',0,0,0,'Parâmetros',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(95,'Alrerar',NULL,'Usuarios','edit',1,0,0,'Parâmetros',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(96,'Excluir',NULL,'Usuarios','delete',1,0,0,'Parâmetros',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02');
+INSERT  IGNORE INTO `menus` (`id`, `titulo`, `plugin`, `controller`, `action`, `status`, `root`, `item_menu`, `grupos`, `icone`, `created`, `modifield`) VALUES (1,'Atividades',NULL,'Atividades','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(2,'Cadastrar',NULL,'Atividades','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(3,'Alrerar',NULL,'Atividades','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:44:17','2016-01-06 15:44:17'),(4,'Excluir',NULL,'Atividades','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:44:18','2016-01-06 15:44:18'),(5,'Bancos',NULL,'Bancos','index',1,0,1,'Financeiro',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(6,'Cadastrar',NULL,'Bancos','add',1,0,0,'Financeiro',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(7,'Alrerar',NULL,'Bancos','edit',1,0,0,'Financeiro',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(8,'Excluir',NULL,'Bancos','delete',1,0,0,'Financeiro',NULL,'2016-01-06 15:45:17','2016-01-06 15:45:17'),(9,'Abertura',NULL,'CaixasDiarios','index',1,0,1,'Caixa Diário',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(10,'Cadastrar',NULL,'CaixasDiarios','add',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(11,'Alrerar',NULL,'CaixasDiarios','edit',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(12,'Excluir',NULL,'CaixasDiarios','delete',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:45:49','2016-01-06 15:45:49'),(13,'Movimentação',NULL,'CaixasMovimentos','index',1,0,1,'Caixa Diário',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(14,'Cadastrar',NULL,'CaixasMovimentos','add',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(15,'Alrerar',NULL,'CaixasMovimentos','edit',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(16,'Excluir',NULL,'CaixasMovimentos','delete',1,0,0,'Caixa Diário',NULL,'2016-01-06 15:46:17','2016-01-06 15:46:17'),(17,'Condições de pagamentos',NULL,'CondicoesPagamentos','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:46:58','2016-01-06 15:46:58'),(18,'Cadastrar',NULL,'CondicoesPagamentos','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(19,'Alrerar',NULL,'CondicoesPagamentos','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(20,'Excluir',NULL,'CondicoesPagamentos','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:46:59','2016-01-06 15:46:59'),(21,'Contas',NULL,'Contas','index',1,0,1,'Financeiro',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(22,'Cadastrar',NULL,'Contas','add',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(23,'Alrerar',NULL,'Contas','edit',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(24,'Excluir',NULL,'Contas','delete',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:22','2016-01-06 15:47:22'),(25,'Pagar',NULL,'ContasPagar','index',1,0,1,'Financeiro',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(26,'Cadastrar',NULL,'ContasPagar','add',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(27,'Alrerar',NULL,'ContasPagar','edit',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(28,'Excluir',NULL,'ContasPagar','delete',1,0,0,'Financeiro',NULL,'2016-01-06 15:47:45','2016-01-06 15:47:45'),(29,'Receber',NULL,'ContasReceber','index',1,0,1,'Financeiro',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(30,'Cadastrar',NULL,'ContasReceber','add',1,0,0,'Financeiro',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(31,'Alrerar',NULL,'ContasReceber','edit',1,0,0,'Financeiro',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(32,'Excluir',NULL,'ContasReceber','delete',1,0,0,'Financeiro',NULL,'2016-01-06 15:48:05','2016-01-06 15:48:05'),(33,'Empresas',NULL,'Empresas','index',1,0,1,'Parâmetros',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(34,'Cadastrar',NULL,'Empresas','add',1,0,0,'Parâmetros',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(35,'Alrerar',NULL,'Empresas','edit',1,0,0,'Parâmetros',NULL,'2016-01-06 15:48:30','2016-01-06 15:48:30'),(36,'Excluir',NULL,'Empresas','delete',1,0,0,'Parâmetros',NULL,'2016-01-06 15:48:31','2016-01-06 15:48:31'),(37,'Formas de pagamentos',NULL,'FormasPagamentos','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(38,'Cadastrar',NULL,'FormasPagamentos','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(39,'Alrerar',NULL,'FormasPagamentos','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:48:53','2016-01-06 15:48:53'),(40,'Excluir',NULL,'FormasPagamentos','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:48:54','2016-01-06 15:48:54'),(41,'Grupos de estoques',NULL,'GruposEstoques','index',1,0,1,'Produtos',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(42,'Cadastrar',NULL,'GruposEstoques','add',1,0,0,'Produtos',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(43,'Alrerar',NULL,'GruposEstoques','edit',1,0,0,'Produtos',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(44,'Excluir',NULL,'GruposEstoques','delete',1,0,0,'Produtos',NULL,'2016-01-06 15:49:22','2016-01-06 15:49:22'),(45,'Icms Estaduais',NULL,'IcmsEstaduais','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:49:54','2016-01-06 15:49:54'),(46,'Cadastrar',NULL,'IcmsEstaduais','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:49:54','2016-01-06 15:49:54'),(47,'Alrerar',NULL,'IcmsEstaduais','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:49:55','2016-01-06 15:49:55'),(48,'Excluir',NULL,'IcmsEstaduais','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:49:55','2016-01-06 15:49:55'),(49,'Impostos',NULL,'Impostos','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(50,'Cadastrar',NULL,'Impostos','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(51,'Alrerar',NULL,'Impostos','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(52,'Excluir',NULL,'Impostos','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:14','2016-01-06 15:50:14'),(53,'NCM',NULL,'Ncm','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:50:29','2016-01-06 15:50:29'),(54,'Cadastrar',NULL,'Ncm','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:29','2016-01-06 15:50:29'),(55,'Alrerar',NULL,'Ncm','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:30','2016-01-06 15:50:30'),(56,'Excluir',NULL,'Ncm','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:50:30','2016-01-06 15:50:30'),(57,'NCM IVA',NULL,'NcmIva','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(58,'Cadastrar',NULL,'NcmIva','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(59,'Alrerar',NULL,'NcmIva','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(60,'Excluir',NULL,'NcmIva','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:51:29','2016-01-06 15:51:29'),(61,'Nfe Entradas',NULL,'NotasFiscaisEntadas','index',1,0,1,'Compras',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(62,'Cadastrar',NULL,'NotasFiscaisEntadas','add',1,0,0,'Compras',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(63,'Alrerar',NULL,'NotasFiscaisEntadas','edit',1,0,0,'Compras',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(64,'Excluir',NULL,'NotasFiscaisEntadas','delete',1,0,0,'Compras',NULL,'2016-01-06 15:52:03','2016-01-06 15:52:03'),(65,'Digitar Nfe',NULL,'NotasFiscaisSaidas','index',1,0,1,'Fiscal',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(66,'Cadastrar',NULL,'NotasFiscaisSaidas','add',1,0,0,'Fiscal',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(67,'Alrerar',NULL,'NotasFiscaisSaidas','edit',1,0,0,'Fiscal',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(68,'Excluir',NULL,'NotasFiscaisSaidas','delete',1,0,0,'Fiscal',NULL,'2016-01-06 15:52:25','2016-01-06 15:52:25'),(69,'Listar pedidos',NULL,'Pedidos','index',1,0,1,'Vendas',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(70,'Novo pedido',NULL,'Pedidos','add',1,0,1,'Vendas',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(71,'Alrerar',NULL,'Pedidos','edit',1,0,0,'Vendas',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(72,'Excluir',NULL,'Pedidos','delete',1,0,0,'Vendas',NULL,'2016-01-06 15:53:33','2016-01-06 15:53:33'),(73,'Pessoas',NULL,'Pessoas','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(74,'Cadastrar',NULL,'Pessoas','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(75,'Alrerar',NULL,'Pessoas','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(76,'Excluir',NULL,'Pessoas','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:53:49','2016-01-06 15:53:49'),(77,'Produtos',NULL,'Produtos','index',1,0,1,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(78,'Cadastrar',NULL,'Produtos','add',1,0,0,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(79,'Alrerar',NULL,'Produtos','edit',1,0,0,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(80,'Excluir',NULL,'Produtos','delete',1,0,0,'Produtos',NULL,'2016-01-06 15:54:04','2016-01-06 15:54:04'),(81,'Kits',NULL,'ProdutosKits','index',1,0,1,'Produtos',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(82,'Cadastrar',NULL,'ProdutosKits','add',1,0,0,'Produtos',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(83,'Alrerar',NULL,'ProdutosKits','edit',1,0,0,'Produtos',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(84,'Excluir',NULL,'ProdutosKits','delete',1,0,0,'Produtos',NULL,'2016-01-06 15:54:32','2016-01-06 15:54:32'),(85,'Tipos de contatos',NULL,'TiposContatos','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(86,'Cadastrar',NULL,'TiposContatos','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(87,'Alrerar',NULL,'TiposContatos','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(88,'Excluir',NULL,'TiposContatos','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:12','2016-01-06 15:55:12'),(89,'Transportadoras',NULL,'Transportadoras','index',1,0,1,'Cadastros',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(90,'Cadastrar',NULL,'Transportadoras','add',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(91,'Alrerar',NULL,'Transportadoras','edit',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(92,'Excluir',NULL,'Transportadoras','delete',1,0,0,'Cadastros',NULL,'2016-01-06 15:55:34','2016-01-06 15:55:34'),(93,'Usuários',NULL,'Usuarios','index',1,0,1,'Parâmetros',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(94,'Cadastrar',NULL,'Usuarios','add',0,0,0,'Parâmetros',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(95,'Alrerar',NULL,'Usuarios','edit',1,0,0,'Parâmetros',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02'),(96,'Excluir',NULL,'Usuarios','delete',1,0,0,'Parâmetros',NULL,'2016-01-06 15:56:02','2016-01-06 15:56:02');
 /*!40000 ALTER TABLE `menus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -497,6 +512,7 @@ CREATE TABLE `menus_grupos` (
 --
 -- Dumping data for table `menus_grupos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `menus_grupos` WRITE;
 /*!40000 ALTER TABLE `menus_grupos` DISABLE KEYS */;
@@ -524,6 +540,7 @@ CREATE TABLE `ncm` (
 --
 -- Dumping data for table `ncm`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `ncm` WRITE;
 /*!40000 ALTER TABLE `ncm` DISABLE KEYS */;
@@ -553,6 +570,7 @@ CREATE TABLE `ncm_iva` (
 --
 -- Dumping data for table `ncm_iva`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `ncm_iva` WRITE;
 /*!40000 ALTER TABLE `ncm_iva` DISABLE KEYS */;
@@ -594,6 +612,7 @@ CREATE TABLE `nota_fiscal_entradas` (
 --
 -- Dumping data for table `nota_fiscal_entradas`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `nota_fiscal_entradas` WRITE;
 /*!40000 ALTER TABLE `nota_fiscal_entradas` DISABLE KEYS */;
@@ -623,6 +642,7 @@ CREATE TABLE `nota_fiscal_entradas_itens` (
 --
 -- Dumping data for table `nota_fiscal_entradas_itens`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `nota_fiscal_entradas_itens` WRITE;
 /*!40000 ALTER TABLE `nota_fiscal_entradas_itens` DISABLE KEYS */;
@@ -677,6 +697,7 @@ CREATE TABLE `nota_fiscal_saidas` (
 --
 -- Dumping data for table `nota_fiscal_saidas`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `nota_fiscal_saidas` WRITE;
 /*!40000 ALTER TABLE `nota_fiscal_saidas` DISABLE KEYS */;
@@ -716,6 +737,7 @@ CREATE TABLE `nota_fiscal_saidas_itens` (
 --
 -- Dumping data for table `nota_fiscal_saidas_itens`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `nota_fiscal_saidas_itens` WRITE;
 /*!40000 ALTER TABLE `nota_fiscal_saidas_itens` DISABLE KEYS */;
@@ -745,6 +767,7 @@ CREATE TABLE `parametros` (
 --
 -- Dumping data for table `parametros`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `parametros` WRITE;
 /*!40000 ALTER TABLE `parametros` DISABLE KEYS */;
@@ -777,15 +800,17 @@ CREATE TABLE `pedidos` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `pedidos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `pedidos` WRITE;
 /*!40000 ALTER TABLE `pedidos` DISABLE KEYS */;
+INSERT  IGNORE INTO `pedidos` (`id`, `empresa_id`, `data_pedido`, `status`, `pessoa_id`, `condicao_pagamento_id`, `vendedor_id`, `transportadora_id`, `valor_total`, `numero_cupom`, `nota_fiscal`, `serie`, `numero_caixa`, `cpf`, `created`, `modified`) VALUES (1,1,'2016-01-16 11:47:57',1,27,2,1,1,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-16 11:33:31','2016-01-16 11:47:57'),(2,1,'2016-01-16 11:43:13',1,28,1,1,1,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-16 11:43:14','2016-01-16 11:43:14'),(3,1,'2016-01-16 11:43:24',1,29,2,1,1,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-16 11:43:24','2016-01-16 11:43:24');
 /*!40000 ALTER TABLE `pedidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -810,6 +835,7 @@ CREATE TABLE `pedidos_formas_pagamentos` (
 --
 -- Dumping data for table `pedidos_formas_pagamentos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `pedidos_formas_pagamentos` WRITE;
 /*!40000 ALTER TABLE `pedidos_formas_pagamentos` DISABLE KEYS */;
@@ -839,6 +865,7 @@ CREATE TABLE `pedidos_itens` (
 --
 -- Dumping data for table `pedidos_itens`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `pedidos_itens` WRITE;
 /*!40000 ALTER TABLE `pedidos_itens` DISABLE KEYS */;
@@ -869,10 +896,11 @@ CREATE TABLE `pessoas` (
 --
 -- Dumping data for table `pessoas`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `pessoas` WRITE;
 /*!40000 ALTER TABLE `pessoas` DISABLE KEYS */;
-INSERT  IGNORE INTO `pessoas` (`id`, `nome`, `tipo_pessoa`, `status`, `consumidor_final`, `tipo_contribuinte`, `created`, `modified`, `observacoes`) VALUES (1,'Administrador Geral do Sistema',1,1,0,1,NULL,'2016-01-10 09:50:35',NULL),(24,'Lucas',1,1,0,1,'2016-01-07 16:16:47','2016-01-10 09:51:31',NULL),(25,'Lucas',1,1,0,1,'2016-01-07 16:16:54','2016-01-10 10:08:11',NULL),(26,'Lucas novo teste',1,1,0,1,'2016-01-07 16:25:28','2016-01-10 09:52:09',NULL),(27,'Lucas Nunes Pinto Pinheiro',1,1,1,1,'2016-01-08 07:43:31','2016-01-08 07:43:31',NULL),(28,'Teste de cadastro de empresa',2,1,1,1,'2016-01-08 10:37:25','2016-01-08 10:37:25',NULL),(29,'Vitor',1,1,0,1,'2016-01-08 17:53:34','2016-01-08 17:53:34',NULL),(30,'teste lucas',1,1,1,1,'2016-01-11 17:37:33','2016-01-11 17:37:33',NULL),(31,'novo teste de cadastro realizado com sucesso',2,1,0,1,'2016-01-11 19:55:33','2016-01-11 19:58:20','Novo teste');
+INSERT  IGNORE INTO `pessoas` (`id`, `nome`, `tipo_pessoa`, `status`, `consumidor_final`, `tipo_contribuinte`, `created`, `modified`, `observacoes`) VALUES (1,'Administrador Geral do Sistema',1,1,0,1,NULL,'2016-01-16 09:44:17',''),(24,'Lucas',1,1,0,1,'2016-01-07 16:16:47','2016-01-10 09:51:31',NULL),(25,'Lucas',1,1,0,1,'2016-01-07 16:16:54','2016-01-10 10:08:11',NULL),(26,'Lucas novo teste',1,1,0,1,'2016-01-07 16:25:28','2016-01-10 09:52:09',NULL),(27,'Lucas Nunes Pinto Pinheiro',1,1,1,1,'2016-01-08 07:43:31','2016-01-08 07:43:31',NULL),(28,'Teste de cadastro de empresa',2,1,1,1,'2016-01-08 10:37:25','2016-01-08 10:37:25',NULL),(29,'Vitor',1,1,0,1,'2016-01-08 17:53:34','2016-01-08 17:53:34',NULL),(30,'teste lucas',1,1,1,1,'2016-01-11 17:37:33','2016-01-11 17:37:33',NULL),(31,'novo teste de cadastro realizado com sucesso',2,1,0,1,'2016-01-11 19:55:33','2016-01-11 19:58:20','Novo teste');
 /*!40000 ALTER TABLE `pessoas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -891,16 +919,17 @@ CREATE TABLE `pessoas_associacoes` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `pessoas_associacoes`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `pessoas_associacoes` WRITE;
 /*!40000 ALTER TABLE `pessoas_associacoes` DISABLE KEYS */;
-INSERT  IGNORE INTO `pessoas_associacoes` (`id`, `pessoa_id`, `tipo_associacao`, `status`, `created`, `modified`) VALUES (2,26,2,1,'2016-01-10 09:38:57','2016-01-10 09:52:09'),(3,26,3,1,'2016-01-10 09:38:57','2016-01-10 09:52:09'),(4,26,6,1,'2016-01-10 09:38:57','2016-01-10 09:52:09'),(5,26,4,1,'2016-01-10 09:38:57','2016-01-10 09:52:09'),(6,26,5,1,'2016-01-10 09:38:57','2016-01-10 09:52:09'),(8,24,2,1,NULL,'2016-01-10 09:51:31'),(9,25,2,1,NULL,NULL),(10,27,2,1,NULL,NULL),(11,28,2,1,NULL,NULL),(12,29,2,1,NULL,NULL),(19,1,7,1,'2016-01-10 09:42:11','2016-01-10 09:50:35'),(24,1,5,1,'2016-01-10 09:42:11','2016-01-10 09:50:35'),(25,26,7,1,'2016-01-10 09:52:09','2016-01-10 09:52:09'),(26,25,1,1,'2016-01-10 10:08:11','2016-01-10 10:08:11'),(27,30,2,1,'2016-01-11 17:37:34','2016-01-11 17:37:34'),(28,31,2,1,'2016-01-11 19:55:34','2016-01-11 19:55:34'),(29,31,6,1,'2016-01-11 19:55:34','2016-01-11 19:55:34'),(30,31,2,1,'2016-01-11 19:58:20','2016-01-11 19:58:20'),(31,31,6,1,'2016-01-11 19:58:20','2016-01-11 19:58:20'),(32,28,1,1,'0000-00-00 00:00:00',NULL);
+INSERT  IGNORE INTO `pessoas_associacoes` (`id`, `pessoa_id`, `tipo_associacao`, `status`, `created`, `modified`) VALUES (2,26,2,1,'2016-01-10 09:38:57','2016-01-10 09:52:09'),(3,26,3,1,'2016-01-10 09:38:57','2016-01-10 09:52:09'),(4,26,6,1,'2016-01-10 09:38:57','2016-01-10 09:52:09'),(5,26,4,1,'2016-01-10 09:38:57','2016-01-10 09:52:09'),(6,26,5,1,'2016-01-10 09:38:57','2016-01-10 09:52:09'),(8,24,2,1,NULL,'2016-01-10 09:51:31'),(9,25,2,1,NULL,NULL),(10,27,2,1,NULL,NULL),(11,28,2,1,NULL,NULL),(12,29,2,1,NULL,NULL),(19,1,7,1,'2016-01-10 09:42:11','2016-01-10 09:50:35'),(24,1,5,1,'2016-01-10 09:42:11','2016-01-10 09:50:35'),(25,26,7,1,'2016-01-10 09:52:09','2016-01-10 09:52:09'),(27,30,2,1,'2016-01-11 17:37:34','2016-01-11 17:37:34'),(28,31,2,1,'2016-01-11 19:55:34','2016-01-11 19:55:34'),(29,31,6,1,'2016-01-11 19:55:34','2016-01-11 19:55:34'),(30,31,2,1,'2016-01-11 19:58:20','2016-01-11 19:58:20'),(31,31,6,1,'2016-01-11 19:58:20','2016-01-11 19:58:20'),(32,28,1,1,'0000-00-00 00:00:00',NULL),(33,1,7,1,'2016-01-16 09:36:38','2016-01-16 09:36:38'),(34,1,2,1,'2016-01-16 09:36:38','2016-01-16 09:36:38'),(35,1,3,1,'2016-01-16 09:36:38','2016-01-16 09:36:38'),(36,1,6,1,'2016-01-16 09:36:38','2016-01-16 09:36:38'),(37,1,4,1,'2016-01-16 09:36:38','2016-01-16 09:36:38'),(38,1,5,1,'2016-01-16 09:36:38','2016-01-16 09:36:38'),(39,1,7,1,'2016-01-16 09:40:28','2016-01-16 09:40:28'),(40,1,2,1,'2016-01-16 09:40:28','2016-01-16 09:40:28'),(41,1,3,1,'2016-01-16 09:40:28','2016-01-16 09:40:28'),(42,1,6,1,'2016-01-16 09:40:28','2016-01-16 09:40:28'),(43,1,4,1,'2016-01-16 09:40:28','2016-01-16 09:40:28'),(44,1,5,1,'2016-01-16 09:40:28','2016-01-16 09:40:28'),(45,1,7,1,'2016-01-16 09:44:17','2016-01-16 09:44:17'),(46,1,2,1,'2016-01-16 09:44:17','2016-01-16 09:44:17'),(47,1,3,1,'2016-01-16 09:44:17','2016-01-16 09:44:17'),(48,1,6,1,'2016-01-16 09:44:17','2016-01-16 09:44:17'),(49,1,4,1,'2016-01-16 09:44:17','2016-01-16 09:44:17'),(50,1,5,1,'2016-01-16 09:44:17','2016-01-16 09:44:17');
 /*!40000 ALTER TABLE `pessoas_associacoes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -926,10 +955,11 @@ CREATE TABLE `pessoas_contatos` (
 --
 -- Dumping data for table `pessoas_contatos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `pessoas_contatos` WRITE;
 /*!40000 ALTER TABLE `pessoas_contatos` DISABLE KEYS */;
-INSERT  IGNORE INTO `pessoas_contatos` (`id`, `pessoa_id`, `tipos_contato_id`, `valor`, `status`, `created`, `modified`) VALUES (13,24,1,'123',1,'2016-01-07 16:16:47','2016-01-10 09:51:31'),(14,24,1,'1234',1,'2016-01-07 16:16:47','2016-01-10 09:51:31'),(15,25,1,'123',1,'2016-01-07 16:16:55','2016-01-10 10:08:11'),(16,25,1,'1234',1,'2016-01-07 16:16:55','2016-01-10 10:08:11'),(17,26,2,'16992660128',1,'2016-01-07 16:25:28','2016-01-10 09:52:09'),(18,26,4,'pinheirolouco@hotmail.com',1,'2016-01-07 16:25:28','2016-01-10 09:52:09'),(19,27,1,'',1,'2016-01-08 07:43:32','2016-01-08 07:43:32'),(23,1,1,'1639191956',1,'2016-01-08 08:09:08','2016-01-10 09:50:35'),(24,1,1,'pinheirolouco@hotmail.com',1,'2016-01-08 08:09:08','2016-01-10 09:50:35'),(25,1,1,'lucasnpinheiro@gmail.com',1,'2016-01-08 08:09:08','2016-01-10 09:50:35'),(26,28,1,'empresa@empresa.com.br',1,'2016-01-08 10:37:26','2016-01-08 10:37:26'),(27,29,1,'1639197391',1,'2016-01-08 17:53:34','2016-01-08 17:53:34'),(28,29,1,'vitorppinheiro@gmail.com',1,'2016-01-08 17:53:34','2016-01-08 17:53:34'),(29,29,1,'1630190418',1,'2016-01-08 17:53:34','2016-01-08 17:53:34'),(30,30,1,'12345678899',1,'2016-01-11 17:37:34','2016-01-11 17:37:34'),(31,31,1,'123',1,'2016-01-11 19:55:33','2016-01-11 19:58:20'),(32,31,2,'321',1,'2016-01-11 19:55:33','2016-01-11 19:58:20'),(33,31,3,'345',1,'2016-01-11 19:55:33','2016-01-11 19:58:20');
+INSERT  IGNORE INTO `pessoas_contatos` (`id`, `pessoa_id`, `tipos_contato_id`, `valor`, `status`, `created`, `modified`) VALUES (13,24,1,'123',1,'2016-01-07 16:16:47','2016-01-10 09:51:31'),(14,24,1,'1234',1,'2016-01-07 16:16:47','2016-01-10 09:51:31'),(15,25,1,'123',1,'2016-01-07 16:16:55','2016-01-10 10:08:11'),(16,25,1,'1234',1,'2016-01-07 16:16:55','2016-01-10 10:08:11'),(17,26,2,'16992660128',1,'2016-01-07 16:25:28','2016-01-10 09:52:09'),(18,26,4,'pinheirolouco@hotmail.com',1,'2016-01-07 16:25:28','2016-01-10 09:52:09'),(19,27,1,'',1,'2016-01-08 07:43:32','2016-01-08 07:43:32'),(23,1,1,'1639191956',1,'2016-01-08 08:09:08','2016-01-16 09:44:17'),(24,1,1,'pinheirolouco@hotmail.com',1,'2016-01-08 08:09:08','2016-01-16 09:44:17'),(25,1,1,'lucasnpinheiro@gmail.com',1,'2016-01-08 08:09:08','2016-01-16 09:44:17'),(26,28,1,'empresa@empresa.com.br',1,'2016-01-08 10:37:26','2016-01-08 10:37:26'),(27,29,1,'1639197391',1,'2016-01-08 17:53:34','2016-01-08 17:53:34'),(28,29,1,'vitorppinheiro@gmail.com',1,'2016-01-08 17:53:34','2016-01-08 17:53:34'),(29,29,1,'1630190418',1,'2016-01-08 17:53:34','2016-01-08 17:53:34'),(30,30,1,'12345678899',1,'2016-01-11 17:37:34','2016-01-11 17:37:34'),(31,31,1,'123',1,'2016-01-11 19:55:33','2016-01-11 19:58:20'),(32,31,2,'321',1,'2016-01-11 19:55:33','2016-01-11 19:58:20'),(33,31,3,'345',1,'2016-01-11 19:55:33','2016-01-11 19:58:20');
 /*!40000 ALTER TABLE `pessoas_contatos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -962,10 +992,11 @@ CREATE TABLE `pessoas_enderecos` (
 --
 -- Dumping data for table `pessoas_enderecos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `pessoas_enderecos` WRITE;
 /*!40000 ALTER TABLE `pessoas_enderecos` DISABLE KEYS */;
-INSERT  IGNORE INTO `pessoas_enderecos` (`id`, `pessoa_id`, `tipo_endereco`, `cep`, `endereco`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `principal`, `status`, `created`, `modified`) VALUES (6,24,1,'14031-010','Rua: Joaquim Franscisco Galeano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-07 16:16:47','2016-01-10 09:51:31'),(7,25,1,'14031-010','Rua: Joaquim Franscisco Galeano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-07 16:16:55','2016-01-10 10:08:11'),(8,26,1,'14031-010','Rua Joaquim Francisco Galiano','109','Casa Unica teste','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-07 16:25:28','2016-01-10 09:52:09'),(9,27,1,'14031-010','Rua: Joaquim Franscisco Galeano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-08 07:43:32','2016-01-08 07:43:32'),(11,1,1,'14031-010','Rua: Joaquim Franscisco Galeano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-08 08:09:08','2016-01-10 09:50:35'),(12,28,2,'14031-010','Rua: Joaquim Franscisco Galeano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-08 10:37:26','2016-01-08 10:37:26'),(13,29,1,'14031-300','Rua: Alfredo Condeixa','1331','','Jardim Marchesi','Ribeirão Preto','SP',1,1,'2016-01-08 17:53:34','2016-01-08 17:53:34'),(14,30,1,'14031-010','Rua Joaquim Francisco Galiano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-11 17:37:34','2016-01-11 17:37:34'),(15,31,2,'14031-010','Rua Joaquim Francisco Galiano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-11 19:55:34','2016-01-11 19:58:20');
+INSERT  IGNORE INTO `pessoas_enderecos` (`id`, `pessoa_id`, `tipo_endereco`, `cep`, `endereco`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `principal`, `status`, `created`, `modified`) VALUES (6,24,1,'14031-010','Rua: Joaquim Franscisco Galeano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-07 16:16:47','2016-01-10 09:51:31'),(7,25,1,'14031-010','Rua: Joaquim Franscisco Galeano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-07 16:16:55','2016-01-10 10:08:11'),(8,26,1,'14031-010','Rua Joaquim Francisco Galiano','109','Casa Unica teste','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-07 16:25:28','2016-01-10 09:52:09'),(9,27,1,'14031-010','Rua: Joaquim Franscisco Galeano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-08 07:43:32','2016-01-08 07:43:32'),(11,1,1,'14031-010','Rua: Joaquim Franscisco Galeano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-08 08:09:08','2016-01-16 09:44:17'),(12,28,2,'14031-010','Rua: Joaquim Franscisco Galeano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-08 10:37:26','2016-01-08 10:37:26'),(13,29,1,'14031-300','Rua: Alfredo Condeixa','1331','','Jardim Marchesi','Ribeirão Preto','SP',1,1,'2016-01-08 17:53:34','2016-01-08 17:53:34'),(14,30,1,'14031-010','Rua Joaquim Francisco Galiano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-11 17:37:34','2016-01-11 17:37:34'),(15,31,2,'14031-010','Rua Joaquim Francisco Galiano','109','','Vila Guiomar','Ribeirão Preto','SP',1,1,'2016-01-11 19:55:34','2016-01-11 19:58:20');
 /*!40000 ALTER TABLE `pessoas_enderecos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -991,10 +1022,11 @@ CREATE TABLE `pessoas_fisicas` (
 --
 -- Dumping data for table `pessoas_fisicas`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `pessoas_fisicas` WRITE;
 /*!40000 ALTER TABLE `pessoas_fisicas` DISABLE KEYS */;
-INSERT  IGNORE INTO `pessoas_fisicas` (`id`, `pessoa_id`, `cpf`, `rg`, `data_nascimento`, `created`, `modified`) VALUES (19,24,'31723287830','28909780-0','2016-01-31','2016-01-07 16:16:47','2016-01-10 09:51:31'),(20,25,'11111111111','111111111111','2016-01-31','2016-01-07 16:16:55','2016-01-10 10:08:11'),(21,26,'11111111111','1234567890','2016-01-20','2016-01-07 16:25:28','2016-01-10 09:52:09'),(22,27,'55555555555','99999999999999','2016-01-31','2016-01-08 07:43:32','2016-01-08 07:43:32'),(24,1,'31723287830','28.909.780-0','1984-07-03','2016-01-08 08:09:08','2016-01-10 09:50:35'),(25,29,'83339027820','6572549-9','1957-01-07','2016-01-08 17:53:34','2016-01-08 17:53:34'),(26,30,'09090909090','00000000000000','0000-00-00','2016-01-11 17:37:33','2016-01-11 17:37:33');
+INSERT  IGNORE INTO `pessoas_fisicas` (`id`, `pessoa_id`, `cpf`, `rg`, `data_nascimento`, `created`, `modified`) VALUES (19,24,'31723287830','28909780-0','2016-01-31','2016-01-07 16:16:47','2016-01-10 09:51:31'),(20,25,'11111111111','111111111111','2016-01-31','2016-01-07 16:16:55','2016-01-10 10:08:11'),(21,26,'11111111111','1234567890','2016-01-20','2016-01-07 16:25:28','2016-01-10 09:52:09'),(22,27,'55555555555','99999999999999','2016-01-31','2016-01-08 07:43:32','2016-01-08 07:43:32'),(24,1,'31723287830','28.909.780-0','1984-07-03','2016-01-08 08:09:08','2016-01-16 09:44:17'),(25,29,'83339027820','6572549-9','1957-01-07','2016-01-08 17:53:34','2016-01-08 17:53:34'),(26,30,'09090909090','00000000000000','0000-00-00','2016-01-11 17:37:33','2016-01-11 17:37:33');
 /*!40000 ALTER TABLE `pessoas_fisicas` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1022,6 +1054,7 @@ CREATE TABLE `pessoas_juridicas` (
 --
 -- Dumping data for table `pessoas_juridicas`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `pessoas_juridicas` WRITE;
 /*!40000 ALTER TABLE `pessoas_juridicas` DISABLE KEYS */;
@@ -1049,16 +1082,17 @@ CREATE TABLE `produtos` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `produtos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `produtos` WRITE;
 /*!40000 ALTER TABLE `produtos` DISABLE KEYS */;
-INSERT  IGNORE INTO `produtos` (`id`, `barra`, `codigo_interno`, `nome`, `unidade`, `grupo_id`, `produto_kit`, `foto`, `descricao`, `created`, `modified`) VALUES (1,'1','1','Teste de cadastro','UN',3,0,'1.jpeg','Teste de cadastro de descrição','2016-01-14 19:48:47','2016-01-14 20:11:52');
+INSERT  IGNORE INTO `produtos` (`id`, `barra`, `codigo_interno`, `nome`, `unidade`, `grupo_id`, `produto_kit`, `foto`, `descricao`, `created`, `modified`) VALUES (1,'1','1','Teste de cadastro','UN',3,0,'1.jpeg','Teste de cadastro de descrição','2016-01-14 19:48:47','2016-01-16 08:57:03'),(2,'7896714202884','2','Teste de cadastro Kit','UN',3,0,'1.jpeg','Teste de cadastro de descrição','2016-01-14 19:48:47','2016-01-16 09:00:07'),(3,'3','3','teste de cadastro 2','UN',3,1,NULL,'',NULL,'2016-01-16 09:02:00'),(4,'7891000112946','4','Leite Ninho fases 1+','LTA',1,0,'4.jpeg','Leite ninho 1+ fases lata de 800g','2016-01-16 14:23:20','2016-01-16 14:23:20'),(5,'5','5','kit teste leite','CX',1,1,NULL,'','2016-01-16 14:24:11','2016-01-16 14:24:11');
 /*!40000 ALTER TABLE `produtos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1078,15 +1112,17 @@ CREATE TABLE `produtos_kits` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `produtos_kits`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `produtos_kits` WRITE;
 /*!40000 ALTER TABLE `produtos_kits` DISABLE KEYS */;
+INSERT  IGNORE INTO `produtos_kits` (`id`, `empresa_id`, `produto_id`, `kit_id`, `qtde`, `created`, `modified`) VALUES (1,1,1,5,10.0000,NULL,'2016-01-16 14:40:44'),(2,2,1,2,9.0000,NULL,'2016-01-16 08:11:45'),(3,1,3,2,3.0000,'2016-01-16 08:11:45','2016-01-16 08:11:45'),(4,2,3,2,3.0000,'2016-01-16 08:11:45','2016-01-16 08:11:45'),(5,1,4,5,10.0000,'2016-01-16 14:40:44','2016-01-16 14:40:44'),(6,1,2,5,5.0000,'2016-01-16 14:40:44','2016-01-16 14:40:44');
 /*!40000 ALTER TABLE `produtos_kits` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1119,16 +1155,17 @@ CREATE TABLE `produtos_valores` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `produtos_valores`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `produtos_valores` WRITE;
 /*!40000 ALTER TABLE `produtos_valores` DISABLE KEYS */;
-INSERT  IGNORE INTO `produtos_valores` (`id`, `empresa_id`, `produto_id`, `ncm_id`, `estoque_minimo`, `estoque_atual`, `valor_compras`, `margem`, `valor_vendas`, `cst_pis`, `cst_cofins`, `cst_icms`, `cst_origem`, `percentual_icms`, `percentual_pis`, `percentual_cofins`, `percentual_ipi`, `percentual_tributacao`, `created`, `modified`) VALUES (1,1,1,NULL,10.0000,12.2220,1.22,48.0851,2.35,10,10,10,10,10.00,31.00,12.00,1.00,23.00,'2016-01-14 19:48:47','2016-01-14 20:11:52'),(2,2,1,NULL,15.1340,12.2220,1.00,90.0000,10.00,1,1,1,1,22.00,33.00,1.00,2.00,12.00,'2016-01-14 19:48:47','2016-01-14 20:11:52'),(3,1,2,NULL,45.4650,4646.4561,9.35,-99.9999,1.25,13132,45646,54654,65465,99.99,99.99,99.99,99.99,99.99,'2016-01-14 19:52:26','2016-01-14 21:05:52'),(4,2,2,NULL,0.0000,0.0000,0.00,0.0000,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-14 19:52:26','2016-01-14 21:05:52');
+INSERT  IGNORE INTO `produtos_valores` (`id`, `empresa_id`, `produto_id`, `ncm_id`, `estoque_minimo`, `estoque_atual`, `valor_compras`, `margem`, `valor_vendas`, `cst_pis`, `cst_cofins`, `cst_icms`, `cst_origem`, `percentual_icms`, `percentual_pis`, `percentual_cofins`, `percentual_ipi`, `percentual_tributacao`, `created`, `modified`) VALUES (1,1,1,NULL,10.0000,12.2220,2.50,70.5882,8.50,10,10,10,10,10.00,31.00,12.00,1.00,23.00,'2016-01-14 19:48:47','2016-01-16 08:57:03'),(2,2,1,NULL,15.1340,12.2220,2.60,50.9434,5.30,1,1,1,1,22.00,33.00,1.00,2.00,12.00,'2016-01-14 19:48:47','2016-01-16 08:57:03'),(3,1,2,NULL,45.4650,4646.4561,10.00,16.6667,12.00,13132,45646,54654,65465,99.99,99.99,99.99,99.99,99.99,'2016-01-14 19:52:26','2016-01-16 09:00:07'),(4,2,2,NULL,0.0000,0.0000,12.00,4.0000,12.50,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-14 19:52:26','2016-01-16 09:00:07'),(5,1,3,NULL,0.0000,0.0000,0.00,0.0000,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-16 09:00:56','2016-01-16 09:00:56'),(6,2,3,NULL,0.0000,0.0000,0.00,0.0000,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-16 09:00:56','2016-01-16 09:00:56'),(7,1,3,NULL,0.0000,0.0000,0.00,0.0000,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-16 09:02:01','2016-01-16 09:02:01'),(8,2,3,NULL,0.0000,0.0000,0.00,0.0000,0.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-16 09:02:01','2016-01-16 09:02:01'),(9,1,4,NULL,1.0000,10.0000,12.00,47.8261,23.00,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-16 14:23:20','2016-01-16 14:23:20'),(10,1,5,NULL,NULL,NULL,NULL,0.0000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2016-01-16 14:24:12','2016-01-16 14:24:12');
 /*!40000 ALTER TABLE `produtos_valores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1151,6 +1188,7 @@ CREATE TABLE `tipos_contatos` (
 --
 -- Dumping data for table `tipos_contatos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `tipos_contatos` WRITE;
 /*!40000 ALTER TABLE `tipos_contatos` DISABLE KEYS */;
@@ -1181,6 +1219,7 @@ CREATE TABLE `transportadoras` (
 --
 -- Dumping data for table `transportadoras`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `transportadoras` WRITE;
 /*!40000 ALTER TABLE `transportadoras` DISABLE KEYS */;
@@ -1211,10 +1250,11 @@ CREATE TABLE `usuarios` (
 --
 -- Dumping data for table `usuarios`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT  IGNORE INTO `usuarios` (`id`, `pessoa_id`, `nome`, `username`, `senha`, `created`, `modified`, `root`) VALUES (1,1,'Administrador Geral do Sistema','super','$2y$10$fp.eNnd3Gw3GVk6sjp/qZeJloW2UPPcbk1bpzNoVSA1G/7oNMWvja','2016-01-05 16:47:05','2016-01-11 20:54:41',1),(8,26,'Lucas novo teste','teste1','$2y$10$VgKsZh5H5o0VKcSH6gBdHeTwYtmYh6kd36y/kCaNA9.HRTuRcAjeW','2016-01-10 08:58:42','2016-01-11 20:54:58',0);
+INSERT  IGNORE INTO `usuarios` (`id`, `pessoa_id`, `nome`, `username`, `senha`, `created`, `modified`, `root`) VALUES (1,1,'Administrador Geral do Sistema','super','$2y$10$fp.eNnd3Gw3GVk6sjp/qZeJloW2UPPcbk1bpzNoVSA1G/7oNMWvja','2016-01-05 16:47:05','2016-01-16 09:44:18',1),(8,26,'Lucas novo teste','teste1','$2y$10$VgKsZh5H5o0VKcSH6gBdHeTwYtmYh6kd36y/kCaNA9.HRTuRcAjeW','2016-01-10 08:58:42','2016-01-11 20:54:58',0);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1232,16 +1272,17 @@ CREATE TABLE `usuarios_grupos` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `usuarios_grupos`
 --
+-- ORDER BY:  `id`
 
 LOCK TABLES `usuarios_grupos` WRITE;
 /*!40000 ALTER TABLE `usuarios_grupos` DISABLE KEYS */;
-INSERT  IGNORE INTO `usuarios_grupos` (`id`, `grupo_id`, `usuario_id`, `created`, `modified`) VALUES (6,1,1,'2016-01-11 20:54:41','2016-01-11 20:54:41'),(7,2,1,'2016-01-11 20:54:41','2016-01-11 20:54:41'),(8,1,8,'2016-01-11 20:54:58','2016-01-11 20:54:58'),(9,3,8,'2016-01-11 20:54:58','2016-01-11 20:54:58'),(10,4,8,'2016-01-11 20:54:58','2016-01-11 20:54:58');
+INSERT  IGNORE INTO `usuarios_grupos` (`id`, `grupo_id`, `usuario_id`, `created`, `modified`) VALUES (8,1,8,'2016-01-11 20:54:58','2016-01-11 20:54:58'),(9,3,8,'2016-01-11 20:54:58','2016-01-11 20:54:58'),(10,4,8,'2016-01-11 20:54:58','2016-01-11 20:54:58'),(15,1,1,'2016-01-16 09:43:58','2016-01-16 09:43:58');
 /*!40000 ALTER TABLE `usuarios_grupos` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1254,4 +1295,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-14 21:12:54
+-- Dump completed on 2016-01-16 14:50:55

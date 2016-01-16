@@ -73,7 +73,7 @@ $this->Html->addCrumb('Cadastrar', null);
                                             <?php echo $this->Form->input('Produto.' . $key . '.produto_id', ['value' => $value->produto_id, 'type' => 'hidden', 'label' => false, 'class' => 'desc-produto-id']); ?>
                                             <?php echo $this->Form->input('Produto.' . $key . '.codigo', ['value' => $value->produto->barra, 'label' => false, 'class' => 'input-sm busca-produto desc-codigo', 'append' => false, 'maxlength' => 32, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?>
                                         </td>
-                                        <td><?php echo $this->Form->numero('Produto.' . $key . '.quantidade', ['value' => $value->qtde, 'label' => false, 'class' => 'input-sm desc-quantidade', 'append' => false, 'maxlength' => 10, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?></td>
+                                        <td><?php echo $this->Form->quantidade('Produto.' . $key . '.quantidade', ['value' => $this->Html->quantidade($value->qtde), 'label' => false, 'class' => 'input-sm desc-quantidade', 'append' => false, 'maxlength' => 10, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?></td>
                                         <td><?php echo $this->Form->input('Produto.' . $key . '.nome', ['value' => $value->produto->nome, 'label' => false, 'class' => 'input-sm desc-nome', 'disabled' => true, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?></td>
                                         <td><a href="#" class="btn btn-danger remove-linha" style="display: none;"><i class="fa fa-close"></i></a></td>
                                     </tr>
@@ -85,7 +85,7 @@ $this->Html->addCrumb('Cadastrar', null);
                                         <?php echo $this->Form->input('Produto.' . ($key + 1) . '.produto_id', ['type' => 'hidden', 'label' => false, 'class' => 'desc-produto-id']); ?>
                                         <?php echo $this->Form->input('Produto.' . ($key + 1) . '.codigo', ['label' => false, 'class' => 'input-sm busca-produto desc-codigo', 'append' => false, 'maxlength' => 32, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?>
                                     </td>
-                                    <td><?php echo $this->Form->numero('Produto.' . ($key + 1) . '.quantidade', ['label' => false, 'class' => 'input-sm desc-quantidade', 'append' => false, 'maxlength' => 10, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?></td>
+                                    <td><?php echo $this->Form->quantidade('Produto.' . ($key + 1) . '.quantidade', ['label' => false, 'class' => 'input-sm desc-quantidade', 'append' => false, 'maxlength' => 10, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?></td>
                                     <td><?php echo $this->Form->input('Produto.' . ($key + 1) . '.nome', ['label' => false, 'class' => 'input-sm desc-nome', 'disabled' => true, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?></td>
                                     <td><a href="#" class="btn btn-danger remove-linha" style="display: none;"><i class="fa fa-close"></i></a></td>
                                 </tr>

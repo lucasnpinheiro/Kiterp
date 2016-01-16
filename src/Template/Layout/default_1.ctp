@@ -2,6 +2,7 @@
 <html>
 
     <head>
+
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <?php $this->assign('title', $title); ?>
@@ -24,17 +25,21 @@
         </script>
     </head>
 
-    <body class="top-navigation">
+    <body class="">
 
         <div id="wrapper">
+
+            <?php echo $this->element('Layout/menu'); ?>
+
             <div id="page-wrapper" class="gray-bg">
-                <div class="row border-bottom white-bg">
-                    <?php echo $this->element('Layout/menu_1'); ?>
+                <div class="row border-bottom">
+                    <?php echo $this->element('Layout/header_mensagens'); ?>
                 </div>
                 <div class="row wrapper border-bottom white-bg page-heading">
                     <?php echo $this->element('Layout/header_title'); ?>
                 </div>
-                <div class="row wrapper border-bottom white-bg">
+
+                <div class="wrapper wrapper-content">
                     <?= $this->Flash->render() ?>
                     <?php echo $this->fetch('content') ?>
                 </div>

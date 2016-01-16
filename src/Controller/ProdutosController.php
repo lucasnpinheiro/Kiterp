@@ -64,7 +64,7 @@ class ProdutosController extends AppController {
         ];
         $codigo = trim($this->request->data('codigo'));
         $this->loadModel('Empresas');
-        $empresa = $this->Empresas->find()->where(['pessoa_id' => $this->request->data('empresa')])->first();
+        $empresa = $this->Empresas->find()->where(['id' => $this->request->data('empresa')])->first();
         $empresa = $empresa->id;
         $kit = [];
         if (!is_null($this->request->data('kit'))) {
@@ -121,6 +121,44 @@ class ProdutosController extends AppController {
             }
             $retorno = [
                 'cod' => $cod,
+                'msg' => 'Produto localizado',
+                'individual' => (string) $retorno['individual'],
+                'produto' => $find->toArray()
+            ];
+        }
+        $this->set('retorno', $retorno);
+    }
+
+    /**
+     * Consultar method
+     *
+     * @return void
+     */
+    public function consultarKit() {
+        $this->viewBuilder()->layout('ajax');
+        $retorno = [
+            'cod' => 111,
+            'msg' => 'Produto não encontrado',
+            'individual' => 1
+        ];
+        $codigo = trim($this->request->data('codigo'));
+        $kit = [];
+        if (!is_null($this->request->data('kit'))) {
+            $kit = ['produto_kit' => trim($this->request->data('kit'))];
+        }
+        if (is_numeric($codigo)) {
+            if (strlen($codigo) >= 13) {
+                $find = $this->Produtos->find()->where(array_merge($kit, ['Produtos.barra' => $codigo]))->first();
+            } else {
+                $find = $this->Produtos->find()->where(array_merge($kit, ['Produtos.codigo_interno' => $codigo]))->first();
+            }
+        } else {
+            $find = $this->Produtos->find()->where(array_merge($kit, ['Produtos.nome RLIKE' => $codigo]))->all();
+            $retorno['individual'] = '0';
+        }
+        if (count($find) > 0) {
+            $retorno = [
+                'cod' => 999,
                 'msg' => 'Produto localizado',
                 'individual' => (string) $retorno['individual'],
                 'produto' => $find->toArray()

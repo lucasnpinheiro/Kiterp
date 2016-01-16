@@ -86,10 +86,10 @@ cake.produtosKits.ajaxConsulta = function (obj) {
         method: "POST",
         type: "POST",
         dataType: "json",
-        url: router.url + 'produtos/consultar',
+        url: router.url + 'produtos/consultar-kit',
         data: {
             codigo: $(obj).val(),
-            kit: '0',
+            kit: '0'
         },
         beforeSend: function () {
             cake.util.loading.show(obj);
