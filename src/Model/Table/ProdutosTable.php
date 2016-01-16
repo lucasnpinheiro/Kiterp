@@ -122,6 +122,7 @@ class ProdutosTable extends Table {
 
     public function beforeSave(Event $event, Entity $entity) {
         $entity->unidade = strtoupper($entity->unidade);
+        $entity->barra = strtoupper(trim($entity->barra));
     }
 
     public function afterSave(Event $event, Entity $entity) {
