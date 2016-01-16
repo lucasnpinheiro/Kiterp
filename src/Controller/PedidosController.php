@@ -27,6 +27,35 @@ class PedidosController extends AppController {
         $this->set('_serialize', ['pedidos']);
     }
 
+    public function gerar() {
+        $dados = [
+            'id' => $this->request->data('pedido_id'),
+            'empresa_id' => $this->request->data('empresa_id'),
+            'vendedor_id' => $this->request->data('vendedor_id'),
+            'pessoa_id' => $this->request->data('cliente_id'),
+            'condicao_pagamento_id' => $this->request->data('condicao_pagamento_id'),
+            'data_pedido' => date('Y-m-d H:i:s'),
+            'transportadora_id' => 1,
+            'status' => 1
+        ];
+        $pedido = $this->Pedidos->newEntity();
+        foreach ($dados as $key => $value) {
+            $pedido{$key} = $value;
+        }
+        $retorno = [
+            'cod' => 111,
+            'id' => 0,
+        ];
+        if ($this->Pedidos->save($pedido)) {
+            $retorno = [
+                'cod' => ($dados['id'] != '' ? 222 : 999),
+                'id' => $pedido->id,
+            ];
+        }
+        echo json_encode($retorno);
+        exit;
+    }
+
     /**
      * View method
      *
@@ -52,21 +81,24 @@ class PedidosController extends AppController {
         if ($this->request->is('post')) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
-                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                    return $this->redirect(['action' => 'index']);
-                } else
-                {
-                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
+        $findPedidosAberto = $this->Pedidos->find()->where(['status' => 1])->first();
+        if (count($findPedidosAberto) > 0) {
+            $pedido->pedido_id = $findPedidosAberto->id;
+            $pedido = $this->Pedidos->patchEntity($pedido, $findPedidosAberto->toArray());
+        }
         $this->loadModel('Pessoas');
-        $empresas = $this->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 1]);
+        $this->loadModel('Empresas');
+        $empresas = $this->Empresas->find('list');
         $pessoas = $this->Pedidos->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
         $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list');
         $vendedors = $this->Pedidos->Vendedores->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
-        $transportadoras = $this->Pedidos->Transportadoras->find('list');
-        $formasPagamentos = $this->Pedidos->FormasPagamentos->find('list');
-        $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors', 'transportadoras', 'formasPagamentos'));
+        $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors'));
         $this->set('_serialize', ['pedido']);
     }
 
@@ -84,11 +116,10 @@ class PedidosController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
-                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                    return $this->redirect(['action' => 'index']);
-                } else
-                {
-                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $empresas = $this->Pedidos->Empresas->find('list');
@@ -113,8 +144,7 @@ class PedidosController extends AppController {
         $pedido = $this->Pedidos->get($id);
         if ($this->Pedidos->delete($pedido)) {
             $this->Flash->success(__('Registro Excluido com Sucesso.'));
-        } else
-        {
+        } else {
             $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);

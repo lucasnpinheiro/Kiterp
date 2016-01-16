@@ -21,8 +21,7 @@ use Cake\ORM\TableRegistry;
  * @property \Cake\ORM\Association\HasMany $NotaFiscalSaidasItens
  * @property \Cake\ORM\Association\HasMany $PedidosItens
  */
-class ProdutosTable extends Table
-{
+class ProdutosTable extends Table {
 
     /**
      * Initialize method
@@ -30,8 +29,7 @@ class ProdutosTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('produtos');
@@ -58,23 +56,18 @@ class ProdutosTable extends Table
         $this->addBehavior('Search.Search');
     }
 
-    public function searchConfiguration()
-    {
+    public function searchConfiguration() {
         return $this->searchConfigurationDynamic();
     }
 
-    private function searchConfigurationDynamic()
-    {
+    private function searchConfigurationDynamic() {
         $search = new Manager($this);
         $c = $this->schema()->columns();
-        foreach ($c as $key => $value)
-        {
+        foreach ($c as $key => $value) {
             $t = $this->schema()->columnType($value);
-            if ($t != 'string' AND $t != 'text')
-            {
+            if ($t != 'string' AND $t != 'text') {
                 $search->value($value, ['field' => $this->aliasField($value)]);
-            } else
-            {
+            } else {
                 $search->like($value, ['before' => true, 'after' => true, 'field' => $this->aliasField($value)]);
             }
         }
@@ -88,8 +81,7 @@ class ProdutosTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
                 ->add('id', 'valid', ['rule' => 'numeric'])
                 ->allowEmpty('id', 'create');
@@ -123,38 +115,31 @@ class ProdutosTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['grupo_id'], 'GruposEstoques'));
         return $rules;
     }
 
-    public function beforeSave(Event $event, Entity $entity)
-    {
+    public function beforeSave(Event $event, Entity $entity) {
         $entity->unidade = strtoupper($entity->unidade);
     }
 
-    public function afterSave(Event $event, Entity $entity)
-    {
+    public function afterSave(Event $event, Entity $entity) {
         $ProdutosValores = TableRegistry::get('ProdutosValores');
         $Produtos = TableRegistry::get('Produtos');
-        foreach ($entity->ProdutosValor as $key => $value)
-        {
+        foreach ($entity->ProdutosValor as $key => $value) {
             $valores = $ProdutosValores->newEntity();
-            foreach ($value as $k => $v)
-            {
+            foreach ($value as $k => $v) {
                 $valores->{$k} = $v;
             }
             $valores->produto_id = $entity->id;
-            if ($entity->produto_kit == 1)
-            {
-                $valores->estoque_minimo = $valores->estoque_atual = $valores->valor_compras = $valores->margem = $valores->valor_vendas = 0;
-            } else
-            {
+            if ($entity->produto_kit == 1) {
+                unset($valores->estoque_minimo, $valores->estoque_atual, $valores->valor_compras, $valores->margem, $valores->valor_vendas);
+            } else {
                 $valores->estoque_minimo = str_replace(',', '.', str_replace('.', '', $valores->estoque_minimo));
                 $valores->estoque_atual = str_replace(',', '.', str_replace('.', '', $valores->estoque_atual));
                 $valores->valor_compras = str_replace(',', '.', str_replace('.', '', $valores->valor_compras));
-                $valores->margem = str_replace(',', '.', str_replace('.', '', $valores->margem));
+                $valores->margem = 0;
                 $valores->valor_vendas = str_replace(',', '.', str_replace('.', '', $valores->valor_vendas));
             }
             $valores->percentual_icms = str_replace(',', '.', str_replace('.', '', $valores->percentual_icms));
@@ -165,12 +150,10 @@ class ProdutosTable extends Table
 
             $ProdutosValores->save($valores);
         }
-        if (trim($entity->barra) == '')
-        {
+        if (trim($entity->barra) == '') {
             $Produtos->updateAll(['barra' => $entity->id], ['id' => $entity->id]);
         }
-        if (trim($entity->codigo_interno) == '')
-        {
+        if (trim($entity->codigo_interno) == '') {
             $Produtos->updateAll(['codigo_interno' => $entity->id], ['id' => $entity->id]);
         }
         return true;

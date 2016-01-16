@@ -155,4 +155,5 @@ cake.util.mascaras = function () {
 
 $(function () {
     cake.util.mascaras();
+    cake.util.pularCampo();
 });

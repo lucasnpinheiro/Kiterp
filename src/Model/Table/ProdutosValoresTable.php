@@ -8,7 +8,10 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Search\Manager;
-
+use Cake\Event\Event;
+use ArrayObject;
+use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * ProdutosValores Model
@@ -17,8 +20,7 @@ use Search\Manager;
  * @property \Cake\ORM\Association\BelongsTo $Produtos
  * @property \Cake\ORM\Association\BelongsTo $Ncms
  */
-class ProdutosValoresTable extends Table
-{
+class ProdutosValoresTable extends Table {
 
     /**
      * Initialize method
@@ -26,8 +28,7 @@ class ProdutosValoresTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('produtos_valores');
@@ -65,7 +66,7 @@ class ProdutosValoresTable extends Table
             'foreignKey' => 'cst_origem',
             'conditions' => ['Impostos.tipo_imposto' => 6]
         ]);
-            $this->addBehavior('Search.Search');
+        $this->addBehavior('Search.Search');
     }
 
     public function searchConfiguration() {
@@ -87,15 +88,13 @@ class ProdutosValoresTable extends Table
         return $search;
     }
 
-
     /**
      * Default validation rules.
      *
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
                 ->add('id', 'valid', ['rule' => 'numeric'])
                 ->allowEmpty('id', 'create');
@@ -166,12 +165,19 @@ class ProdutosValoresTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
         $rules->add($rules->existsIn(['produto_id'], 'Produtos'));
         //$rules->add($rules->existsIn(['ncm_id'], 'Ncms'));
         return $rules;
+    }
+
+    public function beforeSave(Event $event, Entity $entity) {
+        if ((isset($entity->valor_vendas) and $entity->valor_vendas > 0) AND ( isset($entity->valor_compras) AND $entity->valor_compras > 0)) {
+            $entity->margem = ((($entity->valor_vendas - $entity->valor_compras) / $entity->valor_vendas) * 100);
+        } else {
+            $entity->margem = 0;
+        }
     }
 
 }

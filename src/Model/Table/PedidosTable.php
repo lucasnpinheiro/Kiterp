@@ -9,14 +9,13 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Search\Manager;
 
-
 /**
  * Pedidos Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Empresas
  * @property \Cake\ORM\Association\BelongsTo $Pessoas
- * @property \Cake\ORM\Association\BelongsTo $CondicaoPagamentos
- * @property \Cake\ORM\Association\BelongsTo $Vendedors
+ * @property \Cake\ORM\Association\BelongsTo $CondicoesPagamentos
+ * @property \Cake\ORM\Association\BelongsTo $Vendedores
  * @property \Cake\ORM\Association\BelongsTo $Transportadoras
  * @property \Cake\ORM\Association\BelongsToMany $FormasPagamentos
  */
@@ -60,7 +59,7 @@ class PedidosTable extends Table {
             'targetForeignKey' => 'formas_pagamento_id',
             'joinTable' => 'pedidos_formas_pagamentos'
         ]);
-            $this->addBehavior('Search.Search');
+        $this->addBehavior('Search.Search');
     }
 
     public function searchConfiguration() {
@@ -81,7 +80,6 @@ class PedidosTable extends Table {
 
         return $search;
     }
-
 
     /**
      * Default validation rules.
@@ -137,8 +135,8 @@ class PedidosTable extends Table {
     public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
-        $rules->add($rules->existsIn(['condicao_pagamento_id'], 'CondicaoPagamentos'));
-        $rules->add($rules->existsIn(['vendedor_id'], 'Vendedors'));
+        $rules->add($rules->existsIn(['condicao_pagamento_id'], 'CondicoesPagamentos'));
+        $rules->add($rules->existsIn(['vendedor_id'], 'Vendedores'));
         $rules->add($rules->existsIn(['transportadora_id'], 'Transportadoras'));
         return $rules;
     }

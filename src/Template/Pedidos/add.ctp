@@ -12,17 +12,29 @@ $this->Html->addCrumb('Cadastrar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($pedido) ?>
                 <?php
-                echo $this->Form->input('empresa_id', ['required' => true, 'options' => $empresas, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->inputStatic('data_pedido', date('d/m/Y'), ['label' => 'Data do Pedido', 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->inputStatic('status', $this->Html->label('Aberto', 'info'), ['label' => 'Situação', 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('condicao_pagamento_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('vendedor_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('transportadora_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->moeda('valor_total', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->numero('numero_caixa', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('pedido_id', ['type' => 'hidden']);
+                echo $this->Form->input('transportadora_id', ['type' => 'hidden', 'value' => 1]);
+                echo $this->Form->numero('numero_caixa', ['type' => 'hidden', 'value' => 1]);
+
+                $count_empresas = $empresas;
+                $count_empresas = $count_empresas->toArray();
+                if (count($count_empresas) > 1) {
+                    echo $this->Form->input('empresa_id', ['required' => true, 'options' => $empresas, 'empty' => 'Selecione uma Empresa', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                    echo $this->Form->input('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => 'Selecione um Cliente', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                    echo $this->Form->input('condicao_pagamento_id', ['required' => true, 'empty' => 'Selecione uma opção de pagamento', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                    echo $this->Form->input('vendedor_id', ['value' => $this->request->session()->read('Auth.User.id'), 'empty' => 'Selecione um vendedor', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                } else {
+                    foreach ($empresas as $key => $value) {
+                        echo $this->Form->input('empresa_id', ['value' => $key, 'type' => 'hidden']);
+                    }
+                    echo $this->Form->input('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => 'Selecione um Cliente', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                    echo $this->Form->input('condicao_pagamento_id', ['required' => true, 'empty' => 'Selecione uma opção de pagamento', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                    echo $this->Form->input('vendedor_id', ['value' => $this->request->session()->read('Auth.User.id'), 'empty' => 'Selecione um vendedor', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                }
                 echo $this->Form->cpf('cpf', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('formas_pagamentos._ids', ['required' => true, 'options' => $formasPagamentos, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->inputStatic('data_pedido', ($pedido->data_pedido != '' ? $pedido->data_pedido->format('d/m/Y H:i:s') : date('d/m/Y H:i:s')), ['label' => 'Data do Pedido', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->inputStatic('status', $this->Html->label('Aberto', 'info'), ['label' => 'Situação', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo '<div class="col-xs-12 col-md-3"><h2 class="seta-pedido">Pedido: ' . $pedido->id . '</h2></div>';
                 ?>
                 <div class="clearfix"></div>
                 <div class="hr-line-dashed"></div>

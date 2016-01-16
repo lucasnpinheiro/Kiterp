@@ -12,7 +12,6 @@ use Cake\ORM\Entity;
 use Cake\ORM\TableRegistry;
 use Search\Manager;
 
-
 /**
  * Usuarios Model
  *
@@ -38,7 +37,7 @@ class UsuariosTable extends Table {
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoa_id'
         ]);
-            $this->addBehavior('Search.Search');
+        $this->addBehavior('Search.Search');
     }
 
     public function searchConfiguration() {
@@ -59,7 +58,6 @@ class UsuariosTable extends Table {
 
         return $search;
     }
-
 
     /**
      * Default validation rules.
@@ -110,9 +108,10 @@ class UsuariosTable extends Table {
     public function afterSave(Event $event, Entity $entity, ArrayObject $options) {
         $UsuariosGrupos = TableRegistry::get('UsuariosGrupos');
 
-        $UsuariosGrupos->deleteAll(['usuario_id' => (int) $entity->id]);
-
-        if (isset($entity->grupo_id) AND count($entity->grupo_id) > 0) {
+        if (isset($entity->grupo_id) AND empty($entity->grupo_id)) {
+            $UsuariosGrupos->deleteAll(['usuario_id' => (int) $entity->id]);
+        }
+        if (isset($entity->grupo_id) AND ! empty($entity->grupo_id)) {
             foreach ($entity->grupo_id as $key => $value) {
                 $usuario = $UsuariosGrupos->newEntity();
                 $usuario->usuario_id = (int) $entity->id;

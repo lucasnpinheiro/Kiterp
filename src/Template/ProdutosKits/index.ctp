@@ -15,29 +15,17 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
-                                <th><?= $this->Paginator->sort('empresa_id') ?></th>
-                                <th><?= $this->Paginator->sort('produto_id') ?></th>
-                                <th><?= $this->Paginator->sort('kit_id') ?></th>
-                                <th><?= $this->Paginator->sort('qtde') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
+                                <th><?= $this->Paginator->sort('kit_id', 'Kit') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($produtosKits as $produtosKit): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($produtosKit->id) ?></td>
-                                    <td><?= $produtosKit->has('empresa') ? $this->Html->link($produtosKit->empresa->id, ['controller' => 'Empresas', 'action' => 'edit', $produtosKit->empresa->id]) : '' ?></td>
-                                    <td><?= $produtosKit->has('produto') ? $this->Html->link($produtosKit->produto->id, ['controller' => 'Produtos', 'action' => 'edit', $produtosKit->produto->id]) : '' ?></td>
-                                    <td><?= $this->Number->format($produtosKit->kit_id) ?></td>
-                                    <td><?= $this->Number->format($produtosKit->qtde) ?></td>
-                                    <td><?= h($produtosKit->created) ?></td>
-                                    <td><?= h($produtosKit->modified) ?></td>
+                                    <td><?= $this->Html->link($produtosKit->kit->nome, ['controller' => 'Produtos', 'action' => 'edit', $produtosKit->kit->id], ['icon' => 'external-link-square']) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $produtosKit->id]) ?>
-                                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $produtosKit->id], ['confirm' => __('Are you sure you want to delete # {0}?', $produtosKit->id)]) ?>
+                                        <?= $this->Html->link(__('Alterar'), ['action' => 'add', $produtosKit->kit_id]) ?>
+                                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $produtosKit->kit_id], ['confirm' => __('Are you sure you want to delete # {0}?', $produtosKit->kit_id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

@@ -17,7 +17,7 @@ $this->Html->addCrumb('Alterar', null);
                 echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
                 echo $this->Form->input('unidade', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->input('grupo_id', ['empty' => 'Selecione um Grupo', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
-                echo $this->Form->simNao('produto_kit', ['value' => '0', 'label' => 'KIT', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->simNao('produto_kit', ['label' => 'KIT', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->element('Produtos/valores');
                 echo $this->Form->fileUpload('foto', ['value' => ROOT . DS . 'webroot' . DS . 'ImagemProdutos' . DS . $produto->foto, 'type' => 'file', 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 echo $this->Form->input('descricao', ['label' => 'Descrição', 'div' => ['class' => 'col-xs-12 col-md-12']]);
