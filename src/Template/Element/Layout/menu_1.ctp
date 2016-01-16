@@ -8,7 +8,7 @@ if (count($lista_menus)) {
 }
 ?>
 
-<nav class="navbar navbar-static-top" role="navigation">
+<nav class="navbar navbar-custom navbar-static-top" role="navigation">
     
     <div class="navbar-collapse collapse" id="navbar">
         <ul class="nav navbar-nav">

@@ -28,7 +28,7 @@
 
         <div id="wrapper">
             <div id="page-wrapper" class="gray-bg">
-                <div class="row border-bottom white-bg">
+                <div class="row border-bottom">
                     <?php echo $this->element('Layout/menu_1'); ?>
                 </div>
                 <div class="row wrapper border-bottom white-bg page-heading">
