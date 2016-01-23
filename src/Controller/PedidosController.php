@@ -22,9 +22,9 @@ class PedidosController extends AppController {
      * @return void
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Pessoas', 'Vendedores','Empresas'=> function($q) {
-        return $q->contain('Pessoas')->autoFields(true);
-    }]);
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Pessoas', 'Vendedores', 'Empresas' => function($q) {
+                return $q->contain('Pessoas')->autoFields(true);
+            }]);
         $this->set('pedidos', $this->paginate($query));
         $this->set('_serialize', ['pedidos']);
     }
@@ -81,6 +81,9 @@ class PedidosController extends AppController {
     public function add() {
         $pedido = $this->Pedidos->newEntity();
         if ($this->request->is('post')) {
+            debug($this->request->data);
+            exit;
+
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));

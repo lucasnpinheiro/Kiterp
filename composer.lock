@@ -937,12 +937,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfCake/search.git",
-                "reference": "fd2f0aa22723821fe4ae5c0aa92adf76f9edd023"
+                "reference": "28003d2c12886748de98e573d609a9b6966cb614"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfCake/search/zipball/fd2f0aa22723821fe4ae5c0aa92adf76f9edd023",
-                "reference": "fd2f0aa22723821fe4ae5c0aa92adf76f9edd023",
+                "url": "https://api.github.com/repos/FriendsOfCake/search/zipball/28003d2c12886748de98e573d609a9b6966cb614",
+                "reference": "28003d2c12886748de98e573d609a9b6966cb614",
                 "shasum": ""
             },
             "require-dev": {
@@ -974,7 +974,7 @@
                 "cakephp3",
                 "search"
             ],
-            "time": "2015-12-23 07:54:55"
+            "time": "2016-01-22 02:58:37"
         },
         {
             "name": "holt59/cakephp3-bootstrap-helpers",

@@ -12,7 +12,11 @@
         <?php echo $this->Html->css('/css/animate.css') ?>
         <?php echo $this->Html->css('/js/plugins/bootstrap-datepicker/bootstrap-datepicker.css') ?>
         <?php echo $this->Html->css('/css/plugins/toastr/toastr.min.css') ?>
-        <?php echo $this->Html->css('/css/style.css') ?>
+        <?php
+        echo $this->Html->css('/css/style.css');
+        echo $this->Html->css('/js/plugins/select2/select2.min.css');
+        ?>
+
 
         <?php echo $this->fetch('meta') ?>
         <?php echo $this->fetch('css') ?>
@@ -59,6 +63,10 @@
         <?php echo $this->Html->script('/js/plugins/toastr/toastr.min.js') ?>
         <?php echo $this->Html->script('/js/bootbox.min.js') ?>
         <?php echo $this->Html->script('/js/inspinia.js') ?>
+        <?php
+        echo $this->Html->script('/js/plugins/select2/select2.full.min.js');
+        echo $this->Html->script('/js/plugins/select2/i18n/pt-BR.js');
+        ?>
         <?php echo $this->Html->script('/js/Funcoes.js') ?>
         <?php echo $this->fetch('script') ?>
 

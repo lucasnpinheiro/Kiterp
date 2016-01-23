@@ -15,8 +15,7 @@ namespace App\View\Helper;
 
 use Bootstrap\View\Helper\BootstrapFormHelper;
 
-class MyFormHelper extends BootstrapFormHelper
-{
+class MyFormHelper extends BootstrapFormHelper {
 
     public $helpers = [
         'Html' => [
@@ -25,14 +24,12 @@ class MyFormHelper extends BootstrapFormHelper
         'Url'
     ];
 
-    public function __construct(\Cake\View\View $view, array $config = [])
-    {
+    public function __construct(\Cake\View\View $view, array $config = []) {
         $this->helpers[] = 'Number';
         parent::__construct($view, $config);
     }
 
-    public function editor($fieldName, array $options = array(), array $configure = array())
-    {
+    public function editor($fieldName, array $options = array(), array $configure = array()) {
         $_configure = [
             'buttonSource' => true,
             'plugins' => ['table', 'video'],
@@ -64,8 +61,7 @@ class MyFormHelper extends BootstrapFormHelper
         ", ['block' => 'script']);
 
 
-        if (!isset($options['class']))
-        {
+        if (!isset($options['class'])) {
             $options['class'] = '';
         }
         $options['class'] .= ' editor_redactor';
@@ -73,8 +69,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function status($fieldName, array $options = array())
-    {
+    public function status($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -87,8 +82,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function tipoPessoa($fieldName, array $options = array())
-    {
+    public function tipoPessoa($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -100,8 +94,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function tipoImpostos($fieldName, array $options = array())
-    {
+    public function tipoImpostos($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -118,8 +111,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function tipoContribuinte($fieldName, array $options = array())
-    {
+    public function tipoContribuinte($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -132,8 +124,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function associacao($fieldName, array $options = array())
-    {
+    public function associacao($fieldName, array $options = array()) {
         //1 - Empresa | 2 - Cliente | 3 - Fornecedor | 4 - Vendedor | 5 - Representante | 6 - Funcionario | 7 - Usuários
         $options += [
             'type' => 'select',
@@ -150,8 +141,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function tipoEndereco($fieldName, array $options = array())
-    {
+    public function tipoEndereco($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -167,27 +157,21 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function button($title, array $options = array())
-    {
-        if (!isset($options['icon']))
-        {
+    public function button($title, array $options = array()) {
+        if (!isset($options['icon'])) {
             $title = $this->Html->icon('save') . ' ' . $title;
-        } else if ($options['icon'] != '')
-        {
+        } else if ($options['icon'] != '') {
             $title = $this->Html->icon($options['icon']) . ' ' . $title;
         }
         return parent::button($title, $options);
     }
 
-    public function postLink($title, $url = null, array $options = array())
-    {
-        if (!isset($options['class']))
-        {
+    public function postLink($title, $url = null, array $options = array()) {
+        if (!isset($options['class'])) {
             $options['class'] = ' btn btn-xs ';
         }
         $options['escape'] = false;
-        if (!isset($options['icon']))
-        {
+        if (!isset($options['icon'])) {
             $options['icon'] = 'trash-o';
             $options['class'] .= ' btn-danger ';
         }
@@ -195,10 +179,8 @@ class MyFormHelper extends BootstrapFormHelper
         return parent::postLink($title, $url, $options);
     }
 
-    public function create($model = null, array $options = [])
-    {
-        if (is_null($model) OR trim($model) == '')
-        {
+    public function create($model = null, array $options = []) {
+        if (is_null($model) OR trim($model) == '') {
             $_id = 'MyFormCakePhp' . time();
             $options = [
                 'id' => $_id,
@@ -208,15 +190,12 @@ class MyFormHelper extends BootstrapFormHelper
         return parent::create($model, $options);
     }
 
-    public function file($fieldName, array $options = [])
-    {
+    public function file($fieldName, array $options = []) {
         $this->_customFileInput = true;
-        if (!$this->_customFileInput || (isset($options['default']) && $options['default']))
-        {
+        if (!$this->_customFileInput || (isset($options['default']) && $options['default'])) {
             return parent::file($fieldName, $options);
         }
-        if (!isset($options['id']))
-        {
+        if (!isset($options['id'])) {
             $options['id'] = $fieldName;
         }
         $options += ['secure' => true];
@@ -243,20 +222,16 @@ class MyFormHelper extends BootstrapFormHelper
         return $fileInput . $this->Html->div('input-group', $this->Html->div('input-group-btn', $fakeButton) . $fakeInput);
     }
 
-    public function input($fieldName, array $options = array())
-    {
+    public function input($fieldName, array $options = array()) {
         $options = $this->_parseOptions($fieldName, $options);
         $div = $this->_extractOption('div', $options, '');
-        if ($div)
-        {
+        if ($div) {
             $_div = '';
-            if (!isset($div['class']))
-            {
+            if (!isset($div['class'])) {
                 $div['class'] = '';
             }
             $div['class'] = 'form-group {{type}}{{required}} ' . $div['class'];
-            foreach ($div as $key => $value)
-            {
+            foreach ($div as $key => $value) {
                 $_div .= $key . '="' . $value . '"';
             }
             $this->templates(['inputContainer' => '<div ' . $_div . '>{{content}}</div>']);
@@ -264,23 +239,19 @@ class MyFormHelper extends BootstrapFormHelper
         }
 
         $options['title'] = $fieldName;
-        if (isset($options['label']) AND $options['label'] != false)
-        {
+        if (isset($options['label']) AND $options['label'] != false) {
             $options['title'] = $options['label'];
-        } else if (isset($options['placeholder']) AND $options['placeholder'] != false)
-        {
+        } else if (isset($options['placeholder']) AND $options['placeholder'] != false) {
             $options['title'] = $options['placeholder'];
         }
         return parent::input($fieldName, $options);
     }
 
-    public function myWrap($input, $prepend, $append)
-    {
+    public function myWrap($input, $prepend, $append) {
         return $this->prepend($input, $prepend) . $input . $this->append($input, $append);
     }
 
-    public function mail($fieldName, array $options = array())
-    {
+    public function mail($fieldName, array $options = array()) {
         $default = [
             'label' => 'E-mail',
             'type' => 'email',
@@ -290,8 +261,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function data($fieldName, array $options = array())
-    {
+    public function data($fieldName, array $options = array()) {
         $default = [
             'value' => '',
             'class' => 'data',
@@ -303,14 +273,12 @@ class MyFormHelper extends BootstrapFormHelper
             'append' => '<i class="fa fa-calendar fa-lg"></i>',
         ];
         $val = $this->context();
-        if (!empty($val->val($fieldName)))
-        {
+        if (!empty($val->val($fieldName))) {
             $default['value'] = $val->val($fieldName);
         }
 
         $options = \Cake\Utility\Hash::merge($default, $options);
-        if (trim($options['value']) != '')
-        {
+        if (trim($options['value']) != '') {
             //$options['value'] = $this->Html->data($options['value']);
         }
         $options = $this->mergeClassCss($default, $options);
@@ -319,8 +287,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function numero($fieldName, array $options = array())
-    {
+    public function numero($fieldName, array $options = array()) {
         $default = [
             'type' => 'text',
             'class' => 'numero',
@@ -333,8 +300,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function telefone($fieldName, array $options = array())
-    {
+    public function telefone($fieldName, array $options = array()) {
         $default = [
             'type' => 'text',
             'class' => 'telefone',
@@ -345,8 +311,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function cep($fieldName, array $options = array())
-    {
+    public function cep($fieldName, array $options = array()) {
         $default = [
             'label' => 'CEP',
             'type' => 'text',
@@ -358,8 +323,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function moeda($fieldName, array $options = array())
-    {
+    public function moeda($fieldName, array $options = array()) {
         $currency = [
             'before' => '',
             'zero' => '0,00',
@@ -380,8 +344,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function juros($fieldName, array $options = array())
-    {
+    public function juros($fieldName, array $options = array()) {
         $currency = [
             'before' => '',
             'zero' => '0,0000',
@@ -402,8 +365,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function quantidade($fieldName, array $options = array())
-    {
+    public function quantidade($fieldName, array $options = array()) {
         $currency = [
             'before' => '',
             'zero' => '0,0000',
@@ -425,8 +387,29 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function cpf($fieldName, array $options = array())
-    {
+    public function peso($fieldName, array $options = array()) {
+        $currency = [
+            'before' => '',
+            'zero' => '0,0000',
+            'places' => '2',
+            'precision' => '4',
+            'locale' => 'pt_BR',
+        ];
+        $val = $this->context();
+        $default = [
+            'type' => 'text',
+            'class' => 'peso',
+            'casas' => 3,
+            'append' => '0-9',
+            'value' => ($val->val($fieldName) ? $this->Number->format($val->val($fieldName), $currency) : null)
+        ];
+
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
+        return $this->input($fieldName, $options);
+    }
+
+    public function cpf($fieldName, array $options = array()) {
         $default = [
             'label' => 'CPF',
             'type' => 'text',
@@ -439,8 +422,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function cnpj($fieldName, array $options = array())
-    {
+    public function cnpj($fieldName, array $options = array()) {
         $default = [
             'label' => 'CNPJ',
             'type' => 'text',
@@ -453,8 +435,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function senha($fieldName, array $options = array())
-    {
+    public function senha($fieldName, array $options = array()) {
         $default = [
             'label' => __('Senha'),
             'type' => 'password',
@@ -465,8 +446,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function simNao($fieldName, array $options = array())
-    {
+    public function simNao($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -478,8 +458,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function tzd($fieldName, array $options = array())
-    {
+    public function tzd($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -493,19 +472,16 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function select2($fieldName, array $options = array(), array $config = array())
-    {
+    public function select2($fieldName, array $options = array(), array $config = array()) {
         $config += ['language' => "pt-BR"];
         $options += ['id' => $this->_domId($fieldName)];
         $options += ['type' => 'select'];
-        if (isset($config['dados']))
-        {
+        if (isset($config['dados'])) {
             $options += $this->complementoSelect2($config['dados']);
             unset($config['dados']);
         }
 
-        if (isset($config['tokenSeparators']))
-        {
+        if (isset($config['tokenSeparators'])) {
             $options['help'] = 'Tipo(s) de separador(es) "' . implode('" ', $config['tokenSeparators']) . '"';
         }
 
@@ -520,13 +496,10 @@ class MyFormHelper extends BootstrapFormHelper
         return $this->input($fieldName, $options);
     }
 
-    public function fileUpload($fieldName, array $options = array())
-    {
+    public function fileUpload($fieldName, array $options = array()) {
         $image = '';
-        if (isset($options['value']) AND ! empty($options['value']))
-        {
-            if (file_exists($options['value']) and ! is_dir($options['value']))
-            {
+        if (isset($options['value']) AND ! empty($options['value'])) {
+            if (file_exists($options['value']) and ! is_dir($options['value'])) {
                 $list = pathinfo($options['value']);
                 $image = '<span><img style="max-height: 150px;" class="img-responsive img-thumbnail" src="data:image/' . $list['extension'] . ';base64,' . base64_encode(file_get_contents($list['dirname'] . '/' . $list['basename'])) . '" title="' . $options['value'] . '"></span>';
             }
@@ -540,13 +513,10 @@ class MyFormHelper extends BootstrapFormHelper
         return '<div class="col-xs-12"><output id="listFileUpload">' . $image . '</output>' . $this->input($fieldName, $options) . '</div>';
     }
 
-    public function complementoSelect2($dados)
-    {
+    public function complementoSelect2($dados) {
         $retorno = array();
-        if (trim($dados) != '')
-        {
-            foreach (json_decode($dados, true) as $value)
-            {
+        if (trim($dados) != '') {
+            foreach (json_decode($dados, true) as $value) {
                 $retorno['options'][$value] = $value;
                 $retorno['default'][] = $value;
             }
@@ -554,8 +524,7 @@ class MyFormHelper extends BootstrapFormHelper
         return $retorno;
     }
 
-    public function dropdownButton($title, array $menu = [], array $options = [])
-    {
+    public function dropdownButton($title, array $menu = [], array $options = []) {
 
         $options['type'] = false;
         $options['data-toggle'] = 'dropdown';
@@ -567,8 +536,7 @@ class MyFormHelper extends BootstrapFormHelper
         ]);
     }
 
-    public function postLinkPermissao($title, $url = null, array $options = array())
-    {
+    public function postLinkPermissao($title, $url = null, array $options = array()) {
         $default = [
             'plugin' => $this->request->param('plugin'),
             'controller' => $this->request->param('controller'),
@@ -590,37 +558,30 @@ class MyFormHelper extends BootstrapFormHelper
                         ' . ($url['plugin'] != '' ? ' AND Menu.plugin = "' . $url['plugin'] . '"' : '') . '
                         AND Menu.status = 1
                         AND Menu.root ' . ($this->request->session()->read('Auth.User.root') == 1 ? 'IN(0,1)' : '= 0');
-        if (is_null($this->request->session()->read(md5($sql))))
-        {
+        if (is_null($this->request->session()->read(md5($sql)))) {
             $menus = \Cake\Datasource\ConnectionManager::get('default');
             $r = $menus->execute($sql)->fetch('assoc');
 
             $this->request->session()->write(md5($sql), $r['total']);
-            if ($r['total'] > 0)
-            {
+            if ($r['total'] > 0) {
                 return $this->postLink($title, $url, $options);
             }
-        } else
-        {
-            if ($this->request->session()->read(md5($sql)) > 0)
-            {
+        } else {
+            if ($this->request->session()->read(md5($sql)) > 0) {
                 return $this->postLink($title, $url, $options);
             }
         }
         return null;
     }
 
-    private function mergeClassCss($default, $options)
-    {
-        if (isset($options['class']))
-        {
+    private function mergeClassCss($default, $options) {
+        if (isset($options['class'])) {
             $options['class'] .= ' ' . $default['class'];
         }
         return $options;
     }
 
-    public function inputStatic($field, $value, $options = array())
-    {
+    public function inputStatic($field, $value, $options = array()) {
         $default = [
             'class' => 'form-control-static',
             'label' => false

@@ -63,67 +63,106 @@ class ProdutosController extends AppController {
             'individual' => 1
         ];
         $codigo = trim($this->request->data('codigo'));
-        $this->loadModel('Empresas');
-        $empresa = $this->Empresas->find()->where(['id' => $this->request->data('empresa')])->first();
-        $empresa = $empresa->id;
-        $kit = [];
-        if (!is_null($this->request->data('kit'))) {
-            $kit = ['produto_kit' => trim($this->request->data('kit'))];
-        }
-        if (is_numeric($codigo)) {
-            if (strlen($codigo) >= 13) {
-                $find = $this->Produtos->find()->where(array_merge($kit, ['Produtos.barra' => $codigo]));
-            } else {
-                $find = $this->Produtos->find()->where(array_merge($kit, ['Produtos.codigo_interno' => $codigo]));
-            }
-        } else {
-            $find = $this->Produtos->find()->where(array_merge($kit, ['Produtos.nome RLIKE' => $codigo]));
-            $retorno['individual'] = 0;
-        }
-        $find = $find->contain('ProdutosValores')->first();
-        if (count($find) > 0) {
-            $cod = 999;
-            $chave = 0;
-            foreach ($find->produtos_valores as $key => $value) {
-                if ($value->empresa_id == $empresa) {
-                    $chave = $key;
-                }
-            }
-            $find->produtos_valores = $find->produtos_valores[$chave];
-            if ($find->produto_kit == 1) {
-                $sql = 'SELECT 
-                        SUM(ProdutosValores.valor_compras * ProdutosKits.qtde) AS custo,
-                        SUM(ProdutosValores.valor_vendas * ProdutosKits.qtde) AS venda
+        $sql = 'SELECT 
+                        p.id,
+                        p.barra,
+                        p.codigo_interno,
+                        p.nome,
+                        p.produto_kit,
+                        COALESCE(IF(p.produto_kit = 0,
+                                    pv.valor_vendas,
+                                    (SELECT 
+                                            SUM(ProdutosValores.valor_vendas * ProdutosKits.qtde) AS venda
+                                        FROM
+                                            produtos_kits AS ProdutosKits
+                                                INNER JOIN
+                                            produtos AS Produtos ON Produtos.id = ProdutosKits.produto_id
+                                                INNER JOIN
+                                            produtos_valores AS ProdutosValores ON Produtos.id = ProdutosValores.produto_id
+                                                INNER JOIN
+                                            empresas AS Empresas ON Empresas.id = ProdutosKits.empresa_id
+                                                INNER JOIN
+                                            pessoas AS Pessoas ON Pessoas.id = Empresas.pessoa_id
+                                        WHERE
+                                            ProdutosKits.kit_id = p.id
+                                                AND ProdutosKits.empresa_id = pv.empresa_id
+                                        GROUP BY ProdutosKits.empresa_id)),
+                                0) AS valor_vendas
                     FROM
-                        produtos_kits AS ProdutosKits
+                        produtos AS p
                             INNER JOIN
-                        produtos AS Produtos ON Produtos.id = ProdutosKits.produto_id
-                            INNER JOIN
-                        produtos_valores AS ProdutosValores ON Produtos.id = ProdutosValores.produto_id
-                            INNER JOIN
-                        empresas AS Empresas ON Empresas.id = ProdutosKits.empresa_id
-                            INNER JOIN
-                        pessoas AS Pessoas ON Pessoas.id = Empresas.pessoa_id
+                        produtos_valores AS pv ON pv.produto_id = p.id
                     WHERE
-                        ProdutosKits.kit_id = ' . $find->id . '
-                            AND ProdutosKits.empresa_id = ' . $empresa . '
-                    GROUP BY ProdutosKits.empresa_id';
+                        pv.empresa_id = "' . $this->request->data('empresa') . '"
+                        AND (p.barra = "' . $codigo . '" OR p.codigo_interno = "' . $codigo . '") LIMIT 50';
 
-                $conn = \Cake\Datasource\ConnectionManager::get('default');
-                $empresas = $conn->execute($sql)->fetchAll('assoc');
-                if (count($empresas) > 0) {
-                    $find->produtos_valores->valor_compras = trim($empresas[0]['custo']) == '' ? 0 : $empresas[0]['custo'];
-                    $find->produtos_valores->valor_vendas = trim($empresas[0]['venda']) == '' ? 0 : $empresas[0]['venda'];
-                    $find->produtos_valores->valor_vendas_formatado = number_format($find->produtos_valores->valor_vendas, 2, ',', '.');
-                } else {
-                    $cod = 222;
-                }
-            }
+        $conn = \Cake\Datasource\ConnectionManager::get('default');
+        $find = $conn->execute($sql)->fetchAll('assoc');
+
+        if (count($find) > 0) {
             $retorno = [
-                'cod' => $cod,
+                'cod' => 999,
                 'msg' => 'Produto localizado',
-                'individual' => (string) $retorno['individual'],
-                'produto' => $find->toArray()
+                'produto' => $find[0]
+            ];
+        }
+        $this->set('retorno', $retorno);
+    }
+
+    /**
+     * Consultar method
+     *
+     * @return void
+     */
+    public function consultarCombo() {
+        $this->viewBuilder()->layout('ajax');
+        $retorno = [
+            'cod' => 111,
+            'msg' => 'Produto não encontrado',
+            'individual' => 1
+        ];
+        $codigo = trim($this->request->data('codigo'));
+        $sql = 'SELECT 
+                        p.id,
+                        p.barra,
+                        p.codigo_interno,
+                        p.nome,
+                        p.produto_kit,
+                        COALESCE(IF(p.produto_kit = 0,
+                                    pv.valor_vendas,
+                                    (SELECT 
+                                            SUM(ProdutosValores.valor_vendas * ProdutosKits.qtde) AS venda
+                                        FROM
+                                            produtos_kits AS ProdutosKits
+                                                INNER JOIN
+                                            produtos AS Produtos ON Produtos.id = ProdutosKits.produto_id
+                                                INNER JOIN
+                                            produtos_valores AS ProdutosValores ON Produtos.id = ProdutosValores.produto_id
+                                                INNER JOIN
+                                            empresas AS Empresas ON Empresas.id = ProdutosKits.empresa_id
+                                                INNER JOIN
+                                            pessoas AS Pessoas ON Pessoas.id = Empresas.pessoa_id
+                                        WHERE
+                                            ProdutosKits.kit_id = p.id
+                                                AND ProdutosKits.empresa_id = pv.empresa_id
+                                        GROUP BY ProdutosKits.empresa_id)),
+                                0) AS valor_vendas
+                    FROM
+                        produtos AS p
+                            INNER JOIN
+                        produtos_valores AS pv ON pv.produto_id = p.id
+                    WHERE
+                        pv.empresa_id = "' . $this->request->data('empresa') . '"
+                        AND p.nome RLIKE "' . $codigo . '" LIMIT 50';
+
+        $conn = \Cake\Datasource\ConnectionManager::get('default');
+        $find = $conn->execute($sql)->fetchAll('assoc');
+
+        if (count($find) > 0) {
+            $retorno = [
+                'cod' => 999,
+                'msg' => 'Produto localizado',
+                'produto' => $find
             ];
         }
         $this->set('retorno', $retorno);

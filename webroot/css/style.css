@@ -8252,6 +8252,9 @@ td.actions{
 :required{
     border-left: 2px solid red;
 }
+.required .select2-container .selection .select2-selection{
+    border-left: 2px solid red;
+}
 
 .navbar-custom {
     background-color: #1172a2;
