@@ -14,6 +14,7 @@
 namespace App\View\Helper;
 
 use Bootstrap\View\Helper\BootstrapFormHelper;
+use Cake\ORM\TableRegistry;
 
 class MyFormHelper extends BootstrapFormHelper {
 
@@ -69,6 +70,22 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
+    public function statusPedido($fieldName, array $options = array()) {
+        $options += [
+            'type' => 'select',
+            'options' => [
+                1 => __('Aberto'),
+                2 => __('Emitido'),
+                3 => __('Recebido'),
+                4 => __('Orçamento'),
+                5 => __('Nota Fiscal'),
+                6 => __('Cancelado'),
+            ],
+            'empty' => __('Selecionar uma Situação')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
     public function status($fieldName, array $options = array()) {
         $options += [
             'type' => 'select',
@@ -120,6 +137,24 @@ class MyFormHelper extends BootstrapFormHelper {
                 3 => __('Não Contribuinte'),
             ],
             'empty' => __('Selecionar um Tipo de Contribuinte')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
+    public function empresas($fieldName, array $options = array()) {
+        $empresas = TableRegistry::get('Empresas');
+
+        $find = $empresas->find()->contain('Pessoas')->all();
+        $_empresas = [];
+        if (!empty($find)) {
+            foreach ($find as $key => $value) {
+                $_empresas[$value->id] = $value->pessoa->nome;
+            }
+        }
+        $options += [
+            'type' => 'select',
+            'options' => $_empresas,
+            'empty' => __('Selecionar uma Empresa')
         ];
         return $this->input($fieldName, $options);
     }

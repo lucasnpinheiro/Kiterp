@@ -1,5 +1,6 @@
 cake.pedidos = {};
 cake.pedidos.sequencia = 0;
+cake.pedidos.total_geral = 0;
 
 cake.pedidos.cache = function (chave, valor) {
     if (!valor) {
@@ -40,6 +41,8 @@ cake.pedidos.calculaLinha = function () {
         $('.lista-itens-pedidos').append(tr);
         $(obj).closest('tbody').find(':input').val('');
         $('.busca-produto-input').focus();
+        cake.pedidos.total_geral += total;
+        $('.seta-total').html(cake.util.moeda(cake.pedidos.total_geral));
         cake.util.mascaras();
 
     });
@@ -76,6 +79,7 @@ cake.pedidos.gerarPedido = function (obj) {
                 cake.util.loading.hide(obj);
                 console.log(d);
                 $('#pedido-id').val(d.id);
+                $('#id').val(d.id);
                 $('.seta-pedido').html('Pedido: ' + d.id);
                 if (d.cod == 999) {
                     cake.msg.sucesso('Pedido.', 'Pedido criado com sucesso.');
@@ -93,6 +97,7 @@ cake.pedidos.set = function (produto) {
     console.log(produto);
     cake.pedidos.cache(produto.id, produto);
     $('.desc-produto-id').val(produto.id);
+    $('.desc-codigo').val(produto.barra);
     $('.desc-valor-unitario').val(cake.util.moeda(produto.valor_vendas));
     $('.desc-nome').val(produto.nome);
     $('.desc-quantidade').val('').focus();
@@ -189,7 +194,7 @@ $(function () {
     });
     $(':submit').click(function (e) {
         $('#status').val(1);
-        if($(this).val() == 'orcamento'){
+        if ($(this).val() == 'orcamento') {
             $('#status').val(4);
         }
         var c = $.trim($('.lista-itens-pedidos').html());

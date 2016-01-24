@@ -38,7 +38,7 @@ class PedidosFormasPagamentosTable extends Table
             'foreignKey' => 'pedido_id'
         ]);
         $this->belongsTo('FormaPagamentos', [
-            'foreignKey' => 'forma_pagamento_id'
+            'foreignKey' => 'formas_pagamento_id'
         ]);
             $this->addBehavior('Search.Search');
     }
@@ -92,7 +92,7 @@ class PedidosFormasPagamentosTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['pedido_id'], 'Pedidos'));
-        $rules->add($rules->existsIn(['forma_pagamento_id'], 'FormaPagamentos'));
+        //$rules->add($rules->existsIn(['formas_pagamento_id'], 'FormaPagamentos'));
         return $rules;
     }
 }

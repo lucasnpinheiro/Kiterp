@@ -25,6 +25,13 @@ class PedidosController extends AppController {
         $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Pessoas', 'Vendedores', 'Empresas' => function($q) {
                 return $q->contain('Pessoas')->autoFields(true);
             }]);
+
+        $this->loadModel('Pessoas');
+        $this->loadModel('Empresas');
+        $empresas = $this->Empresas->find('list');
+        $pessoas = $this->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
+        $vendedors = $this->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
+        $this->set(compact('empresas', 'pessoas', 'vendedors'));
         $this->set('pedidos', $this->paginate($query));
         $this->set('_serialize', ['pedidos']);
     }
@@ -65,6 +72,41 @@ class PedidosController extends AppController {
      * @return void
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
+    public function receber($id = null) {
+        $pedido = $this->Pedidos->get($id, [
+            'contain' => ['Empresas' => function($q) {
+                    return $q->contain('Pessoas')->autoFields(true);
+                }, 'Pessoas', 'CondicoesPagamentos', 'Vendedores', 'Transportadoras', 'PedidosItens' => function($q) {
+                    return $q->contain('Produtos')->autoFields(true);
+                }]
+        ]);
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            
+            $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
+            if ($this->Pedidos->save($pedido)) {
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
+            }
+        }
+
+        $this->loadModel('FormasPagamentos');
+
+        $formasPagamentos = $this->FormasPagamentos->find('list');
+
+        $this->set('pedido', $pedido);
+        $this->set('formasPagamentos', $formasPagamentos);
+        $this->set('_serialize', ['pedido']);
+    }
+
+    /**
+     * View method
+     *
+     * @param string|null $id Pedido id.
+     * @return void
+     * @throws \Cake\Network\Exception\NotFoundException When record not found.
+     */
     public function view($id = null) {
         $pedido = $this->Pedidos->get($id, [
             'contain' => ['Empresas', 'Pessoas', 'CondicoesPagamentos', 'Vendedores', 'Transportadoras', 'FormasPagamentos']
@@ -81,9 +123,6 @@ class PedidosController extends AppController {
     public function add() {
         $pedido = $this->Pedidos->newEntity();
         if ($this->request->is('post')) {
-            debug($this->request->data);
-            exit;
-
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
@@ -92,7 +131,7 @@ class PedidosController extends AppController {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
-        $findPedidosAberto = $this->Pedidos->find()->where(['status' => 1])->first();
+        $findPedidosAberto = $this->Pedidos->find()->where(['status' => 1, 'vendedor_id' => $this->Auth->user('id')])->first();
         if (count($findPedidosAberto) > 0) {
             $pedido->pedido_id = $findPedidosAberto->id;
             $pedido = $this->Pedidos->patchEntity($pedido, $findPedidosAberto->toArray());
@@ -116,7 +155,7 @@ class PedidosController extends AppController {
      */
     public function edit($id = null) {
         $pedido = $this->Pedidos->get($id, [
-            'contain' => ['FormasPagamentos']
+            'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
@@ -127,13 +166,14 @@ class PedidosController extends AppController {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
-        $empresas = $this->Pedidos->Empresas->find('list');
-        $pessoas = $this->Pedidos->Pessoas->find('list');
+        $pedido->pedido_id = $pedido->id;
+        $this->loadModel('Pessoas');
+        $this->loadModel('Empresas');
+        $empresas = $this->Empresas->find('list');
+        $pessoas = $this->Pedidos->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
         $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list');
-        $vendedors = $this->Pedidos->Vendedores->find('list');
-        $transportadoras = $this->Pedidos->Transportadoras->find('list');
-        $formasPagamentos = $this->Pedidos->FormasPagamentos->find('list');
-        $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors', 'transportadoras', 'formasPagamentos'));
+        $vendedors = $this->Pedidos->Vendedores->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
+        $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors'));
         $this->set('_serialize', ['pedido']);
     }
 

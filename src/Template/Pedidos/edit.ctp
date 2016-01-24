@@ -3,39 +3,65 @@ $this->assign('title', $title);
 $this->Html->addCrumb($this->fetch('title'), ['controller' => $this->request->params['controller'], 'action' => 'index']);
 $this->Html->addCrumb('Alterar', null);
 ?>
+<?= $this->Form->create($pedido) ?>
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5><?= __('Alterar ' . $this->fetch('title')) ?></h5>
+                <h5><?= __($this->fetch('title')) ?></h5>
+                <div class="ibox-tools">
+                    <?= $this->Form->button(__('Orçamento'), ['bootstrap-type' => 'info', 'type' => 'submit', 'value' => 'orcamento', 'icon' => 'print']) ?>
+                    <?= $this->Form->button(__('Imprimir'), ['bootstrap-type' => 'primary', 'type' => 'submit', 'icon' => 'print']) ?>
+                </div>
             </div>
             <div class="ibox-content">
-                <?= $this->Form->create($pedido) ?>
+
                 <?php
-                echo $this->Form->input('empresa_id', ['options' => $empresas, 'empty' => true]);
-                echo $this->Form->input('data_pedido');
-                echo $this->Form->input('status');
-                echo $this->Form->input('pessoa_id', ['options' => $pessoas, 'empty' => true]);
-                echo $this->Form->input('condicao_pagamento_id');
-                echo $this->Form->input('vendedor_id');
-                echo $this->Form->input('transportadora_id');
-                echo $this->Form->input('valor_total');
-                echo $this->Form->input('numero_cupom');
-                echo $this->Form->input('nota_fiscal');
-                echo $this->Form->input('serie');
-                echo $this->Form->input('numero_caixa');
-                echo $this->Form->input('cpf');
-                echo $this->Form->input('formas_pagamentos._ids', ['options' => $formasPagamentos]);
+                echo $this->Form->input('id', ['type' => 'hidden']);
+                echo $this->Form->input('pedido_id', ['type' => 'hidden']);
+                echo $this->Form->input('transportadora_id', ['type' => 'hidden', 'value' => 1]);
+                echo $this->Form->numero('numero_caixa', ['type' => 'hidden', 'value' => 1]);
+                echo $this->Form->numero('status', ['type' => 'hidden', 'value' => 1]);
+
+                $count_empresas = $empresas;
+                $count_empresas = $count_empresas->toArray();
+                if (count($count_empresas) > 1) {
+                    echo $this->Form->empresas('empresa_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                    echo $this->Form->input('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => 'Selecione um Cliente', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                    echo $this->Form->input('condicao_pagamento_id', ['required' => true, 'empty' => 'Selecione uma opção de pagamento', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                    echo $this->Form->input('vendedor_id', ['value' => $this->request->session()->read('Auth.User.id'), 'empty' => 'Selecione um vendedor', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                } else {
+                    foreach ($empresas as $key => $value) {
+                        echo $this->Form->input('empresa_id', ['value' => $key, 'type' => 'hidden']);
+                    }
+                    echo $this->Form->input('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => 'Selecione um Cliente', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                    echo $this->Form->input('condicao_pagamento_id', ['required' => true, 'empty' => 'Selecione uma opção de pagamento', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                    echo $this->Form->input('vendedor_id', ['value' => $this->request->session()->read('Auth.User.id'), 'empty' => 'Selecione um vendedor', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                }
+                echo $this->Form->cpf('cpf', ['div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->inputStatic('data_pedido', ($pedido->data_pedido != '' ? $pedido->data_pedido->format('d/m/Y H:i:s') : date('d/m/Y H:i:s')), ['label' => 'Data do Pedido', 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->inputStatic('status', $this->Html->statusPedido($pedido->status), ['label' => 'Situação', 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo '<div class="col-xs-12 col-md-2"><h2 class="seta-total">Total: ' . $this->Html->moeda($pedido->valor_total) . '</h2></div>';
+                echo '<div class="col-xs-12 col-md-4"><h2 class="seta-pedido">Pedido: ' . $pedido->id . '</h2></div>';
                 ?>
+                <div class="clearfix"></div>
+                <div class="hr-line-dashed"></div>
+                <?php echo $this->element('Pedidos/itens'); ?>
+                <div class="clearfix"></div>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <div class="col-sm-12 text-right">
-                        <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                        <?= $this->Form->button(__('Orçamento'), ['bootstrap-type' => 'info', 'type' => 'submit', 'value' => 'orcamento', 'icon' => 'print']) ?>
+                        <?= $this->Form->button(__('Imprimir'), ['bootstrap-type' => 'primary', 'type' => 'submit', 'icon' => 'print']) ?>
                     </div>
                 </div>
                 <div class="clearfix"></div>
-                <?= $this->Form->end() ?>
+
             </div>
         </div>
     </div>
 </div>
+<?= $this->Form->end() ?>
+<?php
+echo $this->Html->script('/js/pedido.js', ['block' => 'script']);
+?>

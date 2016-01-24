@@ -8,6 +8,10 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Search\Manager;
+use Cake\Event\Event;
+use ArrayObject;
+use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * Pedidos Model
@@ -37,11 +41,11 @@ class PedidosTable extends Table {
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Empresas', [
-            'foreignKey' => 'empresa_id',
+            'foreignKey' => 'empresa_id'
         ]);
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoa_id',
-            //'conditions' => ['PessoasAssociacoes.tipo_associacao' => 2, 'Pessoas.status' => 1],
+                //'conditions' => ['PessoasAssociacoes.tipo_associacao' => 2, 'Pessoas.status' => 1],
         ]);
         $this->belongsTo('CondicoesPagamentos', [
             'foreignKey' => 'condicao_pagamento_id'
@@ -49,10 +53,13 @@ class PedidosTable extends Table {
         $this->belongsTo('Vendedores', [
             'className' => 'Pessoas',
             'foreignKey' => 'vendedor_id',
-            //'conditions' => ['PessoasAssociacoes.tipo_associacao' => 4, 'Vendedores.status' => 1],
+                //'conditions' => ['PessoasAssociacoes.tipo_associacao' => 4, 'Vendedores.status' => 1],
         ]);
         $this->belongsTo('Transportadoras', [
             'foreignKey' => 'transportadora_id'
+        ]);
+        $this->hasMany('PedidosItens', [
+            'foreignKey' => 'pedido_id'
         ]);
         $this->belongsToMany('FormasPagamentos', [
             'foreignKey' => 'pedido_id',
@@ -139,6 +146,49 @@ class PedidosTable extends Table {
         $rules->add($rules->existsIn(['vendedor_id'], 'Vendedores'));
         $rules->add($rules->existsIn(['transportadora_id'], 'Transportadoras'));
         return $rules;
+    }
+
+    public function afterSave(Event $event, Entity $entity) {
+        $ProdutosValores = TableRegistry::get('ProdutosValores');
+        $Pedidos = TableRegistry::get('Pedidos');
+        $PedidosItens = TableRegistry::get('PedidosItens');
+        $PedidosFormasPagamentos = TableRegistry::get('PedidosFormasPagamentos');
+        $total = 0;
+        if (isset($entity->Produto) and ! empty($entity->Produto)) {
+            foreach ($entity->Produto as $key => $value) {
+                $itens = $PedidosItens->newEntity();
+                $itens->pedido_id = $entity->id;
+                $itens->produto_id = $value['produto_id'];
+                $itens->qtde = $value['quantidade'];
+                $itens->venda = $value['valor_unitario'];
+                $itens->total = ((float) $value['quantidade'] * (float) $value['valor_unitario']);
+                $total += (float) $itens->total;
+                $PedidosItens->save($itens);
+            }
+        }
+
+        if ($entity->status < 3) {
+            $Pedidos->updateAll(['valor_total' => $total], ['id' => $entity->id]);
+            if ($entity->status == 1) {
+                $Pedidos->updateAll(['status' => '2', 'valor_total' => $total], ['id' => $entity->id]);
+            }
+        } else if ($entity->status === 3) {
+            foreach ($entity->opcao as $key => $value) {
+                $formas = $PedidosFormasPagamentos->newEntity();
+                $formas->pedido_id = $entity->id;
+                $formas->formas_pagamento_id = $key;
+                $formas->valor = str_replace(',', '.', str_replace('.', '', $value));
+                $PedidosFormasPagamentos->save($formas);
+            }
+            $find = $PedidosItens->find()->where(['pedido_id' => $entity->id])->all();
+            foreach ($find as $key => $value) {
+                $prod = $ProdutosValores->find()->where(['produto_id' => $value->produto_id, 'empresa_id' => $entity->empresa_id])->contain('Produtos')->first();
+                $prod->estoque_atual = ((float) $prod->estoque_atual - (float) $value->qtde);
+                $ProdutosValores->save($prod);
+            }
+        }
+
+        return true;
     }
 
 }

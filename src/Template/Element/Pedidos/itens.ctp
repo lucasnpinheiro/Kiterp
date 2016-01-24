@@ -23,7 +23,7 @@
             <tr class="lista-itens-pedidos-clone">
                 <td><?php echo $this->Form->input('Produto.0.nome', ['label' => false, 'class' => 'input-sm desc-nome', 'disabled' => true, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?></td>
                 <td><?php echo $this->Form->peso('Produto.0.quantidade', ['label' => false, 'class' => 'input-sm desc-quantidade', 'append' => false, 'maxlength' => 10, 'casas' => 4, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?></td>
-                <td><?php echo $this->Form->moeda('Produto.0.valor_unitatio', ['label' => false, 'class' => 'input-sm calcula-linha desc-valor-unitario', 'append' => false, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?></td>
+                <td><?php echo $this->Form->moeda('Produto.0.valor_unitario', ['label' => false, 'class' => 'input-sm calcula-linha desc-valor-unitario', 'append' => false, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-12']]); ?></td>
             </tr>
         </tbody>
     </table>

@@ -54,4 +54,7 @@ $(function () {
     cake.produtos.setKit();
     cake.produtos.duplicidade('barra');
     cake.produtos.duplicidade('codigo-interno');
+    if (router.params.pass[0] > 0) {
+        cake.session.delete(router.params.pass[0]);
+    }
 });

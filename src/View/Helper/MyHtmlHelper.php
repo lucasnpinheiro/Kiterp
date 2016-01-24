@@ -258,7 +258,8 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
                     Menu.action,
                     Menu.grupos,
                     Menu.sub_grupos,
-                    Menu.icone
+                    Menu.icone,
+                    Menu.parametros
                 FROM
                     menus AS Menu
                         INNER JOIN

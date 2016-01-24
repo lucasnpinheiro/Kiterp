@@ -9,7 +9,7 @@ if (count($lista_menus)) {
 ?>
 
 <nav class="navbar navbar-custom navbar-static-top" role="navigation">
-    
+
     <div class="navbar-collapse collapse" id="navbar">
         <ul class="nav navbar-nav">
             <?php
@@ -20,9 +20,15 @@ if (count($lista_menus)) {
                     <li class="dropdown">
                         <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> <?php echo h($key); ?> <span class="caret"></span></a>
                         <ul role="menu" class="dropdown-menu">
-                            <?php foreach ($value as $k => $v) {
+                            <?php
+                            foreach ($value as $k => $v) {
+                                $_params = [];
+                                if ($v['parametros'] != '') {
+                                    parse_str($v['parametros'], $_params);
+                                }
+                                $_params = array_merge($_params, ['plugin' => $v['plugin'], 'controller' => $v['controller'], 'action' => $v['action']]);
                                 ?>
-                                <li><?php echo $this->Html->link($v['titulo'], ['plugin' => $v['plugin'], 'controller' => $v['controller'], 'action' => $v['action']], ['icon' => ($v['icone'] != '' ? $v['icone'] : false)]); ?></li>
+                                <li><?php echo $this->Html->link($v['titulo'], $_params, ['icon' => ($v['icone'] != '' ? $v['icone'] : false)]); ?></li>
                                 <?php
                             }
                             ?>
