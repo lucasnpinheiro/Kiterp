@@ -21,7 +21,7 @@ cake.pedido_fechamento.add = function (obj) {
         cake.pedido_fechamento.calcula($(this).val());
     });
     $('opcao-' + v).focus();
-    cake.util.mascaras();
+    cake.util.rotinas();
 }
 cake.pedido_fechamento.calcula = function (v) {
     v = cake.util.convertFloat(v);

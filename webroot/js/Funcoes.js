@@ -1,6 +1,13 @@
 var cake = {};
 cake.util = {};
 
+cake.util.rotinas = function () {
+    cake.util.mascaras();
+    cake.util.pularCampo();
+    $('select').select2({
+        'language': "pt-BR"
+    });
+};
 cake.util.numero = function (e) {
     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
         return false;
@@ -243,9 +250,5 @@ cake.util.mascaras = function () {
 };
 
 $(function () {
-    cake.util.mascaras();
-    cake.util.pularCampo();
-    $('select').select2({
-        'language': "pt-BR"
-    });
+    cake.util.rotinas();
 });

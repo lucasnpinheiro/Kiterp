@@ -19,7 +19,7 @@ cake.formas_pagamentos.clone = function (quantidade) {
         $('.multi-field-wrapper').hide();
     }
     cake.util.pularCampo();
-    cake.util.mascaras();
+    cake.util.rotinas();
 }
 
 $(function () {
@@ -27,5 +27,5 @@ $(function () {
         cake.formas_pagamentos.clone($(this).val());
     });
     cake.util.pularCampo();
-    cake.util.mascaras();
+    cake.util.rotinas();
 });

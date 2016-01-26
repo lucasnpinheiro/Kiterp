@@ -42,7 +42,7 @@ $this->Html->addCrumb('Cadastrar', null);
                 echo $this->Form->inputStatic('data_pedido', ($pedido->data_pedido != '' ? $pedido->data_pedido->format('d/m/Y H:i:s') : date('d/m/Y H:i:s')), ['label' => 'Data do Pedido', 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->inputStatic('status', $this->Html->label('Aberto', 'info'), ['label' => 'Situação', 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo '<div class="col-xs-12 col-md-2"><h2 class="seta-total">Total: ' . $this->Html->moeda($pedido->valor_total) . '</h2></div>';
-                echo '<div class="col-xs-12 col-md-4"><h2 class="seta-pedido">Pedido: ' . $pedido->id . '</h2></div>';
+                echo '<div class="col-xs-12 col-md-4"><h2 class="seta-pedido">Pedido: ' . $pedido->pedido_id . '</h2></div>';
                 ?>
                 <div class="clearfix"></div>
                 <div class="hr-line-dashed"></div>

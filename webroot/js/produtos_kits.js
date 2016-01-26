@@ -18,7 +18,7 @@ cake.produtosKits.clone = function () {
     $('.lista-itens-produtosKits').append('<tr>' + input + '</tr>');
     cake.produtosKits.consulta();
     cake.util.pularCampo();
-    cake.util.mascaras();
+    cake.util.rotinas();
 };
 
 cake.produtosKits.modalSelect = function (obj) {

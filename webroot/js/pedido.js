@@ -1,7 +1,7 @@
 cake.pedidos = {};
 cake.pedidos.sequencia = 0;
 cake.pedidos.total_geral = 0;
-
+cake.util.convertFloat($('.desc-valor-unitario').val())
 cake.pedidos.cache = function (chave, valor) {
     chave = chave.toUpperCase();
     if (!valor) {
@@ -15,13 +15,16 @@ cake.pedidos.cache = function (chave, valor) {
 cake.pedidos.calculaLinha = function () {
     $('.calcula-linha').blur(function (e) {
         e.preventDefault();
-        var obj = this;
         var valor_unitario = cake.util.convertFloat($('.desc-valor-unitario').val());
+        valor_unitario = (!valor_unitario ? 0 : valor_unitario);
         var quantidade = parseFloat($('.desc-quantidade').val());
-        var total = valor_unitario * quantidade;
-        var prod = cake.pedidos.cache($('.desc-produto-id').val());
-        console.log(prod);
-        var tr = '<tr>\n\
+        quantidade = (!quantidade ? 0 : quantidade);
+        if (quantidade <= 0 || valor_unitario <= 0) {
+            $('.desc-quantidade').focus();
+        } else {
+            var total = valor_unitario * quantidade;
+            var prod = cake.pedidos.cache($('.desc-produto-id').val());
+            var tr = '<tr>\n\
                     <td>\n\
                         <input name="Produto[' + cake.pedidos.sequencia + '][produto_id]" value="' + prod.id + '" type="hidden">\n\
                         <input name="Produto[' + cake.pedidos.sequencia + '][nome]" value="' + prod.nome + '" type="hidden">\n\
@@ -38,14 +41,16 @@ cake.pedidos.calculaLinha = function () {
                     <td class="text-center"><button type="button" class="btn btn-xs btn-danger remove-linha">X</button></td>\n\
                   </tr>';
 
-        cake.pedidos.sequencia++;
-        $('.lista-itens-pedidos').append(tr);
-        $('.lista-itens-pedidos-clone').find(':input').val('');
-        $('.busca-produto-input').focus();
-        cake.pedidos.total_geral += total;
-        $('.seta-total').html(cake.util.moeda(cake.pedidos.total_geral));
-        cake.util.mascaras();
+            cake.pedidos.sequencia++;
+            $('.lista-itens-pedidos').append(tr);
+            $('.lista-itens-pedidos-clone').find(':input').val('');
+            $('.busca-produto-input').focus();
+            cake.pedidos.total_geral += total;
+            $('.seta-total').html(cake.util.moeda(cake.pedidos.total_geral));
+            cake.pedidos.removeLinha();
+            cake.util.rotinas();
 
+        }
     });
 }
 cake.pedidos.removeLinha = function () {
@@ -78,7 +83,6 @@ cake.pedidos.gerarPedido = function (obj) {
             },
             success: function (d) {
                 cake.util.loading.hide(obj);
-                console.log(d);
                 $('#pedido-id').val(d.id);
                 $('#id').val(d.id);
                 $('.seta-pedido').html('Pedido: ' + d.id);
@@ -95,7 +99,6 @@ cake.pedidos.gerarPedido = function (obj) {
 }
 
 cake.pedidos.set = function (produto) {
-    console.log(produto);
     cake.pedidos.cache(produto.id, produto);
     $('.desc-produto-id').val(produto.id);
     $('.desc-codigo').val(produto.barra);
@@ -208,7 +211,6 @@ $(function () {
 
 
 function formatRepo(repo) {
-    console.log(repo);
     if (repo.loading)
         return repo.text;
 
