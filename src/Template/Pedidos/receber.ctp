@@ -1,3 +1,26 @@
+<?php
+//debug($pedido->condicoes_pagamento->parcelas);
+$parcelas = [];
+$condicoes = $pedido->condicoes_pagamento->parcelas;
+if (count($condicoes) < 1) {
+    $condicoes[0] = 0;
+}
+$total = number_format($pedido->valor_total / count($condicoes), 2);
+$diferenca = 0;
+foreach ($condicoes as $key => $value) {
+    if ($value > 1) {
+        $parcelas[$key]['data'] = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + $value));
+        $parcelas[$key]['valor'] = (float) $total;
+        $parcelas[$key]['titulo'] = str_pad($key + 1, 2, "0", STR_PAD_LEFT);
+    } else {
+        $parcelas[$key]['data'] = date('Y-m-d');
+        $parcelas[$key]['valor'] = (float) $total;
+        $parcelas[$key]['titulo'] = str_pad($key + 1, 2, "0", STR_PAD_LEFT);
+    }
+    $diferenca += $total;
+}
+$parcelas[0]['valor'] += ($pedido->valor_total - $diferenca);
+?>
 <div class="ibox-content p-xl">
     <div class="row">
         <div class="col-sm-6">
@@ -25,6 +48,22 @@
         <div class="col-xs-12 col-md-6">
             <?php echo $this->Form->input('status', ['type' => 'hidden', 'value' => 3]) ?>
             <?php echo $this->Form->input('opcoes', ['label' => 'Opções de Pagamentos', 'empty' => 'Selecione uma Opções', 'required' => true, 'options' => $formasPagamentos]) ?>
+
+            <div style="font-size: 16px; font-weight: bold;">
+                <div class="col-xs-12 col-md-2 gray-bg">Documento</div>
+                <div class="col-xs-12 col-md-2 gray-bg">Parcela</div>
+                <div class="col-xs-12 col-md-4 gray-bg">Vencimento</div>
+                <div class="col-xs-12 col-md-4 gray-bg">Valor</div>
+            </div>
+            <?php
+            foreach ($parcelas as $key => $value) {
+                echo $this->Form->input('parcelas.' . $key . 'documento', ['label' => false, 'value' => $pedido->id, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->input('parcelas.' . $key . 'titulo', ['label' => false, 'value' => $value['titulo'], 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->data('parcelas.' . $key . 'data', ['label' => false, 'value' => date('d/m/Y', strtotime($value['data'])), 'div' => ['class' => 'col-xs-12 col-md-4'], 'append' => false]);
+                echo $this->Form->moeda('parcelas.' . $key . 'valor', ['label' => false, 'value' => $value['valor'], 'div' => ['class' => 'col-xs-12 col-md-4'], 'append' => false]);
+            }
+            ?>
+
             <div class="opcoes-pagamento"></div>
 
         </div>

@@ -8,7 +8,8 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Search\Manager;
-
+use Cake\Event\Event;
+use Cake\ORM\Entity;
 
 /**
  * CondicoesPagamentos Model
@@ -75,6 +76,11 @@ class CondicoesPagamentosTable extends Table {
                 ->allowEmpty('qtde_dias');
 
         return $validator;
+    }
+
+    public function beforeSave(Event $event, Entity $entity) {
+        $entity->qtde_parcelas = ($entity->qtde_parcelas < 1 ? 1 : $entity->qtde_parcelas);
+        return true;
     }
 
 }
