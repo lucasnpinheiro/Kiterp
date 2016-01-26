@@ -3,6 +3,7 @@ cake.pedidos.sequencia = 0;
 cake.pedidos.total_geral = 0;
 
 cake.pedidos.cache = function (chave, valor) {
+    chave = chave.toUpperCase();
     if (!valor) {
         var r = cake.session.read(chave);
         return r;
@@ -39,7 +40,7 @@ cake.pedidos.calculaLinha = function () {
 
         cake.pedidos.sequencia++;
         $('.lista-itens-pedidos').append(tr);
-        $(obj).closest('tbody').find(':input').val('');
+        $('.lista-itens-pedidos-clone').find(':input').val('');
         $('.busca-produto-input').focus();
         cake.pedidos.total_geral += total;
         $('.seta-total').html(cake.util.moeda(cake.pedidos.total_geral));
