@@ -9,14 +9,14 @@
                 foreach ($pessoa->pessoas_fisicas as $key => $value) {
                     echo $this->Form->input('PessoasFisica.id', ['type' => 'hidden', 'value' => $value->id]);
                     echo $this->Form->input('PessoasFisica.pessoa_id', ['type' => 'hidden', 'value' => $value->pessoa_id]);
-                    echo $this->Form->cpf('PessoasFisica.cpf', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4'], 'value' => $value->cpf]);
+                    echo $this->Form->cpf('PessoasFisica.cpf', ['div' => ['class' => 'col-xs-12 col-md-4'], 'value' => $value->cpf]);
                     echo $this->Form->input('PessoasFisica.rg', ['div' => ['class' => 'col-xs-12 col-md-4'], 'value' => $value->rg]);
                     echo $this->Form->data('PessoasFisica.data_nascimento', ['div' => ['class' => 'col-xs-12 col-md-4'], 'value' => $value->data_nascimento->format('d/m/Y')]);
                 }
             } else {
                 echo $this->Form->input('PessoasFisica.id', ['type' => 'hidden']);
                 echo $this->Form->input('PessoasFisica.pessoa_id', ['type' => 'hidden']);
-                echo $this->Form->cpf('PessoasFisica.cpf', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->cpf('PessoasFisica.cpf', ['div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->Form->input('PessoasFisica.rg', ['div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->Form->data('PessoasFisica.data_nascimento', ['div' => ['class' => 'col-xs-12 col-md-4']]);
             }

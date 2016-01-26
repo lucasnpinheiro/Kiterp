@@ -323,7 +323,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         $dados = json_decode($dados, true);
         $lista = [];
         foreach ($dados as $key => $value) {
-            $lista[] = '<li>Taxa ' . ($key + 1) . ': ' . $this->porcentagem($value) . '</li>';
+            $lista[] = '<li>Taxa ' . ($key + 1) . ': ' . $this->juros($value) . '</li>';
         }
         return '<ul class="list-unstyled">' . implode('', $lista) . '</ul>';
     }
