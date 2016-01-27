@@ -21,7 +21,31 @@
             </tr>
         </thead>
         <tbody class="lista-itens-pedidos">
-
+            <?php
+            debug($pedido);
+            if (isset($pedido->pedidos_itens) AND ! empty($pedido->pedidos_itens)) {
+                foreach ($pedido->pedidos_itens as $key => $value) {
+                    ?>
+                    <tr>
+                        <td>
+                            <input name="Produto[<?php echo $key; ?>][produto_id]" value="<?php echo $value->produto_id; ?>" type="hidden">
+                            <input name="Produto[<?php echo $key; ?>][nome]" value="<?php echo $value->produto_id; ?>" type="hidden">
+                            <input name="Produto[<?php echo $key; ?>][barra]" value="<?php echo $value->produto_id; ?>" type="hidden">
+                            <input name="Produto[<?php echo $key; ?>][quantidade]" value="<?php echo $value->qtd; ?>" type="hidden">
+                            <input name="Produto[<?php echo $key; ?>][valor_unitario]" value="<?php echo $value->venda; ?>" type="hidden">
+                            <input name="Produto[<?php echo $key; ?>][valor_total]" value="<?php echo $value->qtd * $value->venda; ?>" type="hidden">
+                            ' + prod.barra + '
+                        </td>
+                        <td>' + prod.nome + '</td>
+                        <td class="text-center"><?php echo $value->qtd; ?></td>
+                        <td class="text-center"><?php echo $value->venda; ?></td>
+                        <td class="text-center"><?php echo $value->qtd * $value->venda; ?></td>
+                        <td class="text-center"><button type="button" class="btn btn-xs btn-danger remove-linha">X</button></td>
+                    </tr>
+                    <?php
+                }
+            }
+            ?>
         </tbody>
     </table>
 </div>

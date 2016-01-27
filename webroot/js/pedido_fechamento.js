@@ -20,7 +20,8 @@ cake.pedido_fechamento.add = function (obj) {
         e.preventDefault();
         cake.pedido_fechamento.calcula($(this).val());
     });
-    $('opcao-' + v).focus();
+    $(obj).val('');
+    $('#opcao-' + v).focus();
     cake.util.rotinas();
 }
 cake.pedido_fechamento.calcula = function (v) {

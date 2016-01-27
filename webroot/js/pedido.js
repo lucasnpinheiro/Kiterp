@@ -3,12 +3,16 @@ cake.pedidos.sequencia = 0;
 cake.pedidos.total_geral = 0;
 cake.util.convertFloat($('.desc-valor-unitario').val())
 cake.pedidos.cache = function (chave, valor) {
-    chave = chave.toUpperCase();
-    if (!valor) {
-        var r = cake.session.read(chave);
-        return r;
+    if (!chave) {
+        return null;
     } else {
-        return cake.session.write(chave, valor);
+//        chave = chave.toString().toUpperCase();
+        if (!valor) {
+            var r = cake.session.read(chave);
+            return (!r ? null : r);
+        } else {
+            return cake.session.write(chave, valor);
+        }
     }
 }
 
@@ -41,18 +45,32 @@ cake.pedidos.calculaLinha = function () {
                     <td class="text-center"><button type="button" class="btn btn-xs btn-danger remove-linha">X</button></td>\n\
                   </tr>';
 
-            cake.pedidos.sequencia++;
-            $('.lista-itens-pedidos').append(tr);
-            $('.lista-itens-pedidos-clone').find(':input').val('');
-            $('.busca-produto-input').focus();
-            cake.pedidos.total_geral += total;
-            $('.seta-total').html(cake.util.moeda(cake.pedidos.total_geral));
-            cake.pedidos.removeLinha();
-            cake.util.rotinas();
-
+            $.ajax({
+                method: "POST",
+                type: "POST",
+                dataType: "json",
+                url: router.url + 'pedidos/item',
+                data: {
+                    'pedido_id': $('#pedido-id').val(),
+                    'produto_id': prod.id,
+                    'quantidade': quantidade,
+                    'valor_unitario': valor_unitario
+                },
+                success: function (d) {
+                    cake.pedidos.sequencia++;
+                    $('.lista-itens-pedidos').append(tr);
+                    $('.lista-itens-pedidos-clone').find(':input').val('');
+                    $('.busca-produto-input').focus();
+                    cake.pedidos.total_geral += total;
+                    $('.seta-total').html('Total: ' + cake.util.moeda(d.total));
+                    cake.pedidos.removeLinha();
+                    cake.util.rotinas();
+                }
+            });
         }
     });
 }
+
 cake.pedidos.removeLinha = function () {
     $('.remove-linha').click(function (e) {
         e.preventDefault();
@@ -110,34 +128,29 @@ cake.pedidos.set = function (produto) {
     cake.pedidos.removeLinha();
 }
 cake.pedidos.ajaxConsulta = function (obj) {
-    if (!cake.pedidos.cache($(obj).val())) {
-        $.ajax({
-            method: "POST",
-            type: "POST",
-            dataType: "json",
-            url: router.url + 'produtos/consultar',
-            data: {
-                codigo: $(obj).val(),
-                empresa: $("#empresa-id").val()
-            },
-            beforeSend: function () {
-                cake.util.loading.show(obj);
-            },
-            success: function (d) {
-                cake.util.loading.hide(obj);
-                if (d.retorno.cod == 999) {
-                    cake.pedidos.cache($(obj).val(), d.retorno.produto.id);
-                    cake.pedidos.set(d.retorno.produto);
-                } else if (d.retorno.cod == 222) {
-                    cake.msg.erro('Erro na consulta.', 'Este produto é um KIT, e não foi localizado(s) produto(s) vinculado(s) a ele.');
-                } else {
-                    cake.msg.erro('Erro na consulta.', 'Não foi localizado nenhum produto com os dados informados.');
-                }
+    $.ajax({
+        method: "POST",
+        type: "POST",
+        dataType: "json",
+        url: router.url + 'produtos/consultar',
+        data: {
+            codigo: $(obj).val(),
+            empresa: $("#empresa-id").val()
+        },
+        beforeSend: function () {
+            cake.util.loading.show(obj);
+        },
+        success: function (d) {
+            cake.util.loading.hide(obj);
+            if (d.retorno.cod == 999) {
+                cake.pedidos.set(d.retorno.produto);
+            } else if (d.retorno.cod == 222) {
+                cake.msg.erro('Erro na consulta.', 'Este produto é um KIT, e não foi localizado(s) produto(s) vinculado(s) a ele.');
+            } else {
+                cake.msg.erro('Erro na consulta.', 'Não foi localizado nenhum produto com os dados informados.');
             }
-        });
-    } else {
-        cake.pedidos.set(cake.pedidos.cache($(obj).val()));
-    }
+        }
+    });
 }
 cake.pedidos.consulta = function () {
     $('.busca-produto-input').change(function (e) {
@@ -161,9 +174,6 @@ cake.pedidos.consulta = function () {
             processResults: function (d, params) {
                 if (d.retorno.cod == 999) {
                     $.each(d.retorno.produto, function (a, b) {
-                        cake.pedidos.cache(params.term, b);
-                        cake.pedidos.cache(b.codigo_interno, b);
-                        cake.pedidos.cache(b.barra, b);
                         cake.pedidos.cache(b.id, b);
                     });
 

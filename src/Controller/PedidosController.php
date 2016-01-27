@@ -65,6 +65,50 @@ class PedidosController extends AppController {
         exit;
     }
 
+    public function item() {
+
+        $dados = [
+            'pedido_id' => $this->request->data('pedido_id'),
+            'produto_id' => $this->request->data('produto_id'),
+            'qtde' => $this->request->data('quantidade'),
+            'venda' => $this->request->data('valor_unitario'),
+            'total' => ((float) $this->request->data('quantidade') * (float) $this->request->data('valor_unitario')),
+        ];
+
+        $this->loadModel('PedidosItens');
+
+        $itens = $this->PedidosItens->newEntity();
+        foreach ($dados as $key => $value) {
+            $itens->{$key} = $value;
+        }
+        $retorno = [
+            'cod' => 111,
+        ];
+        if ($this->PedidosItens->save($itens)) {
+            $retorno = [
+                'cod' => (999),
+            ];
+        }
+        $sql = 'UPDATE pedidos 
+                SET 
+                    valor_total = (SELECT 
+                            COALESCE(SUM(qtde * venda), 0) AS total
+                        FROM
+                            pedidos_itens
+                        WHERE
+                            pedido_id = ' . $this->request->data('pedido_id') . ')
+                WHERE
+                    id = ' . $this->request->data('pedido_id');
+
+        $conn = \Cake\Datasource\ConnectionManager::get('default');
+        $conn->execute($sql);
+
+        $pedido = $this->Pedidos->get($this->request->data('pedido_id'), []);
+        $retorno['total'] = $pedido->valor_total;
+        echo json_encode($retorno);
+        exit;
+    }
+
     /**
      * View method
      *
@@ -81,7 +125,7 @@ class PedidosController extends AppController {
                 }]
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            
+
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
@@ -131,7 +175,7 @@ class PedidosController extends AppController {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
-        $findPedidosAberto = $this->Pedidos->find()->where(['status' => 1, 'vendedor_id' => $this->Auth->user('id')])->first();
+        $findPedidosAberto = $this->Pedidos->find()->where(['status' => 1, 'vendedor_id' => $this->Auth->user('id')])->contain('PedidosItens')->first();
         if (count($findPedidosAberto) > 0) {
             $pedido->pedido_id = $findPedidosAberto->id;
             $pedido = $this->Pedidos->patchEntity($pedido, $findPedidosAberto->toArray());
