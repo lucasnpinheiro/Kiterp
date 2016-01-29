@@ -36,8 +36,10 @@ $this->Html->addCrumb('Consultar', null);
                                 <tr>
                                     <td><?= h($gruposEstoque->nome) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $gruposEstoque->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $gruposEstoque->id], ['confirm' => __('Are you sure you want to delete # {0}?', $gruposEstoque->id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $gruposEstoque->id]) ?>
+                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $gruposEstoque->id], ['confirm' => __('Are you sure you want to delete # {0}?', $gruposEstoque->id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

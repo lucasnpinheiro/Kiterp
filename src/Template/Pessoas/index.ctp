@@ -51,8 +51,10 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->tipoContribuinte($pessoa->tipo_contribuinte) ?></td>
                                     <td><?= h($pessoa->created) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $pessoa->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $pessoa->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pessoa->id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $pessoa->id]) ?>
+                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $pessoa->id], ['confirm' => __('Are you sure you want to delete # {0}?', $pessoa->id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

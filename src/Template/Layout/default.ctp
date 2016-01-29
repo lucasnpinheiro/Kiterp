@@ -13,8 +13,9 @@
         <?php echo $this->Html->css('/js/plugins/bootstrap-datepicker/bootstrap-datepicker.css') ?>
         <?php echo $this->Html->css('/css/plugins/toastr/toastr.min.css') ?>
         <?php
-        echo $this->Html->css('/css/style.css');
         echo $this->Html->css('/js/plugins/select2/select2.min.css');
+        echo $this->Html->css('/js/plugins/select2/select2-bootstrap.css');
+        echo $this->Html->css('/css/style.css');
         ?>
 
 
@@ -38,10 +39,12 @@
                 <div class="row wrapper border-bottom white-bg page-heading">
                     <?php echo $this->element('Layout/header_title'); ?>
                 </div>
-                <div class="row wrapper border-bottom white-bg">
+                <div class="row wrapper white-bg" style="padding-bottom: 50px;">
                     <?= $this->Flash->render() ?>
                     <?php echo $this->fetch('content') ?>
+                    <div class="clearfix"></div>
                 </div>
+                <div class="clearfix"></div>
                 <div class="footer">
                     <div>
                         <strong>Kiterp</strong> todos os direitos reservados
@@ -64,6 +67,7 @@
         <?php echo $this->Html->script('/js/bootbox.min.js') ?>
         <?php echo $this->Html->script('/js/inspinia.js') ?>
         <?php
+        echo $this->Html->script('/js/plugins/select2/select2.min.js');
         echo $this->Html->script('/js/plugins/select2/select2.full.min.js');
         echo $this->Html->script('/js/plugins/select2/i18n/pt-BR.js');
         ?>

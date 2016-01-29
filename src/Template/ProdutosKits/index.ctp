@@ -24,8 +24,10 @@ $this->Html->addCrumb('Consultar', null);
                                 <tr>
                                     <td><?= $this->Html->link($produtosKit->kit->nome, ['controller' => 'Produtos', 'action' => 'edit', $produtosKit->kit->id], ['icon' => 'external-link-square']) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link(__('Alterar'), ['action' => 'add', $produtosKit->kit_id]) ?>
-                                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $produtosKit->kit_id], ['confirm' => __('Are you sure you want to delete # {0}?', $produtosKit->kit_id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link(__('Alterar'), ['action' => 'add', $produtosKit->kit_id]) ?>
+                                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $produtosKit->kit_id], ['confirm' => __('Are you sure you want to delete # {0}?', $produtosKit->kit_id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

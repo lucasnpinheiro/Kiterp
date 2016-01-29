@@ -46,7 +46,9 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->juros($ncmIva->iva) ?></td>
                                     <td><?= $this->Html->juros($ncmIva->perc_tributo) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->linkPermissao('Alterar', ['action' => 'add', $ncmIva->icms_estadual_id], ['class' => 'btn-warning btn btn-xs', 'icon' => 'pencil']) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->linkPermissao('Alterar', ['action' => 'add', $ncmIva->icms_estadual_id], ['class' => 'btn-warning btn btn-xs', 'icon' => 'pencil']) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

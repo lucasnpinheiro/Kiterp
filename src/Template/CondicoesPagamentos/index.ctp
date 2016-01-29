@@ -42,10 +42,12 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Number->format($condicoesPagamento->qtde_parcelas) ?></td>
                                     <td><?= $this->Number->format($condicoesPagamento->qtde_dias) ?></td>
                                     <td><?= $this->Html->simNao($condicoesPagamento->avista) ?></td>
-                                    <td><?= implode(' / ',$condicoesPagamento->parcelas) ?></td>
+                                    <td><?= implode(' / ', $condicoesPagamento->parcelas) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $condicoesPagamento->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $condicoesPagamento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $condicoesPagamento->id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $condicoesPagamento->id]) ?>
+                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $condicoesPagamento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $condicoesPagamento->id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

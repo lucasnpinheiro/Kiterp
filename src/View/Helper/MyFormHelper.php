@@ -80,6 +80,7 @@ class MyFormHelper extends BootstrapFormHelper {
                 4 => __('Orçamento'),
                 5 => __('Nota Fiscal'),
                 6 => __('Cancelado'),
+                7 => __('Bloqueado para Recebimento'),
             ],
             'empty' => __('Selecionar uma Situação')
         ];
@@ -279,6 +280,7 @@ class MyFormHelper extends BootstrapFormHelper {
         } else if (isset($options['placeholder']) AND $options['placeholder'] != false) {
             $options['title'] = $options['placeholder'];
         }
+        $this->mergeClassCss(array(), $options);
         return parent::input($fieldName, $options);
     }
 
@@ -520,14 +522,19 @@ class MyFormHelper extends BootstrapFormHelper {
             $options['help'] = 'Tipo(s) de separador(es) "' . implode('" ', $config['tokenSeparators']) . '"';
         }
 
-        $this->Html->css('/js/plugins/select2/select2.min.css', ['block' => 'css']);
-        $this->Html->script('/js/plugins/select2/select2.full.min.js', ['block' => 'script']);
-        $this->Html->script('/js/plugins/select2/i18n/pt-BR.js', ['block' => 'script']);
         $this->Html->scriptBlock("
             jQuery('document').ready(function(){
                 $('#" . $options['id'] . "').select2(" . json_encode($config) . ");
             });
         ", ['block' => 'script']);
+        return $this->input($fieldName, $options);
+    }
+
+    public function select2Auto($fieldName, array $options = array()) {
+        if (!isset($options['class'])) {
+            $options['class'] = '';
+        }
+        $options['class'] .= ' auto-select2-cake';
         return $this->input($fieldName, $options);
     }
 
@@ -610,9 +617,22 @@ class MyFormHelper extends BootstrapFormHelper {
     }
 
     private function mergeClassCss($default, $options) {
-        if (isset($options['class'])) {
-            $options['class'] .= ' ' . $default['class'];
+        $c = array();
+        if (isset($default['class'])) {
+            $ex = explode(' ', $default['class']);
+            foreach ($ex as $key => $value) {
+                $value = trim($value);
+                $c[$value] = $value;
+            }
         }
+        if (isset($options['class'])) {
+            $ex = explode(' ', $options['class']);
+            foreach ($ex as $key => $value) {
+                $value = trim($value);
+                $c[$value] = $value;
+            }
+        }
+        $options['class'] = implode(' ', $c);
         return $options;
     }
 

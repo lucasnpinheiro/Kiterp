@@ -154,7 +154,7 @@ class PedidosTable extends Table {
         $PedidosItens = TableRegistry::get('PedidosItens');
         $PedidosFormasPagamentos = TableRegistry::get('PedidosFormasPagamentos');
         $total = 0;
-        if (isset($entity->Produto) and ! empty($entity->Produto)) {
+        /*if (isset($entity->Produto) and ! empty($entity->Produto)) {
             foreach ($entity->Produto as $key => $value) {
                 $itens = $PedidosItens->newEntity();
                 $itens->pedido_id = $entity->id;
@@ -165,14 +165,15 @@ class PedidosTable extends Table {
                 $total += (float) $itens->total;
                 $PedidosItens->save($itens);
             }
-        }
+        }*/
 
-        if ($entity->status < 3) {
+        /*if ($entity->status < 3) {
             $Pedidos->updateAll(['valor_total' => $total], ['id' => $entity->id]);
             if ($entity->status == 1) {
                 $Pedidos->updateAll(['status' => '2', 'valor_total' => $total], ['id' => $entity->id]);
             }
-        } else if ($entity->status === 3) {
+        } else*/
+        if ($entity->status === 3) {
             foreach ($entity->opcao as $key => $value) {
                 $formas = $PedidosFormasPagamentos->newEntity();
                 $formas->pedido_id = $entity->id;

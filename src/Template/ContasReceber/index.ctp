@@ -52,8 +52,10 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->link($contasReceber->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $contasReceber->pessoa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Html->link($contasReceber->banco->nome, ['controller' => 'Bancos', 'action' => 'edit', $contasReceber->banco->id], ['icon' => 'external-link-square']) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $contasReceber->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $contasReceber->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contasReceber->id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $contasReceber->id]) ?>
+                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $contasReceber->id], ['confirm' => __('Are you sure you want to delete # {0}?', $contasReceber->id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

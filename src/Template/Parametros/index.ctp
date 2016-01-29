@@ -19,18 +19,20 @@
         </thead>
         <tbody>
             <?php foreach ($parametros as $parametro): ?>
-            <tr>
-                <td><?= $this->Number->format($parametro->id) ?></td>
-                <td><?= h($parametro->nome) ?></td>
-                <td><?= h($parametro->chave) ?></td>
-                <td><?= $this->Number->format($parametro->tipo) ?></td>
-                <td><?= h($parametro->grupo) ?></td>
-                <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'edit', $parametro->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $parametro->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $parametro->id], ['confirm' => __('Are you sure you want to delete # {0}?', $parametro->id)]) ?>
-                </td>
-            </tr>
+                <tr>
+                    <td><?= $this->Number->format($parametro->id) ?></td>
+                    <td><?= h($parametro->nome) ?></td>
+                    <td><?= h($parametro->chave) ?></td>
+                    <td><?= $this->Number->format($parametro->tipo) ?></td>
+                    <td><?= h($parametro->grupo) ?></td>
+                    <td class="actions">
+                        <div class="btn-group" role="group" aria-label="">
+                            <?= $this->Html->link(__('View'), ['action' => 'edit', $parametro->id]) ?>
+                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $parametro->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $parametro->id], ['confirm' => __('Are you sure you want to delete # {0}?', $parametro->id)]) ?>
+                        </div>
+                    </td>
+                </tr>
             <?php endforeach; ?>
         </tbody>
     </table>

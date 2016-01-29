@@ -4,10 +4,15 @@ cake.util = {};
 cake.util.rotinas = function () {
     cake.util.mascaras();
     cake.util.pularCampo();
-    $('select').select2({
+    //$("select.auto-select2-cake").select2("destroy");
+    cake.util.select2();
+
+};
+cake.util.select2 = function () {
+    $('select.auto-select2-cake').select2({
         'language': "pt-BR"
     });
-};
+}
 cake.util.numero = function (e) {
     if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
         return false;
@@ -57,7 +62,7 @@ cake.util.convertFloat = function (valor) {
 cake.util.loading = {
     show: function (input) {
         $(input).remove('img.img-loading');
-        $(input).closest('div').prepend('<img src="' + router.url + 'img/loading.gif" class="img-loading" style="margin-top: 5px; position: absolute; right: 17px;" />');
+        $(input).closest('div').prepend('<img src="' + router.url + 'img/loading.gif" class="img-loading" style="margin-top: 28px; position: absolute; right: 20px;" />');
     },
     hide: function (input) {
         $(input).closest('div').find('.img-loading').remove();
@@ -69,9 +74,9 @@ cake.util.pularCampo = function () {
         var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
         if (key == 13) {
             e.preventDefault();
-            var inputs = $(this).closest('form').find(':input:visible:enabled');
+            var inputs = $(this).closest('form').find(':input:visible:enabled:not([readonly])');
             if ((inputs.length - 1) == inputs.index(this))
-                $(':input:enabled:visible:first').focus();
+                $(':input:enabled:visible:first:not([readonly])').focus();
             else
                 inputs.eq(inputs.index(this) + 1).focus();
         }
@@ -251,4 +256,7 @@ cake.util.mascaras = function () {
 
 $(function () {
     cake.util.rotinas();
+    /*$('form').submit(function(e){
+     e.preventDefault();
+     });*/
 });

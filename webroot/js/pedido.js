@@ -1,13 +1,14 @@
 cake.pedidos = {};
 cake.pedidos.sequencia = 0;
-cake.pedidos.total_geral = 0;
-cake.util.convertFloat($('.desc-valor-unitario').val())
+//cake.util.convertFloat($('.desc-valor-unitario').val())
 cake.pedidos.cache = function (chave, valor) {
     if (!chave) {
+        console.log('Sem chave');
         return null;
     } else {
-//        chave = chave.toString().toUpperCase();
+        chave = chave.toUpperCase();
         if (!valor) {
+            console.log(chave);
             var r = cake.session.read(chave);
             return (!r ? null : r);
         } else {
@@ -28,7 +29,7 @@ cake.pedidos.calculaLinha = function () {
         } else {
             var total = valor_unitario * quantidade;
             var prod = cake.pedidos.cache($('.desc-produto-id').val());
-            var tr = '<tr>\n\
+            var tr = '<tr {rel_id}>\n\
                     <td>\n\
                         <input name="Produto[' + cake.pedidos.sequencia + '][produto_id]" value="' + prod.id + '" type="hidden">\n\
                         <input name="Produto[' + cake.pedidos.sequencia + '][nome]" value="' + prod.nome + '" type="hidden">\n\
@@ -58,11 +59,12 @@ cake.pedidos.calculaLinha = function () {
                 },
                 success: function (d) {
                     cake.pedidos.sequencia++;
+                    tr = tr.replace('{rel_id}', 'rel="' + d.id + '"');
                     $('.lista-itens-pedidos').append(tr);
                     $('.lista-itens-pedidos-clone').find(':input').val('');
                     $('.busca-produto-input').focus();
-                    cake.pedidos.total_geral += total;
                     $('.seta-total').html('Total: ' + cake.util.moeda(d.total));
+                    cake.pedidos.consulta();
                     cake.pedidos.removeLinha();
                     cake.util.rotinas();
                 }
@@ -74,7 +76,29 @@ cake.pedidos.calculaLinha = function () {
 cake.pedidos.removeLinha = function () {
     $('.remove-linha').click(function (e) {
         e.preventDefault();
-        $(this).closest('tr').remove();
+        var obj = this;
+        $(obj).closest('tr').css({
+            'background': 'yellow'
+        });
+        $.ajax({
+            method: "POST",
+            type: "POST",
+            dataType: "json",
+            url: router.url + 'pedidos/item_remover',
+            data: {
+                'id': $(obj).closest('tr').attr('rel'),
+                'pedido_id': $('#pedido-id').val()
+            },
+            success: function (d) {
+                $(obj).closest('tr').slideUp().remove();
+                $('.busca-produto-input').focus();
+                $('.seta-total').html('Total: ' + cake.util.moeda(d.total));
+                cake.pedidos.consulta();
+                cake.pedidos.removeLinha();
+                cake.util.rotinas();
+            }
+        });
+
     });
 }
 
@@ -128,35 +152,44 @@ cake.pedidos.set = function (produto) {
     cake.pedidos.removeLinha();
 }
 cake.pedidos.ajaxConsulta = function (obj) {
-    $.ajax({
-        method: "POST",
-        type: "POST",
-        dataType: "json",
-        url: router.url + 'produtos/consultar',
-        data: {
-            codigo: $(obj).val(),
-            empresa: $("#empresa-id").val()
-        },
-        beforeSend: function () {
-            cake.util.loading.show(obj);
-        },
-        success: function (d) {
-            cake.util.loading.hide(obj);
-            if (d.retorno.cod == 999) {
-                cake.pedidos.set(d.retorno.produto);
-            } else if (d.retorno.cod == 222) {
-                cake.msg.erro('Erro na consulta.', 'Este produto é um KIT, e não foi localizado(s) produto(s) vinculado(s) a ele.');
-            } else {
-                cake.msg.erro('Erro na consulta.', 'Não foi localizado nenhum produto com os dados informados.');
+    var busca = cake.pedidos.cache($(obj).val());
+    if (!busca) {
+        $.ajax({
+            method: "POST",
+            type: "POST",
+            dataType: "json",
+            url: router.url + 'produtos/consultar',
+            data: {
+                codigo: $(obj).val(),
+                empresa: $("#empresa-id").val()
+            },
+            beforeSend: function () {
+                cake.util.loading.show(obj);
+            },
+            success: function (d) {
+                cake.util.loading.hide(obj);
+                if (d.retorno.cod == 999) {
+                    cake.pedidos.cache(d.retorno.produto.id, d.retorno.produto);
+                    cake.pedidos.cache(d.retorno.produto.barra, d.retorno.produto);
+                    cake.pedidos.cache(d.retorno.produto.codigo_interno, d.retorno.produto);
+                    cake.pedidos.set(d.retorno.produto);
+                } else if (d.retorno.cod == 222) {
+                    cake.msg.erro('Erro na consulta.', 'Este produto é um KIT, e não foi localizado(s) produto(s) vinculado(s) a ele.');
+                } else {
+                    cake.msg.erro('Erro na consulta.', 'Não foi localizado nenhum produto com os dados informados.');
+                }
             }
-        }
-    });
+        });
+    } else {
+        cake.pedidos.set(busca);
+    }
 }
 cake.pedidos.consulta = function () {
     $('.busca-produto-input').change(function (e) {
         e.preventDefault();
         cake.pedidos.ajaxConsulta(this);
     });
+    //$(".busca-produto").select2("destroy");
     $(".busca-produto").select2({
         ajax: {
             method: "POST",
@@ -175,6 +208,8 @@ cake.pedidos.consulta = function () {
                 if (d.retorno.cod == 999) {
                     $.each(d.retorno.produto, function (a, b) {
                         cake.pedidos.cache(b.id, b);
+                        cake.pedidos.cache(b.barra, b);
+                        cake.pedidos.cache(b.codigo_interno, b);
                     });
 
                     return {
@@ -202,6 +237,7 @@ $(function () {
     cake.pedidos.consulta();
     cake.pedidos.calculaLinha();
     cake.util.pularCampo();
+    cake.pedidos.removeLinha();
     $('#empresa-id, #pessoa-id, #condicao-pagamento-id, #vendedor-id').change(function (e) {
         e.preventDefault();
         cake.pedidos.gerarPedido();

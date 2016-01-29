@@ -45,10 +45,12 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($formasPagamento->abreviado) ?></td>
                                     <td><?= $this->Number->format($formasPagamento->qtde_dias) ?></td>
                                     <td><?= $this->Number->format($formasPagamento->qtde_taxas) ?></td>
-                                    <td><?= $this->Html->jsonToLista($formasPagamento->valor_taxas,$formasPagamento->qtde_taxas) ?></td>
+                                    <td><?= $this->Html->jsonToLista($formasPagamento->valor_taxas, $formasPagamento->qtde_taxas) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $formasPagamento->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $formasPagamento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $formasPagamento->id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $formasPagamento->id]) ?>
+                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $formasPagamento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $formasPagamento->id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

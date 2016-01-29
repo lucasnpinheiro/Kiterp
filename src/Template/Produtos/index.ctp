@@ -47,8 +47,10 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($produto->grupos_estoque->nome) ?></td>
                                     <td><?= $this->Html->simNao($produto->produto_kit) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $produto->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $produto->id], ['confirm' => __('Are you sure you want to delete # {0}?', $produto->id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $produto->id]) ?>
+                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $produto->id], ['confirm' => __('Are you sure you want to delete # {0}?', $produto->id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

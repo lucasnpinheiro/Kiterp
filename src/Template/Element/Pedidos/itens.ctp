@@ -8,7 +8,7 @@
     <?php echo $this->Form->moeda('Produto.0.valor_unitario', ['label' => 'Valor Unitario', 'class' => 'input-sm calcula-linha desc-valor-unitario', 'append' => false, 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-4']]); ?>
 </div>
 <div class="clearfix"></div>
-<div style="max-height: 300px; overflow: auto;">
+<div style="">
     <table class="table table-bordered table-condensed table-hover table-striped">
         <thead>
             <tr>
@@ -22,24 +22,23 @@
         </thead>
         <tbody class="lista-itens-pedidos">
             <?php
-            debug($pedido);
             if (isset($pedido->pedidos_itens) AND ! empty($pedido->pedidos_itens)) {
                 foreach ($pedido->pedidos_itens as $key => $value) {
                     ?>
-                    <tr>
+                    <tr rel="<?php echo $value->id; ?>">
                         <td>
                             <input name="Produto[<?php echo $key; ?>][produto_id]" value="<?php echo $value->produto_id; ?>" type="hidden">
-                            <input name="Produto[<?php echo $key; ?>][nome]" value="<?php echo $value->produto_id; ?>" type="hidden">
-                            <input name="Produto[<?php echo $key; ?>][barra]" value="<?php echo $value->produto_id; ?>" type="hidden">
-                            <input name="Produto[<?php echo $key; ?>][quantidade]" value="<?php echo $value->qtd; ?>" type="hidden">
+                            <input name="Produto[<?php echo $key; ?>][nome]" value="<?php echo $value->produto['nome']; ?>" type="hidden">
+                            <input name="Produto[<?php echo $key; ?>][barra]" value="<?php echo $value->produto['barra']; ?>" type="hidden">
+                            <input name="Produto[<?php echo $key; ?>][quantidade]" value="<?php echo $value->qtde; ?>" type="hidden">
                             <input name="Produto[<?php echo $key; ?>][valor_unitario]" value="<?php echo $value->venda; ?>" type="hidden">
-                            <input name="Produto[<?php echo $key; ?>][valor_total]" value="<?php echo $value->qtd * $value->venda; ?>" type="hidden">
-                            ' + prod.barra + '
+                            <input name="Produto[<?php echo $key; ?>][valor_total]" value="<?php echo $value->qtde * $value->venda; ?>" type="hidden">
+                            <?php echo $value->produto['barra']; ?>
                         </td>
-                        <td>' + prod.nome + '</td>
-                        <td class="text-center"><?php echo $value->qtd; ?></td>
-                        <td class="text-center"><?php echo $value->venda; ?></td>
-                        <td class="text-center"><?php echo $value->qtd * $value->venda; ?></td>
+                        <td><?php echo $value->produto['nome']; ?></td>
+                        <td class="text-center"><?php echo $value->qtde; ?></td>
+                        <td class="text-center"><?php echo $this->Html->moeda($value->venda); ?></td>
+                        <td class="text-center"><?php echo $this->Html->moeda($value->qtde * $value->venda); ?></td>
                         <td class="text-center"><button type="button" class="btn btn-xs btn-danger remove-linha">X</button></td>
                     </tr>
                     <?php

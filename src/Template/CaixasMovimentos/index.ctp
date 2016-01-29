@@ -52,8 +52,10 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Number->format($caixasMovimento->valor) ?></td>
                                     <td><?= $this->Number->format($caixasMovimento->modalidade) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $caixasMovimento->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $caixasMovimento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $caixasMovimento->id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $caixasMovimento->id]) ?>
+                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $caixasMovimento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $caixasMovimento->id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

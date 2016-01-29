@@ -44,8 +44,10 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($banco->conta_corrente) ?></td>
                                     <td><?= $this->Number->format($banco->sequencial_arquivo) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $banco->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $banco->id], ['confirm' => __('Are you sure you want to delete # {0}?', $banco->id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $banco->id]) ?>
+                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $banco->id], ['confirm' => __('Are you sure you want to delete # {0}?', $banco->id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

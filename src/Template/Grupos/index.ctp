@@ -45,9 +45,11 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($grupo->created) ?></td>
                                     <td><?= h($grupo->modified) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link(__('View'), ['action' => 'edit', $grupo->id]) ?>
-                                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $grupo->id]) ?>
-                                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $grupo->id], ['confirm' => __('Are you sure you want to delete # {0}?', $grupo->id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link(__('View'), ['action' => 'edit', $grupo->id]) ?>
+                                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $grupo->id]) ?>
+                                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $grupo->id], ['confirm' => __('Are you sure you want to delete # {0}?', $grupo->id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

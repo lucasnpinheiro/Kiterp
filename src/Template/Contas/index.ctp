@@ -51,8 +51,10 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Number->format($conta->tradutora) ?></td>
                                     <td><?= h($conta->created) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link('Alterar', ['action' => 'edit', $conta->id]) ?>
-                                        <?= $this->Form->postLink('Excluir', ['action' => 'delete', $conta->id], ['confirm' => __('Are you sure you want to delete # {0}?', $conta->id)]) ?>
+                                        <div class="btn-group" role="group" aria-label="">
+                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $conta->id]) ?>
+                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $conta->id], ['confirm' => __('Are you sure you want to delete # {0}?', $conta->id)]) ?>
+                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
