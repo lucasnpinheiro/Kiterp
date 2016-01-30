@@ -208,7 +208,7 @@ class PedidosController extends AppController {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'imprimir', $pedido->id]);
             } else {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
@@ -247,7 +247,7 @@ class PedidosController extends AppController {
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'imprimir', $pedido->id]);
             } else {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
@@ -279,6 +279,26 @@ class PedidosController extends AppController {
             $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function imprimir($id = null) {
+        $this->viewBuilder()->layout('limpo');
+        $pedido = $this->Pedidos->get($id, [
+            'contain' => ['PedidosItens' => function($q) {
+                    return $q->contain('Produtos');
+                }]
+        ]);
+        $this->set(compact('pedido'));
+        $this->set('_serialize', ['pedido']);
+    }
+
+    public function redireciona($id = null) {
+        if (\Cake\Core\Configure::read('Parametros.PTelaPagamento') == 1) {
+            return $this->redirect(['action' => 'receber', $id]);
+        } else {
+            return $this->redirect(['action' => 'add']);
+        }
+        exit;
     }
 
 }

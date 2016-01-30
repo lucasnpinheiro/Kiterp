@@ -182,7 +182,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
             'after' => '%',
             'zero' => '0,0000',
             'places' => '4',
-            'precision' => '4',
+            'precision' => \Cake\Core\Configure::read('Parametros.NCasasDecimais'),
             'locale' => 'pt_BR',
         ];
         $currency = \Cake\Utility\Hash::merge($currency, $options);
@@ -195,7 +195,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
             'after' => '',
             'zero' => '0,000',
             'places' => '3',
-            'precision' => '4',
+            'precision' => \Cake\Core\Configure::read('Parametros.NCasasDecimais'),
             'locale' => 'pt_BR',
         ];
         $currency = \Cake\Utility\Hash::merge($currency, $options);
@@ -316,8 +316,10 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         return null;
     }
 
-    public function jsonToLista($dados,$dias=0) {
-        if ($dias===0){return null;}
+    public function jsonToLista($dados, $dias = 0) {
+        if ($dias === 0) {
+            return null;
+        }
         if (trim($dados) == '') {
             return null;
         }

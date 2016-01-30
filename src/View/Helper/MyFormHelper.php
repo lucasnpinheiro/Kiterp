@@ -407,14 +407,14 @@ class MyFormHelper extends BootstrapFormHelper {
             'before' => '',
             'zero' => '0,0000',
             'places' => '2',
-            'precision' => '4',
+            'precision' => \Cake\Core\Configure::read('Parametros.NCasasDecimais'),
             'locale' => 'pt_BR',
         ];
         $val = $this->context();
         $default = [
             'type' => 'text',
             'class' => 'quantidade',
-            'casas' => 3,
+            'casas' => \Cake\Core\Configure::read('Parametros.NCasasDecimais'),
             'append' => '0-9',
             'value' => ($val->val($fieldName) ? $this->Number->format($val->val($fieldName), $currency) : null)
         ];
@@ -429,14 +429,14 @@ class MyFormHelper extends BootstrapFormHelper {
             'before' => '',
             'zero' => '0,0000',
             'places' => '2',
-            'precision' => '4',
+            'precision' => \Cake\Core\Configure::read('Parametros.NCasasDecimais'),
             'locale' => 'pt_BR',
         ];
         $val = $this->context();
         $default = [
             'type' => 'text',
             'class' => 'peso',
-            'casas' => 3,
+            'casas' => \Cake\Core\Configure::read('Parametros.NCasasDecimais'),
             'append' => '0-9',
             'value' => ($val->val($fieldName) ? $this->Number->format($val->val($fieldName), $currency) : null)
         ];

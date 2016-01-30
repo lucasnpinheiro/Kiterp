@@ -27,9 +27,10 @@ cake.pedidos.calculaLinha = function () {
         if (quantidade <= 0 || valor_unitario <= 0) {
             $('.desc-quantidade').focus();
         } else {
-            var total = valor_unitario * quantidade;
             var prod = cake.pedidos.cache($('.desc-produto-id').val());
-            var tr = '<tr {rel_id}>\n\
+            if (valor_unitario >= prod.valor_minimo) {
+                var total = valor_unitario * quantidade;
+                var tr = '<tr {rel_id}>\n\
                     <td>\n\
                         <input name="Produto[' + cake.pedidos.sequencia + '][produto_id]" value="' + prod.id + '" type="hidden">\n\
                         <input name="Produto[' + cake.pedidos.sequencia + '][nome]" value="' + prod.nome + '" type="hidden">\n\
@@ -46,29 +47,33 @@ cake.pedidos.calculaLinha = function () {
                     <td class="text-center"><button type="button" class="btn btn-xs btn-danger remove-linha">X</button></td>\n\
                   </tr>';
 
-            $.ajax({
-                method: "POST",
-                type: "POST",
-                dataType: "json",
-                url: router.url + 'pedidos/item',
-                data: {
-                    'pedido_id': $('#pedido-id').val(),
-                    'produto_id': prod.id,
-                    'quantidade': quantidade,
-                    'valor_unitario': valor_unitario
-                },
-                success: function (d) {
-                    cake.pedidos.sequencia++;
-                    tr = tr.replace('{rel_id}', 'rel="' + d.id + '"');
-                    $('.lista-itens-pedidos').append(tr);
-                    $('.lista-itens-pedidos-clone').find(':input').val('');
-                    $('.busca-produto-input').focus();
-                    $('.seta-total').html('Total: ' + cake.util.moeda(d.total));
-                    cake.pedidos.consulta();
-                    cake.pedidos.removeLinha();
-                    cake.util.rotinas();
-                }
-            });
+                $.ajax({
+                    method: "POST",
+                    type: "POST",
+                    dataType: "json",
+                    url: router.url + 'pedidos/item',
+                    data: {
+                        'pedido_id': $('#pedido-id').val(),
+                        'produto_id': prod.id,
+                        'quantidade': quantidade,
+                        'valor_unitario': valor_unitario
+                    },
+                    success: function (d) {
+                        cake.pedidos.sequencia++;
+                        tr = tr.replace('{rel_id}', 'rel="' + d.id + '"');
+                        $('.lista-itens-pedidos').append(tr);
+                        $('.lista-itens-pedidos-clone').find(':input').val('');
+                        $('.busca-produto-input').focus();
+                        $('.seta-total').html('Total: ' + cake.util.moeda(d.total));
+                        cake.pedidos.consulta();
+                        cake.pedidos.removeLinha();
+                        cake.util.rotinas();
+                    }
+                });
+            } else {
+                cake.msg.erro('Erro no calculo.', 'O valor maximo de desconto <br /> é de ' + cake.util.moeda(prod.valor_minimo));
+                $('.desc-quantidade').focus();
+            }
         }
     });
 }
@@ -243,7 +248,7 @@ $(function () {
         cake.pedidos.gerarPedido();
     });
     $(':submit').click(function (e) {
-        $('#status').val(1);
+        $('#status').val(2);
         if ($(this).val() == 'orcamento') {
             $('#status').val(4);
         }

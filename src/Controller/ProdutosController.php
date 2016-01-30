@@ -63,6 +63,8 @@ class ProdutosController extends AppController {
             'individual' => 1
         ];
         $codigo = trim($this->request->data('codigo'));
+
+
         $sql = 'SELECT 
                         p.id,
                         p.barra,
@@ -100,6 +102,7 @@ class ProdutosController extends AppController {
         $find = $conn->execute($sql)->fetchAll('assoc');
 
         if (count($find) > 0) {
+            $find = $this->calculaDesconto($find);
             $retorno = [
                 'cod' => 999,
                 'msg' => 'Produto localizado',
@@ -107,6 +110,27 @@ class ProdutosController extends AppController {
             ];
         }
         $this->set('retorno', $retorno);
+    }
+
+    private function calculaDesconto($find) {
+
+        $percentual = 0;
+        if (\Cake\Core\Configure::read('Parametros.DPedidoLocal') != 'P') {
+            $percentual = (float) \Cake\Core\Configure::read('Parametros.DPedidoItem') / 100.0;
+        }
+
+        foreach ($find as $key => $value) {
+            $find[$key]['valor_vendas'] = (float) number_format($find[$key]['valor_vendas'], 2);
+            $find[$key]['valor_minimo'] = $find[$key]['valor_vendas'];
+            if ($find[$key]['valor_vendas'] > 0 AND $percentual > 0) {
+                $find[$key]['valor_minimo'] = (float) $find[$key]['valor_vendas'] - ($percentual * $find[$key]['valor_vendas']);
+                if ($find[$key]['valor_minimo'] < 0) {
+                    $find[$key]['valor_minimo'] = 0;
+                }
+                $find[$key]['valor_minimo'] = (float) number_format($find[$key]['valor_minimo'], 2);
+            }
+        }
+        return $find;
     }
 
     /**
@@ -159,6 +183,7 @@ class ProdutosController extends AppController {
         $find = $conn->execute($sql)->fetchAll('assoc');
 
         if (count($find) > 0) {
+            $find = $this->calculaDesconto($find);
             $retorno = [
                 'cod' => 999,
                 'msg' => 'Produto localizado',
