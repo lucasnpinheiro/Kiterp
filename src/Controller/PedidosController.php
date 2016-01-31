@@ -284,21 +284,47 @@ class PedidosController extends AppController {
     public function imprimir($id = null) {
         $this->viewBuilder()->layout('limpo');
         $pedido = $this->Pedidos->get($id, [
-            'contain' => ['PedidosItens' => function($q) {
+            'contain' => [
+                'PedidosItens' => function($q) {
                     return $q->contain('Produtos');
-                }]
-        ]);
-        $this->set(compact('pedido'));
-        $this->set('_serialize', ['pedido']);
-    }
+                },
+                'Vendedores',
+                'CondicoesPagamentos',
+                'Transportadoras',
+                'Pessoas' => function($q) {
+                    return $q->contain('PessoasEnderecos');
+                },
+                'Empresas' => function($q) {
+                    return $q->contain(['Pessoas' => function($q) {
+                                    return $q->contain(
+                                                    [
+                                                        'PessoasEnderecos',
+                                                        'PessoasContatos' => function($q) {
+                                                            return $q->where(['PessoasContatos.tipos_contato_id' => 2])->contain('TiposContatos');
+                                                        },
+                                                                'PessoasFisicas',
+                                                                'PessoasJuridicas'
+                                                            ]
+                                            );
+                                        }]);
+                                },
+                                        'Pessoas' => function($q) {
+                                    return $q->contain('PessoasEnderecos');
+                                },
+                                    ]
+                                ]);
+                                $this->set(compact('pedido'));
+                                $this->set('_serialize', ['pedido']);
+                            }
 
-    public function redireciona($id = null) {
-        if (\Cake\Core\Configure::read('Parametros.PTelaPagamento') == 1) {
-            return $this->redirect(['action' => 'receber', $id]);
-        } else {
-            return $this->redirect(['action' => 'add']);
-        }
-        exit;
-    }
+                            public function redireciona($id = null) {
+                                if (\Cake\Core\Configure::read('Parametros.PTelaPagamento') == 1) {
+                                    return $this->redirect(['action' => 'receber', $id]);
+                                } else {
+                                    return $this->redirect(['action' => 'add']);
+                                }
+                                exit;
+                            }
 
-}
+                        }
+                        
