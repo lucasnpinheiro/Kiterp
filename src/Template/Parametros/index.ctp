@@ -1,47 +1,97 @@
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('New Parametro'), ['action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="parametros index large-9 medium-8 columns content">
-    <h3><?= __('Parametros') ?></h3>
-    <table cellpadding="0" cellspacing="0">
-        <thead>
-            <tr>
-                <th><?= $this->Paginator->sort('id') ?></th>
-                <th><?= $this->Paginator->sort('nome') ?></th>
-                <th><?= $this->Paginator->sort('chave') ?></th>
-                <th><?= $this->Paginator->sort('tipo') ?></th>
-                <th><?= $this->Paginator->sort('grupo') ?></th>
-                <th class="actions"><?= __('Actions') ?></th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($parametros as $parametro): ?>
-                <tr>
-                    <td><?= $this->Number->format($parametro->id) ?></td>
-                    <td><?= h($parametro->nome) ?></td>
-                    <td><?= h($parametro->chave) ?></td>
-                    <td><?= $this->Number->format($parametro->tipo) ?></td>
-                    <td><?= h($parametro->grupo) ?></td>
-                    <td class="actions">
-                        <div class="btn-group" role="group" aria-label="">
-                            <?= $this->Html->link(__('View'), ['action' => 'edit', $parametro->id]) ?>
-                            <?= $this->Html->link(__('Edit'), ['action' => 'edit', $parametro->id]) ?>
-                            <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $parametro->id], ['confirm' => __('Are you sure you want to delete # {0}?', $parametro->id)]) ?>
-                        </div>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-        </ul>
-        <p><?= $this->Paginator->counter() ?></p>
+<?php
+$this->assign('title', $title);
+$this->Html->addCrumb($this->fetch('title'), ['controller' => $this->request->params['controller'], 'action' => 'index']);
+$this->Html->addCrumb('Cadastrar', null);
+?>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5><?= __('Cadastrar ' . $this->fetch('title')) ?></h5>
+            </div>
+            <div class="ibox-content">
+                <div>
+                    <?= $this->Form->create($parametro, ['url' => ['action' => 'save']]) ?>
+
+                    <?php
+                    $grupos = [];
+                    foreach ($parametros as $key => $value) {
+                        $grupos[$value->grupo][] = $value;
+                    }
+                    ?>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <?php
+                        $active = TRUE;
+                        foreach ($grupos as $k => $v) {
+                            ?>
+                            <li role="presentation"  class="<?php echo ($active === true ? 'active' : ''); ?>"><a href="#<?php echo Cake\Utility\Inflector::underscore($k); ?>" aria-controls="<?php echo Cake\Utility\Inflector::underscore($k); ?>" role="tab" data-toggle="tab"><?php echo $k; ?></a></li>
+                            <?php
+                            $active = FALSE;
+                        }
+                        ?>
+                    </ul>
+                    <div class="tab-content">
+
+                        <?php
+                        $active = TRUE;
+                        foreach ($grupos as $k => $v) {
+                            ?>
+                            <div role="tabpanel" class="tab-pane <?php echo ($active === true ? 'active' : ''); ?>" id="<?php echo Cake\Utility\Inflector::underscore($k); ?>">
+                                <?php
+                                $active = FALSE;
+                                foreach ($v as $key => $value) {
+                                    $options = [
+                                        'value' => $value->valor,
+                                        'label' => $value->nome,
+                                        'required' => $value->required,
+                                        'type' => 'text',
+                                    ];
+                                    if ($value->opcoes) {
+                                        $options['options'] = json_decode($value->opcoes, true);
+                                    }
+                                    switch ($value->tipo) {
+                                        case 1:
+                                            echo $this->Form->numero('paramentros.' . $value->id . '.valor', $options);
+                                            break;
+                                        case 2:
+                                            echo $this->Form->input('paramentros.' . $value->id . '.valor', $options);
+                                            break;
+                                        case 3:
+                                            $options['type'] = 'textarea';
+                                            echo $this->Form->input('paramentros.' . $value->id . '.valor', $options);
+                                            break;
+                                        case 4:
+                                            $options['type'] = 'select';
+                                            echo $this->Form->input('paramentros.' . $value->id . '.valor', $options);
+                                            break;
+                                        case 5:
+                                            echo $this->Form->moeda('paramentros.' . $value->id . '.valor', $options);
+                                            break;
+                                        case 6:
+                                            echo $this->Form->juros('paramentros.' . $value->id . '.valor', $options);
+                                            break;
+
+                                        default:
+                                            echo $this->Form->input('paramentros.' . $value->id . '.valor', $options);
+                                            break;
+                                    }
+                                }
+                                ?>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="form-group">
+                    <div class="col-sm-12 text-right">
+                        <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <?= $this->Form->end() ?>
+            </div>
+        </div>
     </div>
 </div>

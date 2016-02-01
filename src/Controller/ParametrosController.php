@@ -22,70 +22,30 @@ class ParametrosController extends AppController {
      * @return void
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $parametro = $this->Parametros->newEntity();
+        $query = $this->Parametros->find('search', $this->Parametros->filterParams($this->request->query));
         $this->set('parametros', $this->paginate($query));
+        $this->set('parametro', $parametro);
         $this->set('_serialize', ['parametros']);
     }
 
     /**
-     * View method
-     *
-     * @param string|null $id Parametro id.
-     * @return void
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function view($id = null) {
-        $parametro = $this->Parametros->get($id, [
-            'contain' => []
-        ]);
-        $this->set('parametro', $parametro);
-        $this->set('_serialize', ['parametro']);
-    }
-
-    /**
-     * Add method
-     *
-     * @return void Redirects on successful add, renders view otherwise.
-     */
-    public function add() {
-        $parametro = $this->Parametros->newEntity();
-        if ($this->request->is('post')) {
-            $parametro = $this->Parametros->patchEntity($parametro, $this->request->data);
-            if ($this->Parametros->save($parametro)) {
-                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                    return $this->redirect(['action' => 'index']);
-                } else
-                {
-                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
-            }
-        }
-        $this->set(compact('parametro'));
-        $this->set('_serialize', ['parametro']);
-    }
-
-    /**
-     * Edit method
+     * Save method
      *
      * @param string|null $id Parametro id.
      * @return void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null) {
-        $parametro = $this->Parametros->get($id, [
-            'contain' => []
-        ]);
+    public function save() {
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $parametro = $this->Parametros->patchEntity($parametro, $this->request->data);
-            if ($this->Parametros->save($parametro)) {
-                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                    return $this->redirect(['action' => 'index']);
-                } else
-                {
-                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
+            foreach ($this->request->data('paramentros') as $key => $value) {
+                $parametro = $this->Parametros->get($key);
+                $parametro->valor = $value['valor'];
+                $this->Parametros->save($parametro);
             }
         }
-        $this->set(compact('parametro'));
-        $this->set('_serialize', ['parametro']);
+        $this->Flash->success(__('Registro Salvo com Sucesso.'));
+        return $this->redirect(['action' => 'index']);
     }
 
     /**
@@ -100,8 +60,7 @@ class ParametrosController extends AppController {
         $parametro = $this->Parametros->get($id);
         if ($this->Parametros->delete($parametro)) {
             $this->Flash->success(__('Registro Excluido com Sucesso.'));
-        } else
-        {
+        } else {
             $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);

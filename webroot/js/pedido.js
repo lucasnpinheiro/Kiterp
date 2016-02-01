@@ -130,8 +130,8 @@ cake.pedidos.gerarPedido = function (obj) {
             },
             success: function (d) {
                 cake.util.loading.hide(obj);
-                $('#pedido-id').val(d.id);
-                $('#id').val(d.id);
+                $('.pedido-id-registro').val(d.id);
+                //$('#id').val(d.id);
                 $('.seta-pedido').html('Pedido: ' + d.id);
                 if (d.cod == 999) {
                     cake.msg.sucesso('Pedido.', 'Pedido criado com sucesso.');

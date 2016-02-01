@@ -36,6 +36,26 @@ class PedidosController extends AppController {
         $this->set('_serialize', ['pedidos']);
     }
 
+    /**
+     * Index method
+     *
+     * @return void
+     */
+    public function bloqueados() {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->where(['Pedidos.status' => 7])->contain(['Pessoas', 'Vendedores', 'Empresas' => function($q) {
+                return $q->contain('Pessoas')->autoFields(true);
+            }]);
+
+        $this->loadModel('Pessoas');
+        $this->loadModel('Empresas');
+        $empresas = $this->Empresas->find('list');
+        $pessoas = $this->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
+        $vendedors = $this->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
+        $this->set(compact('empresas', 'pessoas', 'vendedors'));
+        $this->set('pedidos', $this->paginate($query));
+        $this->set('_serialize', ['pedidos']);
+    }
+
     public function gerar() {
         $dados = [
             'id' => $this->request->data('pedido_id'),
@@ -47,6 +67,9 @@ class PedidosController extends AppController {
             'transportadora_id' => 1,
             'status' => 1
         ];
+        if ($dados['id'] == '') {
+            unset($dados['id']);
+        }
         $pedido = $this->Pedidos->newEntity();
         foreach ($dados as $key => $value) {
             $pedido{$key} = $value;
@@ -57,7 +80,7 @@ class PedidosController extends AppController {
         ];
         if ($this->Pedidos->save($pedido)) {
             $retorno = [
-                'cod' => ($dados['id'] != '' ? 222 : 999),
+                'cod' => 999,
                 'id' => $pedido->id,
             ];
         }
@@ -159,12 +182,11 @@ class PedidosController extends AppController {
                 }]
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            debug($this->request->data);
-            exit;
+            $this->request->data['parcelas'] = json_encode($this->request->data['parcelas']);
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index', '?' => ['status' => 2]]);
             } else {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
@@ -279,6 +301,13 @@ class PedidosController extends AppController {
             $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function desbloquear($id = null) {
+        $pedido = $this->Pedidos->get($id);
+        $pedido->status = 1;
+        $this->Pedidos->save($pedido);
+        return $this->redirect($this->referer());
     }
 
     public function imprimir($id = null) {

@@ -1,4 +1,5 @@
 <?php
+
 return [
     /**
      * Debug Level:
@@ -10,7 +11,6 @@ return [
      * true: Errors and warnings shown.
      */
     'debug' => TRUE,
-
     /**
      * Configure basic information about the application.
      *
@@ -53,7 +53,6 @@ return [
             'locales' => [APP . 'Locale' . DS],
         ],
     ],
-
     /**
      * Security and encryption configuration
      *
@@ -64,7 +63,6 @@ return [
     'Security' => [
         'salt' => '706117524f20a50e53247696691c6121c780031cabacc98b3f4aa75311a27669',
     ],
-
     /**
      * Apply timestamps with the last modified time to static assets (js, css, images).
      * Will append a querystring parameter containing the time the file was modified.
@@ -74,9 +72,8 @@ return [
      * enable timestamping regardless of debug value.
      */
     'Asset' => [
-        // 'timestamp' => true,
+    // 'timestamp' => true,
     ],
-
     /**
      * Configure the cache adapters.
      */
@@ -85,7 +82,6 @@ return [
             'className' => 'File',
             'path' => CACHE,
         ],
-
         /**
          * Configure the cache used for general framework caching.
          * Translation cache files are stored with this configuration.
@@ -97,7 +93,6 @@ return [
             'serialize' => true,
             'duration' => '+2 minutes',
         ],
-
         /**
          * Configure the cache for model and datasource caches. This cache
          * configuration is used to store schema descriptions, and table listings
@@ -108,10 +103,9 @@ return [
             'prefix' => 'myapp_cake_model_',
             'path' => CACHE . 'models/',
             'serialize' => true,
-            'duration' => '+2 minutes',
+            'duration' => '+10 minutes',
         ],
     ],
-
     /**
      * Configure the Error and Exception handlers used by your application.
      *
@@ -145,7 +139,6 @@ return [
         'log' => true,
         'trace' => true,
     ],
-
     /**
      * Email configuration.
      *
@@ -178,7 +171,6 @@ return [
             'tls' => null,
         ],
     ],
-
     /**
      * Email delivery profiles
      *
@@ -192,11 +184,10 @@ return [
         'default' => [
             'transport' => 'default',
             'from' => 'you@localhost',
-            //'charset' => 'utf-8',
-            //'headerCharset' => 'utf-8',
+        //'charset' => 'utf-8',
+        //'headerCharset' => 'utf-8',
         ],
     ],
-
     /**
      * Connection information used by the ORM to connect
      * to your application's datastores.
@@ -207,7 +198,7 @@ return [
         'default' => [
             'className' => 'Cake\Database\Connection',
             'driver' => 'Cake\Database\Driver\Mysql',
-            'persistent' => false,
+            'persistent' => true,
             'host' => 'localhost',
             /**
              * CakePHP will use the default DB port based on the driver selected
@@ -216,13 +207,13 @@ return [
              */
             //'port' => 'nonstandard_port_number',
             'username' => 'root',
+            //'password' => '1234',
             'password' => '',
             'database' => 'kiterp',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,
-            'log' => false,
-
+            'log' => true,
             /**
              * Set identifier quoting to true if you are using reserved words or
              * special characters in your table or column names. Enabling this
@@ -232,17 +223,15 @@ return [
              * manipulated before being executed.
              */
             'quoteIdentifiers' => false,
-
-            /**
-             * During development, if using MySQL < 5.6, uncommenting the
-             * following line could boost the speed at which schema metadata is
-             * fetched from the database. It can also be set directly with the
-             * mysql configuration directive 'innodb_stats_on_metadata = 0'
-             * which is the recommended value in production environments
-             */
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+        /**
+         * During development, if using MySQL < 5.6, uncommenting the
+         * following line could boost the speed at which schema metadata is
+         * fetched from the database. It can also be set directly with the
+         * mysql configuration directive 'innodb_stats_on_metadata = 0'
+         * which is the recommended value in production environments
+         */
+        //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
         ],
-
         /**
          * The test connection is used during the test suite.
          */
@@ -260,10 +249,9 @@ return [
             'cacheMetadata' => true,
             'quoteIdentifiers' => false,
             'log' => false,
-            //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
+        //'init' => ['SET GLOBAL innodb_stats_on_metadata = 0'],
         ],
     ],
-
     /**
      * Configures logging options
      */
@@ -281,7 +269,6 @@ return [
             'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
         ],
     ],
-
     /**
      * Session configuration.
      *
@@ -322,5 +309,6 @@ return [
      */
     'Session' => [
         'defaults' => 'php',
+        'timeout' => '480'
     ],
 ];

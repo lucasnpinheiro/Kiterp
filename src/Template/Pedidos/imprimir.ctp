@@ -69,6 +69,6 @@
 </div>
 <?php //debug($pedido); ?>
 <script type="text/javascript">
-    //window.print();
-    //window.location.href = router.url + 'pedidos/redireciona/' + router.params.pass[0];
+    window.print();
+    window.location.href = router.url + 'pedidos/redireciona/' + router.params.pass[0];
 </script>

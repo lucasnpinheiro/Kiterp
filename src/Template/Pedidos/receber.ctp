@@ -116,10 +116,10 @@ $parcelas[0]['valor'] += ($pedido->valor_total - $diferenca);
                 </div>
                 <?php
                 foreach ($parcelas as $key => $value) {
-                    echo $this->Form->input('parcelas.' . $key . '.documento', ['type' => 'hidden', 'label' => false, 'value' => $pedido->id, 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                    echo $this->Form->input('parcelas.' . $key . '.titulo', ['type' => 'hidden', 'label' => false, 'value' => $value['titulo'], 'div' => ['class' => 'col-xs-12 col-md-2']]);
-                    echo $this->Form->data('parcelas.' . $key . '.data', ['type' => 'hidden', 'label' => false, 'value' => $value['data'], 'div' => ['class' => 'col-xs-12 col-md-4'], 'append' => false]);
-                    echo $this->Form->moeda('parcelas.' . $key . '.valor', ['type' => 'hidden', 'label' => false, 'value' => $value['valor'], 'div' => ['class' => 'col-xs-12 col-md-3'], 'append' => false]);
+                    echo $this->Form->input('parcelas.' . $key . '.documento', ['type' => 'hidden', 'label' => false, 'value' => $pedido->id]);
+                    echo $this->Form->input('parcelas.' . $key . '.titulo', ['type' => 'hidden', 'label' => false, 'value' => $value['titulo']]);
+                    echo $this->Form->input('parcelas.' . $key . '.data', ['type' => 'hidden', 'label' => false, 'value' => $value['data']]);
+                    echo $this->Form->input('parcelas.' . $key . '.valor', ['type' => 'hidden', 'label' => false, 'value' => $value['valor']]);
 
                     echo $this->Form->input('parcelas.' . $key . '.documento', ['disabled' => true, 'label' => false, 'value' => $pedido->id, 'div' => ['class' => 'col-xs-12 col-md-3']]);
                     echo $this->Form->input('parcelas.' . $key . '.titulo', ['disabled' => true, 'label' => false, 'value' => $value['titulo'], 'div' => ['class' => 'col-xs-12 col-md-2']]);
@@ -172,7 +172,7 @@ $parcelas[0]['valor'] += ($pedido->valor_total - $diferenca);
             </tbody>
         </table>
         <div class="clearfix"></div>
-        
+
         <?php
         echo $this->Html->script('/js/pedido_fechamento.js', ['block' => 'script']);
         ?>
