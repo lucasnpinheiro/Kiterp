@@ -1,7 +1,7 @@
 <?php
 $lista_menus = $this->Html->listaMenus();
 if (count($lista_menus)) {
-    $lista_menus_array = array();
+    $lista_menus_array = [];
     foreach ($lista_menus as $key => $value) {
         $lista_menus_array[$value['grupos']][] = $value;
     }

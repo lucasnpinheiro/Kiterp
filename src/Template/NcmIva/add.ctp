@@ -13,7 +13,7 @@ $this->Html->addCrumb('Cadastrar/Alterar', null);
                 <?= $this->Form->create($ncmIva) ?>
                 <?php
                 echo $this->Form->input('icms_estadual_id', ['empty' => 'Selecione um estado', 'options' => $icmsEstaduais, 'value' => $estado]);
-                $valoresIva = array();
+                $valoresIva = [];
 
                 if (!empty($ncmIvaLista)) {
                     foreach ($ncmIvaLista as $key => $value) {

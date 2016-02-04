@@ -59,7 +59,7 @@ class ProdutosValoresTable extends Table {
         $this->belongsTo('CstIcms', [
             'className' => 'Impostos',
             'foreignKey' => 'cst_icms',
-            'conditions' => ['Impostos.tipo_imposto' => array(1, 2)]
+            'conditions' => ['Impostos.tipo_imposto' => [1, 2]]
         ]);
         $this->belongsTo('CstOrigem', [
             'className' => 'Impostos',

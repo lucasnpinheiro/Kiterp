@@ -140,7 +140,7 @@ class AppController extends Controller {
 
     protected function removeMask($campo) {
         if (isset($this->request->query[$campo])) {
-            $this->request->query[$campo] = trim(str_replace(array('.', '-'), '', $this->request->query[$campo]));
+            $this->request->query[$campo] = trim(str_replace(['.', '-'], '', $this->request->query[$campo]));
         }
     }
 

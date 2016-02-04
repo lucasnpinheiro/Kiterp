@@ -30,7 +30,7 @@ class MyFormHelper extends BootstrapFormHelper {
         parent::__construct($view, $config);
     }
 
-    public function editor($fieldName, array $options = array(), array $configure = array()) {
+    public function editor($fieldName, array $options = [], array $configure = []) {
         $_configure = [
             'buttonSource' => true,
             'plugins' => ['table', 'video'],
@@ -70,7 +70,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function statusPedido($fieldName, array $options = array()) {
+    public function statusPedido($fieldName, array $options = []) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -87,7 +87,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function status($fieldName, array $options = array()) {
+    public function status($fieldName, array $options = []) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -100,7 +100,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function tipoPessoa($fieldName, array $options = array()) {
+    public function tipoPessoa($fieldName, array $options = []) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -112,7 +112,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function tipoImpostos($fieldName, array $options = array()) {
+    public function tipoImpostos($fieldName, array $options = []) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -129,7 +129,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function tipoContribuinte($fieldName, array $options = array()) {
+    public function tipoContribuinte($fieldName, array $options = []) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -142,7 +142,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function empresas($fieldName, array $options = array()) {
+    public function empresas($fieldName, array $options = []) {
         $empresas = TableRegistry::get('Empresas');
 
         $find = $empresas->find()->contain('Pessoas')->all();
@@ -160,7 +160,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function associacao($fieldName, array $options = array()) {
+    public function associacao($fieldName, array $options = []) {
         //1 - Empresa | 2 - Cliente | 3 - Fornecedor | 4 - Vendedor | 5 - Representante | 6 - Funcionario | 7 - Usuários
         $options += [
             'type' => 'select',
@@ -177,7 +177,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function tipoEndereco($fieldName, array $options = array()) {
+    public function tipoEndereco($fieldName, array $options = []) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -193,7 +193,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function button($title, array $options = array()) {
+    public function button($title, array $options = []) {
         if (!isset($options['icon'])) {
             $title = $this->Html->icon('save') . ' ' . $title;
         } else if ($options['icon'] != '') {
@@ -202,7 +202,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return parent::button($title, $options);
     }
 
-    public function postLink($title, $url = null, array $options = array()) {
+    public function postLink($title, $url = null, array $options = []) {
         if (!isset($options['class'])) {
             $options['class'] = ' btn btn-xs ';
         }
@@ -258,7 +258,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $fileInput . $this->Html->div('input-group', $this->Html->div('input-group-btn', $fakeButton) . $fakeInput);
     }
 
-    public function input($fieldName, array $options = array()) {
+    public function input($fieldName, array $options = []) {
         $options = $this->_parseOptions($fieldName, $options);
         $div = $this->_extractOption('div', $options, '');
         if ($div) {
@@ -280,7 +280,7 @@ class MyFormHelper extends BootstrapFormHelper {
         } else if (isset($options['placeholder']) AND $options['placeholder'] != false) {
             $options['title'] = $options['placeholder'];
         }
-        $this->mergeClassCss(array(), $options);
+        $this->mergeClassCss([], $options);
         return parent::input($fieldName, $options);
     }
 
@@ -288,7 +288,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->prepend($input, $prepend) . $input . $this->append($input, $append);
     }
 
-    public function mail($fieldName, array $options = array()) {
+    public function mail($fieldName, array $options = []) {
         $default = [
             'label' => 'E-mail',
             'type' => 'email',
@@ -298,7 +298,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function data($fieldName, array $options = array()) {
+    public function data($fieldName, array $options = []) {
         $default = [
             'value' => '',
             'class' => 'data',
@@ -324,7 +324,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function numero($fieldName, array $options = array()) {
+    public function numero($fieldName, array $options = []) {
         $default = [
             'type' => 'text',
             'class' => 'numero',
@@ -337,7 +337,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function telefone($fieldName, array $options = array()) {
+    public function telefone($fieldName, array $options = []) {
         $default = [
             'type' => 'text',
             'class' => 'telefone',
@@ -348,7 +348,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function cep($fieldName, array $options = array()) {
+    public function cep($fieldName, array $options = []) {
         $default = [
             'label' => 'CEP',
             'type' => 'text',
@@ -360,7 +360,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function moeda($fieldName, array $options = array()) {
+    public function moeda($fieldName, array $options = []) {
         $currency = [
             'before' => '',
             'zero' => '0,00',
@@ -381,7 +381,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function juros($fieldName, array $options = array()) {
+    public function juros($fieldName, array $options = []) {
         $currency = [
             'before' => '',
             'zero' => '0,0000',
@@ -402,7 +402,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function quantidade($fieldName, array $options = array()) {
+    public function quantidade($fieldName, array $options = []) {
         $currency = [
             'before' => '',
             'zero' => '0,0000',
@@ -424,7 +424,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function peso($fieldName, array $options = array()) {
+    public function peso($fieldName, array $options = []) {
         $currency = [
             'before' => '',
             'zero' => '0,0000',
@@ -446,7 +446,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function cpf($fieldName, array $options = array()) {
+    public function cpf($fieldName, array $options = []) {
         $default = [
             'label' => 'CPF',
             'type' => 'text',
@@ -459,7 +459,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function cnpj($fieldName, array $options = array()) {
+    public function cnpj($fieldName, array $options = []) {
         $default = [
             'label' => 'CNPJ',
             'type' => 'text',
@@ -472,7 +472,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function senha($fieldName, array $options = array()) {
+    public function senha($fieldName, array $options = []) {
         $default = [
             'label' => __('Senha'),
             'type' => 'password',
@@ -483,7 +483,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function simNao($fieldName, array $options = array()) {
+    public function simNao($fieldName, array $options = []) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -495,7 +495,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function tzd($fieldName, array $options = array()) {
+    public function tzd($fieldName, array $options = []) {
         $options += [
             'type' => 'select',
             'options' => [
@@ -509,7 +509,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function select2($fieldName, array $options = array(), array $config = array()) {
+    public function select2($fieldName, array $options = [], array $config = []) {
         $config += ['language' => "pt-BR"];
         $options += ['id' => $this->_domId($fieldName)];
         $options += ['type' => 'select'];
@@ -530,7 +530,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function select2Auto($fieldName, array $options = array()) {
+    public function select2Auto($fieldName, array $options = []) {
         if (!isset($options['class'])) {
             $options['class'] = '';
         }
@@ -538,7 +538,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
-    public function fileUpload($fieldName, array $options = array()) {
+    public function fileUpload($fieldName, array $options = []) {
         $image = '';
         if (isset($options['value']) AND ! empty($options['value'])) {
             if (file_exists($options['value']) and ! is_dir($options['value'])) {
@@ -556,7 +556,7 @@ class MyFormHelper extends BootstrapFormHelper {
     }
 
     public function complementoSelect2($dados) {
-        $retorno = array();
+        $retorno = [];
         if (trim($dados) != '') {
             foreach (json_decode($dados, true) as $value) {
                 $retorno['options'][$value] = $value;
@@ -578,7 +578,7 @@ class MyFormHelper extends BootstrapFormHelper {
         ]);
     }
 
-    public function postLinkPermissao($title, $url = null, array $options = array()) {
+    public function postLinkPermissao($title, $url = null, array $options = []) {
         $default = [
             'plugin' => $this->request->param('plugin'),
             'controller' => $this->request->param('controller'),
@@ -617,7 +617,7 @@ class MyFormHelper extends BootstrapFormHelper {
     }
 
     private function mergeClassCss($default, $options) {
-        $c = array();
+        $c = [];
         if (isset($default['class'])) {
             $ex = explode(' ', $default['class']);
             foreach ($ex as $key => $value) {
@@ -636,7 +636,7 @@ class MyFormHelper extends BootstrapFormHelper {
         return $options;
     }
 
-    public function inputStatic($field, $value, $options = array()) {
+    public function inputStatic($field, $value, $options = []) {
         $default = [
             'class' => 'form-control-static',
             'label' => false

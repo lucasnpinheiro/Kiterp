@@ -79,7 +79,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         return $this->label($r[$id]['text'], $r[$id]['class']);
     }
 
-    public function link($title, $url = null, array $options = array()) {
+    public function link($title, $url = null, array $options = []) {
         $default = [
             'iconDirection' => 'left',
             'class' => '',
@@ -218,7 +218,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
     }
 
     public function cpfCnpj($str) {
-        $str = str_replace(array(' ', '.', '-', '/'), '', $str);
+        $str = str_replace([' ', '.', '-', '/'], '', $str);
         if (strlen($str) == 14) {
             return $this->mask($str, '##.###.###/####-##');
         } else if (strlen($str) == 11) {
@@ -277,7 +277,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         return $menus->execute($sql)->fetchAll('assoc');
     }
 
-    public function linkPermissao($title, $url = null, array $options = array()) {
+    public function linkPermissao($title, $url = null, array $options = []) {
         $default = [
             'plugin' => $this->request->param('plugin'),
             'controller' => $this->request->param('controller'),
