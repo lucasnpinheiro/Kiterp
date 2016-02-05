@@ -23,8 +23,8 @@ class PedidosController extends AppController {
      */
     public function index() {
         $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Pessoas', 'Vendedores', 'Empresas' => function($q) {
-                return $q->contain('Pessoas')->autoFields(true);
-            }]);
+                        return $q->contain('Pessoas')->autoFields(true);
+                    }])->order('id', 'desc');
 
         $this->loadModel('Pessoas');
         $this->loadModel('Empresas');
@@ -182,6 +182,9 @@ class PedidosController extends AppController {
                 }]
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            foreach ($this->request->data['parcelas'] as $key => $value) {
+                $this->request->data['parcelas'][$key]['data'] = implode('-', array_reverse(explode('/', $value['data'])));
+            }
             $this->request->data['parcelas'] = json_encode($this->request->data['parcelas']);
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
@@ -194,11 +197,14 @@ class PedidosController extends AppController {
             $pedido = $this->Pedidos->patchEntity($pedido, ['status' => 7]);
             $this->Pedidos->save($pedido);
         }
-
         $this->loadModel('FormasPagamentos');
-
-        $formasPagamentos = $this->FormasPagamentos->find('list');
-
+        $cond = unserialize($pedido->condicoes_pagamento->formas_pagamentos);
+        $formasPagamentos = $this->FormasPagamentos->find('list', [
+            'conditions' => [
+                'id IN' => $cond
+            ],
+            'order' => ['nome' => 'asc']
+        ]);
         $this->set('pedido', $pedido);
         $this->set('formasPagamentos', $formasPagamentos);
         $this->set('_serialize', ['pedido']);
@@ -246,7 +252,9 @@ class PedidosController extends AppController {
         $this->loadModel('Empresas');
         $empresas = $this->Empresas->find('list');
         $pessoas = $this->Pedidos->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
-        $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list');
+        $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list', [
+            'order' => ['principal' => 'desc', 'nome' => 'asc']
+        ]);
         $vendedors = $this->Pedidos->Vendedores->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
         $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors'));
         $this->set('_serialize', ['pedido']);
@@ -279,7 +287,9 @@ class PedidosController extends AppController {
         $this->loadModel('Empresas');
         $empresas = $this->Empresas->find('list');
         $pessoas = $this->Pedidos->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
-        $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list');
+        $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list', [
+            'order' => ['principal' => 'desc', 'nome' => 'asc']
+        ]);
         $vendedors = $this->Pedidos->Vendedores->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
         $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors'));
         $this->set('_serialize', ['pedido']);

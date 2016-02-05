@@ -80,7 +80,7 @@ class MyFormHelper extends BootstrapFormHelper {
                 4 => __('Orçamento'),
                 5 => __('Nota Fiscal'),
                 6 => __('Cancelado'),
-                7 => __('Bloqueado para Recebimento'),
+                7 => __('Em Recebimento'),
             ],
             'empty' => __('Selecionar uma Situação')
         ];
@@ -281,6 +281,10 @@ class MyFormHelper extends BootstrapFormHelper {
             $options['title'] = $options['placeholder'];
         }
         $this->mergeClassCss([], $options);
+        /* if($options['type'] == 'radio' OR $options['type'] == 'checkbox'){
+          $input =    parent::input($fieldName, $options);
+
+          } */
         return parent::input($fieldName, $options);
     }
 
@@ -650,6 +654,14 @@ class MyFormHelper extends BootstrapFormHelper {
         $label = $this->label($field, $options['label'], $divDefault);
         unset($options['label']);
         return $this->Html->tag('div', $label . $this->Html->tag('p', $value, $options), $div);
+    }
+
+    public function gerarOptions($start, $end) {
+        $a = [];
+        for ($i = (int) $start; $i <= (int) $end; $i++) {
+            $a[$i] = $i;
+        }
+        return $a;
     }
 
 }

@@ -31,8 +31,6 @@ $this->Html->addCrumb('Cadastrar', null);
         </div>
     </div>
 </div>
-
-
 <?php
 echo $this->Html->script('/js/formas_pagamentos.js', ['block' => 'script']);
 ?>

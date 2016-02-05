@@ -42,7 +42,7 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Number->format($condicoesPagamento->qtde_parcelas) ?></td>
                                     <td><?= $this->Number->format($condicoesPagamento->qtde_dias) ?></td>
                                     <td><?= $this->Html->simNao($condicoesPagamento->avista) ?></td>
-                                    <td><?= implode(' / ', $condicoesPagamento->parcelas) ?></td>
+                                    <td><?= (!empty($condicoesPagamento->parcelas) ? implode(' / ', unserialize($condicoesPagamento->parcelas)) : '') ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('Alterar', ['action' => 'edit', $condicoesPagamento->id]) ?>

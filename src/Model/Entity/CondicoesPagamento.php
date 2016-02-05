@@ -28,22 +28,18 @@ class CondicoesPagamento extends Entity {
     protected $_accessible = [
         '*' => true,
     ];
-    protected $_virtual = ['parcelas'];
-
+/*
     protected function _getParcelas() {
-        if (isset($this->_properties['avista'])) {
-            $parcelas = [];
-            if ($this->_properties['avista'] == 1) {
-                for ($i = 0; $i < (int) $this->_properties['qtde_parcelas']; $i++) {
-                    $parcelas[] = ($i * (int) $this->_properties['qtde_dias']);
-                }
-            } else {
-                for ($i = 0; $i < (int) $this->_properties['qtde_parcelas']; $i++) {
-                    $parcelas[] = (($i + 1) * (int) $this->_properties['qtde_dias']);
-                }
-            }
-            return $parcelas;
+        if (!empty($this->_properties['parcelas'])) {
+            return unserialize($this->_properties['parcelas']);
         }
+        return [];
     }
-
+    protected function _getFormasPagamentos() {
+        if (!empty($this->_properties['formas_pagamentos'])) {
+            return unserialize($this->_properties['formas_pagamentos']);
+        }
+        return [];
+    }
+*/
 }

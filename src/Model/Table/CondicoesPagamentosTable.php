@@ -10,6 +10,7 @@ use Cake\Validation\Validator;
 use Search\Manager;
 use Cake\Event\Event;
 use Cake\ORM\Entity;
+use Cake\ORM\TableRegistry;
 
 /**
  * CondicoesPagamentos Model
@@ -79,7 +80,11 @@ class CondicoesPagamentosTable extends Table {
     }
 
     public function beforeSave(Event $event, Entity $entity) {
+        $CondicoesPagamentos = TableRegistry::get('CondicoesPagamentos');
         $entity->qtde_parcelas = ($entity->qtde_parcelas < 1 ? 1 : $entity->qtde_parcelas);
+        if ((int) $entity->principal === 1) {
+            $CondicoesPagamentos->updateAll(['principal' => '0'], ['principal' => '1']);
+        }
         return true;
     }
 

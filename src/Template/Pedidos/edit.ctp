@@ -28,14 +28,14 @@ $this->Html->addCrumb('Alterar', null);
                 if (count($count_empresas) > 1) {
                     echo $this->Form->empresas('empresa_id', ['required' => true, 'class'=>'auto-select2-cake', 'div' => ['class' => 'col-xs-12 col-md-3']]);
                     echo $this->Form->select2Auto('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => 'Selecione um Cliente', 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                    echo $this->Form->select2Auto('condicao_pagamento_id', ['required' => true, 'empty' => 'Selecione uma opção de pagamento', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                    echo $this->Form->select2Auto('condicao_pagamento_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
                     echo $this->Form->select2Auto('vendedor_id', ['value' => $this->request->session()->read('Auth.User.id'), 'empty' => 'Selecione um vendedor', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
                 } else {
                     foreach ($empresas as $key => $value) {
                         echo $this->Form->input('empresa_id', ['value' => $key, 'type' => 'hidden']);
                     }
                     echo $this->Form->select2Auto('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => 'Selecione um Cliente', 'div' => ['class' => 'col-xs-12 col-md-4']]);
-                    echo $this->Form->select2Auto('condicao_pagamento_id', ['required' => true, 'empty' => 'Selecione uma opção de pagamento', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                    echo $this->Form->select2Auto('condicao_pagamento_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                     echo $this->Form->select2Auto('vendedor_id', ['value' => $this->request->session()->read('Auth.User.id'), 'empty' => 'Selecione um vendedor', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 }
                 echo $this->Form->cpf('cpf', ['div' => ['class' => 'col-xs-12 col-md-2']]);

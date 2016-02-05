@@ -50,7 +50,11 @@ class CondicoesPagamentosController extends AppController {
     public function add() {
         $condicoesPagamento = $this->CondicoesPagamentos->newEntity();
         if ($this->request->is('post')) {
+            $this->request->data['parcelas'] = (!empty($this->request->data['parcelas']) ? serialize($this->request->data['parcelas']) : '');
+            $this->request->data['formas_pagamentos'] = (!empty($this->request->data['formas_pagamentos']) ? serialize($this->request->data['formas_pagamentos']) : '');
             $condicoesPagamento = $this->CondicoesPagamentos->patchEntity($condicoesPagamento, $this->request->data);
+            //debug($condicoesPagamento);
+            //exit;
             if ($this->CondicoesPagamentos->save($condicoesPagamento)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
                 return $this->redirect(['action' => 'index']);
@@ -58,7 +62,9 @@ class CondicoesPagamentosController extends AppController {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
-        $this->set(compact('condicoesPagamento'));
+        $this->loadModel('FormasPagamentos');
+        $formasPagamentos = $this->FormasPagamentos->find('list');
+        $this->set(compact('condicoesPagamento', 'formasPagamentos'));
         $this->set('_serialize', ['condicoesPagamento']);
     }
 
@@ -74,7 +80,13 @@ class CondicoesPagamentosController extends AppController {
             'contain' => []
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
+            $this->request->data['parcelas'] = (string) (!empty($this->request->data['parcelas']) ? serialize($this->request->data['parcelas']) : '');
+            $this->request->data['formas_pagamentos'] = (string) (!empty($this->request->data['formas_pagamentos']) ? serialize($this->request->data['formas_pagamentos']) : '');
+
             $condicoesPagamento = $this->CondicoesPagamentos->patchEntity($condicoesPagamento, $this->request->data);
+            //debug($condicoesPagamento);
+            //debug($this->request->data);
+            //exit;
             if ($this->CondicoesPagamentos->save($condicoesPagamento)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
                 return $this->redirect(['action' => 'index']);
@@ -82,7 +94,10 @@ class CondicoesPagamentosController extends AppController {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
-        $this->set(compact('condicoesPagamento'));
+        $this->loadModel('FormasPagamentos');
+        $formasPagamentos = $this->FormasPagamentos->find('list');
+
+        $this->set(compact('condicoesPagamento', 'formasPagamentos'));
         $this->set('_serialize', ['condicoesPagamento']);
     }
 
@@ -98,8 +113,7 @@ class CondicoesPagamentosController extends AppController {
         $condicoesPagamento = $this->CondicoesPagamentos->get($id);
         if ($this->CondicoesPagamentos->delete($condicoesPagamento)) {
             $this->Flash->success(__('Registro Excluido com Sucesso.'));
-        } else
-        {
+        } else {
             $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);

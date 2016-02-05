@@ -12,10 +12,20 @@ $this->Html->addCrumb('Cadastrar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($condicoesPagamento) ?>
                 <?php
-                echo $this->Form->input('nome', ['div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->numero('qtde_parcelas', ['label' => 'Parcelas', 'div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->numero('qtde_dias', ['label' => 'Dias corridos', 'div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->simNao('avista', ['div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->numero('qtde_dias', ['required' => true, 'label' => 'Dias corridos', 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('qtde_parcelas', ['options' => $this->Form->gerarOptions(1, (int) Cake\Core\Configure::read('Parametros.CMaxParcelas')), 'required' => true, 'label' => 'Parcelas', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->simNao('avista', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->simNao('principal', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->element('CondicoesPagamentos/parcelas');
+
+                $i = 0;
+                foreach ($formasPagamentos->toArray() as $key => $value) {
+                    echo '<div class="col-xs-12 col-md-2">';
+                    echo $this->Form->input('formas_pagamentos.' . $i, ['type' => 'checkbox', 'label' => $value, 'value' => $key, 'hiddenField' => false]);
+                    echo '</div>';
+                    $i++;
+                }
                 ?>
                 <div class="clearfix"></div>
                 <div class="hr-line-dashed"></div>
@@ -30,3 +40,6 @@ $this->Html->addCrumb('Cadastrar', null);
         </div>
     </div>
 </div>
+<?php
+echo $this->Html->script('/js/condicoes_pagamentos.js', ['block' => 'script']);
+?>
