@@ -24,7 +24,7 @@ class PedidosController extends AppController {
     public function index() {
         $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain(['Pessoas', 'Vendedores', 'Empresas' => function($q) {
                         return $q->contain('Pessoas')->autoFields(true);
-                    }])->order('id', 'desc');
+                    }])->order('Pedidos.id', 'desc');
 
         $this->loadModel('Pessoas');
         $this->loadModel('Empresas');
