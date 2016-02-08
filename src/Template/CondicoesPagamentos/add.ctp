@@ -15,8 +15,8 @@ $this->Html->addCrumb('Cadastrar', null);
                 echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
                 echo $this->Form->numero('qtde_dias', ['required' => true, 'label' => 'Dias corridos', 'div' => ['class' => 'col-xs-12 col-md-6']]);
                 echo $this->Form->input('qtde_parcelas', ['options' => $this->Form->gerarOptions(1, (int) Cake\Core\Configure::read('Parametros.CMaxParcelas')), 'required' => true, 'label' => 'Parcelas', 'div' => ['class' => 'col-xs-12 col-md-4']]);
-                echo $this->Form->simNao('avista', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
-                echo $this->Form->simNao('principal', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->simNao('avista', ['value' => '0', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->simNao('principal', ['value' => '0', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->element('CondicoesPagamentos/parcelas');
 
                 $i = 0;

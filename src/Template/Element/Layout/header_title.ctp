@@ -18,10 +18,10 @@
                     echo $this->Html->linkPermissao('Cadastrar', ['action' => 'add'], ['class' => 'btn btn-success', 'icon' => 'plus-circle']);
                     if ($this->request->params['controller'] == 'Usuarios') {
                         if ($this->request->session()->read('Auth.User.id') != $this->request->params['pass'][0]) {
-                            echo $this->Form->postLinkPermissao('Excluir', ['action' => 'delete', $this->request->params['pass'][0]], ['icon' => 'minus-circle', 'class' => 'btn btn-danger', 'confirm' => __('Are you sure you want to delete # {0}?', $this->request->params['pass'][0])]);
+                            echo $this->Form->postLinkPermissao('Excluir', ['action' => 'delete', $this->request->params['pass'][0]], ['icon' => 'minus-circle', 'class' => 'btn btn-danger', 'confirm' => __('Tem certeza de que deseja o registro {0}?', $this->request->params['pass'][0])]);
                         }
                     } else {
-                        echo $this->Form->postLinkPermissao('Excluir', ['action' => 'delete', $this->request->params['pass'][0]], ['icon' => 'minus-circle', 'class' => 'btn btn-danger', 'confirm' => __('Are you sure you want to delete # {0}?', $this->request->params['pass'][0])]);
+                        echo $this->Form->postLinkPermissao('Excluir', ['action' => 'delete', $this->request->params['pass'][0]], ['icon' => 'minus-circle', 'class' => 'btn btn-danger', 'confirm' => __('Tem certeza de que deseja o registro {0}?', $this->request->params['pass'][0])]);
                     }
 
                     break;

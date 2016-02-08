@@ -47,7 +47,7 @@ $this->Html->addCrumb('Consultar', null);
                                             <?= $this->Html->linkPermissao('Alterar', ['action' => 'edit', $usuario->id]) ?>
                                             <?php
                                             if ($this->request->session()->read('Auth.User.id') != $usuario->id) {
-                                                echo $this->Form->postLinkPermissao('Excluir', ['action' => 'delete', $usuario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $usuario->id)]);
+                                                echo $this->Form->postLinkPermissao('Excluir', ['action' => 'delete', $usuario->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $usuario->id)]);
                                             }
                                             ?>
                                         </div>
