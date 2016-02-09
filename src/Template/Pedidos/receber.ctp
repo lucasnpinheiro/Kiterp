@@ -125,8 +125,7 @@ $parcelas[0]['valor'] += ($pedido->valor_total - $diferenca);
                 echo $this->Form->input('opcoes.3.tipo', ['class' => 'forma-selecionada', 'label' => 'Cartão', 'empty' => 'Selecione uma Opções', 'options' => $_formasPagamentos[3], 'div' => ['class' => 'col-xs-12 col-md-6']]);
                 echo $this->Form->moeda('opcoes.3.valor', ['class' => 'forma-selecionada', 'label' => 'Valor', 'div' => ['class' => 'col-xs-12 col-md-3']]);
                 echo $this->Form->numero('opcoes.3.parcelas', ['label' => 'Quantidade', 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->moeda('opcoes.4.valor', ['class' => 'forma-selecionada', 'label' => 'Prazo', 'empty' => 'Selecione uma Opções', 'options' => $value, 'div' => ['class' => 'col-xs-12 col-md-8']]);
-                echo $this->Form->numero('opcoes.4.parcelas', ['label' => 'Quantidade', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->moeda('opcoes.4.valor', ['class' => 'forma-selecionada', 'label' => 'Prazo', 'empty' => 'Selecione uma Opções', 'options' => $value, 'div' => ['class' => 'col-xs-12 col-md-12']]);
 
                 echo $this->Form->button(__('Receber'), ['bootstrap-type' => 'primary', 'type' => 'submit', 'icon' => 'money', 'style' => 'display:none;', 'class' => 'col-lg-12 bt-pagar']);
                 ?>
