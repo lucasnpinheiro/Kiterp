@@ -31,6 +31,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
                                 <th><?= $this->Paginator->sort('abreviado') ?></th>
+                                <th><?= $this->Paginator->sort('grupo') ?></th>
                                 <th><?= $this->Paginator->sort('qtde_dias') ?></th>
                                 <th><?= $this->Paginator->sort('qtde_taxas') ?></th>
                                 <th><?= $this->Paginator->sort('valor_taxas', 'Taxas') ?></th>
@@ -43,6 +44,7 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Number->format($formasPagamento->id) ?></td>
                                     <td><?= h($formasPagamento->nome) ?></td>
                                     <td><?= h($formasPagamento->abreviado) ?></td>
+                                    <td><?= $this->Html->pagamentos($formasPagamento->grupo) ?></td>
                                     <td><?= $this->Number->format($formasPagamento->qtde_dias) ?></td>
                                     <td><?= $this->Number->format($formasPagamento->qtde_taxas) ?></td>
                                     <td><?= $this->Html->jsonToLista($formasPagamento->valor_taxas, $formasPagamento->qtde_taxas) ?></td>

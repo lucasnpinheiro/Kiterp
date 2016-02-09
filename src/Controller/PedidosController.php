@@ -197,13 +197,7 @@ class PedidosController extends AppController {
             $this->Pedidos->save($pedido);
         }
         $this->loadModel('FormasPagamentos');
-        $cond = unserialize($pedido->condicoes_pagamento->formas_pagamentos);
-        $formasPagamentos = $this->FormasPagamentos->find('list', [
-            'conditions' => [
-                'id IN' => $cond
-            ],
-            'order' => ['nome' => 'asc']
-        ]);
+        $formasPagamentos = $this->FormasPagamentos->find()->order(['nome' => 'asc'])->all();
         $this->set('pedido', $pedido);
         $this->set('formasPagamentos', $formasPagamentos);
         $this->set('_serialize', ['pedido']);

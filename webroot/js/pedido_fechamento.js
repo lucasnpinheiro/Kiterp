@@ -1,33 +1,21 @@
 cake.pedido_fechamento = {};
 cake.pedido_fechamento.total = 0;
 cake.pedido_fechamento.sub = 0;
+cake.pedido_fechamento.sub_parcelas = 0;
 cake.pedido_fechamento.diferenca = 0;
 
-cake.pedido_fechamento.add = function (obj) {
-    var v = obj.val();
-    var l = obj.find(':selected').text();
-    var t = '<div class="form-group text">\n\
-                <label class=" control-label " for="opcao-' + v + '">' + l + '</label>\n\
-                <div class="input-group">\n\
-                    <input name="opcao[' + v + ']" class="form-control moeda calcula-pedido" title="nome da opção" id="opcao-' + v + '" value="" type="text">\n\
-                        <span class="input-group-addon">\n\
-                            <i class="fa fa-money"></i>\n\
-                        </span>\n\
-                    </div>\n\
-                </div>';
-    $('.opcoes-pagamento').append(t);
-    $('.calcula-pedido').change(function (e) {
-        e.preventDefault();
-        cake.pedido_fechamento.calcula($(this).val());
-    });
-    $(obj).val('');
-    $('#opcao-' + v).focus();
-    cake.util.rotinas();
-}
-cake.pedido_fechamento.calcula = function (v) {
-    v = cake.util.convertFloat(v);
+cake.pedido_fechamento.calcula = function (obj) {
+    var v = cake.util.convertFloat($(obj).val());
+    var id = $(obj).attr('id').replace('valor', '');
+    if ($('#' + id + 'parcelas').length > 0) {
+        $('#' + id + 'parcelas').removeAttr('required');
+        if (v > 0) {
+            $('#' + id + 'parcelas').attr('required', 'required');
+        }
+    }
+
     cake.pedido_fechamento.sub = 0;
-    $('.calcula-pedido').each(function () {
+    $('.forma-selecionada').each(function () {
         cake.pedido_fechamento.sub += cake.util.convertFloat($(this).val());
     });
     cake.pedido_fechamento.diferenca = cake.pedido_fechamento.total - cake.pedido_fechamento.sub;
@@ -39,16 +27,37 @@ cake.pedido_fechamento.calcula = function (v) {
     } else {
         $('.calcula-troco').html(cake.util.moeda(cake.pedido_fechamento.diferenca * -1));
         $('.calcula-diferenca').html(cake.util.moeda('0.00'));
-        $('.bt-pagar').show();
+        if (cake.pedido_fechamento.sub_parcelas >= cake.pedido_fechamento.total) {
+            $('.bt-pagar').show();
+        }
+    }
+}
+cake.pedido_fechamento.parcelas = function () {
+    cake.pedido_fechamento.sub_parcelas = 0;
+    $('.valor-parcelas-condicoes').each(function () {
+        cake.pedido_fechamento.sub_parcelas += cake.util.convertFloat($(this).val());
+    });
+    var diferenca = cake.pedido_fechamento.total - cake.pedido_fechamento.sub_parcelas;
+    $('.bt-pagar').hide();
+
+    if (diferenca <= 0) {
+        if (cake.pedido_fechamento.sub >= cake.pedido_fechamento.total) {
+            $('.bt-pagar').show();
+        }
     }
 }
 
 $(function () {
-    $('#opcoes').change(function (e) {
-        e.preventDefault();
-        cake.pedido_fechamento.add($(this));
-    });
+    cake.pedido_fechamento.sub_parcelas = parseFloat($('.valor-total').attr('rel'));
     cake.pedido_fechamento.total = parseFloat($('.valor-total').attr('rel'));
+    $('.forma-selecionada').change(function (e) {
+        e.preventDefault();
+        cake.pedido_fechamento.calcula($(this));
+    });
+    $('.valor-parcelas-condicoes').change(function (e) {
+        e.preventDefault();
+        cake.pedido_fechamento.parcelas();
+    });
     $('.bt-pagar').click(function (e) {
         if (cake.pedido_fechamento.diferenca > 0) {
             e.preventDefault();

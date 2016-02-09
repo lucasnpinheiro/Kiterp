@@ -12,8 +12,9 @@ $this->Html->addCrumb('Alterar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($formasPagamento) ?>
                 <?php
-                echo $this->Form->input('nome', ['autofocus' => true, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-12']]);
-                echo $this->Form->input('abreviado', ['label' => 'Nome abreviado', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('nome', ['autofocus' => true, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('abreviado', ['label' => 'Nome abreviado', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('grupo', ['label' => 'Grupo', 'options' => $this->Html->tiposPagamentos(), 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->Form->numero('qtde_dias', ['label' => 'Dias a Receber', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->Form->numero('qtde_taxas', ['label' => 'Quantidade de Parcelas', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->element('FormasPagamentos/taxas');

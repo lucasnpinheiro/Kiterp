@@ -28,18 +28,4 @@ class CondicoesPagamento extends Entity {
     protected $_accessible = [
         '*' => true,
     ];
-/*
-    protected function _getParcelas() {
-        if (!empty($this->_properties['parcelas'])) {
-            return unserialize($this->_properties['parcelas']);
-        }
-        return [];
-    }
-    protected function _getFormasPagamentos() {
-        if (!empty($this->_properties['formas_pagamentos'])) {
-            return unserialize($this->_properties['formas_pagamentos']);
-        }
-        return [];
-    }
-*/
 }

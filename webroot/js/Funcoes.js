@@ -52,9 +52,9 @@ cake.util.convertFloat = function (valor) {
     if (valor === "") {
         valor = 0;
     } else {
+        valor = valor.replace('R$', '');
         valor = valor.replace(".", "");
         valor = valor.replace(",", ".");
-        valor = valor.replace('R$', '');
         valor = $.trim(valor);
     }
     return parseFloat(valor);

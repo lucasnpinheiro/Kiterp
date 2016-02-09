@@ -18,17 +18,6 @@ $this->Html->addCrumb('Alterar', null);
                 echo $this->Form->simNao('avista', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->Form->simNao('principal', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->element('CondicoesPagamentos/parcelas');
-
-                if (!empty($condicoesPagamento->formas_pagamentos)) {
-                    $condicoesPagamento->formas_pagamentos = unserialize($condicoesPagamento->formas_pagamentos);
-                }
-                $i = 0;
-                foreach ($formasPagamentos->toArray() as $key => $value) {
-                    echo '<div class="col-xs-12 col-md-2">';
-                    echo $this->Form->input('formas_pagamentos.' . $i, ['type' => 'checkbox', 'label' => $value, 'value' => $key, 'hiddenField' => false]);
-                    echo '</div>';
-                    $i++;
-                }
                 ?>
                 <div class="clearfix"></div>
                 <div class="hr-line-dashed"></div>

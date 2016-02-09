@@ -331,4 +331,18 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         return '<ul class="list-unstyled">' . implode('', $lista) . '</ul>';
     }
 
+    public function tiposPagamentos() {
+        return [
+            1 => 'Dinheiro',
+            2 => 'Cheque',
+            3 => 'Cartão',
+            4 => 'Prazo'
+        ];
+    }
+
+    public function pagamentos($id) {
+        $r = $this->tiposPagamentos();
+        return $r[$id];
+    }
+
 }
