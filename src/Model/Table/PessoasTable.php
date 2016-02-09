@@ -256,7 +256,7 @@ class PessoasTable extends Table {
                         'table' => 'pessoas_associacoes',
                         'alias' => 'PessoasAssociacoes',
                         'type' => 'INNER',
-                        'conditions' => ['PessoasAssociacoes.pessoa_id = ' . $this->alias() . '.id', 'PessoasAssociacoes.tipo_associacao !=' => 1, 'PessoasAssociacoes.status !=' => 9],
+                        'conditions' => ['PessoasAssociacoes.status !=' => 9],
                     ]);
                 }
                 $query->group($this->alias() . '.id');

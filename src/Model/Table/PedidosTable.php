@@ -41,7 +41,7 @@ class PedidosTable extends Table {
         $this->addBehavior('Timestamp');
 
         $this->belongsTo('Empresas', [
-            'foreignKey' => 'empresa_id'
+            'foreignKey' => 'empresa_id',
         ]);
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoa_id',
