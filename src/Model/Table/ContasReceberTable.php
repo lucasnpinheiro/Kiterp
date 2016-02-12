@@ -71,56 +71,7 @@ class ContasReceberTable extends Table
 
         return $search;
     }
-
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
-
-        $validator
-            ->allowEmpty('numero_documento');
-
-        $validator
-            ->add('data_vencimento', 'valid', ['rule' => 'date'])
-            ->allowEmpty('data_vencimento');
-
-        $validator
-            ->add('valor_documento', 'valid', ['rule' => 'money'])
-            ->allowEmpty('valor_documento');
-
-        $validator
-            ->add('status', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('status');
-
-        $validator
-            ->add('data_recebimento', 'valid', ['rule' => 'date'])
-            ->allowEmpty('data_recebimento');
-
-        $validator
-            ->add('valor recebimento', 'valid', ['rule' => 'money'])
-            ->allowEmpty('valor recebimento');
-
-        $validator
-            ->add('numero_pedido', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('numero_pedido');
-
-        $validator
-            ->add('nota_fiscal', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('nota_fiscal');
-
-        $validator
-            ->allowEmpty('serie');
-
-        return $validator;
-    }
-
+    
     /**
      * Returns a rules checker object that will be used for validating
      * application integrity.
@@ -130,10 +81,10 @@ class ContasReceberTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
-        $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
-        $rules->add($rules->existsIn(['banco_id'], 'Bancos'));
-        $rules->add($rules->existsIn(['tradutora_id'], 'Tradutoras'));
+        //$rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
+        //$rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
+        //$rules->add($rules->existsIn(['banco_id'], 'Bancos'));
+        //$rules->add($rules->existsIn(['tradutora_id'], 'Tradutoras'));
         return $rules;
     }
 }

@@ -14,7 +14,7 @@ $this->Html->addCrumb('Cadastrar', null);
                 <?php
                 echo $this->Form->input('codigo');
                 echo $this->Form->input('nome');
-                echo $this->Form->input('tipo');
+                echo $this->Form->input('tipo', ['options' => [1 => 'Credora', 2 => 'Devedora']]);
                 echo $this->Form->input('id_pai');
                 echo $this->Form->input('tradutora');
                 ?>

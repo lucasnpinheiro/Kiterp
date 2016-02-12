@@ -154,13 +154,13 @@ class PedidosTable extends Table {
         $PedidosItens = TableRegistry::get('PedidosItens');
         $PedidosFormasPagamentos = TableRegistry::get('PedidosFormasPagamentos');
         if ($entity->status === 3) {
-            foreach ($entity->opcao as $key => $value) {
+            /*foreach ($entity->opcoes as $key => $value) {
                 $formas = $PedidosFormasPagamentos->newEntity();
                 $formas->pedido_id = $entity->id;
                 $formas->formas_pagamento_id = $key;
                 $formas->valor = str_replace(',', '.', str_replace('.', '', $value));
                 $PedidosFormasPagamentos->save($formas);
-            }
+            }*/
             $find = $PedidosItens->find()->where(['pedido_id' => $entity->id])->all();
             foreach ($find as $key => $value) {
                 $prod = $ProdutosValores->find()->where(['produto_id' => $value->produto_id, 'empresa_id' => $entity->empresa_id])->contain('Produtos')->first();

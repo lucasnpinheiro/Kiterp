@@ -98,8 +98,7 @@ class ContasController extends AppController {
         $conta = $this->Contas->get($id);
         if ($this->Contas->delete($conta)) {
             $this->Flash->success(__('Registro Excluido com Sucesso.'));
-        } else
-        {
+        } else {
             $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);
