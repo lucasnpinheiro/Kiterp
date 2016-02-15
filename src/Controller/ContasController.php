@@ -22,9 +22,10 @@ class ContasController extends AppController {
      * @return void
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain('SubContas');
         $this->set('contas', $this->paginate($query));
         $this->set('_serialize', ['contas']);
+        $this->set('tipo', $this->request->query('tipo') == 1 ? 'Credito' : 'Debito');
     }
 
     /**
@@ -53,13 +54,15 @@ class ContasController extends AppController {
             $conta = $this->Contas->patchEntity($conta, $this->request->data);
             if ($this->Contas->save($conta)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index', '?' => ['tipo' => $this->request->query('tipo')]]);
             } else {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('conta'));
+        $this->set('contas', $this->Contas->find()->where(['tipo' => $this->request->query('tipo')])->order(['id_pai' => 'asc'])->all());
         $this->set('_serialize', ['conta']);
+        $this->set('tipo', $this->request->query('tipo') == 1 ? 'Credito' : 'Debito');
     }
 
     /**
@@ -77,13 +80,16 @@ class ContasController extends AppController {
             $conta = $this->Contas->patchEntity($conta, $this->request->data);
             if ($this->Contas->save($conta)) {
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'index', '?' => ['tipo' => $this->request->query('tipo')]]);
             } else {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->set(compact('conta'));
+        $this->set('contas', $this->Contas->find()->where(['tipo' => $this->request->query('tipo')])->order(['id_pai' => 'asc'])->all());
+        $this->set(compact('conta'));
         $this->set('_serialize', ['conta']);
+        $this->set('tipo', $this->request->query('tipo') == 1 ? 'Credito' : 'Debito');
     }
 
     /**
@@ -101,7 +107,8 @@ class ContasController extends AppController {
         } else {
             $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
-        return $this->redirect(['action' => 'index']);
+        $this->set('tipo', $this->request->query('tipo') == 1 ? 'Credito' : 'Debito');
+        return $this->redirect(['action' => 'index', '?' => ['tipo' => $this->request->query('tipo')]]);
     }
 
 }

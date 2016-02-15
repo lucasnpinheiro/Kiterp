@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use App\Model\Entity\Conta;
@@ -8,13 +9,11 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Search\Manager;
 
-
 /**
  * Contas Model
  *
  */
-class ContasTable extends Table
-{
+class ContasTable extends Table {
 
     /**
      * Initialize method
@@ -22,8 +21,7 @@ class ContasTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('contas');
@@ -33,6 +31,10 @@ class ContasTable extends Table
         $this->addBehavior('Timestamp');
 
         $this->addBehavior('Search.Search');
+        $this->belongsTo('SubContas', [
+            'foreignKey' => 'id_pai',
+            'className' => 'Contas'
+        ]);
     }
 
     public function searchConfiguration() {
@@ -60,30 +62,40 @@ class ContasTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id', 'create');
+                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('id', 'create');
 
         $validator
-            ->allowEmpty('codigo');
+                ->allowEmpty('codigo');
 
         $validator
-            ->allowEmpty('nome');
+                ->allowEmpty('nome');
 
         $validator
-            ->add('tipo', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('tipo');
+                ->add('tipo', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('tipo');
 
         $validator
-            ->add('id_pai', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('id_pai');
+                ->add('id_pai', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('id_pai');
 
         $validator
-            ->add('tradutora', 'valid', ['rule' => 'numeric'])
-            ->allowEmpty('tradutora');
+                ->add('tradutora', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('tradutora');
 
         return $validator;
     }
+
+    public function beforeSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity) {
+        $Contas = \Cake\ORM\TableRegistry::get('Contas');
+        $entity->tradutora = $entity->codigo;
+        if ($entity->id_pai > 0) {
+            $find = $Contas->get($entity->id_pai);
+            $entity->tradutora = $entity->codigo . $find->codigo;
+        }
+        return true;
+    }
+
 }
