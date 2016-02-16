@@ -193,7 +193,7 @@ class PedidosController extends AppController {
                 $this->loadModel('FormasPagamentos');
                 $this->loadModel('FormasPagamentos');
                 $banco = $this->Bancos->find()->first();
-                $removeIndex = false;
+                $parcelas = json_decode($this->request->data('parcelas'), true);
                 if (!empty($this->request->data('opcoes.1.valor'))) {
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 1])->first();
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.1.valor')));
@@ -213,7 +213,7 @@ class PedidosController extends AppController {
                     $contasReceber->valor_liquido = $valor;
                     $contasReceber->formas_pagamento_id = $formasPagamentos->id;
                     $this->ContasReceber->save($contasReceber);
-                    $removeIndex = true;
+                    array_shift($parcelas);
                 }
                 if (!empty($this->request->data('opcoes.2.valor'))) {
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 2])->first();
@@ -227,7 +227,7 @@ class PedidosController extends AppController {
                         $contasReceber->valor_documento = $valor;
                         $contasReceber->pessoa_id = $pedido->pessoa_id;
                         $contasReceber->banco_id = $banco->id;
-                        $contasReceber->tradutora_id = 2;
+                        $contasReceber->tradutora_id = 4;
                         $contasReceber->status = 1;
                         $contasReceber->data_recebimento = null;
                         $contasReceber->valor_recebimento = $valor;
@@ -236,8 +236,8 @@ class PedidosController extends AppController {
                         $contasReceber->valor_liquido = $valor;
                         $contasReceber->formas_pagamento_id = $formasPagamentos->id;
                         $this->ContasReceber->save($contasReceber);
+                        array_shift($parcelas);
                     }
-                    $removeIndex = true;
                 }
                 if (!empty($this->request->data('opcoes.3.valor'))) {
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['id' => (int) $this->request->data('opcoes.3.tipo')])->first();
@@ -250,7 +250,7 @@ class PedidosController extends AppController {
                         if (!empty($taxas[$i])) {
                             $desconto = (float) str_replace('%', '', $taxas[$i]);
                             $diferenca = (float) number_format(((float) $desconto / 100) * $valor, 2);
-                            $desconto = (float)($valor - $diferenca);
+                            $desconto = (float) ($valor - $diferenca);
                         }
 
                         $contasReceber = $this->ContasReceber->newEntity();
@@ -260,7 +260,7 @@ class PedidosController extends AppController {
                         $contasReceber->valor_documento = $valor;
                         $contasReceber->pessoa_id = $pedido->pessoa_id;
                         $contasReceber->banco_id = $banco->id;
-                        $contasReceber->tradutora_id = 2;
+                        $contasReceber->tradutora_id = 5;
                         $contasReceber->status = 1;
                         $contasReceber->data_recebimento = null;
                         $contasReceber->valor_recebimento = $valor;
@@ -271,17 +271,11 @@ class PedidosController extends AppController {
                         $contasReceber->parcelas = (int) $i;
                         $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
                         $this->ContasReceber->save($contasReceber);
+                        array_shift($parcelas);
                     }
-                    $removeIndex = true;
                 }
 
-                $parcelas = json_decode($this->request->data('parcelas'), true);
-                if (!empty($parcelas[0])) {
-                    if ($removeIndex === true) {
-                        unset($parcelas[0]);
-                    }
-                }
-                if (!empty($parcelas[0])) {
+                if (!empty($parcelas)) {
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 4])->first();
                     foreach ($parcelas as $key => $value) {
                         $valor = (float) str_replace(',', '.', str_replace(array('.', 'R$ '), '', $value['valor']));
@@ -292,7 +286,7 @@ class PedidosController extends AppController {
                         $contasReceber->valor_documento = $valor;
                         $contasReceber->pessoa_id = $pedido->pessoa_id;
                         $contasReceber->banco_id = $banco->id;
-                        $contasReceber->tradutora_id = 2;
+                        $contasReceber->tradutora_id = 3;
                         $contasReceber->status = 1;
                         $contasReceber->data_recebimento = null;
                         $contasReceber->valor_recebimento = $valor;
@@ -300,7 +294,7 @@ class PedidosController extends AppController {
                         $contasReceber->valor_desconto = $diferenca;
                         $contasReceber->valor_liquido = $desconto;
                         $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
-                        $contasReceber->parcelas = (int) $i;
+                        $contasReceber->parcelas = (int) $key;
                         $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
                         $this->ContasReceber->save($contasReceber);
                     }
@@ -361,13 +355,15 @@ class PedidosController extends AppController {
         }
         $this->loadModel('Pessoas');
         $this->loadModel('Empresas');
+        $this->loadModel('Produtos');
         $empresas = $this->Empresas->find('list');
+        $produtos = $this->Produtos->find()->select(['barra'])->where(['status' => 1])->order(['nome' => 'asc'])->all();
         $pessoas = $this->Pedidos->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
         $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list', [
             'order' => ['principal' => 'desc', 'nome' => 'asc']
         ]);
         $vendedors = $this->Pedidos->Vendedores->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
-        $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors'));
+        $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors', 'produtos'));
         $this->set('_serialize', ['pedido']);
     }
 
@@ -396,13 +392,15 @@ class PedidosController extends AppController {
         $pedido->pedido_id = $pedido->id;
         $this->loadModel('Pessoas');
         $this->loadModel('Empresas');
+        $this->loadModel('Produtos');
         $empresas = $this->Empresas->find('list');
+        $produtos = $this->Produtos->find()->select(['barra'])->where(['status' => 1])->order(['nome' => 'asc'])->all();
         $pessoas = $this->Pedidos->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
         $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list', [
             'order' => ['principal' => 'desc', 'nome' => 'asc']
         ]);
         $vendedors = $this->Pedidos->Vendedores->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
-        $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors'));
+        $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors', 'produtos'));
         $this->set('_serialize', ['pedido']);
     }
 

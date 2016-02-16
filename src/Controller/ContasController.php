@@ -52,11 +52,22 @@ class ContasController extends AppController {
         $conta = $this->Contas->newEntity();
         if ($this->request->is('post')) {
             $conta = $this->Contas->patchEntity($conta, $this->request->data);
-            if ($this->Contas->save($conta)) {
-                $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                return $this->redirect(['action' => 'index', '?' => ['tipo' => $this->request->query('tipo')]]);
+            $Contas = \Cake\ORM\TableRegistry::get('Contas');
+            $conta->tradutora = $conta->codigo;
+            if ($conta->id_pai > 0) {
+                $find = $Contas->get($conta->id_pai);
+                $conta->tradutora = $find->codigo . $conta->codigo;
+            }
+            $find = $Contas->find()->where(['tradutora' => $conta->tradutora])->first();
+            if (empty($find)) {
+                if ($this->Contas->save($conta)) {
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    return $this->redirect(['action' => 'index', '?' => ['tipo' => $this->request->query('tipo')]]);
+                } else {
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
+                }
             } else {
-                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
+                $this->Flash->error(__('Erro ao Salvar o Registro. Código da Conta com a Sub-Conta informada já existe.'));
             }
         }
         $this->set(compact('conta'));

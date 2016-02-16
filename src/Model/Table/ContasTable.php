@@ -89,14 +89,4 @@ class ContasTable extends Table {
         return $validator;
     }
 
-    public function beforeSave(\Cake\Event\Event $event, \Cake\ORM\Entity $entity) {
-        $Contas = \Cake\ORM\TableRegistry::get('Contas');
-        $entity->tradutora = $entity->codigo;
-        if ($entity->id_pai > 0) {
-            $find = $Contas->get($entity->id_pai);
-            $entity->tradutora = $find->codigo . $entity->codigo;
-        }
-        return true;
-    }
-
 }
