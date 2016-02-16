@@ -68,6 +68,7 @@ class ContasTable extends Table {
                 ->allowEmpty('id', 'create');
 
         $validator
+                ->add('codigo', 'valid', ['rule' => 'numeric'])
                 ->allowEmpty('codigo');
 
         $validator
@@ -93,7 +94,7 @@ class ContasTable extends Table {
         $entity->tradutora = $entity->codigo;
         if ($entity->id_pai > 0) {
             $find = $Contas->get($entity->id_pai);
-            $entity->tradutora = $entity->codigo . $find->codigo;
+            $entity->tradutora = $find->codigo . $entity->codigo;
         }
         return true;
     }

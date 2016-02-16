@@ -22,7 +22,7 @@ class ContasController extends AppController {
      * @return void
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->contain('SubContas');
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order(['Contas.tradutora' => 'ASC'])->contain('SubContas');
         $this->set('contas', $this->paginate($query));
         $this->set('_serialize', ['contas']);
         $this->set('tipo', $this->request->query('tipo') == 1 ? 'Credito' : 'Debito');
@@ -60,7 +60,7 @@ class ContasController extends AppController {
             }
         }
         $this->set(compact('conta'));
-        $this->set('contas', $this->Contas->find()->where(['tipo' => $this->request->query('tipo')])->order(['id_pai' => 'asc'])->all());
+        $this->set('contas', $this->Contas->find()->select(['id', 'nome', 'tradutora'])->where(['tipo' => $this->request->query('tipo'), 'id_pai' => '0'])->order(['id_pai' => 'asc'])->all());
         $this->set('_serialize', ['conta']);
         $this->set('tipo', $this->request->query('tipo') == 1 ? 'Credito' : 'Debito');
     }
@@ -85,8 +85,6 @@ class ContasController extends AppController {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
-        $this->set(compact('conta'));
-        $this->set('contas', $this->Contas->find()->where(['tipo' => $this->request->query('tipo')])->order(['id_pai' => 'asc'])->all());
         $this->set(compact('conta'));
         $this->set('_serialize', ['conta']);
         $this->set('tipo', $this->request->query('tipo') == 1 ? 'Credito' : 'Debito');
