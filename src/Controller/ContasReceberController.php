@@ -61,7 +61,7 @@ class ContasReceberController extends AppController {
         $empresas = $this->ContasReceber->Empresas->find('list');
         $pessoas = $this->ContasReceber->Pessoas->find('list');
         $bancos = $this->ContasReceber->Bancos->find('list');
-        $tradutoras = $this->ContasReceber->Tradutoras->find('list');
+        //$tradutoras = $this->ContasReceber->Tradutoras->find('list');
         $this->set(compact('contasReceber', 'empresas', 'pessoas', 'bancos', 'tradutoras'));
         $this->set('_serialize', ['contasReceber']);
     }
@@ -89,7 +89,7 @@ class ContasReceberController extends AppController {
         $empresas = $this->ContasReceber->Empresas->find('list');
         $pessoas = $this->ContasReceber->Pessoas->find('list');
         $bancos = $this->ContasReceber->Bancos->find('list');
-        $tradutoras = $this->ContasReceber->Tradutoras->find('list');
+        //$tradutoras = $this->ContasReceber->Tradutoras->find('list');
         $this->set(compact('contasReceber', 'empresas', 'pessoas', 'bancos', 'tradutoras'));
         $this->set('_serialize', ['contasReceber']);
     }

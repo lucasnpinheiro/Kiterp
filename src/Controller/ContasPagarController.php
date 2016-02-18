@@ -61,7 +61,7 @@ class ContasPagarController extends AppController {
         $empresas = $this->ContasPagar->Empresas->find('list');
         $pessoas = $this->ContasPagar->Pessoas->find('list');
         $bancos = $this->ContasPagar->Bancos->find('list');
-        $tradutoras = $this->ContasPagar->Tradutoras->find('list');
+        //$tradutoras = $this->ContasPagar->Tradutoras->find('list');
         $this->set(compact('contasPagar', 'empresas', 'pessoas', 'bancos', 'tradutoras'));
         $this->set('_serialize', ['contasPagar']);
     }
@@ -89,7 +89,7 @@ class ContasPagarController extends AppController {
         $empresas = $this->ContasPagar->Empresas->find('list');
         $pessoas = $this->ContasPagar->Pessoas->find('list');
         $bancos = $this->ContasPagar->Bancos->find('list');
-        $tradutoras = $this->ContasPagar->Tradutoras->find('list');
+        //$tradutoras = $this->ContasPagar->Tradutoras->find('list');
         $this->set(compact('contasPagar', 'empresas', 'pessoas', 'bancos', 'tradutoras'));
         $this->set('_serialize', ['contasPagar']);
     }

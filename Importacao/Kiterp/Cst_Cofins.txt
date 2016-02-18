@@ -1,0 +1,34 @@
+CODIGO|NOME
+01|Operacao Tributavel com Aiquota Basica
+02|Operacao Tributavel com Aiquota Diferenciada
+03|Operacao Tributavel com Aiquota por Unidade de Medida de Produto
+04|Operacao Tributavel Monofasica   Revenda a Aiquota Zero
+05|Operacao Tributavel por Substituicao Tributaria
+06|Operacao Tributavel a Aiquota Zero
+07|Operacao Isenta da Contribuicao
+08|Operacao sem Incidencia da Contribuicao
+09|Operacao com Suspenscao da Contribuicao
+49|Outras Operacoes de Saida
+50|Operacao com Direito a Credito Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+51|Operacao com Direito a Credito Vinculada Exclusivamente a Receita Nao Tributada no Mercado Interno
+52|Operacao com Direito a Credito Vinculada Exclusivamente a Receita de Exportacao
+53|Operacao com Direito a Credito Vinculada a Receitas Tributadas e Nao Tributadas no Mercado Interno
+54|Operacao com Direito a Credito Vinculada a Receitas Tributadas no Mercado Interno e de Exportacao
+55|Operacao com Direito a Credito Vinculada a Receitas Nao Tributadas no Mercado Interno e de Exportacao
+56|Operacao com Direito a Credito Vinculada a Receitas Tributadas e Nao Tributadas no Mercado Interno, e de Exportacao
+60|Credito Presumido Operacao de Aquisicao Vinculada Exclusivamente a Receita Tributada no Mercado Interno
+61|Credito Presumido Operacao de Aquisicao Vinculada Exclusivamente a Receita Nao Tributada no Mercado Interno
+62|Credito Presumido Operacao de Aquisicao Vinculada Exclusivamente a Receita de Exportacao
+63|Credito Presumido Operacao de Aquisicao Vinculada a Receitas Tributadas e Nao Tributadas no Mercado Interno
+64|Credito Presumido Operacao de Aquisicao Vinculada a Receitas Tributadas no Mercado Interno e de Exportacao
+65|Credito Presumido Operacao de Aquisicao Vinculada a Receitas Nao Tributadas no Mercado Interno e de Exportacao
+66|Credito Presumido Operacao de Aquisicao Vinculada a Receitas Tributadas e Nao Tributadas no Mercado Interno, e de Exportacao
+67|Credito Presumido Outras Operacoes
+70|Operacao de Aquisicao sem Direito a Credito
+71|Operacao de Aquisicao com IseNao
+72|Operacao de Aquisicao com Suspenscao
+73|Operacao de Aquisicao a Aiquota Zero
+74|Operacao de Aquisicao sem Incidencia da Contribuicao
+75|Operacao de Aquisicao por Substituicao Tributaria
+98|Outras Operacoes de Entrada
+99|Outras Operacoes
