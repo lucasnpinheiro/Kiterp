@@ -194,6 +194,7 @@ class PedidosController extends AppController {
                 $this->loadModel('FormasPagamentos');
                 $banco = $this->Bancos->find()->first();
                 $parcelas = json_decode($this->request->data('parcelas'), true);
+                
                 if (!empty($this->request->data('opcoes.1.valor'))) {
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 1])->first();
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.1.valor')));
@@ -215,6 +216,7 @@ class PedidosController extends AppController {
                     $this->ContasReceber->save($contasReceber);
                     array_shift($parcelas);
                 }
+                
                 if (!empty($this->request->data('opcoes.2.valor'))) {
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 2])->first();
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.2.valor')));
@@ -239,6 +241,7 @@ class PedidosController extends AppController {
                         array_shift($parcelas);
                     }
                 }
+                
                 if (!empty($this->request->data('opcoes.3.valor'))) {
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['id' => (int) $this->request->data('opcoes.3.tipo')])->first();
                     $taxas = json_decode($formasPagamentos->valor_taxas, true);

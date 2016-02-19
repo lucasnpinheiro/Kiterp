@@ -119,13 +119,27 @@ $parcelas[0]['valor'] += ($pedido->valor_total - $diferenca);
                     $_formasPagamentos[$value->grupo][$value->id] = $value->nome;
                 }
 
-                echo $this->Form->moeda('opcoes.1.valor', ['class' => 'forma-selecionada', 'label' => 'Dinheiro', 'div' => ['class' => 'col-xs-12 col-md-12']]);
-                echo $this->Form->moeda('opcoes.2.valor', ['class' => 'forma-selecionada', 'label' => 'Cheque', 'empty' => 'Selecione uma Opções', 'options' => $value, 'div' => ['class' => 'col-xs-12 col-md-8']]);
-                echo $this->Form->numero('opcoes.2.parcelas', ['label' => 'Quantidade', 'div' => ['class' => 'col-xs-12 col-md-4']]);
-                echo $this->Form->input('opcoes.3.tipo', ['class' => 'forma-selecionada', 'label' => 'Cartão', 'empty' => 'Selecione uma Opções', 'options' => $_formasPagamentos[3], 'div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->moeda('opcoes.3.valor', ['class' => 'forma-selecionada', 'label' => 'Valor', 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->numero('opcoes.3.parcelas', ['label' => 'Quantidade', 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->moeda('opcoes.4.valor', ['class' => 'forma-selecionada', 'label' => 'Prazo', 'empty' => 'Selecione uma Opções', 'options' => $value, 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                if (!empty($_formasPagamentos[1])) {
+                    echo $this->Form->moeda('opcoes.1.valor', ['class' => 'forma-selecionada', 'label' => 'Dinheiro', 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                }
+                if (!empty($_formasPagamentos[2])) {
+                    echo $this->Form->moeda('opcoes.2.valor', ['class' => 'forma-selecionada', 'label' => 'Cheque', 'empty' => 'Selecione uma Opções', 'options' => $value, 'div' => ['class' => 'col-xs-12 col-md-8']]);
+                    echo $this->Form->numero('opcoes.2.parcelas', ['label' => 'Quantidade', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                }
+                if (!empty($_formasPagamentos[3])) {
+                    echo $this->Form->input('opcoes.3.tipo', ['class' => 'forma-selecionada', 'label' => 'Cartão', 'empty' => 'Selecione uma Opções', 'options' => $_formasPagamentos[3], 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                    echo $this->Form->moeda('opcoes.3.valor', ['class' => 'forma-selecionada', 'label' => 'Valor', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                    echo $this->Form->numero('opcoes.3.parcelas', ['label' => 'Quantidade', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                }
+                if (!empty($_formasPagamentos[4])) {
+                    if (count($_formasPagamentos[4]) > 1) {
+                        echo $this->Form->input('opcoes.4.tipo', ['class' => 'forma-selecionada', 'label' => 'Prazo', 'empty' => 'Selecione uma Opções', 'options' => $_formasPagamentos[4], 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                        echo $this->Form->moeda('opcoes.4.valor', ['class' => 'forma-selecionada', 'label' => 'Valor', 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                    } else {
+                        echo $this->Form->moeda('opcoes.4.valor', ['class' => 'forma-selecionada', 'label' => 'Prazo', 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                    }
+                }
+
 
                 echo $this->Form->button(__('Receber'), ['bootstrap-type' => 'primary', 'type' => 'submit', 'icon' => 'money', 'style' => 'display:none;', 'class' => 'col-lg-12 bt-pagar']);
                 ?>
@@ -146,7 +160,7 @@ $parcelas[0]['valor'] += ($pedido->valor_total - $diferenca);
                     echo $this->Form->input('parcelas.' . $key . '.documento', ['disabled' => true, 'label' => false, 'value' => $pedido->id, 'div' => ['class' => 'col-xs-12 col-md-3']]);
                     echo $this->Form->input('parcelas.' . $key . '.titulo', ['disabled' => true, 'label' => false, 'value' => $value['titulo'], 'div' => ['class' => 'col-xs-12 col-md-2']]);
                     echo $this->Form->data('parcelas.' . $key . '.data', ['label' => false, 'value' => date('d/m/Y', strtotime($value['data'])), 'div' => ['class' => 'col-xs-12 col-md-3'], 'append' => false]);
-                    echo $this->Form->moeda('parcelas.' . $key . '.valor', ['class'=>'valor-parcelas-condicoes','label' => false, 'value' => $this->Html->moeda($value['valor']), 'div' => ['class' => 'col-xs-12 col-md-4'], 'append' => false]);
+                    echo $this->Form->moeda('parcelas.' . $key . '.valor', ['class' => 'valor-parcelas-condicoes', 'label' => false, 'value' => $this->Html->moeda($value['valor']), 'div' => ['class' => 'col-xs-12 col-md-4'], 'append' => false]);
                 }
                 ?>
 

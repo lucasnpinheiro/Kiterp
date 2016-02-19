@@ -1,0 +1,58 @@
+CODIGO |        NOME                     | TIPO |  SUBCONTA |  TRADUTORA
+10     |        RECEITAS C/VENDAS        |   C  |     10    |     10
+10     |        VENDAS A VISTA           |   C  |      1    |    101
+10     |        VENDAS A PRAZO           |   C  |      2    |    102
+10     |        VENDAS NO CHEQUE         |   C  |      3    |    103
+10     |        VENDAS NO CARTAO         |   C  |      4    |    104
+50     |        COMPRAS DIVERSAS         |   D  |     50    |     50
+50     |        COMPRAS A VISTA          |   D  |      1    |    501
+50     |        COMPRAS A PRAZO          |   D  |      2    |    502
+51     |        PAGTO FORNECEDORES       |   D  |     51    |     51
+51     |        PAGTO FORNECEDORES GERAL |   D  |      1    |    511
+51     |        PAGTO FORNECEDORES ATRASO|   D  |      2    |    512
+52     |        DESPESAS ADMINISTRATIVAS |   D  |     52    |     52
+52     |        ALUGUEL                  |   D  |      1    |    521
+52     |        TELEFONE                 |   D  |      2    |    522
+52     |        LUZ                      |   D  |      3    |    523
+52     |        AGUA                     |   D  |      4    |    524
+52     |        CONTADOR                 |   D  |      5    |    525
+52     |        MATERIAL DE LIMPEZA      |   D  |      6    |    526
+52     |        INFORMATICA              |   D  |      7    |    527
+53     |        DESPESAS COM FUNCIONARIOS|   D  |     53    |     53
+53     |        SALARIO                  |   D  |      1    |    531
+53     |        ADIANTAMENTO DE SAL      |   D  |      2    |    532
+53     |        13* SALARIO              |   D  |      3    |    533
+53     |        FERIAS                   |   D  |      4    |    534
+53     |        CONVENIO GILVAN          |   D  |      5    |    535
+53     |        CONVENIO GILSON          |   D  |      6    |    536
+53     |        SUL AMERICA PATRICIA     |   D  |      7    |    537
+53     |        CONSORCIO SANTA EMILIA   |   D  |      8    |    538
+53     |        IPTU                     |   D  |      9    |    539
+53     |        FACULDADE SIMONE         |   D  |     10    |   5310
+54     |        DESPESAS COM IMPOSTOS    |   D  |     54    |     54
+54     |        ICMS                     |   D  |      1    |    541
+54     |        SIMPLES                  |   D  |      2    |    542
+54     |        GPS GUIA PREV. SOCIAL    |   D  |      3    |    543
+54     |        SINDICATO                |   D  |      4    |    544
+54     |        PARCTO. SIMPLES          |   D  |      5    |    545
+54     |        GFIPE-FGTS               |   D  |      6    |    546
+55     |        DESPESAS BANCARIAS       |   D  |     55    |     55
+55     |        TARIFA DE REGISTRO       |   D  |      1    |    551
+55     |        TARIFA TALAO CHEQUES     |   D  |      2    |    552
+55     |        TARIFA CPMF              |   D  |      3    |    553
+55     |        TARIFAS DIVERSAS         |   D  |      4    |    554
+55     |        TITULO CAPITALIZACAO     |   D  |      5    |    555
+56     |        DESPESAS COM TRANSPORTES |   D  |     56    |     56
+56     |        TRANSPORTADORA           |   D  |      1    |    561
+56     |        GASOLINA                 |   D  |      2    |    562
+56     |        IPVA                     |   D  |      3    |    563
+56     |        LICENCA ANUAL            |   D  |      4    |    564
+56     |        SEGURO                   |   D  |      5    |    565
+56     |        MANUTENCAO               |   D  |      6    |    566
+56     |        SEGURO CARRO GILSON      |   D  |      7    |    567
+57     |        DESPESA COM MARKETING    |   D  |     57    |     57
+57     |        PROPAGANDA ESCRITA       |   D  |      1    |    571
+58     |        RETIRADAS                |   D  |     58    |     58
+58     |        CONDOMINIO/GILSON        |   D  |      1    |    581
+58     |        CONDOMINIO/GILVAN        |   D  |      2    |    582
+58     |        CPFL/SITIO               |   D  |      3    |    583
