@@ -207,8 +207,8 @@ return [
              */
             //'port' => 'nonstandard_port_number',
             'username' => 'root',
-            //'password' => '1234',
             'password' => '',
+            //'password' => '',
             'database' => 'kiterp',
             'encoding' => 'utf8',
             'timezone' => 'UTC',

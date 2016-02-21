@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Table;
 
 use App\Model\Entity\ContasReceber;
@@ -8,7 +9,6 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Search\Manager;
 
-
 /**
  * ContasReceber Model
  *
@@ -17,8 +17,7 @@ use Search\Manager;
  * @property \Cake\ORM\Association\BelongsTo $Bancos
  * @property \Cake\ORM\Association\BelongsTo $Tradutoras
  */
-class ContasReceberTable extends Table
-{
+class ContasReceberTable extends Table {
 
     /**
      * Initialize method
@@ -26,8 +25,7 @@ class ContasReceberTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('contas_receber');
@@ -62,16 +60,15 @@ class ContasReceberTable extends Table
         $c = $this->schema()->columns();
         foreach ($c as $key => $value) {
             $t = $this->schema()->columnType($value);
-            if ($t != 'string' AND $t != 'text') {
+            if ($t != 'string' AND $t != 'text' AND $t != 'date' AND $t != 'datetime') {
                 $search->value($value, ['field' => $this->aliasField($value)]);
             } else {
                 $search->like($value, ['before' => true, 'after' => true, 'field' => $this->aliasField($value)]);
             }
         }
-
         return $search;
     }
-    
+
     /**
      * Returns a rules checker object that will be used for validating
      * application integrity.
@@ -79,12 +76,12 @@ class ContasReceberTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         //$rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
         //$rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
         //$rules->add($rules->existsIn(['banco_id'], 'Bancos'));
         //$rules->add($rules->existsIn(['tradutora_id'], 'Tradutoras'));
         return $rules;
     }
+
 }

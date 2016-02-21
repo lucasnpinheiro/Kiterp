@@ -19,7 +19,6 @@ $this->Html->addCrumb('Consultar', null);
                     ]);
                     echo $this->Form->input('codigo', ['label' => false, 'placeholder' => 'Código']);
                     echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
-                    echo $this->Form->input('tipo', ['label' => false, 'placeholder' => 'Tipo']);
                     echo $this->Form->input('tradutora', ['label' => false, 'placeholder' => 'Tradutora']);
                     echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();

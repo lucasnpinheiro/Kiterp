@@ -152,30 +152,24 @@ class PedidosTable extends Table {
         $ProdutosValores = TableRegistry::get('ProdutosValores');
         $ProdutosKits = TableRegistry::get('ProdutosKits');
         $PedidosItens = TableRegistry::get('PedidosItens');
-        $PedidosFormasPagamentos = TableRegistry::get('PedidosFormasPagamentos');
         if ($entity->status === 3) {
-            /*foreach ($entity->opcoes as $key => $value) {
-                $formas = $PedidosFormasPagamentos->newEntity();
-                $formas->pedido_id = $entity->id;
-                $formas->formas_pagamento_id = $key;
-                $formas->valor = str_replace(',', '.', str_replace('.', '', $value));
-                $PedidosFormasPagamentos->save($formas);
-            }*/
             $find = $PedidosItens->find()->where(['pedido_id' => $entity->id])->all();
             foreach ($find as $key => $value) {
                 $prod = $ProdutosValores->find()->where(['produto_id' => $value->produto_id, 'empresa_id' => $entity->empresa_id])->contain('Produtos')->first();
-                if ($prod->produto_kit == 1) {
-                    $prodk = $ProdutosKits->find()->where(['kit_id' => $value->produto_id])->contain('Produtos')->all();
-                    if (!empty($prodk)) {
-                        foreach ($prodk as $kkey => $kvalue) {
-                            $prodkk = $ProdutosValores->find()->where(['produto_id' => $kvalue->produto_id, 'empresa_id' => $entity->empresa_id])->contain('Produtos')->first();
-                            $prodkk->estoque_atual = ((float) $prodkk->estoque_atual - ((float) $kvalue->qtde * (float) $value->qtde));
-                            $ProdutosValores->save($prodkk);
+                if (!empty($prod)) {
+                    if ($prod->produto_kit == 1) {
+                        $prodk = $ProdutosKits->find()->where(['kit_id' => $value->produto_id])->contain('Produtos')->all();
+                        if (!empty($prodk)) {
+                            foreach ($prodk as $kkey => $kvalue) {
+                                $prodkk = $ProdutosValores->find()->where(['produto_id' => $kvalue->produto_id, 'empresa_id' => $entity->empresa_id])->contain('Produtos')->first();
+                                $prodkk->estoque_atual = ((float) $prodkk->estoque_atual - ((float) $kvalue->qtde * (float) $value->qtde));
+                                $ProdutosValores->save($prodkk);
+                            }
                         }
+                    } else {
+                        $prod->estoque_atual = ((float) $prod->estoque_atual - (float) $value->qtde);
+                        $ProdutosValores->save($prod);
                     }
-                } else {
-                    $prod->estoque_atual = ((float) $prod->estoque_atual - (float) $value->qtde);
-                    $ProdutosValores->save($prod);
                 }
             }
         }

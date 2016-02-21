@@ -194,7 +194,7 @@ class PedidosController extends AppController {
                 $this->loadModel('FormasPagamentos');
                 $banco = $this->Bancos->find()->first();
                 $parcelas = json_decode($this->request->data('parcelas'), true);
-                
+
                 if (!empty($this->request->data('opcoes.1.valor'))) {
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 1])->first();
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.1.valor')));
@@ -216,9 +216,13 @@ class PedidosController extends AppController {
                     $this->ContasReceber->save($contasReceber);
                     array_shift($parcelas);
                 }
-                
+
                 if (!empty($this->request->data('opcoes.2.valor'))) {
-                    $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 2])->first();
+                    if (!empty($this->request->data('opcoes.2.tipo'))) {
+                        $formasPagamentos = $this->FormasPagamentos->find()->where(['id' => (int) $this->request->data('opcoes.2.tipo')])->first();
+                    } else {
+                        $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 2])->first();
+                    }
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.2.valor')));
                     $valor = $valor / (int) $this->request->data('opcoes.2.parcelas');
                     for ($i = 0; $i < (int) $this->request->data('opcoes.2.parcelas'); $i++) {
@@ -241,7 +245,7 @@ class PedidosController extends AppController {
                         array_shift($parcelas);
                     }
                 }
-                
+
                 if (!empty($this->request->data('opcoes.3.valor'))) {
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['id' => (int) $this->request->data('opcoes.3.tipo')])->first();
                     $taxas = json_decode($formasPagamentos->valor_taxas, true);
@@ -278,32 +282,36 @@ class PedidosController extends AppController {
                     }
                 }
 
-                if (!empty($parcelas)) {
-                    $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 4])->first();
-                    foreach ($parcelas as $key => $value) {
-                        $valor = (float) str_replace(',', '.', str_replace(array('.', 'R$ '), '', $value['valor']));
-                        $contasReceber = $this->ContasReceber->newEntity();
-                        $contasReceber->empresa_id = $pedido->empresa_id;
-                        $contasReceber->numero_documento = $value['titulo'];
-                        $contasReceber->data_vencimento = $value['data'];
-                        $contasReceber->valor_documento = $valor;
-                        $contasReceber->pessoa_id = $pedido->pessoa_id;
-                        $contasReceber->banco_id = $banco->id;
-                        $contasReceber->tradutora_id = 3;
-                        $contasReceber->status = 1;
-                        $contasReceber->data_recebimento = null;
-                        $contasReceber->valor_recebimento = $valor;
-                        $contasReceber->numero_pedido = $pedido->id;
-                        $contasReceber->valor_desconto = $diferenca;
-                        $contasReceber->valor_liquido = $desconto;
-                        $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
-                        $contasReceber->parcelas = (int) $key;
-                        $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
-                        $this->ContasReceber->save($contasReceber);
+                if (!empty($this->request->data('opcoes.4.valor'))) {
+                    if (!empty($parcelas)) {
+                        $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 4])->first();
+                        foreach ($parcelas as $key => $value) {
+                            $valor = (float) str_replace(',', '.', str_replace(array('.', 'R$ '), '', $value['valor']));
+                            if ($valor > 0) {
+                                $contasReceber = $this->ContasReceber->newEntity();
+                                $contasReceber->empresa_id = $pedido->empresa_id;
+                                $contasReceber->numero_documento = $value['titulo'];
+                                $contasReceber->data_vencimento = $value['data'];
+                                $contasReceber->valor_documento = $valor;
+                                $contasReceber->pessoa_id = $pedido->pessoa_id;
+                                $contasReceber->banco_id = $banco->id;
+                                $contasReceber->tradutora_id = 3;
+                                $contasReceber->status = 1;
+                                $contasReceber->data_recebimento = null;
+                                $contasReceber->valor_recebimento = $valor;
+                                $contasReceber->numero_pedido = $pedido->id;
+                                $contasReceber->valor_desconto = 0;
+                                $contasReceber->valor_liquido = $valor;
+                                $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
+                                $contasReceber->parcelas = (int) $key;
+                                $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
+                                $this->ContasReceber->save($contasReceber);
+                            }
+                        }
                     }
                 }
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                return $this->redirect(['action' => 'index', '?' => ['status' => 2]]);
+                return $this->redirect(['action' => 'index', '?' => ['status' => [2, 7]]]);
             } else {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }

@@ -22,9 +22,17 @@ class ContasReceberController extends AppController {
      * @return void
      */
     public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query));
+        if (!empty($this->request->query('data_vencimento'))) {
+            $this->request->query['data_vencimento'] = implode('-', array_reverse(explode('/', $this->request->query('data_vencimento'))));
+        }
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order(['data_vencimento' => 'desc'])->contain(['Empresas' => function($q) {
+                return $q->contain('Pessoas');
+            }, 'Pessoas', 'Bancos']);
         $this->set('contasReceber', $this->paginate($query));
         $this->set('_serialize', ['contasReceber']);
+        $pessoas = $this->ContasReceber->Pessoas->find('list');
+        $bancos = $this->ContasReceber->Bancos->find('list');
+        $this->set(compact(['pessoas', 'bancos']));
     }
 
     /**
@@ -106,8 +114,7 @@ class ContasReceberController extends AppController {
         $contasReceber = $this->ContasReceber->get($id);
         if ($this->ContasReceber->delete($contasReceber)) {
             $this->Flash->success(__('Registro Excluido com Sucesso.'));
-        } else
-        {
+        } else {
             $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);

@@ -1,4 +1,6 @@
-<?= $this->Form->create($pedido, ['onSubmit' => 'return false;']) ?>
+<?=
+
+$this->Form->create($pedido, ['onSubmit' => 'return false;']) ?>
 <?php
 $parcelas = [];
 $condicoes = [];
@@ -10,19 +12,25 @@ if (count($condicoes) < 1) {
 }
 $total = number_format($pedido->valor_total / count($condicoes), 2);
 $diferenca = 0;
-foreach ($condicoes as $key => $value) {
-    if ($value > 1) {
-        $parcelas[$key]['data'] = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + $value));
-        $parcelas[$key]['valor'] = (float) $total;
-        $parcelas[$key]['titulo'] = str_pad($key + 1, 2, "0", STR_PAD_LEFT);
-    } else {
-        $parcelas[$key]['data'] = date('Y-m-d');
-        $parcelas[$key]['valor'] = (float) $total;
-        $parcelas[$key]['titulo'] = str_pad($key + 1, 2, "0", STR_PAD_LEFT);
-    }
+$i = 0;
+if($pedido->condicoes_pagamento->avista == 1){
+    $parcelas[$i]['data'] = date('Y-m-d');
+    $parcelas[$i]['valor'] = (float) $total;
+    $parcelas[$i]['titulo'] = str_pad($i + 1, 2, "0", STR_PAD_LEFT);
     $diferenca += $total;
+    $i++;
+    array_shift($condicoes);
 }
-$parcelas[0]['valor'] += ($pedido->valor_total - $diferenca);
+if(!empty($condicoes)){
+    foreach ($condicoes as $key => $value) {
+        $parcelas[$i]['data'] = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') + $value));
+        $parcelas[$i]['valor'] = (float) $total;
+        $parcelas[$i]['titulo'] = str_pad($i + 1, 2, "0", STR_PAD_LEFT);
+        $diferenca += $total;
+        $i++;
+    }
+}
+//$parcelas[0]['valor'] += ($pedido->valor_total - $diferenca);
 ?>
 <div class="row">
     <div class="col-lg-12">
@@ -127,13 +135,13 @@ $parcelas[0]['valor'] += ($pedido->valor_total - $diferenca);
                     echo $this->Form->numero('opcoes.2.parcelas', ['label' => 'Quantidade', 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 }
                 if (!empty($_formasPagamentos[3])) {
-                    echo $this->Form->input('opcoes.3.tipo', ['class' => 'forma-selecionada', 'label' => 'Cartão', 'empty' => 'Selecione uma Opções', 'options' => $_formasPagamentos[3], 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                    echo $this->Form->input('opcoes.3.tipo', ['class' => '', 'label' => 'Cartão', 'empty' => 'Selecione uma Opções', 'options' => $_formasPagamentos[3], 'div' => ['class' => 'col-xs-12 col-md-6']]);
                     echo $this->Form->moeda('opcoes.3.valor', ['class' => 'forma-selecionada', 'label' => 'Valor', 'div' => ['class' => 'col-xs-12 col-md-3']]);
                     echo $this->Form->numero('opcoes.3.parcelas', ['label' => 'Quantidade', 'div' => ['class' => 'col-xs-12 col-md-3']]);
                 }
                 if (!empty($_formasPagamentos[4])) {
                     if (count($_formasPagamentos[4]) > 1) {
-                        echo $this->Form->input('opcoes.4.tipo', ['class' => 'forma-selecionada', 'label' => 'Prazo', 'empty' => 'Selecione uma Opções', 'options' => $_formasPagamentos[4], 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                        echo $this->Form->input('opcoes.4.tipo', ['class' => '', 'label' => 'Prazo', 'empty' => 'Selecione uma Opções', 'options' => $_formasPagamentos[4], 'div' => ['class' => 'col-xs-12 col-md-6']]);
                         echo $this->Form->moeda('opcoes.4.valor', ['class' => 'forma-selecionada', 'label' => 'Valor', 'div' => ['class' => 'col-xs-12 col-md-6']]);
                     } else {
                         echo $this->Form->moeda('opcoes.4.valor', ['class' => 'forma-selecionada', 'label' => 'Prazo', 'div' => ['class' => 'col-xs-12 col-md-12']]);
@@ -187,13 +195,13 @@ $parcelas[0]['valor'] += ($pedido->valor_total - $diferenca);
                 <tbody>
                     <?php foreach ($pedido->pedidos_itens as $key => $value) {
                         ?>
-                        <tr>
-                            <td class="text-right"><?php echo $value->produto->barra; ?></td>
-                            <td style="text-align: left;"><?php echo $value->produto->nome; ?></td>
-                            <td><?php echo $value->qtde; ?></td>
-                            <td class="text-right"><?php echo $this->Html->moeda($value->venda); ?></td>
-                            <td class="text-right"><?php echo $this->Html->moeda($value->total); ?></td>
-                        </tr>
+                    <tr>
+                        <td class="text-right"><?php echo $value->produto->barra; ?></td>
+                        <td style="text-align: left;"><?php echo $value->produto->nome; ?></td>
+                        <td><?php echo $value->qtde; ?></td>
+                        <td class="text-right"><?php echo $this->Html->moeda($value->venda); ?></td>
+                        <td class="text-right"><?php echo $this->Html->moeda($value->total); ?></td>
+                    </tr>
                     <?php }
                     ?>
 

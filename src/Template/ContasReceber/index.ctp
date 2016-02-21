@@ -1,4 +1,5 @@
 <?php
+
 $this->assign('title', $title);
 $this->Html->addCrumb($this->fetch('title'), ['controller' => $this->request->params['controller'], 'action' => 'index']);
 $this->Html->addCrumb('Consultar', null);
@@ -17,11 +18,10 @@ $this->Html->addCrumb('Consultar', null);
                         'inline' => true,
                         'label' => false
                     ]);
-                    echo $this->Form->input('empresa_id', ['label' => false, 'placeholder' => 'Empresa']);
-                    echo $this->Form->input('numero_documento', ['label' => false, 'placeholder' => 'Número do Documento']);
-                    echo $this->Form->input('data_vencimento', ['label' => false, 'placeholder' => 'Data de Vencimento']);
-                    echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Cliente']);
-                    echo $this->Form->input('banco_id', ['label' => false, 'placeholder' => 'Banco']);
+                    echo $this->Form->numero('numero_documento', ['label' => false, 'placeholder' => 'Número do Documento']);
+                    echo $this->Form->data('data_vencimento', ['label' => false, 'placeholder' => 'Data de Vencimento']);
+                    echo $this->Form->input('pessoa_id', ['empty'=>'Selecione um Cliente','label' => false, 'placeholder' => 'Cliente']);
+                    echo $this->Form->input('banco_id', ['empty'=>'Selecione um Banco','label' => false, 'placeholder' => 'Banco']);
                     echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
@@ -31,33 +31,31 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('empresa_id') ?></th>
-                                <th><?= $this->Paginator->sort('numero_documento') ?></th>
-                                <th><?= $this->Paginator->sort('data_vencimento') ?></th>
-                                <th><?= $this->Paginator->sort('valor_documento') ?></th>
-                                <th><?= $this->Paginator->sort('pessoa_id') ?></th>
+                                <th><?= $this->Paginator->sort('numero_documento', 'Documento') ?></th>
+                                <th><?= $this->Paginator->sort('data_vencimento', 'Vencimento') ?></th>
+                                <th><?= $this->Paginator->sort('valor_documento', 'Valor') ?></th>
+                                <th><?= $this->Paginator->sort('pessoa_id', 'Cliente') ?></th>
                                 <th><?= $this->Paginator->sort('banco_id') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($contasReceber as $contasReceber): ?>
-                                <tr>
-                                    <td><?= $this->Number->format($contasReceber->id) ?></td>
-                                    <td><?= $this->Html->link($contasReceber->empresa->nome, ['controller' => 'Empresas', 'action' => 'edit', $contasReceber->empresa->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td><?= h($contasReceber->numero_documento) ?></td>
-                                    <td><?= h($contasReceber->data_vencimento) ?></td>
-                                    <td><?= $this->Number->format($contasReceber->valor_documento) ?></td>
-                                    <td><?= $this->Html->link($contasReceber->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $contasReceber->pessoa->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td><?= $this->Html->link($contasReceber->banco->nome, ['controller' => 'Bancos', 'action' => 'edit', $contasReceber->banco->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
+                            <tr>
+                                <td><?= $this->Html->link($contasReceber->empresa->pessoa->nome, ['controller' => 'Empresas', 'action' => 'edit', $contasReceber->empresa->id], ['icon' => 'external-link-square']) ?></td>
+                                <td><?= h($contasReceber->numero_documento) ?></td>
+                                <td><?= h($contasReceber->data_vencimento) ?></td>
+                                <td><?= $this->Html->moeda($contasReceber->valor_documento) ?></td>
+                                <td><?= $this->Html->link($contasReceber->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $contasReceber->pessoa->id], ['icon' => 'external-link-square']) ?></td>
+                                <td><?= $this->Html->link($contasReceber->banco->nome, ['controller' => 'Bancos', 'action' => 'edit', $contasReceber->banco->id], ['icon' => 'external-link-square']) ?></td>
+                                <td class="actions">
+                                    <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('Alterar', ['action' => 'edit', $contasReceber->id]) ?>
                                             <?= $this->Form->postLink('Excluir', ['action' => 'delete', $contasReceber->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $contasReceber->id)]) ?>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
