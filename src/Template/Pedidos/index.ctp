@@ -1,4 +1,5 @@
 <?php
+
 $this->assign('title', $title);
 $this->Html->addCrumb($this->fetch('title'), ['controller' => $this->request->params['controller'], 'action' => 'index']);
 $this->Html->addCrumb('Consultar', null);
@@ -18,12 +19,12 @@ $this->Html->addCrumb('Consultar', null);
                         'label' => false
                     ]);
 
-                    echo $this->Form->empresas('empresa_id', ['label' => false, 'placeholder' => 'Empresa']);
-                    echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Cliente', 'options' => $pessoas, 'empty' => 'Selecione um Cliente']);
-                    echo $this->Form->input('vendedor_id', ['label' => false, 'placeholder' => 'Vendedor', 'options' => $vendedors, 'empty' => 'Selecione um Vendedor']);
-                    echo $this->Form->statusPedido('status', ['label' => false, 'placeholder' => 'Situação']);
-                    echo $this->Form->data('data_pedido', ['label' => false, 'placeholder' => 'Data do Pedido']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->empresas('empresa_id', ['label' => false, 'placeholder' => 'Empresa','class'=>'input-sm']);
+                    echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Cliente', 'options' => $pessoas, 'empty' => 'Selecione um Cliente','class'=>'input-sm']);
+                    echo $this->Form->input('vendedor_id', ['label' => false, 'placeholder' => 'Vendedor', 'options' => $vendedors, 'empty' => 'Selecione um Vendedor','class'=>'input-sm']);
+                    echo $this->Form->statusPedido('status', ['label' => false, 'placeholder' => 'Situação','class'=>'input-sm']);
+                    echo $this->Form->data('data_pedido', ['label' => false, 'placeholder' => 'Data do Pedido','class'=>'input-sm']);
+                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search','class'=>'input-sm']);
                     echo $this->Form->end();
                     ?>
 
@@ -43,15 +44,15 @@ $this->Html->addCrumb('Consultar', null);
                         </thead>
                         <tbody>
                             <?php foreach ($pedidos as $pedido): ?>
-                                <tr>
-                                    <td><?= $this->Number->format($pedido->id) ?></td>
-                                    <td><?= $this->Html->link($pedido->empresa->pessoa->nome, ['controller' => 'Empresas', 'action' => 'edit', $pedido->empresa->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td><?= h($pedido->data_pedido) ?></td>
-                                    <td><?= $this->Html->statusPedido($pedido->status) ?></td>
-                                    <td><?= $this->Html->link($pedido->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $pedido->pessoa->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td><?= $this->Html->moeda($pedido->valor_total) ?></td>
-                                    <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
+                            <tr>
+                                <td><?= $this->Number->format($pedido->id) ?></td>
+                                <td><?= $this->Html->link($pedido->empresa->pessoa->nome, ['controller' => 'Empresas', 'action' => 'edit', $pedido->empresa->id], ['icon' => 'external-link-square']) ?></td>
+                                <td><?= h($pedido->data_pedido) ?></td>
+                                <td><?= $this->Html->statusPedido($pedido->status) ?></td>
+                                <td><?= $this->Html->link($pedido->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $pedido->pessoa->id], ['icon' => 'external-link-square']) ?></td>
+                                <td><?= $this->Html->moeda($pedido->valor_total) ?></td>
+                                <td class="actions">
+                                    <div class="btn-group" role="group" aria-label="">
                                             <?php
                                             if ($pedido->status == 1 OR $pedido->status == 4 OR $pedido->status == 2) {
                                                 echo $this->Html->link('Alterar', ['action' => 'edit', $pedido->id]);
@@ -61,9 +62,9 @@ $this->Html->addCrumb('Consultar', null);
                                             }
                                             ?>
                                             <?= $this->Form->postLink('Cancelar', ['action' => 'delete', $pedido->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $pedido->id)]) ?>
-                                        </div>
-                                    </td>
-                                </tr>
+                                    </div>
+                                </td>
+                            </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
