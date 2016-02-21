@@ -4,9 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "6a043f2cb222609cc625e4ab59a07c9a",
-    "content-hash": "5600c372b9863f97b689fc6e014505e8",
+    "hash": "8e601e6c0879c0b60ee462dc6d6b3f8a",
+    "content-hash": "1ba7a88fcae39aeafc65a8c5366db3ff",
     "packages": [
+        {
+            "name": "abeautifulsite/simpleimage",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/claviska/SimpleImage.git",
+                "reference": "6d5e941ad3e154f099b33bf522005b75df8268d1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/claviska/SimpleImage/zipball/6d5e941ad3e154f099b33bf522005b75df8268d1",
+                "reference": "6d5e941ad3e154f099b33bf522005b75df8268d1",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.5-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "abeautifulsite": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nazar Mokrynskyi",
+                    "email": "nazar@mokrynskyi.com",
+                    "homepage": "http://cleverstyle.org/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Cory LaViska",
+                    "homepage": "http://www.abeautifulsite.net/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PHP class that simplifies working with images",
+            "time": "2015-11-02 18:00:16"
+        },
         {
             "name": "aura/installer-default",
             "version": "1.0.0",
@@ -1306,6 +1355,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "abeautifulsite/simpleimage": 20,
         "psy/psysh": 0,
         "friendsofcake/search": 20
     },

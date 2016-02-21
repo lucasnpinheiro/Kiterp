@@ -40,7 +40,7 @@ $this->Html->addCrumb('Consultar', null);
                         <tbody>
                             <?php foreach ($produtos as $produto): ?>
                                 <tr>
-                                    <td><?= $this->Html->image('/ImagemProdutos/' . $produto->foto, ['style' => 'max-height: 50px;', 'class' => 'img-responsive img-thumbnail']) ?></td>
+                                    <td><?= $this->Html->image($produto->foto, ['style' => 'max-height: 50px;', 'class' => 'img-responsive img-thumbnail']) ?></td>
                                     <td><?= h($produto->barra) ?></td>
                                     <td><?= h($produto->nome) ?></td>
                                     <td><?= h($produto->unidade) ?></td>

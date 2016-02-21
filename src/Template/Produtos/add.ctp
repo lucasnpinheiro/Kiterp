@@ -13,8 +13,9 @@ $this->Html->addCrumb('Cadastrar', null);
                 <?= $this->Form->create($produto, ['type' => 'file']) ?>
                 <?php
                 echo $this->Form->input('barra', ['maxlength' => 14, 'div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->input('codigo_interno', ['disabled' => true, 'maxlength' => 14, 'div' => ['class' => 'col-xs-12 col-md-6']]);
                 echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('codigo_interno', ['disabled' => true, 'maxlength' => 14, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->status('status', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->input('unidade', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->input('grupo_id', ['empty' => 'Selecione um Grupo', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->simNao('produto_kit', ['value' => '0', 'label' => 'KIT', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);

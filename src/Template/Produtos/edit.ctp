@@ -13,13 +13,14 @@ $this->Html->addCrumb('Alterar', null);
                 <?= $this->Form->create($produto, ['type' => 'file']) ?>
                 <?php
                 echo $this->Form->input('barra', ['maxlength' => 14, 'div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->input('codigo_interno', ['disabled' => true, 'maxlength' => 14, 'div' => ['class' => 'col-xs-12 col-md-6']]);
                 echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->input('codigo_interno', ['disabled' => true, 'maxlength' => 14, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->status('status', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->input('unidade', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->input('grupo_id', ['empty' => 'Selecione um Grupo', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->simNao('produto_kit', ['label' => 'KIT', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->element('Produtos/valores');
-                echo $this->Form->fileUpload('foto', ['value' => ROOT . DS . 'webroot' . DS . 'ImagemProdutos' . DS . $produto->foto, 'type' => 'file', 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                echo $this->Form->fileUpload('foto', ['value' => ROOT . DS . 'webroot' . $produto->foto, 'type' => 'file', 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 echo $this->Form->input('descricao', ['label' => 'Descrição', 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 ?>
                 <div class="hr-line-dashed"></div>

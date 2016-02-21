@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -21,8 +22,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\NotaFiscalSaidasIten[] $nota_fiscal_saidas_itens
  * @property \App\Model\Entity\PedidosIten[] $pedidos_itens
  */
-class Produto extends Entity
-{
+class Produto extends Entity {
 
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
@@ -36,4 +36,14 @@ class Produto extends Entity
     protected $_accessible = [
         '*' => true,
     ];
+
+    protected function _getFoto($foto) {
+        $file = new \Cake\Filesystem\File(ROOT . DS . 'webroot' . $foto);
+        if ($file->exists()) {
+            $file->close();
+            return $foto;
+        }
+        return DS . 'ImagemProdutos' . DS . 'produto-sem-imagem.gif';
+    }
+
 }

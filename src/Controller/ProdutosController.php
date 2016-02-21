@@ -328,6 +328,14 @@ class ProdutosController extends AppController {
             $ext = explode('/', $this->request->data['foto']['type']);
             $file->copy(ROOT . DS . 'webroot' . DS . 'ImagemProdutos' . DS . $id . '.' . strtolower($ext[1]));
             $file->close();
+
+            try {
+                $img = new \abeautifulsite\SimpleImage(ROOT . DS . 'webroot' . DS . 'ImagemProdutos' . DS . $id . '.' . strtolower($ext[1]));
+                $img->auto_orient()->best_fit(500, 500)->save(ROOT . DS . 'webroot' . DS . 'ImagemProdutos' . DS . $id . '.' . strtolower($ext[1]));
+            } catch (Exception $e) {
+                echo 'Error: ' . $e->getMessage();
+            }
+
             return $id . '.' . strtolower($ext[1]);
         } else {
             return null;
