@@ -35,7 +35,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('qtde_dias') ?></th>
                                 <th><?= $this->Paginator->sort('qtde_taxas') ?></th>
                                 <th><?= $this->Paginator->sort('valor_taxas', 'Taxas') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>

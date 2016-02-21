@@ -36,7 +36,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('data_encerramento') ?></th>
                                 <th><?= $this->Paginator->sort('valor_inicial') ?></th>
                                 <th><?= $this->Paginator->sort('total_entradas') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>

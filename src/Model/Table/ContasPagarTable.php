@@ -9,7 +9,6 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Search\Manager;
 
-
 /**
  * ContasPagar Model
  *
@@ -18,8 +17,7 @@ use Search\Manager;
  * @property \Cake\ORM\Association\BelongsTo $Bancos
  * @property \Cake\ORM\Association\BelongsTo $Tradutoras
  */
-class ContasPagarTable extends Table
-{
+class ContasPagarTable extends Table {
 
     /**
      * Initialize method
@@ -27,8 +25,7 @@ class ContasPagarTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('contas_pagar');
@@ -49,7 +46,7 @@ class ContasPagarTable extends Table
         $this->belongsTo('Tradutoras', [
             'className' => 'Contas',
             'foreignKey' => 'tradutora_id',
-            'conditions' => ['Contas.tipo' => 2]
+            'conditions' => ['Tradutoras.tipo' => 2, 'Tradutoras.id_pai !=' => '0']
         ]);
         $this->addBehavior('Search.Search');
     }
@@ -79,8 +76,7 @@ class ContasPagarTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
                 ->add('id', 'valid', ['rule' => 'numeric'])
                 ->allowEmpty('id', 'create');
@@ -118,8 +114,7 @@ class ContasPagarTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
         $rules->add($rules->existsIn(['banco_id'], 'Bancos'));

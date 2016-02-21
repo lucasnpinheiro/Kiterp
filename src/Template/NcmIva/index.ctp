@@ -33,7 +33,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('icms_estadual_id', 'Estado') ?></th>
                                 <th><?= $this->Paginator->sort('iva', 'IVA') ?></th>
                                 <th><?= $this->Paginator->sort('perc_tributo', 'Tributo') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>

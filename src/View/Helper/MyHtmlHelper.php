@@ -28,9 +28,18 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
 
     public function status($id) {
         $r = [
-            0 => ['text' => __('Inativo'), 'class' => 'danger'],
-            1 => ['text' => __('Ativo'), 'class' => 'info'],
-            9 => ['text' => __('Excluido'), 'class' => 'success'],
+            0 => ['text' => __('Inativo'), 'class' => 'warning'],
+            1 => ['text' => __('Ativo'), 'class' => 'success'],
+            9 => ['text' => __('Excluido'), 'class' => 'danger'],
+        ];
+        return $this->label($r[$id]['text'], $r[$id]['class']);
+    }
+
+    public function statusContas($id) {
+        $r = [
+            1 => ['text' => __('Aberto'), 'class' => 'primary'],
+            2 => ['text' => __('baixado'), 'class' => 'success'],
+            3 => ['text' => __('Cancelado'), 'class' => 'danger'],
         ];
         return $this->label($r[$id]['text'], $r[$id]['class']);
     }
@@ -41,7 +50,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
             1 => ['text' => __('Aberto'), 'class' => 'default'],
             2 => ['text' => __('Emitido'), 'class' => 'info'],
             3 => ['text' => __('Recebido'), 'class' => 'primary'],
-            4 => ['text' => __('Orçamento'), 'class' => 'info'],
+            4 => ['text' => __('Orçamento'), 'class' => 'warning'],
             5 => ['text' => __('Nota Fiscal'), 'class' => 'success'],
             6 => ['text' => __('Cancelado'), 'class' => 'danger'],
             7 => ['text' => __('Em Recebimento'), 'class' => 'info'],

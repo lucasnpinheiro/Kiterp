@@ -32,7 +32,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('qtde_dias', 'Dias corridos') ?></th>
                                 <th><?= $this->Paginator->sort('avista', 'Entrada da primeira parcela') ?></th>
                                 <th><?= $this->Paginator->sort('parcelas') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>

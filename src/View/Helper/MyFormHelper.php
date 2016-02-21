@@ -100,6 +100,20 @@ class MyFormHelper extends BootstrapFormHelper {
         return $this->input($fieldName, $options);
     }
 
+    public function statusContas($fieldName, array $options = []) {
+        $options += [
+            'type' => 'select',
+            'options' => [
+                1 => __('Aberto'),
+                2 => __('baixado'),
+                3 => __('Cancelado'),
+            //9 => __('Excluido'),
+            ],
+            'empty' => __('Selecionar uma Situação')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
     public function tipoPessoa($fieldName, array $options = []) {
         $options += [
             'type' => 'select',

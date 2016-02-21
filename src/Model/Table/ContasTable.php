@@ -25,7 +25,7 @@ class ContasTable extends Table {
         parent::initialize($config);
 
         $this->table('contas');
-        $this->displayField('id');
+        $this->displayField('nome');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');

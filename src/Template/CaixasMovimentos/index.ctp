@@ -38,7 +38,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('tipo_lancamento') ?></th>
                                 <th><?= $this->Paginator->sort('valor') ?></th>
                                 <th><?= $this->Paginator->sort('modalidade') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>

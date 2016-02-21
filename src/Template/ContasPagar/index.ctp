@@ -17,10 +17,10 @@ $this->Html->addCrumb('Consultar', null);
                         'inline' => true,
                         'label' => false
                     ]);
-                    echo $this->Form->input('empresa_id', ['label' => false, 'placeholder' => 'Empresa']);
-                    echo $this->Form->input('numero_documento', ['label' => false, 'placeholder' => 'Número do Documento']);
-                    echo $this->Form->input('data_vencimento', ['label' => false, 'placeholder' => 'Data de Vencimento']);
-                    echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Cliente']);
+                    echo $this->Form->empresas('empresa_id', ['label' => false, 'placeholder' => 'Empresa']);
+                    echo $this->Form->numero('numero_documento', ['label' => false, 'placeholder' => 'Número do Documento']);
+                    echo $this->Form->data('data_vencimento', ['label' => false, 'placeholder' => 'Data de Vencimento']);
+                    echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Fornecedor']);
                     echo $this->Form->input('banco_id', ['label' => false, 'placeholder' => 'Banco']);
                     echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
@@ -31,26 +31,26 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('empresa_id') ?></th>
                                 <th><?= $this->Paginator->sort('numero_documento') ?></th>
                                 <th><?= $this->Paginator->sort('data_vencimento') ?></th>
                                 <th><?= $this->Paginator->sort('valor_documento') ?></th>
-                                <th><?= $this->Paginator->sort('pessoa_id') ?></th>
+                                <th><?= $this->Paginator->sort('pessoa_id', 'Fornecedor') ?></th>
                                 <th><?= $this->Paginator->sort('banco_id') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th><?= $this->Paginator->sort('status', 'Situação') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($contasPagar as $contasPagar): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($contasPagar->id) ?></td>
-                                    <td><?= $this->Html->link($contasPagar->empresa->nome, ['controller' => 'Empresas', 'action' => 'edit', $contasPagar->empresa->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($contasPagar->empresa->pessoa->nome, ['controller' => 'Empresas', 'action' => 'edit', $contasPagar->empresa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= h($contasPagar->numero_documento) ?></td>
                                     <td><?= h($contasPagar->data_vencimento) ?></td>
-                                    <td><?= $this->Number->format($contasPagar->valor_documento) ?></td>
+                                    <td><?= $this->Html->moeda($contasPagar->valor_documento) ?></td>
                                     <td><?= $this->Html->link($contasPagar->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $contasPagar->pessoa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Html->link($contasPagar->banco->nome, ['controller' => 'Bancos', 'action' => 'edit', $contasPagar->banco->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->statusContas($contasPagar->status) ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('Alterar', ['action' => 'edit', $contasPagar->id]) ?>

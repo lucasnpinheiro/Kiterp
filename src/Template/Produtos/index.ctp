@@ -34,7 +34,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('unidade') ?></th>
                                 <th><?= $this->Paginator->sort('grupo_id') ?></th>
                                 <th><?= $this->Paginator->sort('produto_kit') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>

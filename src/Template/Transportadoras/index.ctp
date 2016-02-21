@@ -33,7 +33,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('telefone1') ?></th>
                                 <th><?= $this->Paginator->sort('telefone2') ?></th>
                                 <th><?= $this->Paginator->sort('cnpj') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>

@@ -12,19 +12,28 @@ $this->Html->addCrumb('Alterar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($contasReceber) ?>
                 <?php
-                echo $this->Form->input('empresa_id', ['options' => $empresas, 'empty' => true]);
-                echo $this->Form->input('numero_documento');
-                echo $this->Form->input('data_vencimento', ['empty' => true]);
-                echo $this->Form->input('valor_documento');
-                echo $this->Form->input('pessoa_id', ['options' => $pessoas, 'empty' => true]);
-                echo $this->Form->input('banco_id', ['options' => $bancos, 'empty' => true]);
-                echo $this->Form->input('tradutora_id');
-                echo $this->Form->input('status');
-                echo $this->Form->input('data_recebimento', ['empty' => true]);
-                echo $this->Form->input('valor recebimento');
-                echo $this->Form->input('numero_pedido');
-                echo $this->Form->input('nota_fiscal');
-                echo $this->Form->input('serie');
+                echo $this->Form->empresas('empresa_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-8']]);
+                echo $this->Form->numero('numero_documento', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->data('data_vencimento', ['required' => true, 'empty' => true, 'value' => (!empty($contasReceber->data_vencimento) ? $contasReceber->data_vencimento->format('d/m/Y') : null ), 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->moeda('valor_documento', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('banco_id', ['required' => true, 'options' => $bancos, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('tradutora_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->statusContas('status', ['required' => true, 'label' => 'Situação', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->data('data_recebimento', ['required' => true, 'empty' => true, 'value' => (!empty($contasReceber->data_recebimento) ? $contasReceber->data_recebimento->format('d/m/Y') : null ), 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->moeda('valor_recebimento', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->moeda('valor_desconto', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->moeda('valor_liquido', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('formas_pagamento_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->numero('parcelas', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->numero('dias', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->numero('cheque_numero', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->numero('cheque_banco', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('cheque_emitente', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('cheque_destino', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('numero_pedido', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->numero('nota_fiscal', ['div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->input('serie', ['div' => ['class' => 'col-xs-12 col-md-4']]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

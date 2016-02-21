@@ -28,7 +28,7 @@ $this->Html->addCrumb('Consultar', null);
                         <thead>
                             <tr>
                                 <th><?= $this->Paginator->sort('nome') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>

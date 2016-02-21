@@ -38,15 +38,18 @@ class ContasReceberTable extends Table {
             'foreignKey' => 'empresa_id'
         ]);
         $this->belongsTo('Pessoas', [
-            'foreignKey' => 'pessoa_id'
+            'foreignKey' => 'pessoa_id',
         ]);
         $this->belongsTo('Bancos', [
             'foreignKey' => 'banco_id'
         ]);
+        $this->belongsTo('FormasPagamentos', [
+            'foreignKey' => 'formas_pagamento_id'
+        ]);
         $this->belongsTo('Tradutoras', [
             'className' => 'Contas',
             'foreignKey' => 'tradutora_id',
-            'conditions' => ['Contas.tipo' => 1]
+            'conditions' => ['Tradutoras.tipo' => 1, 'Tradutoras.id_pai !=' => '0']
         ]);
         $this->addBehavior('Search.Search');
     }

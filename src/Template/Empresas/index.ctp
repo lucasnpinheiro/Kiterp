@@ -34,7 +34,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('versao_sefaz') ?></th>
                                 <th><?= $this->Paginator->sort('perentual_tributo') ?></th>
                                 <th><?= $this->Paginator->sort('hora_tzd') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>

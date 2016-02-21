@@ -34,7 +34,7 @@ $this->Html->addCrumb('Consultar', null);
                                 <th><?= $this->Paginator->sort('tipo') ?></th>
                                 <th><?= $this->Paginator->sort('id_pai', 'Sub-Conta') ?></th>
                                 <th><?= $this->Paginator->sort('tradutora') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>
