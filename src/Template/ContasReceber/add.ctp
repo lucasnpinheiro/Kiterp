@@ -13,7 +13,7 @@ $this->Html->addCrumb('Cadastrar', null);
                 <?= $this->Form->create($contasReceber) ?>
                 <?php
                 echo $this->Form->empresas('empresa_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-8']]);
-                echo $this->Form->numero('numero_documento', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->numero('numero_documento', ['maxlength' => 45, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->Form->data('data_vencimento', ['required' => true, 'empty' => true, 'value' => (!empty($contasReceber->data_vencimento) ? $contasReceber->data_vencimento->format('d/m/Y') : null ), 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->Form->moeda('valor_documento', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 echo $this->Form->input('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);

@@ -213,6 +213,7 @@ class PedidosController extends AppController {
                     $contasReceber->valor_desconto = 0;
                     $contasReceber->valor_liquido = $valor;
                     $contasReceber->formas_pagamento_id = $formasPagamentos->id;
+                    $contasReceber->parcelas = 1;
                     $this->ContasReceber->save($contasReceber);
                     array_shift($parcelas);
                 }
@@ -241,6 +242,7 @@ class PedidosController extends AppController {
                         $contasReceber->valor_desconto = 0;
                         $contasReceber->valor_liquido = $valor;
                         $contasReceber->formas_pagamento_id = $formasPagamentos->id;
+                        $contasReceber->parcelas = (int) $i;
                         $this->ContasReceber->save($contasReceber);
                         array_shift($parcelas);
                     }
