@@ -239,7 +239,7 @@ class PedidosController extends AppController {
                         $contasReceber->tradutora_id = 4;
                         $contasReceber->status = 1;
                         $contasReceber->data_recebimento = null;
-                        $contasReceber->valor_recebimento = $valor;
+                        $contasReceber->valor_recebimento = 0;
                         $contasReceber->numero_pedido = $pedido->id;
                         $contasReceber->valor_desconto = 0;
                         $contasReceber->valor_liquido = $valor;
@@ -275,7 +275,7 @@ class PedidosController extends AppController {
                         $contasReceber->tradutora_id = 5;
                         $contasReceber->status = 1;
                         $contasReceber->data_recebimento = null;
-                        $contasReceber->valor_recebimento = $valor;
+                        $contasReceber->valor_recebimento = 0;
                         $contasReceber->numero_pedido = $pedido->id;
                         $contasReceber->valor_desconto = $diferenca;
                         $contasReceber->valor_liquido = $desconto;
@@ -304,7 +304,7 @@ class PedidosController extends AppController {
                                 $contasReceber->tradutora_id = 3;
                                 $contasReceber->status = 1;
                                 $contasReceber->data_recebimento = null;
-                                $contasReceber->valor_recebimento = $valor;
+                                $contasReceber->valor_recebimento = 0;
                                 $contasReceber->numero_pedido = $pedido->id;
                                 $contasReceber->valor_desconto = 0;
                                 $contasReceber->valor_liquido = $valor;
