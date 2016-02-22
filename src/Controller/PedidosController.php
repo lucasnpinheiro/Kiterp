@@ -293,7 +293,7 @@ class PedidosController extends AppController {
                         foreach ($parcelas as $key => $value) {
                             $valor = (float) str_replace(',', '.', str_replace(array('.', 'R$ '), '', $value['valor']));
                             if ($valor > 0) {
-                                $_parcela = $this->getParcelas($parcelas);
+                                //$_parcela = $this->getParcelas($parcelas);
                                 $contasReceber = $this->ContasReceber->newEntity();
                                 $contasReceber->empresa_id = $pedido->empresa_id;
                                 $contasReceber->numero_documento = $numero_documento;
@@ -309,7 +309,7 @@ class PedidosController extends AppController {
                                 $contasReceber->valor_desconto = 0;
                                 $contasReceber->valor_liquido = $valor;
                                 $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
-                                $contasReceber->parcelas = $_parcela['titulo'];
+                                $contasReceber->parcelas = $value['titulo'];
                                 $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
                                 $this->ContasReceber->save($contasReceber);
                             }
