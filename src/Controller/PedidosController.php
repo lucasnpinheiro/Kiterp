@@ -282,6 +282,7 @@ class PedidosController extends AppController {
                         $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
                         $contasReceber->parcelas = $_parcela['titulo'];
                         $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
+                        $contasReceber->taxa = $taxas[$i];
                         $this->ContasReceber->save($contasReceber);
                         array_shift($parcelas);
                     }

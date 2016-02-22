@@ -87,9 +87,13 @@ class ContasReceberController extends AppController {
                      */
                     public function edit($id = null) {
                         $contasReceber = $this->ContasReceber->get($id, [
-                            'contain' => []
+                            'contain' => ['FormasPagamentos']
                         ]);
+
                         if ($this->request->is(['patch', 'post', 'put'])) {
+                            if ($contasReceber->formas_pagamento->grupo != 3) {
+                                $this->request->data['valor_liquido'] = $this->request->data['valor_documento'];
+                            }
                             $contasReceber = $this->ContasReceber->patchEntity($contasReceber, $this->request->data);
                             if ($this->ContasReceber->save($contasReceber)) {
                                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
