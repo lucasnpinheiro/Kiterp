@@ -187,7 +187,7 @@ class PedidosController extends AppController {
             $this->request->data['parcelas'] = json_encode($this->request->data['parcelas']);
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
-$numero_documento = $pedido->id;
+                $numero_documento = $pedido->id;
                 $this->loadModel('ContasReceber');
                 $this->loadModel('Bancos');
                 $this->loadModel('FormasPagamentos');
@@ -196,6 +196,7 @@ $numero_documento = $pedido->id;
                 $parcelas = json_decode($this->request->data('parcelas'), true);
 
                 if (!empty($this->request->data('opcoes.1.valor'))) {
+                    $_parcela = $this->getParcelas($parcelas);
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 1])->first();
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.1.valor')));
                     $contasReceber = $this->ContasReceber->newEntity();
@@ -213,7 +214,7 @@ $numero_documento = $pedido->id;
                     $contasReceber->valor_desconto = 0;
                     $contasReceber->valor_liquido = $valor;
                     $contasReceber->formas_pagamento_id = $formasPagamentos->id;
-                    $contasReceber->parcelas = 1;
+                    $contasReceber->parcelas = $_parcela['titulo'];
                     $this->ContasReceber->save($contasReceber);
                     array_shift($parcelas);
                 }
@@ -227,6 +228,7 @@ $numero_documento = $pedido->id;
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.2.valor')));
                     $valor = $valor / (int) $this->request->data('opcoes.2.parcelas');
                     for ($i = 0; $i < (int) $this->request->data('opcoes.2.parcelas'); $i++) {
+                        $_parcela = $this->getParcelas($parcelas);
                         $contasReceber = $this->ContasReceber->newEntity();
                         $contasReceber->empresa_id = $pedido->empresa_id;
                         $contasReceber->numero_documento = $numero_documento;
@@ -242,7 +244,7 @@ $numero_documento = $pedido->id;
                         $contasReceber->valor_desconto = 0;
                         $contasReceber->valor_liquido = $valor;
                         $contasReceber->formas_pagamento_id = $formasPagamentos->id;
-                        $contasReceber->parcelas = (int) $i;
+                        $contasReceber->parcelas = $_parcela['titulo'];
                         $this->ContasReceber->save($contasReceber);
                         array_shift($parcelas);
                     }
@@ -254,6 +256,7 @@ $numero_documento = $pedido->id;
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.3.valor')));
                     $valor = $valor / (int) $this->request->data('opcoes.3.parcelas');
                     for ($i = 0; $i < (int) $this->request->data('opcoes.3.parcelas'); $i++) {
+                        $_parcela = $this->getParcelas($parcelas);
                         $desconto = $valor;
                         $diferenca = 0;
                         if (!empty($taxas[$i])) {
@@ -277,7 +280,7 @@ $numero_documento = $pedido->id;
                         $contasReceber->valor_desconto = $diferenca;
                         $contasReceber->valor_liquido = $desconto;
                         $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
-                        $contasReceber->parcelas = (int) $i;
+                        $contasReceber->parcelas = $_parcela['titulo'];
                         $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
                         $this->ContasReceber->save($contasReceber);
                         array_shift($parcelas);
@@ -290,6 +293,7 @@ $numero_documento = $pedido->id;
                         foreach ($parcelas as $key => $value) {
                             $valor = (float) str_replace(',', '.', str_replace(array('.', 'R$ '), '', $value['valor']));
                             if ($valor > 0) {
+                                $_parcela = $this->getParcelas($parcelas);
                                 $contasReceber = $this->ContasReceber->newEntity();
                                 $contasReceber->empresa_id = $pedido->empresa_id;
                                 $contasReceber->numero_documento = $numero_documento;
@@ -305,7 +309,7 @@ $numero_documento = $pedido->id;
                                 $contasReceber->valor_desconto = 0;
                                 $contasReceber->valor_liquido = $valor;
                                 $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
-                                $contasReceber->parcelas = (int) $key;
+                                $contasReceber->parcelas = $_parcela['titulo'];
                                 $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
                                 $this->ContasReceber->save($contasReceber);
                             }
@@ -326,6 +330,14 @@ $numero_documento = $pedido->id;
         $this->set('pedido', $pedido);
         $this->set('formasPagamentos', $formasPagamentos);
         $this->set('_serialize', ['pedido']);
+    }
+
+    private function getParcelas($parcelas) {
+        $chave = array_keys($parcelas);
+        if (!empty($chave)) {
+            return $parcelas[$chave[0]];
+        }
+        return null;
     }
 
     /**

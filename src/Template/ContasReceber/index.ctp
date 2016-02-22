@@ -31,7 +31,7 @@ $this->Html->addCrumb('Consultar', null);
                         <thead>
                             <tr>
                                 <th><?= $this->Paginator->sort('empresa_id') ?></th>
-                                <th><?= $this->Paginator->sort('numero_documento', 'Documento') ?></th>
+                                <th><?= $this->Paginator->sort('numero_documento', 'Doc./Parc.') ?></th>
                                 <th><?= $this->Paginator->sort('data_vencimento', 'Vencimento') ?></th>
                                 <th><?= $this->Paginator->sort('valor_documento', 'Valor') ?></th>
                                 <th><?= $this->Paginator->sort('pessoa_id', 'Cliente') ?></th>
@@ -44,7 +44,7 @@ $this->Html->addCrumb('Consultar', null);
                             <?php foreach ($contasReceber as $contasReceber): ?>
                                 <tr>
                                     <td><?= $this->Html->link($contasReceber->empresa->pessoa->nome, ['controller' => 'Empresas', 'action' => 'edit', $contasReceber->empresa->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td><?= h($contasReceber->numero_documento) ?></td>
+                                    <td><?= h($contasReceber->numero_documento) . '/' . h($contasReceber->parcelas) ?></td>
                                     <td><?= h($contasReceber->data_vencimento) ?></td>
                                     <td><?= $this->Html->moeda($contasReceber->valor_documento) ?></td>
                                     <td><?= $this->Html->link($contasReceber->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $contasReceber->pessoa->id], ['icon' => 'external-link-square']) ?></td>
