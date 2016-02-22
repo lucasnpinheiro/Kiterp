@@ -25,7 +25,7 @@ class ContasReceberController extends AppController {
         if (!empty($this->request->query('data_vencimento'))) {
             $this->request->query['data_vencimento'] = implode('-', array_reverse(explode('/', $this->request->query('data_vencimento'))));
         }
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order(['ContasReceber.status' => 'asc', 'ContasReceber.data_vencimento' => 'desc'])->contain(['FormasPagamentos', 'Empresas' => function($q) {
+        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))->order(['ContasReceber.status' => 'asc', 'ContasReceber.data_vencimento' => 'asc', 'ContasReceber.parcelas' => 'asc'])->contain(['FormasPagamentos', 'Empresas' => function($q) {
                 return $q->contain('Pessoas');
             }, 'Pessoas', 'Bancos']);
         $this->set('contasReceber', $this->paginate($query));
