@@ -38,12 +38,13 @@ class Produto extends Entity {
     ];
 
     protected function _getFoto($foto) {
-        $file = new \Cake\Filesystem\File(ROOT . DS . 'webroot' . $foto);
+        $directorio = str_replace(DS, '/', ROOT . DS . 'webroot');
+        $file = new \Cake\Filesystem\File($directorio . $foto);
         if ($file->exists()) {
             $file->close();
             return $foto;
         }
-        return DS . 'ImagemProdutos' . DS . 'produto-sem-imagem.gif';
+        return '/ImagemProdutos/produto-sem-imagem.gif';
     }
 
 }
