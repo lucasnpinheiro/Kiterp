@@ -187,7 +187,7 @@ class PedidosController extends AppController {
             $this->request->data['parcelas'] = json_encode($this->request->data['parcelas']);
             $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
             if ($this->Pedidos->save($pedido)) {
-
+$numero_documento = $pedido->id;
                 $this->loadModel('ContasReceber');
                 $this->loadModel('Bancos');
                 $this->loadModel('FormasPagamentos');
@@ -200,7 +200,7 @@ class PedidosController extends AppController {
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.1.valor')));
                     $contasReceber = $this->ContasReceber->newEntity();
                     $contasReceber->empresa_id = $pedido->empresa_id;
-                    $contasReceber->numero_documento = $pedido->id;
+                    $contasReceber->numero_documento = $numero_documento;
                     $contasReceber->data_vencimento = date('Y-m-d');
                     $contasReceber->valor_documento = $valor;
                     $contasReceber->pessoa_id = $pedido->pessoa_id;
@@ -229,7 +229,7 @@ class PedidosController extends AppController {
                     for ($i = 0; $i < (int) $this->request->data('opcoes.2.parcelas'); $i++) {
                         $contasReceber = $this->ContasReceber->newEntity();
                         $contasReceber->empresa_id = $pedido->empresa_id;
-                        $contasReceber->numero_documento = $pedido->id;
+                        $contasReceber->numero_documento = $numero_documento;
                         $contasReceber->data_vencimento = date('Y-m-d', mktime(0, 0, 0, date('m') + $i));
                         $contasReceber->valor_documento = $valor;
                         $contasReceber->pessoa_id = $pedido->pessoa_id;
@@ -264,7 +264,7 @@ class PedidosController extends AppController {
 
                         $contasReceber = $this->ContasReceber->newEntity();
                         $contasReceber->empresa_id = $pedido->empresa_id;
-                        $contasReceber->numero_documento = $pedido->id;
+                        $contasReceber->numero_documento = $numero_documento;
                         $contasReceber->data_vencimento = date('Y-m-d', mktime(0, 0, 0, date('m') + $i));
                         $contasReceber->valor_documento = $valor;
                         $contasReceber->pessoa_id = $pedido->pessoa_id;
@@ -292,7 +292,7 @@ class PedidosController extends AppController {
                             if ($valor > 0) {
                                 $contasReceber = $this->ContasReceber->newEntity();
                                 $contasReceber->empresa_id = $pedido->empresa_id;
-                                $contasReceber->numero_documento = $value['titulo'];
+                                $contasReceber->numero_documento = $numero_documento;
                                 $contasReceber->data_vencimento = $value['data'];
                                 $contasReceber->valor_documento = $valor;
                                 $contasReceber->pessoa_id = $pedido->pessoa_id;
