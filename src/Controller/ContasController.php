@@ -120,4 +120,20 @@ class ContasController extends AppController {
         return $this->redirect(['action' => 'index', '?' => ['tipo' => $this->request->query('tipo')]]);
     }
 
+    public function relatorio() {
+        $contas = $this->Contas->find()->order(['tipo' => 'asc'])->all();
+        $resutltado = [];
+        foreach ($contas as $key => $value) {
+            $resutltado[$value->tipo] = [];
+            $contasPrincipal = $this->Contas->find()->where(['id_pai' => '0', 'tipo' => $value->tipo])->all();
+            if (!empty($contasPrincipal)) {
+                foreach ($contasPrincipal as $k_p => $v_p) {
+                    $resutltado[$value->tipo][$v_p->id]['principal'] = $v_p;
+                    $resutltado[$value->tipo][$v_p->id]['sub_conta'] = $this->Contas->find()->where(['id_pai' => $v_p->id, 'tipo' => $value->tipo])->all();
+                }
+            }
+        }
+        $this->set('resutltado', $resutltado);
+    }
+
 }
