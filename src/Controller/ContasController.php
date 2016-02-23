@@ -121,7 +121,7 @@ class ContasController extends AppController {
     }
 
     public function relatorio() {
-        $contas = $this->Contas->find()->order(['tipo' => 'asc'])->all();
+        $contas = $this->Contas->find()->order(['tipo' => 'asc'])->group(['tipo'])->all();
         $resultado = [];
         foreach ($contas as $key => $value) {
             $resultado[$value->tipo] = [];
