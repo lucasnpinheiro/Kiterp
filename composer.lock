@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8e601e6c0879c0b60ee462dc6d6b3f8a",
-    "content-hash": "1ba7a88fcae39aeafc65a8c5366db3ff",
+    "hash": "bad2491678d6d6d721a5b6c27d6312f7",
+    "content-hash": "eb7909dc3db49e927ff5431991897c73",
     "packages": [
         {
             "name": "abeautifulsite/simpleimage",
@@ -177,16 +177,16 @@
         },
         {
             "name": "cakephp/cakephp",
-            "version": "3.2.2",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/cakephp.git",
-                "reference": "ef134e0691dd124ff4cd35747252ae1c9da77305"
+                "reference": "2c715472e57651b14538ace21b8f0de384a579cc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/ef134e0691dd124ff4cd35747252ae1c9da77305",
-                "reference": "ef134e0691dd124ff4cd35747252ae1c9da77305",
+                "url": "https://api.github.com/repos/cakephp/cakephp/zipball/2c715472e57651b14538ace21b8f0de384a579cc",
+                "reference": "2c715472e57651b14538ace21b8f0de384a579cc",
                 "shasum": ""
             },
             "require": {
@@ -215,6 +215,9 @@
                 "cakephp/cakephp-codesniffer": "dev-master",
                 "phpunit/phpunit": "*"
             },
+            "suggest": {
+                "ext-openssl": "To use Security::encrypt() or have secure CSRF token generation."
+            },
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -242,7 +245,7 @@
             "keywords": [
                 "framework"
             ],
-            "time": "2016-02-12 03:14:21"
+            "time": "2016-02-21 19:44:26"
         },
         {
             "name": "cakephp/chronos",
@@ -948,16 +951,16 @@
         },
         {
             "name": "friendsofcake/search",
-            "version": "dev-master",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfCake/search.git",
-                "reference": "a67c2ac4cbedde63c52d630bf451cacfed7933d5"
+                "reference": "055cddb21f4436b074c1895839097c106b827be9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfCake/search/zipball/a67c2ac4cbedde63c52d630bf451cacfed7933d5",
-                "reference": "a67c2ac4cbedde63c52d630bf451cacfed7933d5",
+                "url": "https://api.github.com/repos/FriendsOfCake/search/zipball/055cddb21f4436b074c1895839097c106b827be9",
+                "reference": "055cddb21f4436b074c1895839097c106b827be9",
                 "shasum": ""
             },
             "require-dev": {
@@ -989,7 +992,7 @@
                 "cakephp3",
                 "search"
             ],
-            "time": "2016-02-03 16:46:13"
+            "time": "2016-02-22 12:37:41"
         },
         {
             "name": "holt59/cakephp3-bootstrap-helpers",
@@ -1356,8 +1359,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "abeautifulsite/simpleimage": 20,
-        "psy/psysh": 0,
-        "friendsofcake/search": 20
+        "psy/psysh": 0
     },
     "prefer-stable": true,
     "prefer-lowest": false,

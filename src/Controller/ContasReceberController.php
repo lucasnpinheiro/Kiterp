@@ -35,6 +35,7 @@ class ContasReceberController extends AppController {
             }]);
                 $bancos = $this->ContasReceber->Bancos->find('list');
                 $this->set(compact(['pessoas', 'bancos']));
+                
             }
 
             /**
@@ -91,11 +92,41 @@ class ContasReceberController extends AppController {
                         ]);
 
                         if ($this->request->is(['patch', 'post', 'put'])) {
+                            $isBaixa = false;
                             if ($contasReceber->formas_pagamento->grupo != 3) {
-                                $this->request->data['valor_liquido'] = $this->request->data['valor_documento'];
+                                if (!empty($this->request->data['valor_documento'])) {
+                                    $this->request->data['valor_liquido'] = $this->request->data['valor_documento'];
+                                }
                             }
+                            if (!empty($this->request->data['data_recebimento'])) {
+                                if ($contasReceber->status == 1) {
+                                    $isBaixa = true;
+                                    $this->request->data['status'] = 2;
+                                }
+                            }
+
                             $contasReceber = $this->ContasReceber->patchEntity($contasReceber, $this->request->data);
                             if ($this->ContasReceber->save($contasReceber)) {
+                                if ($isBaixa === true) {
+                                    $this->loadModel('ContasPagar');
+                                    $this->loadModel('Bancos');
+                                    $this->loadModel('Contas');
+                                    $findBanco = $this->Bancos->find()->where(['codigo_banco' => '999'])->first();
+                                    $findContas = $this->Contas->find()->where(['tradutora' => '601'])->first();
+                                    $contasPagar = $this->ContasPagar->newEntity();
+                                    $contasPagar->empresa_id = $contasReceber->empresa_id;
+                                    $contasPagar->numero_documento = $contasReceber->numero_documento . $contasReceber->parcelas . $contasReceber->pessoa_id . date('mY');
+                                    $contasPagar->data_vencimento = $contasReceber->data_recebimento;
+                                    $contasPagar->valor_documento = $contasReceber->valor_desconto;
+                                    $contasPagar->pessoa_id = $this->request->session()->read('Auth.User.pessoa_id');
+                                    $contasPagar->banco_id = $findBanco->id;
+                                    $contasPagar->tradutora_id = $findContas->id;
+                                    $contasPagar->status = 2;
+                                    $contasPagar->data_pagamento = $contasReceber->data_recebimento;
+                                    $contasPagar->valor_pagamento = $contasReceber->valor_desconto;
+                                    $contasPagar->contas_receber_id = $contasReceber->id;
+                                    $save = $this->ContasPagar->save($contasPagar);
+                                }
                                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
                                 return $this->redirect(['action' => 'index']);
                             } else {

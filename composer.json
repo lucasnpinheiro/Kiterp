@@ -16,7 +16,7 @@
         "psy/psysh": "@stable",
         "cakephp/debug_kit": "~3.2",
         "cakephp/bake": "~1.1",
-        "friendsofcake/search": "dev-master",
+        "friendsofcake/search": "1.2.2",
         "holt59/cakephp3-bootstrap-helpers": "v3.0.4"
     },
     "suggest": {

@@ -105,7 +105,7 @@ class MyFormHelper extends BootstrapFormHelper {
             'type' => 'select',
             'options' => [
                 1 => __('Aberto'),
-                2 => __('baixado'),
+                2 => __('Baixado'),
                 3 => __('Cancelado'),
             //9 => __('Excluido'),
             ],

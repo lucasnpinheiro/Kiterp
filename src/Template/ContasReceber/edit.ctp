@@ -69,7 +69,11 @@ $this->Html->addCrumb('Alterar', null);
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <div class="col-sm-12 text-right">
-                        <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                        <?php
+                        if ($contasReceber->status == 1) {
+                            echo $this->Form->button(__('Salvar', ['class' => 'btn btn-primary']));
+                        }
+                        ?>
                     </div>
                 </div>
                 <div class="clearfix"></div>

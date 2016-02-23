@@ -38,7 +38,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
     public function statusContas($id) {
         $r = [
             1 => ['text' => __('Aberto'), 'class' => 'primary'],
-            2 => ['text' => __('baixado'), 'class' => 'success'],
+            2 => ['text' => __('Baixado'), 'class' => 'success'],
             3 => ['text' => __('Cancelado'), 'class' => 'danger'],
         ];
         return $this->label($r[$id]['text'], $r[$id]['class']);

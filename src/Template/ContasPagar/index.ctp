@@ -53,7 +53,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->statusContas($contasPagar->status) ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
-                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $contasPagar->id]) ?>
+                                            <?= $this->Html->link('Baixa', ['action' => 'edit', $contasPagar->id, '?' => ['baixar' => 1]], ['class' => 'btn btn-info btn-xs', 'icon' => 'usd']) ?>
+                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $contasPagar->id, '?' => ['baixar' => 0]]) ?>
                                             <?= $this->Form->postLink('Excluir', ['action' => 'delete', $contasPagar->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $contasPagar->id)]) ?>
                                         </div>
                                     </td>
