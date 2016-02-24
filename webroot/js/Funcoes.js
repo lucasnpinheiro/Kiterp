@@ -49,7 +49,7 @@ cake.util.number_format = function (number, decimals, dec_point, thousands_sep) 
     return s.join(dec);
 };
 cake.util.convertFloat = function (valor) {
-    if (valor === "") {
+    if (!valor) {
         valor = 0;
     } else {
         valor = valor.replace('R$', '');
