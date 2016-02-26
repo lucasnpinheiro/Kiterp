@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\CaixasDiariosTable;
+use App\Model\Table\InventariosTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\CaixasDiariosTable Test Case
+ * App\Model\Table\InventariosTable Test Case
  */
-class CaixasDiariosTableTest extends TestCase
+class InventariosTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\CaixasDiariosTable
+     * @var \App\Model\Table\InventariosTable
      */
-    public $CaixasDiarios;
+    public $Inventarios;
 
     /**
      * Fixtures
@@ -24,20 +24,22 @@ class CaixasDiariosTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.caixas_diarios',
-        'app.operadores',
-        'app.contas_pagar',
+        'app.inventarios',
+        'app.produtos',
+        'app.grupos_estoques',
+        'app.nota_fiscal_entradas_itens',
+        'app.nota_fiscal_entradas',
         'app.empresas',
         'app.pessoas',
-        'app.contas_receber',
+        'app.contas_pagar',
         'app.bancos',
+        'app.contas_receber',
         'app.formas_pagamentos',
         'app.pedidos',
         'app.condicoes_pagamentos',
         'app.vendedores',
-        'app.nota_fiscal_entradas',
-        'app.cfops',
         'app.nota_fiscal_saidas',
+        'app.cfops',
         'app.forma_pagamentos',
         'app.transportadoras',
         'app.vendedors',
@@ -49,21 +51,17 @@ class CaixasDiariosTableTest extends TestCase
         'app.pessoas_juridicas',
         'app.pessoas_associacoes',
         'app.pedidos_itens',
-        'app.produtos',
-        'app.grupos_estoques',
-        'app.nota_fiscal_entradas_itens',
+        'app.pedidos_formas_pagamentos',
+        'app.tradutoras',
+        'app.produtos_kits',
+        'app.kits',
         'app.nota_fiscal_saidas_itens',
         'app.ncms',
         'app.produtos_valores',
         'app.cst_pis',
         'app.cst_cofins',
         'app.cst_icms',
-        'app.cst_origem',
-        'app.pedidos_formas_pagamentos',
-        'app.tradutoras',
-        'app.produtos_kits',
-        'app.kits',
-        'app.terminais'
+        'app.cst_origem'
     ];
 
     /**
@@ -74,8 +72,8 @@ class CaixasDiariosTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('CaixasDiarios') ? [] : ['className' => 'App\Model\Table\CaixasDiariosTable'];
-        $this->CaixasDiarios = TableRegistry::get('CaixasDiarios', $config);
+        $config = TableRegistry::exists('Inventarios') ? [] : ['className' => 'App\Model\Table\InventariosTable'];
+        $this->Inventarios = TableRegistry::get('Inventarios', $config);
     }
 
     /**
@@ -85,7 +83,7 @@ class CaixasDiariosTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->CaixasDiarios);
+        unset($this->Inventarios);
 
         parent::tearDown();
     }
@@ -101,21 +99,21 @@ class CaixasDiariosTableTest extends TestCase
     }
 
     /**
-     * Test searchConfiguration method
-     *
-     * @return void
-     */
-    public function testSearchConfiguration()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
      * Test validationDefault method
      *
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

@@ -2,14 +2,19 @@
 
 namespace App\Model\Table;
 
+use App\Model\Entity\CaixasDiario;
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Search\Manager;
 
-
 /**
  * CaixasDiarios Model
  *
+ * @property \Cake\ORM\Association\BelongsTo $Pessoas
+ * @property \Cake\ORM\Association\BelongsTo $Terminais
+ * @property \Cake\ORM\Association\HasMany $CaixasMovimentos
  */
 class CaixasDiariosTable extends Table {
 
@@ -28,9 +33,14 @@ class CaixasDiariosTable extends Table {
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('Operadores', [
-            'foreignKey' => 'operador',
-            'className' => 'Pessoas'
+        $this->belongsTo('Pessoas', [
+            'foreignKey' => 'pessoa_id'
+        ]);
+        $this->belongsTo('Terminais', [
+            'foreignKey' => 'terminal_id'
+        ]);
+        $this->hasMany('CaixasMovimentos', [
+            'foreignKey' => 'caixas_diario_id'
         ]);
         $this->addBehavior('Search.Search');
     }
@@ -61,59 +71,32 @@ class CaixasDiariosTable extends Table {
      * @return \Cake\Validation\Validator
      */
     public function validationDefault(Validator $validator) {
-        $validator->provider('extra', new \App\Model\Validation\ExtraValidator());
         $validator
-                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->integer('id')
                 ->allowEmpty('id', 'create');
 
         $validator
-                ->add('numero_caixa', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('numero_caixa');
+                ->date('data')
+                ->allowEmpty('data');
 
         $validator
-                ->allowEmpty('operador');
-
-        $validator
-                ->add('data_abertura', 'valid', ['rule' => 'datetime'])
-                ->allowEmpty('data_abertura');
-
-        $validator
-                ->add('data_encerramento', 'valid', ['rule' => 'datetime'])
-                ->allowEmpty('data_encerramento');
-
-        $validator
-                ->add('valor_inicial', 'valid', ['provider' => 'extra', 'rule' => 'moeda'])
-                ->allowEmpty('valor_inicial');
-
-        $validator
-                ->add('total_entradas', 'valid', ['provider' => 'extra', 'rule' => 'moeda'])
-                ->allowEmpty('total_entradas');
-
-        $validator
-                ->add('total_saidas', 'valid', ['provider' => 'extra', 'rule' => 'moeda'])
-                ->allowEmpty('total_saidas');
-
-        $validator
-                ->add('total_saldo', 'valid', ['provider' => 'extra', 'rule' => 'moeda'])
-                ->allowEmpty('total_saldo');
-
-        $validator
-                ->add('encerrado', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('encerrado');
-
-        $validator
-                ->add('total_real', 'valid', ['provider' => 'extra', 'rule' => 'moeda'])
-                ->allowEmpty('total_real');
-
-        $validator
-                ->add('total_sobras', 'valid', ['provider' => 'extra', 'rule' => 'moeda'])
-                ->allowEmpty('total_sobras');
-
-        $validator
-                ->add('total_faltas', 'valid', ['provider' => 'extra', 'rule' => 'moeda'])
-                ->allowEmpty('total_faltas');
+                ->integer('status')
+                ->allowEmpty('status');
 
         return $validator;
+    }
+
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules) {
+        $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));
+        $rules->add($rules->existsIn(['terminal_id'], 'Terminais'));
+        return $rules;
     }
 
 }

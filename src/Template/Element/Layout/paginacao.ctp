@@ -9,6 +9,10 @@
         ?>
     </div>
     <div class="col-xs-12 col-md-3 text-right pagination">
-        <p><?= $this->Paginator->counter() ?></p>
+        <p><?=
+            $this->Paginator->counter([
+                'format' => '{{page}} de {{pages}}'
+            ])
+            ?></p>
     </div>
 </div>

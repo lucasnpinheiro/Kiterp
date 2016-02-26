@@ -4,19 +4,20 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * CaixasDiario Entity.
+ * Inventario Entity.
  *
  * @property int $id
- * @property \Cake\I18n\Time $data
- * @property int $pessoa_id
- * @property \App\Model\Entity\Pessoa $operadore
- * @property int $terminal_id
- * @property \App\Model\Entity\Terminai $terminai
- * @property \Cake\I18n\Time $created
- * @property \Cake\I18n\Time $modified
- * @property int $status
+ * @property int $produto_id
+ * @property \App\Model\Entity\Produto $produto
+ * @property string $nome
+ * @property string $unidade
+ * @property string $grupo
+ * @property float $estoque
+ * @property float $compra
+ * @property float $valor
+ * @property float $total
  */
-class CaixasDiario extends Entity
+class Inventario extends Entity
 {
 
     /**

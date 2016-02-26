@@ -17,37 +17,39 @@ $this->Html->addCrumb('Consultar', null);
                         'inline' => true,
                         'label' => false
                     ]);
-                    echo $this->Form->input('numero_caixa', ['label' => false, 'placeholder' => 'Número do Caixa']);
-                    echo $this->Form->input('operador', ['label' => false, 'placeholder' => 'Operador']);
-                    echo $this->Form->input('data_abertura', ['label' => false, 'placeholder' => 'Data de Abertura']);
-                    echo $this->Form->input('data_encerramento', ['label' => false, 'placeholder' => 'Data de Encerramento']);
+                    echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Operador']);
+                    echo $this->Form->input('terminal_id', ['label' => false, 'placeholder' => 'Terminal']);
+                    echo $this->Form->data('data', ['label' => false, 'placeholder' => 'Data']);
                     echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
-
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
+                            
                             <tr>
-                                <th><?= $this->Paginator->sort('numero_caixa') ?></th>
-                                <th><?= $this->Paginator->sort('operador') ?></th>
-                                <th><?= $this->Paginator->sort('data_abertura') ?></th>
-                                <th><?= $this->Paginator->sort('data_encerramento') ?></th>
-                                <th><?= $this->Paginator->sort('valor_inicial') ?></th>
-                                <th><?= $this->Paginator->sort('total_entradas') ?></th>
+                                <th><?= $this->Paginator->sort('id') ?></th>
+                                <th><?= $this->Paginator->sort('data') ?></th>
+                                <th><?= $this->Paginator->sort('pessoa_id') ?></th>
+                                <th><?= $this->Paginator->sort('terminal_id') ?></th>
+                                <th><?= $this->Paginator->sort('created') ?></th>
+                                <th><?= $this->Paginator->sort('modified') ?></th>
+                                <th><?= $this->Paginator->sort('status') ?></th>
                                 <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($caixasDiarios as $caixasDiario): ?>
+                            <?php 
+                            foreach ($caixasDiarios as $caixasDiario): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($caixasDiario->numero_caixa) ?></td>
-                                    <td><?= $this->Html->link($caixasDiario->operadore->nome, ['controller' => 'Pessoas', 'action' => 'edit', $caixasDiario->operadore->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td><?= h($caixasDiario->data_abertura) ?></td>
-                                    <td><?= h($caixasDiario->data_encerramento) ?></td>
-                                    <td><?= $this->Html->moeda($caixasDiario->valor_inicial) ?></td>
-                                    <td><?= $this->Html->moeda($caixasDiario->total_entradas) ?></td>
+                                    <td><?= $this->Number->format($caixasDiario->id) ?></td>
+                                    <td><?= h($caixasDiario->data) ?></td>
+                                    <td><?= $this->Html->link($caixasDiario->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $caixasDiario->pessoa->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= $this->Html->link($caixasDiario->terminai->nome, ['controller' => 'Terminais', 'action' => 'edit', $caixasDiario->terminai->id], ['icon' => 'external-link-square']) ?></td>
+                                    <td><?= h($caixasDiario->created) ?></td>
+                                    <td><?= h($caixasDiario->modified) ?></td>
+                                    <td><?= $this->Html->status($caixasDiario->status) ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
                                             <?php

@@ -4,10 +4,10 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * CaixasDiariosFixture
+ * TerminaisFixture
  *
  */
-class CaixasDiariosFixture extends TestFixture
+class TerminaisFixture extends TestFixture
 {
 
     /**
@@ -18,12 +18,10 @@ class CaixasDiariosFixture extends TestFixture
     // @codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'data' => ['type' => 'date', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
-        'pessoa_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
-        'terminal_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'nome' => ['type' => 'string', 'length' => 500, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
+        'ip' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         'created' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
         'modified' => ['type' => 'datetime', 'length' => null, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null],
-        'status' => ['type' => 'integer', 'length' => 1, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '0 - Fechado | 1 - Aberto', 'precision' => null, 'autoIncrement' => null],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
         ],
@@ -42,12 +40,10 @@ class CaixasDiariosFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'data' => '2016-02-25',
-            'pessoa_id' => 1,
-            'terminal_id' => 1,
-            'created' => '2016-02-25 22:49:35',
-            'modified' => '2016-02-25 22:49:35',
-            'status' => 1
+            'nome' => 'Lorem ipsum dolor sit amet',
+            'ip' => 'Lorem ipsum dolor sit amet',
+            'created' => '2016-02-25 22:48:30',
+            'modified' => '2016-02-25 22:48:30'
         ],
     ];
 }

@@ -2,10 +2,8 @@
 <html>
 
     <head>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
         <?php $this->assign('title', $title); ?>
         <title>Kiterp - <?php echo $this->fetch('title'); ?></title>
 
@@ -29,33 +27,27 @@
                 params: <?php echo json_encode($this->request->params); ?>
             };
         </script>
-
     </head>
 
     <body class="top-navigation">
 
         <div id="wrapper">
-            <div id="page-wrapper" class="white-bg">
-                <div class="row border-bottom white-bg">
+            <div id="page-wrapper" class="gray-bg">
+                <div class="row border-bottom">
                     <?php echo $this->element('Layout/menu_1'); ?>
                 </div>
-                <div class="container-fluid" style="margin-top: 35px;">
+                <div class="row wrapper border-bottom white-bg page-heading">
                     <?php echo $this->element('Layout/header_title'); ?>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <?= $this->Flash->render() ?>    
-                        </div>
-                    </div>
-                    <div>
-                        <?php echo $this->fetch('content') ?>
-                    </div>
                 </div>
-                <div class="footer black-bg">
-                    <div class="pull-right">
-                        Versão 01.00.01
-                    </div>
+                <div class="row wrapper white-bg" style="padding-bottom: 50px;">
+                    <?= $this->Flash->render() ?>
+                    <?php echo $this->fetch('content') ?>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="footer">
                     <div>
-                        <strong>Kiterp</strong> Todos os direitos reservados
+                        <strong>Kiterp</strong> todos os direitos reservados
                     </div>
                 </div>
 

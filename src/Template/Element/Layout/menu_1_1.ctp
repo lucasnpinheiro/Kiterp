@@ -8,14 +8,9 @@ if (count($lista_menus)) {
 }
 ?>
 
-<nav class="navbar navbar-fixed-top" role="navigation">
-    <div class="navbar-header navbar-default">
-        <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-            <i class="fa fa-reorder"></i>
-        </button>
-        <a href="#" class="navbar-brand">Kiterp</a>
-    </div>
-    <div class="navbar-collapse collapse navbar-default" id="navbar">
+<nav class="navbar navbar-custom navbar-static-top" role="navigation">
+
+    <div class="navbar-collapse collapse" id="navbar">
         <ul class="nav navbar-nav">
             <?php
             if (count($lista_menus_array)) {
@@ -44,8 +39,6 @@ if (count($lista_menus)) {
                 }
             }
             ?>
-
-
         </ul>
         <ul class="nav navbar-top-links navbar-right">
             <li>
@@ -58,6 +51,16 @@ if (count($lista_menus)) {
                     <i class="fa fa-sign-out"></i> Sair
                 </a>
             </li>
+        </ul>
+    </div>
+</nav>
+
+
+
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+
         </ul>
     </div>
 </nav>
