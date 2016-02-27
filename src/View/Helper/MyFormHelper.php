@@ -99,6 +99,33 @@ class MyFormHelper extends BootstrapFormHelper {
         ];
         return $this->input($fieldName, $options);
     }
+    public function statusMovimentos($fieldName, array $options = []) {
+        //1 - Abertura | 2 - Entrada | 3 - Saída | 9 - Excluido
+        $options += [
+            'type' => 'select',
+            'options' => [
+                1 => __('Abertura'),
+                2 => __('Entrada'),
+                3 => __('Saída'),
+            ],
+            'empty' => __('Selecionar uma Situação')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
+    public function tiposPagamentos($fieldName, array $options = []) {
+        $options += [
+            'type' => 'select',
+            'options' => [
+                1 => __('Dinheiro'),
+                2 => __('Cheque'),
+                3 => __('Cartão'),
+                4 => __('Prazo'),
+            ],
+            'empty' => __('Selecionar um Tipo')
+        ];
+        return $this->input($fieldName, $options);
+    }
 
     public function statusContas($fieldName, array $options = []) {
         $options += [
@@ -170,6 +197,27 @@ class MyFormHelper extends BootstrapFormHelper {
             'type' => 'select',
             'options' => $_empresas,
             'empty' => __('Selecionar uma Empresa')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
+    public function caixas($fieldName, array $options = [], $conditions = []) {
+        $caixas = TableRegistry::get('CaixasDiarios');
+        $defautl = [
+            'contain' => ['Pessoas']
+        ];
+        $conditions = \Cake\Utility\Hash::merge($defautl, $conditions);
+        $find = $caixas->find('all', $conditions);
+        $_empresas = [];
+        if (!empty($find)) {
+            foreach ($find as $key => $value) {
+                $_empresas[$value->id] = $value->data . ' | ' . $value->pessoa->nome;
+            }
+        }
+        $options += [
+            'type' => 'select',
+            'options' => $_empresas,
+            'empty' => __('Selecionar um Caixa')
         ];
         return $this->input($fieldName, $options);
     }

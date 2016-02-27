@@ -7,17 +7,13 @@ use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Cake\Event\Event;
-use Cake\ORM\Entity;
-use ArrayObject;
-use Cake\ORM\TableRegistry;
 use Search\Manager;
-
 
 /**
  * CaixasMovimentos Model
  *
- * @property \Cake\ORM\Association\BelongsTo $CaixaDiarios
+ * @property \Cake\ORM\Association\BelongsTo $CaixasDiarios
+ * @property \Cake\ORM\Association\BelongsTo $Grupos
  */
 class CaixasMovimentosTable extends Table {
 
@@ -36,8 +32,8 @@ class CaixasMovimentosTable extends Table {
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('CaixaDiarios', [
-            'foreignKey' => 'caixa_diario_id'
+        $this->belongsTo('CaixasDiarios', [
+            'foreignKey' => 'caixas_diario_id'
         ]);
         $this->addBehavior('Search.Search');
     }
@@ -69,30 +65,19 @@ class CaixasMovimentosTable extends Table {
      */
     public function validationDefault(Validator $validator) {
         $validator
-                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->integer('id')
                 ->allowEmpty('id', 'create');
 
         $validator
-                ->add('data_movimento', 'valid', ['rule' => 'datetime'])
-                ->allowEmpty('data_movimento');
+                ->integer('status')
+                ->allowEmpty('status');
 
         $validator
-                ->allowEmpty('numero documento');
-
-        $validator
-                ->add('tipo_lancamento', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('tipo_lancamento');
-
-        $validator
-                ->add('valor', 'valid', ['rule' => 'money'])
+                ->numeric('valor')
                 ->allowEmpty('valor');
 
         $validator
-                ->add('modalidade', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('modalidade');
-
-        $validator
-                ->allowEmpty('historico');
+                ->allowEmpty('descricao');
 
         return $validator;
     }
@@ -105,13 +90,8 @@ class CaixasMovimentosTable extends Table {
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules) {
-        $rules->add($rules->existsIn(['caixa_diario_id'], 'CaixaDiarios'));
+        $rules->add($rules->existsIn(['caixas_diario_id'], 'CaixasDiarios'));
         return $rules;
-    }
-
-    public function afterSave(Event $event, Entity $entity, ArrayObject $options) {
-        debug($entity);
-        exit;
     }
 
 }

@@ -7,16 +7,14 @@ use Cake\ORM\Entity;
  * CaixasMovimento Entity.
  *
  * @property int $id
- * @property int $caixa_diario_id
- * @property \App\Model\Entity\CaixaDiario $caixa_diario
- * @property \Cake\I18n\Time $data_movimento
- * @property string $numero documento
- * @property int $tipo_lancamento
+ * @property int $caixas_diario_id
+ * @property int $status
  * @property float $valor
- * @property int $modalidade
- * @property string $historico
+ * @property string $descricao
+ * @property int $grupo_id
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
+ * @property \App\Model\Entity\CaixaDiario $caixa_diario
  */
 class CaixasMovimento extends Entity
 {
@@ -32,5 +30,6 @@ class CaixasMovimento extends Entity
      */
     protected $_accessible = [
         '*' => true,
+        'id' => false,
     ];
 }

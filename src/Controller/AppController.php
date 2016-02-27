@@ -20,7 +20,11 @@ use Cake\Controller\Controller;
 use Cake\Event\Event;
 use Cake\Database\Type;
 use Cake\I18n\I18n;
+use Cake\I18n\Time;
+use Cake\I18n\Number;
 
+
+I18n::locale('pt_BR');
 // Habilita o parseamento de datas localizadas
 Type::build('date')->useLocaleParser()->setLocaleFormat('dd/M/yyyy');
 Type::build('datetime')->useLocaleParser()->setLocaleFormat('dd/M/yyyy HH:ii:ss');
@@ -29,7 +33,7 @@ Type::build('timestamp')->useLocaleParser()->setLocaleFormat('dd/M/yyyy HH:ii:ss
 // Habilita o parseamento de decimal localizaddos
 Type::build('decimal')->useLocaleParser();
 Type::build('float')->useLocaleParser();
-I18n::locale('pt_BR');
+
 
 /**
  * Application Controller

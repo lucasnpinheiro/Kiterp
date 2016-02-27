@@ -12,6 +12,13 @@ class CaixasMovimentosTableTest extends TestCase
 {
 
     /**
+     * Test subject
+     *
+     * @var \App\Model\Table\CaixasMovimentosTable
+     */
+    public $CaixasMovimentos;
+
+    /**
      * Fixtures
      *
      * @var array
@@ -56,6 +63,16 @@ class CaixasMovimentosTableTest extends TestCase
     }
 
     /**
+     * Test searchConfiguration method
+     *
+     * @return void
+     */
+    public function testSearchConfiguration()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
      * Test validationDefault method
      *
      * @return void
@@ -71,6 +88,16 @@ class CaixasMovimentosTableTest extends TestCase
      * @return void
      */
     public function testBuildRules()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test afterSave method
+     *
+     * @return void
+     */
+    public function testAfterSave()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

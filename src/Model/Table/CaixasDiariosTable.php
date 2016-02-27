@@ -76,7 +76,7 @@ class CaixasDiariosTable extends Table {
                 ->allowEmpty('id', 'create');
 
         $validator
-                ->date('data')
+                ->add('data', 'validFormat', ['rule' => ['date', 'dmy']])
                 ->allowEmpty('data');
 
         $validator

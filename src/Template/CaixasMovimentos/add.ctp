@@ -12,13 +12,11 @@ $this->Html->addCrumb('Cadastrar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($caixasMovimento) ?>
                 <?php
-                echo $this->Form->input('caixa_diario_id');
-                echo $this->Form->input('data_movimento');
-                echo $this->Form->input('numero documento');
-                echo $this->Form->input('tipo_lancamento');
-                echo $this->Form->input('valor');
-                echo $this->Form->input('modalidade');
-                echo $this->Form->input('historico');
+                echo $this->Form->caixas('caixas_diario_id', ['div' => ['class' => 'col-xs-12 col-md-3']], ['conditions' => ['CaixasDiarios.status' => 1]]);
+                echo $this->Form->statusMovimentos('status', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->moeda('valor', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->tiposPagamentos('grupo_id', ['div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('descricao', ['label' => 'Descrição', 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

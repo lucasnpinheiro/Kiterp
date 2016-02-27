@@ -96,7 +96,7 @@ CREATE TABLE `caixas_diarios` (
   `modified` datetime DEFAULT NULL,
   `status` int(1) DEFAULT NULL COMMENT '0 - Fechado | 1 - Aberto',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -106,7 +106,7 @@ CREATE TABLE `caixas_diarios` (
 
 LOCK TABLES `caixas_diarios` WRITE;
 /*!40000 ALTER TABLE `caixas_diarios` DISABLE KEYS */;
-INSERT  IGNORE INTO `caixas_diarios` (`id`, `data`, `pessoa_id`, `terminal_id`, `created`, `modified`, `status`) VALUES (1,'2016-02-25',26,1,'2016-01-12 21:01:32','2016-01-12 21:01:32',1),(5,'2016-02-25',26,1,'2016-01-12 21:06:51','2016-01-12 21:16:00',0),(6,'2016-02-25',26,1,'2016-01-12 21:18:53','2016-01-12 21:18:53',0),(7,'2016-02-25',26,1,'2016-01-12 22:15:04','2016-01-12 22:16:08',0),(8,'2016-02-25',26,1,'2016-01-13 18:54:56','2016-01-13 18:54:56',0);
+INSERT  IGNORE INTO `caixas_diarios` (`id`, `data`, `pessoa_id`, `terminal_id`, `created`, `modified`, `status`) VALUES (1,'2016-02-28',1,1,'2016-02-27 14:47:12','2016-02-27 18:06:01',1),(2,'2016-02-27',1,1,'2016-02-27 14:47:12','2016-02-27 18:06:01',0);
 /*!40000 ALTER TABLE `caixas_diarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,6 +123,7 @@ CREATE TABLE `caixas_movimentos` (
   `status` int(1) DEFAULT '1' COMMENT '1 - Abertura | 2 - Entrada | 3 - Saída | 9 - Excluido',
   `valor` float(10,2) DEFAULT NULL,
   `descricao` text,
+  `grupo_id` int(11) DEFAULT NULL,
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1396,4 +1397,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-25 23:13:49
+-- Dump completed on 2016-02-27 19:23:46

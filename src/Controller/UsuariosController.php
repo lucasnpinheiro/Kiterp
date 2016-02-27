@@ -77,11 +77,10 @@ class UsuariosController extends AppController {
         if ($this->request->is('post')) {
             $usuario = $this->Usuarios->patchEntity($usuario, $this->request->data);
             if ($this->Usuarios->save($usuario)) {
-                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                    return $this->redirect(['action' => 'index']);
-                } else
-                {
-                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
 
@@ -103,18 +102,17 @@ class UsuariosController extends AppController {
         if ($this->request->is(['patch', 'post', 'put'])) {
             $usuario = $this->Usuarios->patchEntity($usuario, $this->request->data);
             if ($this->Usuarios->save($usuario)) {
-                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                    return $this->redirect(['action' => 'index']);
-                } else
-                {
-                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
         $this->loadModel('Grupos');
         $this->loadModel('UsuariosGrupos');
         $grupo = $this->Grupos->find('list')->toArray();
         $usuarios_grupo = $this->UsuariosGrupos->find('list')->where(['usuario_id' => $id])->toArray();
-        $this->set(compact('usuario', 'grupo','usuarios_grupo'));
+        $this->set(compact('usuario', 'grupo', 'usuarios_grupo'));
         $this->set('_serialize', ['usuario']);
     }
 
@@ -130,8 +128,7 @@ class UsuariosController extends AppController {
         $usuario = $this->Usuarios->get($id);
         if ($this->Usuarios->delete($usuario)) {
             $this->Flash->success(__('Registro Excluido com Sucesso.'));
-        } else
-        {
+        } else {
             $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));
         }
         return $this->redirect(['action' => 'index']);

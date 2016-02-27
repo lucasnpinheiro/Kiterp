@@ -372,6 +372,7 @@ class PedidosController extends AppController {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
+        $pedido->numero_caixa = $this->getCaixaDiario();
         $findPedidosAberto = $this->Pedidos->find()->where(['status' => 1, 'vendedor_id' => $this->Auth->user('id')])->contain(['PedidosItens' => function($q) {
                         return $q->contain('Produtos');
                     }])->first();
@@ -415,6 +416,7 @@ class PedidosController extends AppController {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
+        $pedido->numero_caixa = $this->getCaixaDiario();
         $pedido->pedido_id = $pedido->id;
         $this->loadModel('Pessoas');
         $this->loadModel('Empresas');
@@ -428,6 +430,16 @@ class PedidosController extends AppController {
         $vendedors = $this->Pedidos->Vendedores->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
         $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors', 'produtos'));
         $this->set('_serialize', ['pedido']);
+    }
+
+    private function getCaixaDiario() {
+        $this->loadModel('CaixasDiarios');
+        $find = $this->CaixasDiarios->find()->where(['data <=' => date('Y-m-d'), 'pessoa_id' => $this->request->session()->read('Auth.User.pessoa_id'), 'status' => 1, 'terminal_id' => 1])->first();
+        if (!empty($find)) {
+            return $find->id;
+        }
+        $this->Flash->error(__('Não foi localizado nenhum caixa aberto.'));
+        return $this->redirect(['action' => 'index']);
     }
 
     /**

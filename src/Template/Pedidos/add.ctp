@@ -20,7 +20,7 @@ $this->Html->addCrumb('Cadastrar', null);
                 echo $this->Form->input('id', ['class' => 'pedido-id-registro', 'type' => 'hidden']);
                 echo $this->Form->input('pedido_id', ['class' => 'pedido-id-registro', 'type' => 'hidden']);
                 echo $this->Form->input('transportadora_id', ['type' => 'hidden', 'value' => 1]);
-                echo $this->Form->numero('numero_caixa', ['type' => 'hidden', 'value' => 1]);
+                echo $this->Form->numero('numero_caixa', ['type' => 'hidden']);
                 echo $this->Form->numero('status', ['type' => 'hidden', 'value' => 1]);
 
                 $count_empresas = $empresas;
