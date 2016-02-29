@@ -12,11 +12,11 @@ $this->Html->addCrumb('Cadastrar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($caixasMovimento) ?>
                 <?php
-                echo $this->Form->caixas('caixas_diario_id', ['div' => ['class' => 'col-xs-12 col-md-3']], ['conditions' => ['CaixasDiarios.status' => 1]]);
-                echo $this->Form->statusMovimentos('status', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->moeda('valor', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->tiposPagamentos('grupo_id', ['div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->input('descricao', ['label' => 'Descrição', 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                echo $this->Form->caixas('caixas_diario_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']], ['conditions' => ['CaixasDiarios.status' => 1]]);
+                echo $this->Form->statusMovimentos('status', ['label' => 'Tipo', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->moeda('valor', ['div' => ['required' => true, 'class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->tiposPagamentos('grupo_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                echo $this->Form->input('descricao', ['required' => true, 'label' => 'Descrição', 'div' => ['class' => 'col-xs-12 col-md-12']]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

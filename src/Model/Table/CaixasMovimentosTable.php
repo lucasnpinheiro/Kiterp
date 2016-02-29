@@ -73,7 +73,7 @@ class CaixasMovimentosTable extends Table {
                 ->allowEmpty('status');
 
         $validator
-                ->numeric('valor')
+                 ->add('valor', 'valid', ['rule' => 'money'])
                 ->allowEmpty('valor');
 
         $validator

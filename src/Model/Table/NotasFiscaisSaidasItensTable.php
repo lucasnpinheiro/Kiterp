@@ -1,22 +1,20 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\NotaFiscalSaidasIten;
+use App\Model\Entity\NotasFiscaisSaidasIten;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Search\Manager;
-
 
 /**
- * NotaFiscalSaidasItens Model
+ * NotasFiscaisSaidasItens Model
  *
- * @property \Cake\ORM\Association\BelongsTo $NotaFiscalSaidas
+ * @property \Cake\ORM\Association\BelongsTo $NotasFiscaisSaidas
  * @property \Cake\ORM\Association\BelongsTo $Produtos
  * @property \Cake\ORM\Association\BelongsTo $Ncms
  */
-class NotaFiscalSaidasItensTable extends Table
+class NotasFiscaisSaidasItensTable extends Table
 {
 
     /**
@@ -29,14 +27,14 @@ class NotaFiscalSaidasItensTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('nota_fiscal_saidas_itens');
+        $this->table('notas_fiscais_saidas_itens');
         $this->displayField('id');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('NotaFiscalSaidas', [
-            'foreignKey' => 'nota_fiscal_saida_id'
+        $this->belongsTo('NotasFiscaisSaidas', [
+            'foreignKey' => 'notas_fiscais_saida_id'
         ]);
         $this->belongsTo('Produtos', [
             'foreignKey' => 'produto_id'
@@ -44,28 +42,7 @@ class NotaFiscalSaidasItensTable extends Table
         $this->belongsTo('Ncms', [
             'foreignKey' => 'ncms_id'
         ]);
-            $this->addBehavior('Search.Search');
     }
-
-    public function searchConfiguration() {
-        return $this->searchConfigurationDynamic();
-    }
-
-    private function searchConfigurationDynamic() {
-        $search = new Manager($this);
-        $c = $this->schema()->columns();
-        foreach ($c as $key => $value) {
-            $t = $this->schema()->columnType($value);
-            if ($t != 'string' AND $t != 'text') {
-                $search->value($value, ['field' => $this->aliasField($value)]);
-            } else {
-                $search->like($value, ['before' => true, 'after' => true, 'field' => $this->aliasField($value)]);
-            }
-        }
-
-        return $search;
-    }
-
 
     /**
      * Default validation rules.
@@ -76,27 +53,27 @@ class NotaFiscalSaidasItensTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
+            ->integer('id')
             ->allowEmpty('id', 'create');
 
         $validator
-            ->add('qtde', 'valid', ['rule' => 'money'])
+            ->numeric('qtde')
             ->allowEmpty('qtde');
 
         $validator
-            ->add('venda', 'valid', ['rule' => 'money'])
+            ->numeric('venda')
             ->allowEmpty('venda');
 
         $validator
-            ->add('total', 'valid', ['rule' => 'money'])
+            ->numeric('total')
             ->allowEmpty('total');
 
         $validator
-            ->add('base_icms', 'valid', ['rule' => 'money'])
+            ->numeric('base_icms')
             ->allowEmpty('base_icms');
 
         $validator
-            ->add('valor_icms', 'valid', ['rule' => 'money'])
+            ->numeric('valor_icms')
             ->allowEmpty('valor_icms');
 
         $validator
@@ -106,23 +83,23 @@ class NotaFiscalSaidasItensTable extends Table
             ->allowEmpty('origem');
 
         $validator
-            ->add('base_credito', 'valid', ['rule' => 'money'])
+            ->numeric('base_credito')
             ->allowEmpty('base_credito');
 
         $validator
-            ->add('valor_credito', 'valid', ['rule' => 'money'])
+            ->numeric('valor_credito')
             ->allowEmpty('valor_credito');
 
         $validator
-            ->add('base_st', 'valid', ['rule' => 'money'])
+            ->numeric('base_st')
             ->allowEmpty('base_st');
 
         $validator
-            ->add('valor_st', 'valid', ['rule' => 'money'])
+            ->numeric('valor_st')
             ->allowEmpty('valor_st');
 
         $validator
-            ->add('valor_tributo', 'valid', ['rule' => 'money'])
+            ->numeric('valor_tributo')
             ->allowEmpty('valor_tributo');
 
         return $validator;
@@ -137,7 +114,7 @@ class NotaFiscalSaidasItensTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['nota_fiscal_saida_id'], 'NotaFiscalSaidas'));
+        $rules->add($rules->existsIn(['notas_fiscais_saida_id'], 'NotasFiscaisSaidas'));
         $rules->add($rules->existsIn(['produto_id'], 'Produtos'));
         $rules->add($rules->existsIn(['ncms_id'], 'Ncms'));
         return $rules;

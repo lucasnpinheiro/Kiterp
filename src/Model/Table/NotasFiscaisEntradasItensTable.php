@@ -1,21 +1,19 @@
 <?php
 namespace App\Model\Table;
 
-use App\Model\Entity\NotaFiscalEntradasIten;
+use App\Model\Entity\NotasFiscaisEntradasIten;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Search\Manager;
-
 
 /**
- * NotaFiscalEntradasItens Model
+ * NotasFiscaisEntradasItens Model
  *
- * @property \Cake\ORM\Association\BelongsTo $NotaFiscalEntradas
+ * @property \Cake\ORM\Association\BelongsTo $NotasFiscaisEntradas
  * @property \Cake\ORM\Association\BelongsTo $Produtos
  */
-class NotaFiscalEntradasItensTable extends Table
+class NotasFiscaisEntradasItensTable extends Table
 {
 
     /**
@@ -28,40 +26,19 @@ class NotaFiscalEntradasItensTable extends Table
     {
         parent::initialize($config);
 
-        $this->table('nota_fiscal_entradas_itens');
+        $this->table('notas_fiscais_entradas_itens');
         $this->displayField('id');
         $this->primaryKey('id');
 
         $this->addBehavior('Timestamp');
 
-        $this->belongsTo('NotaFiscalEntradas', [
-            'foreignKey' => 'nota_fiscal_entrada_id'
+        $this->belongsTo('NotasFiscaisEntradas', [
+            'foreignKey' => 'notas_fiscais_entrada_id'
         ]);
         $this->belongsTo('Produtos', [
             'foreignKey' => 'produto_id'
         ]);
-            $this->addBehavior('Search.Search');
     }
-
-    public function searchConfiguration() {
-        return $this->searchConfigurationDynamic();
-    }
-
-    private function searchConfigurationDynamic() {
-        $search = new Manager($this);
-        $c = $this->schema()->columns();
-        foreach ($c as $key => $value) {
-            $t = $this->schema()->columnType($value);
-            if ($t != 'string' AND $t != 'text') {
-                $search->value($value, ['field' => $this->aliasField($value)]);
-            } else {
-                $search->like($value, ['before' => true, 'after' => true, 'field' => $this->aliasField($value)]);
-            }
-        }
-
-        return $search;
-    }
-
 
     /**
      * Default validation rules.
@@ -72,19 +49,19 @@ class NotaFiscalEntradasItensTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->add('id', 'valid', ['rule' => 'numeric'])
+            ->integer('id')
             ->allowEmpty('id', 'create');
 
         $validator
-            ->add('qtde', 'valid', ['rule' => 'money'])
+            ->numeric('qtde')
             ->allowEmpty('qtde');
 
         $validator
-            ->add('compra', 'valid', ['rule' => 'money'])
+            ->numeric('compra')
             ->allowEmpty('compra');
 
         $validator
-            ->add('total', 'valid', ['rule' => 'money'])
+            ->numeric('total')
             ->allowEmpty('total');
 
         return $validator;
@@ -99,7 +76,7 @@ class NotaFiscalEntradasItensTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->existsIn(['nota_fiscal_entrada_id'], 'NotaFiscalEntradas'));
+        $rules->add($rules->existsIn(['notas_fiscais_entrada_id'], 'NotasFiscaisEntradas'));
         $rules->add($rules->existsIn(['produto_id'], 'Produtos'));
         return $rules;
     }

@@ -17,10 +17,10 @@ $this->Html->addCrumb('Consultar', null);
                         'inline' => true,
                         'label' => false
                     ]);
-                    echo $this->Form->input('empresa_id', ['label' => false, 'placeholder' => 'Empresa']);
-                    echo $this->Form->input('numero_nota_fiscal', ['label' => false, 'placeholder' => 'Número da Nota Fiscal']);
+                    echo $this->Form->empresas('empresa_id', ['label' => false, 'placeholder' => 'Empresa']);
                     echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Cliente']);
-                    echo $this->Form->input('data_emissao', ['label' => false, 'placeholder' => 'Data de Emissão']);
+                    echo $this->Form->data('data_emissao', ['label' => false, 'placeholder' => 'Data']);
+                    echo $this->Form->numero('numero_nota_fiscal', ['label' => false, 'placeholder' => 'Número da Nota']);
                     echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
@@ -30,31 +30,27 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('empresa_id') ?></th>
                                 <th><?= $this->Paginator->sort('numero_nota_fiscal') ?></th>
                                 <th><?= $this->Paginator->sort('serie') ?></th>
-                                <th><?= $this->Paginator->sort('cfop_id') ?></th>
                                 <th><?= $this->Paginator->sort('pessoa_id') ?></th>
+                                <th><?= $this->Paginator->sort('cfop_id') ?></th>
                                 <th><?= $this->Paginator->sort('data_emissao') ?></th>
-                                <th class="actions"><?= __('Ação') ?></th>
+                                <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($notaFiscalSaidas as $notaFiscalSaida): ?>
+                            <?php foreach ($notasFiscaisEntradas as $notasFiscaisEntrada): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($notaFiscalSaida->id) ?></td>
-                                    <td><?= $this->Html->link($notaFiscalSaida->empresa->nome, ['controller' => 'Empresas', 'action' => 'edit', $notaFiscalSaida->empresa->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td><?= $this->Number->format($notaFiscalSaida->numero_nota_fiscal) ?></td>
-                                    <td><?= h($notaFiscalSaida->serie) ?></td>
-                                    <td><?= $this->Number->format($notaFiscalSaida->cfop_id) ?></td>
-                                    <td><?= $this->Html->link($notaFiscalSaida->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $notaFiscalSaida->pessoa->id], ['icon' => 'external-link-square']) ?></td>
-                                    <td><?= h($notaFiscalSaida->data_emissao) ?></td>
+                                    <td><?= $notasFiscaisEntrada->has('empresa') ? $this->Html->link($notasFiscaisEntrada->empresa->id, ['controller' => 'Empresas', 'action' => 'view', $notasFiscaisEntrada->empresa->id]) : '' ?></td>
+                                    <td><?= $this->Number->format($notasFiscaisEntrada->numero_nota_fiscal) ?></td>
+                                    <td><?= h($notasFiscaisEntrada->serie) ?></td>
+                                    <td><?= $notasFiscaisEntrada->has('pessoa') ? $this->Html->link($notasFiscaisEntrada->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'view', $notasFiscaisEntrada->pessoa->id]) : '' ?></td>
+                                    <td><?= $this->Number->format($notasFiscaisEntrada->cfop_id) ?></td>
+                                    <td><?= h($notasFiscaisEntrada->data_emissao) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
-                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $notaFiscalSaida->id]) ?>
-                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $notaFiscalSaida->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $notaFiscalSaida->id)]) ?>
-                                        </div>
+                                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $notasFiscaisEntrada->id]) ?>
+                                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $notasFiscaisEntrada->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notasFiscaisEntrada->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

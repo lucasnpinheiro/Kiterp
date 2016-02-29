@@ -1,22 +1,22 @@
 <?php
 namespace App\Test\TestCase\Model\Table;
 
-use App\Model\Table\NotaFiscalEntradasItensTable;
+use App\Model\Table\NotasFiscaisSaidasTable;
 use Cake\ORM\TableRegistry;
 use Cake\TestSuite\TestCase;
 
 /**
- * App\Model\Table\NotaFiscalEntradasItensTable Test Case
+ * App\Model\Table\NotasFiscaisSaidasTable Test Case
  */
-class NotaFiscalEntradasItensTableTest extends TestCase
+class NotasFiscaisSaidasTableTest extends TestCase
 {
 
     /**
      * Test subject
      *
-     * @var \App\Model\Table\NotaFiscalEntradasItensTable
+     * @var \App\Model\Table\NotasFiscaisSaidasTable
      */
-    public $NotaFiscalEntradasItens;
+    public $NotasFiscaisSaidas;
 
     /**
      * Fixtures
@@ -24,8 +24,7 @@ class NotaFiscalEntradasItensTableTest extends TestCase
      * @var array
      */
     public $fixtures = [
-        'app.nota_fiscal_entradas_itens',
-        'app.nota_fiscal_entradas',
+        'app.notas_fiscais_saidas',
         'app.empresas',
         'app.pessoas',
         'app.contas_pagar',
@@ -35,11 +34,8 @@ class NotaFiscalEntradasItensTableTest extends TestCase
         'app.pedidos',
         'app.condicoes_pagamentos',
         'app.vendedores',
+        'app.nota_fiscal_entradas',
         'app.nota_fiscal_saidas',
-        'app.cfops',
-        'app.forma_pagamentos',
-        'app.transportadoras',
-        'app.vendedors',
         'app.usuarios',
         'app.pessoas_enderecos',
         'app.pessoas_contatos',
@@ -47,20 +43,26 @@ class NotaFiscalEntradasItensTableTest extends TestCase
         'app.pessoas_fisicas',
         'app.pessoas_juridicas',
         'app.pessoas_associacoes',
+        'app.transportadoras',
         'app.pedidos_itens',
         'app.produtos',
         'app.grupos_estoques',
+        'app.nota_fiscal_entradas_itens',
         'app.nota_fiscal_saidas_itens',
-        'app.ncms',
         'app.produtos_valores',
+        'app.ncms',
         'app.cst_pis',
         'app.cst_cofins',
         'app.cst_icms',
         'app.cst_origem',
         'app.pedidos_formas_pagamentos',
+        'app.forma_pagamentos',
         'app.tradutoras',
         'app.produtos_kits',
-        'app.kits'
+        'app.kits',
+        'app.cfops',
+        'app.vendedors',
+        'app.notas_fiscais_saidas_itens'
     ];
 
     /**
@@ -71,8 +73,8 @@ class NotaFiscalEntradasItensTableTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = TableRegistry::exists('NotaFiscalEntradasItens') ? [] : ['className' => 'App\Model\Table\NotaFiscalEntradasItensTable'];
-        $this->NotaFiscalEntradasItens = TableRegistry::get('NotaFiscalEntradasItens', $config);
+        $config = TableRegistry::exists('NotasFiscaisSaidas') ? [] : ['className' => 'App\Model\Table\NotasFiscaisSaidasTable'];
+        $this->NotasFiscaisSaidas = TableRegistry::get('NotasFiscaisSaidas', $config);
     }
 
     /**
@@ -82,7 +84,7 @@ class NotaFiscalEntradasItensTableTest extends TestCase
      */
     public function tearDown()
     {
-        unset($this->NotaFiscalEntradasItens);
+        unset($this->NotasFiscaisSaidas);
 
         parent::tearDown();
     }
@@ -93,16 +95,6 @@ class NotaFiscalEntradasItensTableTest extends TestCase
      * @return void
      */
     public function testInitialize()
-    {
-        $this->markTestIncomplete('Not implemented yet.');
-    }
-
-    /**
-     * Test searchConfiguration method
-     *
-     * @return void
-     */
-    public function testSearchConfiguration()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

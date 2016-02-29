@@ -2,16 +2,14 @@
 
 namespace App\Model\Table;
 
-use App\Model\Entity\NotaFiscalSaidas;
+use App\Model\Entity\NotasFiscaisSaida;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
-use Search\Manager;
-
 
 /**
- * NotaFiscalSaidas Model
+ * NotasFiscaisSaidas Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Empresas
  * @property \Cake\ORM\Association\BelongsTo $Cfops
@@ -19,9 +17,9 @@ use Search\Manager;
  * @property \Cake\ORM\Association\BelongsTo $FormaPagamentos
  * @property \Cake\ORM\Association\BelongsTo $Transportadoras
  * @property \Cake\ORM\Association\BelongsTo $Vendedors
+ * @property \Cake\ORM\Association\HasMany $NotasFiscaisSaidasItens
  */
-class NotaFiscalSaidasTable extends Table
-{
+class NotasFiscaisSaidasTable extends Table {
 
     /**
      * Initialize method
@@ -29,11 +27,10 @@ class NotaFiscalSaidasTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
-        $this->table('nota_fiscal_saidas');
+        $this->table('notas_fiscais_saidas');
         $this->displayField('id');
         $this->primaryKey('id');
 
@@ -42,17 +39,15 @@ class NotaFiscalSaidasTable extends Table
         $this->belongsTo('Empresas', [
             'foreignKey' => 'empresa_id'
         ]);
-        $this->belongsTo('Cfops', [
-            'foreignKey' => 'cfop_id',
-            'className' => 'Impostos',
-            'conditions' => ['Impostos.tipo_imposto' => 7]
-        ]);
+        /* $this->belongsTo('Cfops', [
+          'foreignKey' => 'cfop_id'
+          ]); */
         $this->belongsTo('Pessoas', [
             'foreignKey' => 'pessoa_id'
         ]);
-        $this->belongsTo('FormaPagamentos', [
-            'foreignKey' => 'forma_pagamento_id'
-        ]);
+        /* $this->belongsTo('FormaPagamentos', [
+          'foreignKey' => 'forma_pagamento_id'
+          ]); */
         $this->belongsTo('Transportadoras', [
             'foreignKey' => 'transportadora_id'
         ]);
@@ -60,28 +55,10 @@ class NotaFiscalSaidasTable extends Table
             'foreignKey' => 'vendedor_id',
             'className' => 'Pessoas'
         ]);
-            $this->addBehavior('Search.Search');
+        $this->hasMany('NotasFiscaisSaidasItens', [
+            'foreignKey' => 'notas_fiscais_saida_id'
+        ]);
     }
-
-    public function searchConfiguration() {
-        return $this->searchConfigurationDynamic();
-    }
-
-    private function searchConfigurationDynamic() {
-        $search = new Manager($this);
-        $c = $this->schema()->columns();
-        foreach ($c as $key => $value) {
-            $t = $this->schema()->columnType($value);
-            if ($t != 'string' AND $t != 'text') {
-                $search->value($value, ['field' => $this->aliasField($value)]);
-            } else {
-                $search->like($value, ['before' => true, 'after' => true, 'field' => $this->aliasField($value)]);
-            }
-        }
-
-        return $search;
-    }
-
 
     /**
      * Default validation rules.
@@ -89,99 +66,98 @@ class NotaFiscalSaidasTable extends Table
      * @param \Cake\Validation\Validator $validator Validator instance.
      * @return \Cake\Validation\Validator
      */
-    public function validationDefault(Validator $validator)
-    {
+    public function validationDefault(Validator $validator) {
         $validator
-                ->add('id', 'valid', ['rule' => 'numeric'])
+                ->integer('id')
                 ->allowEmpty('id', 'create');
 
         $validator
-                ->add('numero_nota_fiscal', 'valid', ['rule' => 'numeric'])
+                ->integer('numero_nota_fiscal')
                 ->allowEmpty('numero_nota_fiscal');
 
         $validator
                 ->allowEmpty('serie');
 
         $validator
-                ->add('data_emissao', 'valid', ['rule' => 'date'])
+                ->date('data_emissao')
                 ->allowEmpty('data_emissao');
 
         $validator
-                ->add('data_saida', 'valid', ['rule' => 'date'])
+                ->date('data_saida')
                 ->allowEmpty('data_saida');
 
         $validator
                 ->allowEmpty('hora_saida');
 
         $validator
-                ->add('total_produtos', 'valid', ['rule' => 'money'])
+                ->numeric('total_produtos')
                 ->allowEmpty('total_produtos');
 
         $validator
-                ->add('total_nota', 'valid', ['rule' => 'money'])
+                ->numeric('total_nota')
                 ->allowEmpty('total_nota');
 
         $validator
-                ->add('base_icms', 'valid', ['rule' => 'money'])
+                ->numeric('base_icms')
                 ->allowEmpty('base_icms');
 
         $validator
-                ->add('valor_icms', 'valid', ['rule' => 'money'])
+                ->numeric('valor_icms')
                 ->allowEmpty('valor_icms');
 
         $validator
-                ->add('cancelada', 'valid', ['rule' => 'numeric'])
+                ->integer('cancelada')
                 ->allowEmpty('cancelada');
 
         $validator
-                ->add('data_cancelada', 'valid', ['rule' => 'date'])
+                ->date('data_cancelada')
                 ->allowEmpty('data_cancelada');
 
         $validator
-                ->add('numero_pedido', 'valid', ['rule' => 'numeric'])
+                ->integer('numero_pedido')
                 ->allowEmpty('numero_pedido');
 
         $validator
-                ->add('frete', 'valid', ['rule' => 'numeric'])
+                ->integer('frete')
                 ->allowEmpty('frete');
 
         $validator
-                ->add('qtde_volumes', 'valid', ['rule' => 'numeric'])
+                ->integer('qtde_volumes')
                 ->allowEmpty('qtde_volumes');
 
         $validator
                 ->allowEmpty('especie');
 
         $validator
-                ->add('base_st', 'valid', ['rule' => 'numeric'])
+                ->numeric('base_st')
                 ->allowEmpty('base_st');
 
         $validator
-                ->add('valor_st', 'valid', ['rule' => 'numeric'])
+                ->numeric('valor_st')
                 ->allowEmpty('valor_st');
 
         $validator
-                ->add('base_credito', 'valid', ['rule' => 'numeric'])
+                ->numeric('base_credito')
                 ->allowEmpty('base_credito');
 
         $validator
-                ->add('valor_credito', 'valid', ['rule' => 'numeric'])
+                ->numeric('valor_credito')
                 ->allowEmpty('valor_credito');
 
         $validator
-                ->add('percentual_tributo', 'valid', ['rule' => 'numeric'])
+                ->numeric('percentual_tributo')
                 ->allowEmpty('percentual_tributo');
 
         $validator
-                ->add('valor_tributo', 'valid', ['rule' => 'numeric'])
+                ->numeric('valor_tributo')
                 ->allowEmpty('valor_tributo');
 
         $validator
-                ->add('operacao', 'valid', ['rule' => 'numeric'])
+                ->integer('operacao')
                 ->allowEmpty('operacao');
 
         $validator
-                ->add('atendimento', 'valid', ['rule' => 'numeric'])
+                ->integer('atendimento')
                 ->allowEmpty('atendimento');
 
         $validator
@@ -197,8 +173,7 @@ class NotaFiscalSaidasTable extends Table
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
      * @return \Cake\ORM\RulesChecker
      */
-    public function buildRules(RulesChecker $rules)
-    {
+    public function buildRules(RulesChecker $rules) {
         $rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
         $rules->add($rules->existsIn(['cfop_id'], 'Cfops'));
         $rules->add($rules->existsIn(['pessoa_id'], 'Pessoas'));

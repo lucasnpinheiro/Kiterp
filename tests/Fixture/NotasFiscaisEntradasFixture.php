@@ -4,10 +4,10 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * NotaFiscalEntradasFixture
+ * NotasFiscaisEntradasFixture
  *
  */
-class NotaFiscalEntradasFixture extends TestFixture
+class NotasFiscaisEntradasFixture extends TestFixture
 {
 
     /**
@@ -70,8 +70,8 @@ class NotaFiscalEntradasFixture extends TestFixture
             'valor_ipi' => 1,
             'valor_frete' => 1,
             'valor_seguro' => 1,
-            'created' => '2016-02-29 20:25:49',
-            'modified' => '2016-02-29 20:25:49'
+            'created' => '2016-02-29 20:31:41',
+            'modified' => '2016-02-29 20:31:41'
         ],
     ];
 }

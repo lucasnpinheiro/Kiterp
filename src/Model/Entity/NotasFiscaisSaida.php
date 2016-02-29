@@ -4,7 +4,7 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * NotaFiscalSaida Entity.
+ * NotasFiscaisSaida Entity.
  *
  * @property int $id
  * @property int $empresa_id
@@ -45,8 +45,9 @@ use Cake\ORM\Entity;
  * @property string $data_hora
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
+ * @property \App\Model\Entity\NotasFiscaisSaidasIten[] $notas_fiscais_saidas_itens
  */
-class NotaFiscalSaida extends Entity
+class NotasFiscaisSaida extends Entity
 {
 
     /**
@@ -60,5 +61,6 @@ class NotaFiscalSaida extends Entity
      */
     protected $_accessible = [
         '*' => true,
+        'id' => false,
     ];
 }

@@ -1,13 +1,13 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
-use App\Controller\NotaFiscalSaidasItensController;
+use App\Controller\NotasFiscaisEntradasController;
 use Cake\TestSuite\IntegrationTestCase;
 
 /**
- * App\Controller\NotaFiscalSaidasItensController Test Case
+ * App\Controller\NotasFiscaisEntradasController Test Case
  */
-class NotaFiscalSaidasItensControllerTest extends IntegrationTestCase
+class NotasFiscaisEntradasControllerTest extends IntegrationTestCase
 {
 
     /**
@@ -16,8 +16,7 @@ class NotaFiscalSaidasItensControllerTest extends IntegrationTestCase
      * @var array
      */
     public $fixtures = [
-        'app.nota_fiscal_saidas_itens',
-        'app.nota_fiscal_saidas',
+        'app.notas_fiscais_entradas',
         'app.empresas',
         'app.pessoas',
         'app.contas_pagar',
@@ -28,17 +27,7 @@ class NotaFiscalSaidasItensControllerTest extends IntegrationTestCase
         'app.condicoes_pagamentos',
         'app.vendedores',
         'app.nota_fiscal_entradas',
-        'app.cfops',
-        'app.nota_fiscal_entradas_itens',
-        'app.produtos',
-        'app.grupos_estoques',
-        'app.pedidos_itens',
-        'app.produtos_valores',
-        'app.ncms',
-        'app.cst_pis',
-        'app.cst_cofins',
-        'app.cst_icms',
-        'app.cst_origem',
+        'app.nota_fiscal_saidas',
         'app.usuarios',
         'app.pessoas_enderecos',
         'app.pessoas_contatos',
@@ -47,12 +36,24 @@ class NotaFiscalSaidasItensControllerTest extends IntegrationTestCase
         'app.pessoas_juridicas',
         'app.pessoas_associacoes',
         'app.transportadoras',
+        'app.pedidos_itens',
+        'app.produtos',
+        'app.grupos_estoques',
+        'app.nota_fiscal_entradas_itens',
+        'app.nota_fiscal_saidas_itens',
+        'app.produtos_valores',
+        'app.ncms',
+        'app.cst_pis',
+        'app.cst_cofins',
+        'app.cst_icms',
+        'app.cst_origem',
         'app.pedidos_formas_pagamentos',
         'app.forma_pagamentos',
         'app.tradutoras',
         'app.produtos_kits',
         'app.kits',
-        'app.vendedors'
+        'app.cfops',
+        'app.notas_fiscais_entradas_itens'
     ];
 
     /**

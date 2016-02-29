@@ -4,20 +4,31 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * NotaFiscalEntradasIten Entity.
+ * NotasFiscaisSaidasIten Entity.
  *
  * @property int $id
- * @property int $nota_fiscal_entrada_id
- * @property \App\Model\Entity\NotaFiscalEntrada $nota_fiscal_entrada
+ * @property int $notas_fiscais_saida_id
+ * @property \App\Model\Entity\NotasFiscaisSaida $notas_fiscais_saida
  * @property int $produto_id
  * @property \App\Model\Entity\Produto $produto
  * @property float $qtde
- * @property float $compra
+ * @property float $venda
  * @property float $total
+ * @property float $base_icms
+ * @property float $valor_icms
+ * @property int $ncms_id
+ * @property \App\Model\Entity\Ncm $ncm
+ * @property string $cfop
+ * @property string $origem
+ * @property float $base_credito
+ * @property float $valor_credito
+ * @property float $base_st
+ * @property float $valor_st
+ * @property float $valor_tributo
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  */
-class NotaFiscalEntradasIten extends Entity
+class NotasFiscaisSaidasIten extends Entity
 {
 
     /**
@@ -31,5 +42,6 @@ class NotaFiscalEntradasIten extends Entity
      */
     protected $_accessible = [
         '*' => true,
+        'id' => false,
     ];
 }

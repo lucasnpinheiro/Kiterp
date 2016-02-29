@@ -26,29 +26,27 @@ $this->Html->addCrumb('Consultar', null);
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('caixas_diario_id') ?></th>
                                 <th><?= $this->Paginator->sort('status') ?></th>
                                 <th><?= $this->Paginator->sort('valor') ?></th>
                                 <th><?= $this->Paginator->sort('grupo_id') ?></th>
                                 <th><?= $this->Paginator->sort('created') ?></th>
-                                <th><?= $this->Paginator->sort('modified') ?></th>
                                 <th class="actions"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($caixasMovimentos as $caixasMovimento): ?>
+                            <?php
+                            foreach ($caixasMovimentos as $caixasMovimento):
+                                ?>
                                 <tr>
-                                    <td><?= $this->Number->format($caixasMovimento->id) ?></td>
-                                    <td><?= $this->Number->format($caixasMovimento->caixas_diario_id) ?></td>
-                                    <td><?= $this->Number->format($caixasMovimento->status) ?></td>
-                                    <td><?= $this->Number->format($caixasMovimento->valor) ?></td>
-                                    <td><?= $this->Number->format($caixasMovimento->grupo_id) ?></td>
+                                    <td><?= h($caixasMovimento->caixas_diario->data) . ' | ' . h($caixasMovimento->caixas_diario->pessoa->nome); ?></td>
+                                    <td><?= $this->Html->statusMovimentos($caixasMovimento->status) ?></td>
+                                    <td><?= $this->Html->moeda($caixasMovimento->valor) ?></td>
+                                    <td><?= $this->Html->pagamentos($caixasMovimento->grupo_id) ?></td>
                                     <td><?= h($caixasMovimento->created) ?></td>
-                                    <td><?= h($caixasMovimento->modified) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $caixasMovimento->id]) ?>
-                                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $caixasMovimento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $caixasMovimento->id)]) ?>
+                                        <?= $this->Html->link(__('Alterar'), ['action' => 'edit', $caixasMovimento->id]) ?>
+                                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $caixasMovimento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $caixasMovimento->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

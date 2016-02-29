@@ -12,6 +12,13 @@ class NotaFiscalEntradasTableTest extends TestCase
 {
 
     /**
+     * Test subject
+     *
+     * @var \App\Model\Table\NotaFiscalEntradasTable
+     */
+    public $NotaFiscalEntradas;
+
+    /**
      * Fixtures
      *
      * @var array
@@ -23,12 +30,37 @@ class NotaFiscalEntradasTableTest extends TestCase
         'app.contas_pagar',
         'app.bancos',
         'app.contas_receber',
-        'app.tradutoras',
-        'app.nota_fiscal_entrada',
-        'app.cfops',
-        'app.nota_fiscal_saida',
+        'app.formas_pagamentos',
         'app.pedidos',
-        'app.produtos_kits'
+        'app.condicoes_pagamentos',
+        'app.vendedores',
+        'app.nota_fiscal_saidas',
+        'app.cfops',
+        'app.forma_pagamentos',
+        'app.transportadoras',
+        'app.vendedors',
+        'app.usuarios',
+        'app.pessoas_enderecos',
+        'app.pessoas_contatos',
+        'app.tipos_contatos',
+        'app.pessoas_fisicas',
+        'app.pessoas_juridicas',
+        'app.pessoas_associacoes',
+        'app.pedidos_itens',
+        'app.produtos',
+        'app.grupos_estoques',
+        'app.nota_fiscal_entradas_itens',
+        'app.nota_fiscal_saidas_itens',
+        'app.ncms',
+        'app.produtos_valores',
+        'app.cst_pis',
+        'app.cst_cofins',
+        'app.cst_icms',
+        'app.cst_origem',
+        'app.pedidos_formas_pagamentos',
+        'app.tradutoras',
+        'app.produtos_kits',
+        'app.kits'
     ];
 
     /**
@@ -61,6 +93,16 @@ class NotaFiscalEntradasTableTest extends TestCase
      * @return void
      */
     public function testInitialize()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test searchConfiguration method
+     *
+     * @return void
+     */
+    public function testSearchConfiguration()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

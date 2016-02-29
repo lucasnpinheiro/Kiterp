@@ -4,10 +4,10 @@ namespace App\Test\Fixture;
 use Cake\TestSuite\Fixture\TestFixture;
 
 /**
- * NotaFiscalSaidasItensFixture
+ * NotasFiscaisSaidasItensFixture
  *
  */
-class NotaFiscalSaidasItensFixture extends TestFixture
+class NotasFiscaisSaidasItensFixture extends TestFixture
 {
 
     /**
@@ -18,7 +18,7 @@ class NotaFiscalSaidasItensFixture extends TestFixture
     // @codingStandardsIgnoreStart
     public $fields = [
         'id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'autoIncrement' => true, 'precision' => null],
-        'nota_fiscal_saida_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'notas_fiscais_saida_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'produto_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'qtde' => ['type' => 'float', 'length' => 6, 'precision' => 4, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => ''],
         'venda' => ['type' => 'float', 'length' => 10, 'precision' => 2, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => ''],
@@ -53,7 +53,7 @@ class NotaFiscalSaidasItensFixture extends TestFixture
     public $records = [
         [
             'id' => 1,
-            'nota_fiscal_saida_id' => 1,
+            'notas_fiscais_saida_id' => 1,
             'produto_id' => 1,
             'qtde' => 1,
             'venda' => 1,
@@ -68,8 +68,8 @@ class NotaFiscalSaidasItensFixture extends TestFixture
             'base_st' => 1,
             'valor_st' => 1,
             'valor_tributo' => 1,
-            'created' => '2016-02-29 20:26:36',
-            'modified' => '2016-02-29 20:26:36'
+            'created' => '2016-02-29 20:32:17',
+            'modified' => '2016-02-29 20:32:17'
         ],
     ];
 }
