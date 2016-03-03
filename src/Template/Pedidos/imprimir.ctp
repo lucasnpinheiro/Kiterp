@@ -20,7 +20,7 @@
         <div style="display: inline-block; width: 20%;"></div>
         <div style="display: inline-block; width: 79%;"><?php echo $pedido->pessoa->pessoas_enderecos[0]->bairro; ?></div>
         <div style="display: inline-block; width: 20%;">Vendedor: </div>
-        <div style="display: inline-block; width: 34%;"><?php echo $pedido->vendedore->nome; ?></div>
+        <div style="display: inline-block; width: 30%;"><?php echo $pedido->vendedore->nome; ?></div>
         <div style="display: inline-block; width: 15%;">Cond. Pgto: </div>
         <div style="display: inline-block; width: 29%;"><?php echo $pedido->condicoes_pagamento->nome; ?></div>
         <div style="display: inline-block; width: 20%;">Transportadora: </div>
