@@ -5,34 +5,29 @@ cake.pessoas.tipoPessoa = function () {
     $('.div-pessoas-fisica').find(':input').removeAttr('required');
     $('.div-pessoas-juridica').find(':input').removeAttr('required');
 
-    if ($('#tipo-pessoa').val() != '') {
-        if ($('#tipo-pessoa').val() == 1) {
-            $('.div-pessoas-fisica').find('#pessoasfisica-cpf').attr('required', 'required');
-            $('.div-pessoas-fisica').show();
-            cake.pessoas.consulta('fisica');
-        } else if ($('#tipo-pessoa').val() == 2) {
-            $('.div-pessoas-juridica').find('#pessoasjuridica-cnpj').attr('required', 'required');
-            $('.div-pessoas-juridica').find('#pessoasjuridica-data-abertura').attr('required', 'required');
-            $('.div-pessoas-juridica').show();
-            cake.pessoas.consulta('juridica');
-        }
-    }
-
+    cake.pessoas.div($('#tipo-pessoa').val());
     $('#tipo-pessoa').change(function (e) {
         e.preventDefault();
-        if ($(this).val() == 1) {
-            $('.div-pessoas-fisica').find('#pessoasfisica-cpf').attr('required', 'required');
-            $('.div-pessoas-fisica').show();
-            cake.pessoas.consulta('fisica');
-        } else if ($(this).val() == 2) {
-            $('.div-pessoas-juridica').find('#pessoasjuridica-cnpj').attr('required', 'required');
-            $('.div-pessoas-juridica').find('#pessoasjuridica-data-abertura').attr('required', 'required');
-            $('.div-pessoas-juridica').show();
-            cake.pessoas.consulta('juridica');
-        }
+        cake.pessoas.div($(this).val());
     });
 
 }
+
+cake.pessoas.div = function (valor) {
+    $('.div-pessoas-fisica').hide();
+    $('.div-pessoas-juridica').hide();
+    if (valor == 1) {
+        //$('.div-pessoas-fisica').find('#pessoasfisica-cpf').attr('required', 'required');
+        $('.div-pessoas-fisica').show();
+        cake.pessoas.consulta('fisica');
+    } else if (valor == 2) {
+        //$('.div-pessoas-juridica').find('#pessoasjuridica-cnpj').attr('required', 'required');
+        //$('.div-pessoas-juridica').find('#pessoasjuridica-data-abertura').attr('required', 'required');
+        $('.div-pessoas-juridica').show();
+        cake.pessoas.consulta('juridica');
+    }
+}
+
 cake.pessoas.clone = function (tipo, busca) {
     cake.pessoas[tipo] = parseInt($('.' + tipo + '-multi-field').length) - 1;
     var $wrapper = $('.' + tipo + '-multi-fields').find('.' + tipo + '-multi-field').eq(0).html();

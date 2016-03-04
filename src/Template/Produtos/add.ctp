@@ -10,7 +10,7 @@ $this->Html->addCrumb('Cadastrar', null);
                 <h5><?= __('Cadastrar ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
-                <?= $this->Form->create($produto, ['type' => 'file']) ?>
+                <?= $this->Form->create($produto, ['type' => 'file', 'autocomplete' => "on"]) ?>
                 <?php
                 echo $this->Form->input('barra', ['maxlength' => 14, 'div' => ['class' => 'col-xs-12 col-md-6']]);
                 echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);

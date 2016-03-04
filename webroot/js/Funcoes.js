@@ -207,36 +207,35 @@ cake.util.mascaras = function () {
     $(".moeda").each(function () {
         if ($(this).prop('readonly') == false) {
             $(this).maskMoney({
-                prefix: '',
-                allowNegative: true,
-                thousands: '.',
-                decimal: ',',
-                affixesStay: false
+                prefix: $(this).attr('data-prefix'),
+                allowNegative: $(this).attr('data-allowNegative'),
+                thousands: $(this).attr('data-thousands'),
+                decimal: $(this).attr('data-decimal'),
+                affixesStay: $(this).attr('data-affixesStay')
             });
         }
     });
     $(".juros").each(function () {
         if ($(this).prop('readonly') == false) {
             $(this).maskMoney({
-                suffix: '',
-                allowNegative: false,
-                thousands: '',
-                decimal: ',',
-                affixesStay: false,
-                precision: 4
+                suffix: $(this).attr('data-suffix'),
+                allowNegative: $(this).attr('data-allowNegative'),
+                thousands: $(this).attr('data-thousands'),
+                decimal: $(this).attr('data-decimal'),
+                affixesStay: $(this).attr('data-affixesStay'),
+                precision: $(this).attr('data-precision')
             });
         }
     });
     $(".quantidade").each(function () {
         if ($(this).prop('readonly') == false) {
-            var casas = $(this).attr('casas');
             $(this).maskMoney({
-                suffix: '',
-                allowNegative: false,
-                thousands: '',
-                decimal: ',',
-                affixesStay: false,
-                precision: parseInt(casas)
+                suffix: $(this).attr('data-suffix'),
+                allowNegative: $(this).attr('data-allowNegative'),
+                thousands: $(this).attr('data-thousands'),
+                decimal: $(this).attr('data-decimal'),
+                affixesStay: $(this).attr('data-affixesStay'),
+                precision: $(this).attr('data-precision')
             });
         }
     });

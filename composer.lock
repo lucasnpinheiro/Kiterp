@@ -486,16 +486,16 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "v0.5.1",
+            "version": "v0.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robmorgan/phinx.git",
-                "reference": "9e41ae609670645546e08e3907a68b3b8fb60f31"
+                "reference": "69aa56d80ba5cbd2904be4a95c46b78a3ebd5916"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/9e41ae609670645546e08e3907a68b3b8fb60f31",
-                "reference": "9e41ae609670645546e08e3907a68b3b8fb60f31",
+                "url": "https://api.github.com/repos/robmorgan/phinx/zipball/69aa56d80ba5cbd2904be4a95c46b78a3ebd5916",
+                "reference": "69aa56d80ba5cbd2904be4a95c46b78a3ebd5916",
                 "shasum": ""
             },
             "require": {
@@ -543,7 +543,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2015-12-30 21:16:52"
+            "time": "2016-03-01 15:43:58"
         },
         {
             "name": "symfony/config",

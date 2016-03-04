@@ -109,6 +109,7 @@ class ProdutosController extends AppController {
                 'produto' => $find[0]
             ];
         }
+        //$this->Produtos->query();
         $this->set('retorno', $retorno);
     }
 

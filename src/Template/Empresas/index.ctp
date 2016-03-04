@@ -11,18 +11,7 @@ $this->Html->addCrumb('Consultar', null);
                 <h5><?= __('Lista de ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
-                <div class="row text-right">
-                    <?php
-                    echo $this->Form->create(null, [
-                        'inline' => true,
-                        'label' => false
-                    ]);
-                    echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Empresa']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
-                    echo $this->Form->end();
-                    ?>
-
-                </div>
+                
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-condensed">
                         <thead>

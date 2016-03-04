@@ -99,6 +99,7 @@ class MyFormHelper extends BootstrapFormHelper {
         ];
         return $this->input($fieldName, $options);
     }
+
     public function statusMovimentos($fieldName, array $options = []) {
         //1 - Abertura | 2 - Entrada | 3 - Saída | 9 - Excluido
         $options += [
@@ -164,6 +165,7 @@ class MyFormHelper extends BootstrapFormHelper {
                 5 => __('Cst Cofins'),
                 6 => __('Icms Origem'),
                 7 => __('Tabela Cfop'),
+                8 => __('Origem'),
             ],
             'empty' => __('Selecionar um Tipo de Imposto')
         ];
@@ -197,6 +199,42 @@ class MyFormHelper extends BootstrapFormHelper {
             'type' => 'select',
             'options' => $_empresas,
             'empty' => __('Selecionar uma Empresa')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
+    public function impostos($fieldName, array $options = [], $tipo_imposto = null) {
+        $impostos = TableRegistry::get('Impostos');
+
+        $find = $impostos->find()->where(['tipo_imposto' => $tipo_imposto])->all();
+        $_impostos = [];
+        if (!empty($find)) {
+            foreach ($find as $key => $value) {
+                $_impostos[$value->id] = $value->codigo . ' - ' . $value->nome;
+            }
+        }
+        $options += [
+            'type' => 'select',
+            'options' => $_impostos,
+            'empty' => __('Selecione um registro')
+        ];
+        return $this->input($fieldName, $options);
+    }
+
+    public function ncm($fieldName, array $options = []) {
+        $impostos = TableRegistry::get('Ncm');
+
+        $find = $impostos->find()->all();
+        $_impostos = [];
+        if (!empty($find)) {
+            foreach ($find as $key => $value) {
+                $_impostos[$value->id] = $value->ncm . ' - ' . $value->nome;
+            }
+        }
+        $options += [
+            'type' => 'select',
+            'options' => $_impostos,
+            'empty' => __('Selecione um registro')
         ];
         return $this->input($fieldName, $options);
     }
@@ -437,6 +475,11 @@ class MyFormHelper extends BootstrapFormHelper {
 
         $val = $this->context();
         $default = [
+            'data-prefix' => '',
+            'data-allowNegative' => false,
+            'data-thousands' => '.',
+            'data-decimal' => ',',
+            'data-affixesStay' => false,
             'type' => 'text',
             'class' => 'moeda',
             'append' => '<i class="fa fa-money"></i>',
@@ -448,20 +491,30 @@ class MyFormHelper extends BootstrapFormHelper {
     }
 
     public function juros($fieldName, array $options = []) {
-        $currency = [
-            'before' => '',
-            'zero' => '0,0000',
-            'places' => '4',
-            'precision' => '4',
-            'locale' => 'pt_BR',
-        ];
-        $val = $this->context();
         $default = [
+            'data-suffix' => '',
+            'data-allowNegative' => false,
+            'data-thousands' => '.',
+            'data-decimal' => ',',
+            'data-affixesStay' => false,
+            'data-precision' => 4,
             'type' => 'text',
             'class' => 'juros',
             'append' => '%',
-            'value' => ($val->val($fieldName) ? $this->Number->format($val->val($fieldName), $currency) : null)
         ];
+
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
+
+        $currency = [
+            'before' => '',
+            'zero' => str_pad('0,', (int) $options['data-precision'], "0"),
+            'places' => (int) $options['data-precision'],
+            'precision' => (int) $options['data-precision'],
+            'locale' => 'pt_BR',
+        ];
+        $val = $this->context();
+        $default['value'] = ($val->val($fieldName) ? $this->Number->format($val->val($fieldName), $currency) : null);
 
         $options = \Cake\Utility\Hash::merge($default, $options);
         $options = $this->mergeClassCss($default, $options);
@@ -469,21 +522,30 @@ class MyFormHelper extends BootstrapFormHelper {
     }
 
     public function quantidade($fieldName, array $options = []) {
+        $default = [
+            'data-suffix' => '',
+            'data-allowNegative' => false,
+            'data-thousands' => '.',
+            'data-decimal' => ',',
+            'data-affixesStay' => false,
+            'data-precision' => \Cake\Core\Configure::read('Parametros.NCasasDecimais'),
+            'type' => 'text',
+            'class' => 'quantidade',
+            'append' => '0-9',
+        ];
+
+        $options = \Cake\Utility\Hash::merge($default, $options);
+        $options = $this->mergeClassCss($default, $options);
+
         $currency = [
             'before' => '',
-            'zero' => '0,0000',
-            'places' => '2',
-            'precision' => \Cake\Core\Configure::read('Parametros.NCasasDecimais'),
+            'zero' => str_pad('0,', (int) $options['data-precision'], "0"),
+            'places' => (int) $options['data-precision'],
+            'precision' => (int) $options['data-precision'],
             'locale' => 'pt_BR',
         ];
         $val = $this->context();
-        $default = [
-            'type' => 'text',
-            'class' => 'quantidade',
-            'casas' => \Cake\Core\Configure::read('Parametros.NCasasDecimais'),
-            'append' => '0-9',
-            'value' => ($val->val($fieldName) ? $this->Number->format($val->val($fieldName), $currency) : null)
-        ];
+        $default['value'] = ($val->val($fieldName) ? $this->Number->format($val->val($fieldName), $currency) : null);
 
         $options = \Cake\Utility\Hash::merge($default, $options);
         $options = $this->mergeClassCss($default, $options);

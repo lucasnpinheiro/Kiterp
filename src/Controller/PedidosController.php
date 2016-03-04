@@ -180,6 +180,7 @@ class PedidosController extends AppController {
                     return $q->contain('Produtos')->autoFields(true);
                 }]
         ]);
+        $pedido->numero_caixa = $this->getCaixaDiario();
         if ($this->request->is(['patch', 'post', 'put'])) {
             foreach ($this->request->data['parcelas'] as $key => $value) {
                 $this->request->data['parcelas'][$key]['data'] = implode('-', array_reverse(explode('/', $value['data'])));
@@ -318,7 +319,11 @@ class PedidosController extends AppController {
                     }
                 }
                 $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                return $this->redirect(['action' => 'index', '?' => ['status' => [2, 7]]]);
+                if (\Cake\Core\Configure::read('Parametros.PTelaPedido') == 1) {
+                    return $this->redirect(['action' => 'add']);
+                } else {
+                    return $this->redirect(['action' => 'index', '?' => ['status' => [2, 7]]]);
+                }
             } else {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
@@ -372,7 +377,7 @@ class PedidosController extends AppController {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
-        $pedido->numero_caixa = $this->getCaixaDiario();
+
         $findPedidosAberto = $this->Pedidos->find()->where(['status' => 1, 'vendedor_id' => $this->Auth->user('id')])->contain(['PedidosItens' => function($q) {
                         return $q->contain('Produtos');
                     }])->first();
@@ -416,7 +421,7 @@ class PedidosController extends AppController {
                 $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
             }
         }
-        $pedido->numero_caixa = $this->getCaixaDiario();
+
         $pedido->pedido_id = $pedido->id;
         $this->loadModel('Pessoas');
         $this->loadModel('Empresas');

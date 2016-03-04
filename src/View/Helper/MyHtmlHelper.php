@@ -83,6 +83,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
             5 => ['text' => __('Cst Cofins'), 'class' => 'info'],
             6 => ['text' => __('Icms Origem'), 'class' => 'info'],
             7 => ['text' => __('Tabela Cfop'), 'class' => 'info'],
+            8 => ['text' => __('Origem'), 'class' => 'info'],
         ];
         return $this->label($r[$id]['text'], $r[$id]['class']);
     }

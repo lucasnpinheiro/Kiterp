@@ -14,8 +14,8 @@ $this->Html->addCrumb('Cadastrar', null);
                 <?php
                 echo $this->Form->input('estado', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->juros('icms_interno', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
-                echo $this->Form->juros('icms_externo', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->juros('icms_interno', ['data-precision' => 2, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                echo $this->Form->juros('icms_externo', ['data-precision' => 2, 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">
