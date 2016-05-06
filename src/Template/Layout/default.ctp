@@ -39,7 +39,7 @@
                 <div class="row border-bottom white-bg">
                     <?php echo $this->element('Layout/menu_1'); ?>
                 </div>
-                <div class="container-fluid" style="margin-top: 35px;">
+                <div class="container-fluid" style="margin-top: 35px; padding-bottom: 35px;">
                     <?php echo $this->element('Layout/header_title'); ?>
                     <div class="row">
                         <div class="col-lg-12">
@@ -48,8 +48,11 @@
                     </div>
                     <div>
                         <?php echo $this->fetch('content') ?>
+                        <div class="clearfix"></div>
                     </div>
+                    <div class="clearfix"></div>
                 </div>
+                <div class="clearfix"></div>
                 <div class="footer black-bg">
                     <div class="pull-right">
                         Versão 01.00.01

@@ -45,8 +45,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Number->format($banco->sequencial_arquivo) ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
-                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $banco->id]) ?>
-                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $banco->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $banco->id)]) ?>
+                                            <?= $this->Html->link('', ['action' => 'edit', $banco->id]) ?>
+                                            <?= $this->Form->postLink('', ['action' => 'delete', $banco->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $banco->id)]) ?>
                                         </div>
                                     </td>
                                 </tr>

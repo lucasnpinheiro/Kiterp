@@ -312,6 +312,12 @@ class MyFormHelper extends BootstrapFormHelper {
             $options['class'] .= ' btn-danger ';
         }
 
+        if (empty($options['title'])) {
+            if (!empty($url['action'])) {
+                $options['title'] = __(\Cake\Utility\Inflector::camelize($url['action']));
+            }
+        }
+
         return parent::postLink($title, $url, $options);
     }
 

@@ -32,9 +32,9 @@
                 <td><?= $this->Number->format($inventario->estoque) ?></td>
                 <td><?= $this->Number->format($inventario->compra) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $inventario->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $inventario->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $inventario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $inventario->id)]) ?>
+                    <?= $this->Html->link('', ['action' => 'view', $inventario->id]) ?>
+                    <?= $this->Html->link('', ['action' => 'edit', $inventario->id]) ?>
+                    <?= $this->Form->postLink('', ['action' => 'delete', $inventario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $inventario->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

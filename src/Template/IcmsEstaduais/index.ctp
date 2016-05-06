@@ -43,7 +43,7 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->juros($icmsEstaduai->icms_externo) ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
-                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $icmsEstaduai->id]) ?>
+                                            <?= $this->Html->link('', ['action' => 'edit', $icmsEstaduai->id]) ?>
                                         </div>
                                     </td>
                                 </tr>

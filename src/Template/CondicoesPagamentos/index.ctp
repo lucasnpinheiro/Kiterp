@@ -45,8 +45,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= (!empty($condicoesPagamento->parcelas) ? implode(' / ', unserialize($condicoesPagamento->parcelas)) : '') ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
-                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $condicoesPagamento->id]) ?>
-                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $condicoesPagamento->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $condicoesPagamento->id)]) ?>
+                                            <?= $this->Html->link('', ['action' => 'edit', $condicoesPagamento->id]) ?>
+                                            <?= $this->Form->postLink('', ['action' => 'delete', $condicoesPagamento->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $condicoesPagamento->id)]) ?>
                                         </div>
                                     </td>
                                 </tr>

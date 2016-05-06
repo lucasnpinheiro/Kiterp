@@ -55,7 +55,7 @@ $this->Html->addCrumb('Consultar', null);
                                     <div class="btn-group" role="group" aria-label="">
                                             <?php
                                             if ($pedido->status == 1 OR $pedido->status == 4 OR $pedido->status == 2) {
-                                                echo $this->Html->link('Alterar', ['action' => 'edit', $pedido->id]);
+                                                echo $this->Html->link('', ['action' => 'edit', $pedido->id]);
                                             }
                                             if ($pedido->status == 2 OR $pedido->status == 7) {
                                                 echo $this->Html->link('Receber', ['action' => 'receber', $pedido->id], ['class' => ' btn-info  btn btn-xs ', 'icon' => 'money']);

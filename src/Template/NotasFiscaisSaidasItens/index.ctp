@@ -34,9 +34,9 @@
                 <td><?= $this->Number->format($notasFiscaisSaidasIten->total) ?></td>
                 <td><?= $this->Number->format($notasFiscaisSaidasIten->base_icms) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $notasFiscaisSaidasIten->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $notasFiscaisSaidasIten->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $notasFiscaisSaidasIten->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notasFiscaisSaidasIten->id)]) ?>
+                    <?= $this->Html->link('', ['action' => 'view', $notasFiscaisSaidasIten->id]) ?>
+                    <?= $this->Html->link('', ['action' => 'edit', $notasFiscaisSaidasIten->id]) ?>
+                    <?= $this->Form->postLink('', ['action' => 'delete', $notasFiscaisSaidasIten->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notasFiscaisSaidasIten->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

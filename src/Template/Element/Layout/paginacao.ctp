@@ -1,9 +1,10 @@
+<div class="clearfix"></div>
 <div class="row">
     <div class="col-xs-12 col-md-9 text-center">
         <?=
         $this->Paginator->numbers([
-            'prev' => '< ' . __('previous'),
-            'next' => __('next') . ' >',
+            'prev' => '< ' . __('anterior'),
+            'next' => __('próximo') . ' >',
             'escape' => false
         ])
         ?>
@@ -15,4 +16,6 @@
             ])
             ?></p>
     </div>
+    <div class="clearfix"></div>
 </div>
+<div class="clearfix"></div>

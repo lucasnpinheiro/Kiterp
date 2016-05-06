@@ -11,6 +11,22 @@ $this->Html->addCrumb('Consultar', null);
                 <h5><?= __('Lista de ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
+                <div class="row text-right">
+                    <?php
+                    echo $this->Form->create(null, [
+                        'inline' => true,
+                        'label' => false
+                    ]);
+                    echo $this->Form->input('barra', ['label' => false, 'placeholder' => 'Código de Barras']);
+                    echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
+                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->end();
+                    
+                   
+                    
+                    ?>
+
+                </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
@@ -25,8 +41,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->link($produtosKit->kit->nome, ['controller' => 'Produtos', 'action' => 'edit', $produtosKit->kit->id], ['icon' => 'external-link-square']) ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
-                                            <?= $this->Html->link(__('Alterar'), ['action' => 'add', $produtosKit->kit_id]) ?>
-                                            <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $produtosKit->kit_id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $produtosKit->kit_id)]) ?>
+                                            <?= $this->Html->link('', ['action' => 'add', $produtosKit->kit_id], ['class' => ' btn-warning  btn btn-xs ', 'icon' => 'pencil']) ?>
+                                            <?= $this->Form->postLink('', ['action' => 'delete', $produtosKit->kit_id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $produtosKit->kit_id)]) ?>
                                         </div>
                                     </td>
                                 </tr>

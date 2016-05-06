@@ -45,8 +45,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->pagamentos($caixasMovimento->grupo_id) ?></td>
                                     <td><?= h($caixasMovimento->created) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link(__('Alterar'), ['action' => 'edit', $caixasMovimento->id]) ?>
-                                        <?= $this->Form->postLink(__('Excluir'), ['action' => 'delete', $caixasMovimento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $caixasMovimento->id)]) ?>
+                                        <?= $this->Html->link('', ['action' => 'edit', $caixasMovimento->id]) ?>
+                                        <?= $this->Form->postLink('', ['action' => 'delete', $caixasMovimento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $caixasMovimento->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

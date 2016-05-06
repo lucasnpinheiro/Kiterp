@@ -34,6 +34,7 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         ];
         return $this->label($r[$id]['text'], $r[$id]['class']);
     }
+
     public function statusMovimentos($id) {
         $r = [
             1 => ['text' => __('Abertura'), 'class' => 'warning'],
@@ -154,6 +155,13 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
             $options['escape'] = false;
             unset($options['icon']);
         }
+
+        if (empty($options['title'])) {
+            if (!empty($url['action'])) {
+                $options['title'] = __(\Cake\Utility\Inflector::camelize($url['action']));
+            }
+        }
+
         return parent::link($title, $url, $options);
     }
 

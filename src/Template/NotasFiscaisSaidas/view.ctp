@@ -197,9 +197,9 @@
                 <td><?= h($notasFiscaisSaidasItens->created) ?></td>
                 <td><?= h($notasFiscaisSaidasItens->modified) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['controller' => 'NotasFiscaisSaidasItens', 'action' => 'view', $notasFiscaisSaidasItens->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['controller' => 'NotasFiscaisSaidasItens', 'action' => 'edit', $notasFiscaisSaidasItens->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['controller' => 'NotasFiscaisSaidasItens', 'action' => 'delete', $notasFiscaisSaidasItens->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notasFiscaisSaidasItens->id)]) ?>
+                    <?= $this->Html->link('', ['controller' => 'NotasFiscaisSaidasItens', 'action' => 'view', $notasFiscaisSaidasItens->id]) ?>
+                    <?= $this->Html->link('', ['controller' => 'NotasFiscaisSaidasItens', 'action' => 'edit', $notasFiscaisSaidasItens->id]) ?>
+                    <?= $this->Form->postLink('', ['controller' => 'NotasFiscaisSaidasItens', 'action' => 'delete', $notasFiscaisSaidasItens->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notasFiscaisSaidasItens->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

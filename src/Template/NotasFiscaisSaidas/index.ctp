@@ -38,9 +38,9 @@
                 <td><?= $notasFiscaisSaida->has('pessoa') ? $this->Html->link($notasFiscaisSaida->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'view', $notasFiscaisSaida->pessoa->id]) : '' ?></td>
                 <td><?= h($notasFiscaisSaida->data_emissao) ?></td>
                 <td class="actions">
-                    <?= $this->Html->link(__('View'), ['action' => 'view', $notasFiscaisSaida->id]) ?>
-                    <?= $this->Html->link(__('Edit'), ['action' => 'edit', $notasFiscaisSaida->id]) ?>
-                    <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $notasFiscaisSaida->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notasFiscaisSaida->id)]) ?>
+                    <?= $this->Html->link('', ['action' => 'view', $notasFiscaisSaida->id]) ?>
+                    <?= $this->Html->link('', ['action' => 'edit', $notasFiscaisSaida->id]) ?>
+                    <?= $this->Form->postLink('', ['action' => 'delete', $notasFiscaisSaida->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notasFiscaisSaida->id)]) ?>
                 </td>
             </tr>
             <?php endforeach; ?>

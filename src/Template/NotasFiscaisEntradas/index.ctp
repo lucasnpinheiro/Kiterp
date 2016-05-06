@@ -49,8 +49,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Number->format($notasFiscaisEntrada->cfop_id) ?></td>
                                     <td><?= h($notasFiscaisEntrada->data_emissao) ?></td>
                                     <td class="actions">
-                                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $notasFiscaisEntrada->id]) ?>
-                                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $notasFiscaisEntrada->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notasFiscaisEntrada->id)]) ?>
+                                        <?= $this->Html->link('', ['action' => 'edit', $notasFiscaisEntrada->id]) ?>
+                                        <?= $this->Form->postLink('', ['action' => 'delete', $notasFiscaisEntrada->id], ['confirm' => __('Are you sure you want to delete # {0}?', $notasFiscaisEntrada->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

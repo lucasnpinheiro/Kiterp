@@ -50,8 +50,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->jsonToLista($formasPagamento->valor_taxas, $formasPagamento->qtde_taxas) ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
-                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $formasPagamento->id]) ?>
-                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $formasPagamento->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $formasPagamento->id)]) ?>
+                                            <?= $this->Html->link('', ['action' => 'edit', $formasPagamento->id]) ?>
+                                            <?= $this->Form->postLink('', ['action' => 'delete', $formasPagamento->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $formasPagamento->id)]) ?>
                                         </div>
                                     </td>
                                 </tr>

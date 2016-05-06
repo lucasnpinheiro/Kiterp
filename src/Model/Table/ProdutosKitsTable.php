@@ -9,7 +9,6 @@ use Cake\ORM\Table;
 use Cake\Validation\Validator;
 use Search\Manager;
 
-
 /**
  * ProdutosKits Model
  *
@@ -17,8 +16,7 @@ use Search\Manager;
  * @property \Cake\ORM\Association\BelongsTo $Produtos
  * @property \Cake\ORM\Association\BelongsTo $Kits
  */
-class ProdutosKitsTable extends Table
-{
+class ProdutosKitsTable extends Table {
 
     /**
      * Initialize method
@@ -26,8 +24,7 @@ class ProdutosKitsTable extends Table
      * @param array $config The configuration for the Table.
      * @return void
      */
-    public function initialize(array $config)
-    {
+    public function initialize(array $config) {
         parent::initialize($config);
 
         $this->table('produtos_kits');
@@ -46,7 +43,7 @@ class ProdutosKitsTable extends Table
             'foreignKey' => 'kit_id',
             'className' => 'Produtos'
         ]);
-            $this->addBehavior('Search.Search');
+        $this->addBehavior('Search.Search');
     }
 
     public function searchConfiguration() {
@@ -65,42 +62,60 @@ class ProdutosKitsTable extends Table
             }
         }
 
-        return $search;
-    }
+        $search->callback('barra', [
+            'callback' => function ($query, $args, $manager) {
+                return $query->join([
+                            'table' => 'produtos',
+                            'alias' => 'kprodutosbarra',
+                            'type' => 'INNER',
+                            'conditions' => 'kprodutosbarra.id = ProdutosKits.kit_id AND kprodutosbarra.barra RLIKE "' . $args['barra'] . '" AND kprodutosbarra.produto_kit = 1',
+                ]);
+            }
+                ]);
+                $search->callback('nome', [
+                    'callback' => function ($query, $args, $manager) {
+                        return $query->join([
+                                    'table' => 'produtos',
+                                    'alias' => 'kprodutosnome',
+                                    'type' => 'INNER',
+                                    'conditions' => 'kprodutosnome.id = ProdutosKits.kit_id AND kprodutosnome.nome RLIKE "' . $args['nome'] . '" AND kprodutosnome.produto_kit = 1',
+                        ]);
+                    }
+                        ]);
+                        return $search;
+                    }
 
+                    /**
+                     * Default validation rules.
+                     *
+                     * @param \Cake\Validation\Validator $validator Validator instance.
+                     * @return \Cake\Validation\Validator
+                     */
+                    public function validationDefault(Validator $validator) {
+                        $validator
+                                ->add('id', 'valid', ['rule' => 'numeric'])
+                                ->allowEmpty('id', 'create');
 
-    /**
-     * Default validation rules.
-     *
-     * @param \Cake\Validation\Validator $validator Validator instance.
-     * @return \Cake\Validation\Validator
-     */
-    public function validationDefault(Validator $validator)
-    {
-        $validator
-                ->add('id', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('id', 'create');
+                        $validator
+                                ->add('qtde', 'valid', ['rule' => 'money'])
+                                ->allowEmpty('qtde');
 
-        $validator
-                ->add('qtde', 'valid', ['rule' => 'money'])
-                ->allowEmpty('qtde');
+                        return $validator;
+                    }
 
-        return $validator;
-    }
+                    /**
+                     * Returns a rules checker object that will be used for validating
+                     * application integrity.
+                     *
+                     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+                     * @return \Cake\ORM\RulesChecker
+                     */
+                    public function buildRules(RulesChecker $rules) {
+                        $rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
+                        $rules->add($rules->existsIn(['produto_id'], 'Produtos'));
+                        $rules->add($rules->existsIn(['kit_id'], 'Kits'));
+                        return $rules;
+                    }
 
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['empresa_id'], 'Empresas'));
-        $rules->add($rules->existsIn(['produto_id'], 'Produtos'));
-        $rules->add($rules->existsIn(['kit_id'], 'Kits'));
-        return $rules;
-    }
-
-}
+                }
+                

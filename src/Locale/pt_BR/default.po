@@ -1,0 +1,32 @@
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Add"
+msgstr "Adicionar"
+
+msgid "Delete"
+msgstr "Excluir"
+
+msgid "Submit"
+msgstr "Salvar"
+
+msgid "View"
+msgstr "Detalhes"
+
+msgid "Index"
+msgstr "Consultas"
+
+msgid "Status"
+msgstr "Situação"
+
+msgid "Modified"
+msgstr "Modificado"
+
+msgid "Created"
+msgstr "Criado"
+
+msgid "Actions"
+msgstr "Ações"
+
+msgid "Are you sure you want to delete # {0}?"
+msgstr "Tem certeza de que deseja excluir o registro {0} ?"

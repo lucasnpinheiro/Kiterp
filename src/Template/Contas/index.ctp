@@ -49,7 +49,7 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($conta->tradutora) ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
-                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $conta->id, '?' => ['tipo' => $this->request->query('tipo')]]) ?>
+                                            <?= $this->Html->link('', ['action' => 'edit', $conta->id, '?' => ['tipo' => $this->request->query('tipo')]]) ?>
                                         </div>
                                     </td>
                                 </tr>

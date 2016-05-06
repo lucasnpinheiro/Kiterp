@@ -44,12 +44,12 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($produto->barra) ?></td>
                                     <td><?= h($produto->nome) ?></td>
                                     <td><?= h($produto->unidade) ?></td>
-                                    <td><?= h($produto->grupos_estoque->nome) ?></td>
+                                    <td><?= h(empty($produto->grupos_estoque->nome) ? 'Não informado' : $produto->grupos_estoque->nome) ?></td>
                                     <td><?= $this->Html->simNao($produto->produto_kit) ?></td>
                                     <td class="actions">
                                         <div class="btn-group" role="group" aria-label="">
-                                            <?= $this->Html->link('Alterar', ['action' => 'edit', $produto->id]) ?>
-                                            <?= $this->Form->postLink('Excluir', ['action' => 'delete', $produto->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $produto->id)]) ?>
+                                            <?= $this->Html->link('', ['action' => 'edit', $produto->id]) ?>
+                                            <?= $this->Form->postLink('', ['action' => 'delete', $produto->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $produto->id)]) ?>
                                         </div>
                                     </td>
                                 </tr>
