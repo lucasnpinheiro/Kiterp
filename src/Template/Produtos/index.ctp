@@ -19,7 +19,7 @@ $this->Html->addCrumb('Consultar', null);
                     ]);
                     echo $this->Form->input('barra', ['label' => false, 'placeholder' => 'Código de Barras']);
                     echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -47,10 +47,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h(empty($produto->grupos_estoque->nome) ? 'Não informado' : $produto->grupos_estoque->nome) ?></td>
                                     <td><?= $this->Html->simNao($produto->produto_kit) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $produto->id]) ?>
                                             <?= $this->Form->postLink('', ['action' => 'delete', $produto->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $produto->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

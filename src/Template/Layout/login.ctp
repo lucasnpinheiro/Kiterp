@@ -12,8 +12,9 @@
         <?php echo $this->fetch('meta') ?>
         <?php echo $this->Html->css('/css/bootstrap.min.css') ?>
         <?php echo $this->Html->css('/font-awesome/css/font-awesome.css') ?>
-        <?php echo $this->Html->css('/css/animate.css') ?>
-        <?php echo $this->Html->css('/css/style.css') ?>
+        <?php //echo $this->Html->css('/css/animate.css') ?>
+        <?php //echo $this->Html->css('/css/style.css') ?>
+        <?php echo $this->Html->css('/css/login.css') ?>
         <?php echo $this->fetch('css') ?>
     </head>
 

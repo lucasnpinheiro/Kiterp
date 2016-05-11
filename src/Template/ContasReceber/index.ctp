@@ -21,7 +21,7 @@ $this->Html->addCrumb('Consultar', null);
                     echo $this->Form->data('data_vencimento', ['label' => false, 'placeholder' => 'Data de Vencimento']);
                     echo $this->Form->input('pessoa_id', ['empty' => 'Selecione um Cliente', 'label' => false, 'placeholder' => 'Cliente']);
                     echo $this->Form->input('banco_id', ['empty' => 'Selecione um Banco', 'label' => false, 'placeholder' => 'Banco']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -51,11 +51,9 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->link($contasReceber->formas_pagamento->nome, ['controller' => 'FormasPagamentos', 'action' => 'edit', $contasReceber->formas_pagamento->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Html->statusContas($contasReceber->status) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $contasReceber->id, '?' => ['baixar' => 1]], ['class' => 'btn btn-info btn-xs', 'icon' => 'usd']) ?>
                                             <?= $this->Html->link('', ['action' => 'edit', $contasReceber->id, '?' => ['baixar' => 0]]) ?>
                                             <?= $this->Form->postLink('', ['action' => 'delete', $contasReceber->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $contasReceber->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

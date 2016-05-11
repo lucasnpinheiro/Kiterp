@@ -21,7 +21,7 @@ $this->Html->addCrumb('Consultar', null);
                     echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Cliente']);
                     echo $this->Form->data('data_emissao', ['label' => false, 'placeholder' => 'Data']);
                     echo $this->Form->numero('numero_nota_fiscal', ['label' => false, 'placeholder' => 'Número da Nota']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 

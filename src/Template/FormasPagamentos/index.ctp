@@ -19,7 +19,7 @@ $this->Html->addCrumb('Consultar', null);
                     ]);
                     echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
                     echo $this->Form->input('abreviado', ['label' => false, 'placeholder' => 'Abreviado']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -49,10 +49,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Number->format($formasPagamento->qtde_taxas) ?></td>
                                     <td><?= $this->Html->jsonToLista($formasPagamento->valor_taxas, $formasPagamento->qtde_taxas) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $formasPagamento->id]) ?>
                                             <?= $this->Form->postLink('', ['action' => 'delete', $formasPagamento->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $formasPagamento->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

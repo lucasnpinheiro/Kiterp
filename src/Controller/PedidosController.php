@@ -293,7 +293,7 @@ class PedidosController extends AppController {
                     if (!empty($parcelas)) {
                         $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 4])->first();
                         foreach ($parcelas as $key => $value) {
-                            $valor = (float) str_replace(',', '.', str_replace(array('.', 'R$ '), '', $value['valor']));
+                            $valor = (float) str_replace(',', '.', str_replace(['.', 'R$ '], '', $value['valor']));
                             if ($valor > 0) {
                                 //$_parcela = $this->getParcelas($parcelas);
                                 $contasReceber = $this->ContasReceber->newEntity();

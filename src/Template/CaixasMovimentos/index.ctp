@@ -18,7 +18,7 @@ $this->Html->addCrumb('Consultar', null);
                         'label' => false
                     ]);
                     echo $this->Form->caixas('caixas_diario_id', ['empty' => true, 'label' => false, 'placeholder' => 'Operador']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
                 </div>

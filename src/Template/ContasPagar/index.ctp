@@ -22,7 +22,7 @@ $this->Html->addCrumb('Consultar', null);
                     echo $this->Form->data('data_vencimento', ['label' => false, 'placeholder' => 'Data de Vencimento']);
                     echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Fornecedor']);
                     echo $this->Form->input('banco_id', ['label' => false, 'placeholder' => 'Banco']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -52,11 +52,9 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->link($contasPagar->banco->nome, ['controller' => 'Bancos', 'action' => 'edit', $contasPagar->banco->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Html->statusContas($contasPagar->status) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $contasPagar->id, '?' => ['baixar' => 1]], ['class' => 'btn btn-info btn-xs', 'icon' => 'usd']) ?>
                                             <?= $this->Html->link('', ['action' => 'edit', $contasPagar->id, '?' => ['baixar' => 0]]) ?>
                                             <?= $this->Form->postLink('', ['action' => 'delete', $contasPagar->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $contasPagar->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

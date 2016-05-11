@@ -18,7 +18,7 @@ $this->Html->addCrumb('Consultar', null);
                         'label' => false
                     ]);
                     echo $this->Form->input('estado', ['label' => false, 'placeholder' => 'Estado']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -42,9 +42,7 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->juros($icmsEstaduai->icms_interno) ?></td>
                                     <td><?= $this->Html->juros($icmsEstaduai->icms_externo) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $icmsEstaduai->id]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

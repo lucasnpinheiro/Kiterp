@@ -20,7 +20,7 @@ $this->Html->addCrumb('Consultar', null);
                     echo $this->Form->numero('codigo', ['label' => false, 'placeholder' => 'Código']);
                     echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
                     echo $this->Form->tipoImpostos('tipo_imposto', ['label' => false, 'placeholder' => 'Tipo de Imposto']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -42,10 +42,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($imposto->codigo) ?></td>
                                     <td><?= h($imposto->nome) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $imposto->id]) ?>
                                             <?= $this->Form->postLink('', ['action' => 'delete', $imposto->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $imposto->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

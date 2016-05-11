@@ -1,0 +1,14 @@
+.grid-login{
+    margin-top: 5%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0px 15px 15px 15px;
+}
+.grid-login h1{
+    font-size: 500%;
+}
+@media (max-width: 750px) {
+    .grid-login{
+        margin-top: 10%;
+    }
+}

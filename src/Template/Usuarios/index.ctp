@@ -19,7 +19,7 @@ $this->Html->addCrumb('Consultar', null);
                     ]);
                     echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
                     echo $this->Form->input('username', ['label' => false, 'placeholder' => 'Username']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -43,14 +43,12 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($usuario->nome) ?></td>
                                     <td><?= h($usuario->username) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
-                                            <?= $this->Html->linkPermissao('Alterar', ['action' => 'edit', $usuario->id]) ?>
-                                            <?php
-                                            if ($this->request->session()->read('Auth.User.id') != $usuario->id) {
-                                                echo $this->Form->postLinkPermissao('Excluir', ['action' => 'delete', $usuario->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $usuario->id)]);
-                                            }
-                                            ?>
-                                        </div>
+                                        <?= $this->Html->linkPermissao('', ['action' => 'edit', $usuario->id]) ?>
+                                        <?php
+                                        if ($this->request->session()->read('Auth.User.id') != $usuario->id) {
+                                            echo $this->Form->postLinkPermissao('', ['action' => 'delete', $usuario->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $usuario->id)]);
+                                        }
+                                        ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

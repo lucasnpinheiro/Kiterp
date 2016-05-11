@@ -20,7 +20,7 @@ $this->Html->addCrumb('Consultar', null);
                     echo $this->Form->input('pessoa_id', ['options' => $vendedor, 'empty' => true, 'label' => false, 'placeholder' => 'Operador']);
                     echo $this->Form->input('terminal_id', ['options' => $terminais, 'empty' => true, 'label' => false, 'placeholder' => 'Terminal']);
                     echo $this->Form->data('data', ['label' => false, 'placeholder' => 'Data']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
                 </div>
@@ -50,13 +50,11 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($caixasDiario->modified) ?></td>
                                     <td><?= $this->Html->status($caixasDiario->status) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?php
                                             if ($caixasDiario->encerrado != 1) {
                                                 echo $this->Html->linkPermissao('Encerrar', ['action' => 'edit', $caixasDiario->id]);
                                             }
                                             ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

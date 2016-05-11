@@ -37,10 +37,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->juros($empresa->perentual_tributo) ?></td>
                                     <td><?= h($empresa->hora_tzd) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $empresa->id]) ?>
                                             <?= $this->Form->postLink('', ['action' => 'delete', $empresa->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $empresa->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

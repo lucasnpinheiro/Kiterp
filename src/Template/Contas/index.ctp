@@ -20,7 +20,7 @@ $this->Html->addCrumb('Consultar', null);
                     echo $this->Form->input('codigo', ['label' => false, 'placeholder' => 'Código']);
                     echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
                     echo $this->Form->input('tradutora', ['label' => false, 'placeholder' => 'Tradutora']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -48,9 +48,7 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h(!empty($conta->sub_conta->nome) ? $conta->sub_conta->nome : 'Principal') ?></td>
                                     <td><?= h($conta->tradutora) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $conta->id, '?' => ['tipo' => $this->request->query('tipo')]]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

@@ -19,7 +19,7 @@ $this->Html->addCrumb('Consultar', null);
                     ]);
                     echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
                     echo $this->Form->input('cnpj', ['label' => false, 'placeholder' => 'CNPJ']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -45,10 +45,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($transportadora->telefone2) ?></td>
                                     <td><?= h($transportadora->cnpj) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $transportadora->id]) ?>
                                             <?= $this->Form->postLink('', ['action' => 'delete', $transportadora->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $transportadora->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

@@ -18,7 +18,7 @@ $this->Html->addCrumb('Consultar', null);
                         'label' => false
                     ]);
                     echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -44,10 +44,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($banco->conta_corrente) ?></td>
                                     <td><?= $this->Number->format($banco->sequencial_arquivo) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $banco->id]) ?>
                                             <?= $this->Form->postLink('', ['action' => 'delete', $banco->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $banco->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

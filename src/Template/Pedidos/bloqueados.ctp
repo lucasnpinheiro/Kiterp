@@ -23,7 +23,7 @@ $this->Html->addCrumb('Consultar', null);
                     echo $this->Form->input('vendedor_id', ['label' => false, 'placeholder' => 'Vendedor', 'options' => $vendedors, 'empty' => 'Selecione um Vendedor']);
                     echo $this->Form->statusPedido('status', ['label' => false, 'placeholder' => 'Situação']);
                     echo $this->Form->data('data_pedido', ['label' => false, 'placeholder' => 'Data do Pedido']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -51,13 +51,11 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->link($pedido->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $pedido->pessoa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Html->moeda($pedido->valor_total) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?php
                                             echo $this->Html->link('Desbloquear', ['action' => 'desbloquear', $pedido->id], ['class' => ' btn-default btn btn-xs ', 'icon' => 'info']);
                                             echo $this->Html->link('Receber', ['action' => 'receber', $pedido->id], ['class' => ' btn-info  btn btn-xs ', 'icon' => 'money']);
                                             ?>
                                             <?= $this->Form->postLink('Cancelar', ['action' => 'delete', $pedido->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $pedido->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

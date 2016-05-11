@@ -21,7 +21,7 @@ $this->Html->addCrumb('Consultar', null);
                     echo $this->Form->tipoPessoa('tipo_pessoa', ['label' => false, 'placeholder' => 'Tipo de Pessoa']);
                     echo $this->Form->status('status', ['label' => false, 'placeholder' => 'Situação']);
                     echo $this->Form->associacao('associacao', ['label' => false, 'placeholder' => 'Associação']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -51,10 +51,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->tipoContribuinte($pessoa->tipo_contribuinte) ?></td>
                                     <td><?= h($pessoa->created) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $pessoa->id]) ?>
                                             <?= $this->Form->postLink('', ['action' => 'delete', $pessoa->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $pessoa->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

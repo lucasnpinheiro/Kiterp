@@ -18,7 +18,7 @@ $this->Html->addCrumb('Consultar', null);
                         'label' => false
                     ]);
                     echo $this->Form->input('nome', ['label' => false, 'placeholder' => 'Nome']);
-                    echo $this->Form->button('Consultar', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 
@@ -36,10 +36,8 @@ $this->Html->addCrumb('Consultar', null);
                                 <tr>
                                     <td><?= h($tiposContato->nome) ?></td>
                                     <td class="actions">
-                                        <div class="btn-group" role="group" aria-label="">
                                             <?= $this->Html->link('', ['action' => 'edit', $tiposContato->id]) ?>
                                             <?= $this->Form->postLink('', ['action' => 'delete', $tiposContato->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $tiposContato->id)]) ?>
-                                        </div>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

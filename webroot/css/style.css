@@ -8290,7 +8290,7 @@ td.actions{
 }
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-    color: #000000;
+    color: #ffffff;
 }
 .navbar-default .navbar-nav > li > .dropdown-menu {
     background-color: #436394;
@@ -8300,7 +8300,7 @@ td.actions{
 }
 .navbar-default .navbar-nav > li > .dropdown-menu > li > a:hover,
 .navbar-default .navbar-nav > li > .dropdown-menu > li > a:focus {
-    color: #000000;
+    color: #ffffff;
     background-color: #09377e;
 }
 .navbar-default .navbar-nav > li > .dropdown-menu > li > .divider {
@@ -8321,7 +8321,7 @@ td.actions{
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-    color: #000000;
+    color: #ffffff;
     background-color: #09377e;
 }
 .navbar-default .navbar-toggle {
