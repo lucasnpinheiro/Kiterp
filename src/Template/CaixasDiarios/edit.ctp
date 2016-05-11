@@ -12,10 +12,10 @@ $this->Html->addCrumb('Alterar', null);
             <div class="ibox-content">
                 <?= $this->Form->create($caixasDiario) ?>
                 <?php
-                echo $this->Form->data('data', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->input('pessoa_id', ['required' => true, 'options' => $vendedor, 'div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->input('terminal_id', ['required' => true, 'options' => $terminais, 'div' => ['class' => 'col-xs-12 col-md-6']]);
-                echo $this->Form->status('status', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                echo $this->Form->data('data', ['div' => ['class' => 'col-xs-12 col-md-4'], 'value' => date('d/m/Y')]);
+                echo $this->Form->input('terminal', ['options' => $terminais, 'empty' => true, 'value' => 1, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                echo $this->Form->pessoas('pessoa_id', ['empty' => true, 'label' => 'Operadores', 'div' => ['class' => 'col-xs-12 col-md-4']], [5]);
+                echo $this->Form->input('status', ['type' => 'hidden', 'value' => 1]);
                 ?>
                 <div class="hr-line-dashed"></div>
                 <div class="form-group">

@@ -24,6 +24,7 @@ class CaixasDiariosController extends AppController {
     public function index() {
 
         $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))
+                ->where(['CaixasDiarios.status !=' => 9])
                 ->contain(['Pessoas', 'Terminais'])
                 ->order(['CaixasDiarios.status' => 'desc', 'CaixasDiarios.created' => 'desc']);
         $this->set('caixasDiarios', $this->paginate($query));
@@ -131,7 +132,8 @@ class CaixasDiariosController extends AppController {
                             public function delete($id = null) {
                                 $this->request->allowMethod(['post', 'delete']);
                                 $caixasDiario = $this->CaixasDiarios->get($id);
-                                if ($this->CaixasDiarios->delete($caixasDiario)) {
+                                $caixasDiario->status = 9;
+                                if ($this->CaixasDiarios->save($caixasDiario)) {
                                     $this->Flash->success(__('Registro Excluido com Sucesso.'));
                                 } else {
                                     $this->Flash->error(__('Erro ao Excluir o Registro. Tente Novamente.'));

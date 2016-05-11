@@ -90,7 +90,6 @@ class CaixasMovimentosTable extends Table {
      * @return \Cake\ORM\RulesChecker
      */
     public function buildRules(RulesChecker $rules) {
-        $rules->add($rules->existsIn(['caixas_diario_id'], 'CaixasDiarios'));
         return $rules;
     }
 

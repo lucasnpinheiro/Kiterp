@@ -60,8 +60,15 @@ class AppController extends Controller {
         ],
             //'MyForm'
     ];
-   
+    
+    public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
+        parent::__construct($request, $response, $name, $eventManager, $components);
+        $this->set('bt_consultar_acao', true);
+        $this->set('bt_cadastrar_acao', true);
+        $this->set('bt_excluir_acao', true);
+    }
 
+    
     /**
      * Initialization hook method.
      *

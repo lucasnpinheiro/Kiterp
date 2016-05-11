@@ -14,6 +14,9 @@ class CaixasMovimentosController extends AppController {
     public function __construct(\Cake\Network\Request $request = null, \Cake\Network\Response $response = null, $name = null, $eventManager = null, $components = null) {
         parent::__construct($request, $response, $name, $eventManager, $components);
         $this->set('title', 'Caixa Movimentos');
+        $this->set('bt_consultar_acao', false);
+        $this->set('bt_cadastrar_acao', false);
+        $this->set('bt_excluir_acao', false);
     }
 
     /**
@@ -21,31 +24,15 @@ class CaixasMovimentosController extends AppController {
      *
      * @return \Cake\Network\Response|null
      */
-    public function index() {
-        $query = $this->{$this->modelClass}->find('search', $this->{$this->modelClass}->filterParams($this->request->query))
-                ->contain(['CaixasDiarios'=>function($q){
-                    return $q->contain('Pessoas');
-                }])
-                ->order(['CaixasMovimentos.caixas_diario_id' => 'desc', 'CaixasMovimentos.created' => 'asc']);
-        $this->set('caixasMovimentos', $this->paginate($query));
+    public function index($id) {
+        $this->loadModel('CaixasDiarios');
+        $caixasDiarios = $this->CaixasDiarios->get($id, ['contain' => ['Pessoas', 'Terminais']]);
+        $caixasMovimento = $this->CaixasMovimentos->newEntity();
+        $caixasMovimentos = $this->CaixasMovimentos->find()->where(['caixas_diario_id' => $id])->all();
+
+        $this->set(compact('caixasDiarios', 'caixasMovimento', 'caixasMovimentos'));
+        $this->set('caixas_diario_id', $id);
         $this->set('_serialize', ['caixasMovimentos']);
-        
-    }
-
-    /**
-     * View method
-     *
-     * @param string|null $id Caixas Movimento id.
-     * @return \Cake\Network\Response|null
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function view($id = null) {
-        $caixasMovimento = $this->CaixasMovimentos->get($id, [
-            'contain' => ['CaixasDiarios']
-        ]);
-
-        $this->set('caixasMovimento', $caixasMovimento);
-        $this->set('_serialize', ['caixasMovimento']);
     }
 
     /**
@@ -53,63 +40,59 @@ class CaixasMovimentosController extends AppController {
      *
      * @return \Cake\Network\Response|void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add($id = null) {
         $caixasMovimento = $this->CaixasMovimentos->newEntity();
         if ($this->request->is('post')) {
             $caixasMovimento = $this->CaixasMovimentos->patchEntity($caixasMovimento, $this->request->data);
             if ($this->CaixasMovimentos->save($caixasMovimento)) {
-                $this->Flash->success(__('The caixas movimento has been saved.'));
-                return $this->redirect(['action' => 'index']);
+                $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                return $this->redirect(['action' => 'index', $caixasMovimento->caixas_diario_id]);
             } else {
-                $this->Flash->error(__('The caixas movimento could not be saved. Please, try again.'));
+                $this->Flash->error(__('O registro não pôde ser salvo. Por favor tente novamente.'));
             }
         }
-        $caixaDiarios = $this->CaixasMovimentos->CaixasDiarios->find('list', ['limit' => 200]);
-        $this->set(compact('caixasMovimento', 'caixaDiarios'));
+        $this->set(compact('caixasMovimento'));
         $this->set('_serialize', ['caixasMovimento']);
     }
 
-    /**
-     * Edit method
-     *
-     * @param string|null $id Caixas Movimento id.
-     * @return \Cake\Network\Response|void Redirects on successful edit, renders view otherwise.
-     * @throws \Cake\Network\Exception\NotFoundException When record not found.
-     */
-    public function edit($id = null) {
-        $caixasMovimento = $this->CaixasMovimentos->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $caixasMovimento = $this->CaixasMovimentos->patchEntity($caixasMovimento, $this->request->data);
-            if ($this->CaixasMovimentos->save($caixasMovimento)) {
-                $this->Flash->success(__('The caixas movimento has been saved.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The caixas movimento could not be saved. Please, try again.'));
-            }
-        }
-        $caixaDiarios = $this->CaixasMovimentos->CaixasDiarios->find('list', ['limit' => 200]);
-        $this->set(compact('caixasMovimento', 'caixaDiarios'));
-        $this->set('_serialize', ['caixasMovimento']);
-    }
+    public function fechar($id = null) {
+        $this->loadModel('CaixasDiarios');
+        $this->loadModel('Pedidos');
+        $caixasDiarios = $this->CaixasDiarios->get($id, ['contain' => ['Pessoas', 'Terminais']]);
+        $caixasMovimentos = $this->CaixasMovimentos->find()->where(['caixas_diario_id' => $id])->all();
+        $saldoInicial = $this->CaixasMovimentos->find();
+        $saldoInicial = $saldoInicial->select(['total' => $saldoInicial->func()->sum('valor')])->where(['caixas_diario_id' => $id, 'grupo_id' => 1])->first();
+        $entradas = $this->CaixasMovimentos->find();
+        $entradas = $entradas->select(['total' => $entradas->func()->sum('valor')])->where(['caixas_diario_id' => $id, 'grupo_id' => 2])->first();
+        $saidas = $this->CaixasMovimentos->find();
+        $saidas = $saidas->select(['total' => $saidas->func()->sum('valor')])->where(['caixas_diario_id' => $id, 'grupo_id' => 3])->first();
+        $sangrias = $this->CaixasMovimentos->find();
+        $sangrias = $sangrias->select(['total' => $sangrias->func()->sum('valor')])->where(['caixas_diario_id' => $id, 'grupo_id' => 4])->first();
 
-    /**
-     * Delete method
-     *
-     * @param string|null $id Caixas Movimento id.
-     * @return \Cake\Network\Response|null Redirects to index.
-     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
-     */
-    public function delete($id = null) {
-        $this->request->allowMethod(['post', 'delete']);
-        $caixasMovimento = $this->CaixasMovimentos->get($id);
-        if ($this->CaixasMovimentos->delete($caixasMovimento)) {
-            $this->Flash->success(__('The caixas movimento has been deleted.'));
-        } else {
-            $this->Flash->error(__('The caixas movimento could not be deleted. Please, try again.'));
+        $vendas = $this->Pedidos->find();
+        $vendas = $vendas->select(['total' => $vendas->func()->sum('valor_liquido')])->where(['caixas_diario_id' => $id, 'status' => 1])->first();
+
+        $vendasDinheiro = $this->Pedidos->find();
+        $vendasDinheiro = $vendasDinheiro->select(['total' => $vendasDinheiro->func()->sum('valor_dinheiro')])->where(['caixas_diario_id' => $id, 'status' => 1])->first();
+        $vendasCheque = $this->Pedidos->find();
+        $vendasCheque = $vendasCheque->select(['total' => $vendasCheque->func()->sum('valor_cheque')])->where(['caixas_diario_id' => $id, 'status' => 1])->first();
+        $vendasPrazo = $this->Pedidos->find();
+        $vendasPrazo = $vendasPrazo->select(['total' => $vendasPrazo->func()->sum('valor_prazo')])->where(['caixas_diario_id' => $id, 'status' => 1])->first();
+        $vendasCartao = $this->Pedidos->find();
+        $vendasCartao = $vendasCartao->select(['total' => $vendasCartao->func()->sum('valor_cartao')])->where(['caixas_diario_id' => $id, 'status' => 1])->first();
+
+
+        $this->set(compact('caixasDiarios', 'caixasMovimentos', 'saldoInicial', 'entradas', 'saidas', 'sangrias', 'vendas', 'vendasDinheiro', 'vendasCheque', 'vendasPrazo', 'vendasCartao'));
+        $this->set('caixas_diario_id', $id);
+        $this->set('_serialize', ['caixasMovimentos']);
+
+        if ($this->request->query('imprimir') === 'S') {
+            $this->viewBuilder()->layout('print');
+            $redirect = $this->request->query;
+            unset($redirect['imprimir']);
+            $redirect = array_merge($redirect, $this->request->params['pass']);
+            $this->set('redirect', \Cake\Routing\Router::url($redirect, true));
         }
-        return $this->redirect(['action' => 'index']);
     }
 
 }

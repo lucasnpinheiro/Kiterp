@@ -29,32 +29,29 @@ $this->Html->addCrumb('Consultar', null);
                         <thead>
 
                             <tr>
-                                <th><?= $this->Paginator->sort('id') ?></th>
                                 <th><?= $this->Paginator->sort('data') ?></th>
                                 <th><?= $this->Paginator->sort('pessoa_id') ?></th>
                                 <th><?= $this->Paginator->sort('terminal_id') ?></th>
                                 <th><?= $this->Paginator->sort('created') ?></th>
                                 <th><?= $this->Paginator->sort('modified') ?></th>
-                                <th><?= $this->Paginator->sort('status') ?></th>
                                 <th class="actions"><?= __('Ação') ?></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach ($caixasDiarios as $caixasDiario): ?>
                                 <tr>
-                                    <td><?= $this->Number->format($caixasDiario->id) ?></td>
                                     <td><?= h($caixasDiario->data) ?></td>
                                     <td><?= $this->Html->link($caixasDiario->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $caixasDiario->pessoa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Html->link($caixasDiario->terminai->nome, ['controller' => 'Terminais', 'action' => 'edit', $caixasDiario->terminai->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= h($caixasDiario->created) ?></td>
                                     <td><?= h($caixasDiario->modified) ?></td>
-                                    <td><?= $this->Html->status($caixasDiario->status) ?></td>
                                     <td class="actions">
-                                            <?php
-                                            if ($caixasDiario->encerrado != 1) {
-                                                echo $this->Html->linkPermissao('Encerrar', ['action' => 'edit', $caixasDiario->id]);
-                                            }
-                                            ?>
+                                        <?php
+                                        echo $this->Html->linkPermissao(null, ['action' => 'edit', $caixasDiario->id], ['title' => __('Edit')]);
+                                        echo $this->Html->linkPermissao(null, ['controller' => 'CaixasMovimentos', 'action' => 'index', $caixasDiario->id], ['icon' => 'list', 'class' => ' btn-info btn btn-xs ', 'title' => __('Movimentos')]);
+                                        echo $this->Html->linkPermissao(null, ['controller' => 'CaixasMovimentos', 'action' => 'fechar', $caixasDiario->id], ['icon' => 'calculator', 'class' => ' btn-default btn btn-xs ', 'title' => __('Relatorio de Fechamento')]);
+                                        echo $this->Form->postLink(null, ['action' => 'delete', $caixasDiario->id], ['confirm' => __('Are you sure you want to delete # {0}?', $caixasDiario->id), 'title' => __('Delete')]);
+                                        ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

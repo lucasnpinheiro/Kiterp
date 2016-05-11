@@ -325,17 +325,17 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
                         ' . ($url['plugin'] != '' ? ' AND Menu.plugin = "' . $url['plugin'] . '"' : '') . '
                         AND Menu.status = 1
                         AND Menu.root ' . ($this->request->session()->read('Auth.User.root') == 1 ? 'IN(0,1)' : '= 0');
-
-        if (is_null($this->request->session()->read(md5($sql)))) {
+        $sqlMd5 = md5($sql);
+        if (empty($this->request->session()->read($sqlMd5))) {
             $menus = \Cake\Datasource\ConnectionManager::get('default');
             $r = $menus->execute($sql)->fetch('assoc');
 
-            $this->request->session()->write(md5($sql), $r['total']);
+            $this->request->session()->write($sqlMd5, $r['total']);
             if ($r['total'] > 0) {
                 return $this->link($title, $url, $options);
             }
         } else {
-            if ($this->request->session()->read(md5($sql)) > 0) {
+            if ($this->request->session()->read($sqlMd5) > 0) {
                 return $this->link($title, $url, $options);
             }
         }

@@ -11,53 +11,41 @@ $this->Html->addCrumb('Consultar', null);
                 <h5><?= __('Lista de ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
-                <div class="row text-right">
+                <div class="row">
+                    <?php echo $this->Form->create($caixasMovimento, ['url' => ['action' => 'add', $caixas_diario_id]]); ?>
                     <?php
-                    echo $this->Form->create(null, [
-                        'inline' => true,
-                        'label' => false
-                    ]);
-                    echo $this->Form->caixas('caixas_diario_id', ['empty' => true, 'label' => false, 'placeholder' => 'Operador']);
-                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
-                    echo $this->Form->end();
+                    echo $this->Form->input('caixas_diario_id', ['type' => 'hidden', 'value' => $caixas_diario_id]);
+                    echo $this->Form->input('status', ['type' => 'hidden', 'value' => 1]);
+                    echo $this->Form->statusMovimentos('grupo_id', ['required' => true, 'label' => 'Tipo', 'options' => [1 => 'Abertura', 2 => 'Entrada', 3 => 'Saída', 4 => 'Sangria'], 'empty' => true, 'div' => ['class' => 'col-xs-12 col-md-2']]);
+                    echo $this->Form->moeda('valor', ['div' => ['required' => true, 'class' => 'col-xs-12 col-md-2']]);
+                    echo $this->Form->input('descricao', ['required' => true, 'label' => 'Descrição', 'type' => 'text', 'div' => ['class' => 'col-xs-12 col-md-8'], 'append' => $this->Form->button(__('Submit'), ['class' => 'btn btn-primary'])]);
                     ?>
-                </div>
+                    <?= $this->Form->end() ?>
+                </div><!-- /.row -->
+
                 <div class="table-responsive">
-                    <table class="table table-striped table-hover table-condensed">
+                    <table class="table table-bordered table-striped font-12 table-hover">
                         <thead>
                             <tr>
-                                <th><?= $this->Paginator->sort('caixas_diario_id') ?></th>
-                                <th><?= $this->Paginator->sort('status') ?></th>
-                                <th><?= $this->Paginator->sort('valor') ?></th>
-                                <th><?= $this->Paginator->sort('grupo_id') ?></th>
-                                <th><?= $this->Paginator->sort('created') ?></th>
-                                <th class="actions"><?= __('Actions') ?></th>
+                                <th>Valor</th>
+                                <th>Descrição</th>
+                                <th>Tipo</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            foreach ($caixasMovimentos as $caixasMovimento):
-                                ?>
+                            <?php foreach ($caixasMovimentos as $caixasMovimento): ?>
                                 <tr>
-                                    <td><?= h($caixasMovimento->caixas_diario->data) . ' | ' . h($caixasMovimento->caixas_diario->pessoa->nome); ?></td>
-                                    <td><?= $this->Html->statusMovimentos($caixasMovimento->status) ?></td>
                                     <td><?= $this->Html->moeda($caixasMovimento->valor) ?></td>
-                                    <td><?= $this->Html->pagamentos($caixasMovimento->grupo_id) ?></td>
-                                    <td><?= h($caixasMovimento->created) ?></td>
-                                    <td class="actions">
-                                        <?= $this->Html->link('', ['action' => 'edit', $caixasMovimento->id]) ?>
-                                        <?= $this->Form->postLink('', ['action' => 'delete', $caixasMovimento->id], ['confirm' => __('Are you sure you want to delete # {0}?', $caixasMovimento->id)]) ?>
-                                    </td>
+                                    <td><?= h($caixasMovimento->descricao) ?></td>
+                                    <td><?= $this->Html->statusMovimentos($caixasMovimento->grupo_id) ?></td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                </div>
+                </div><!-- /.table-responsive -->
 
             </div>
         </div>
     </div>
 
 </div>
-
-<?php echo $this->element('Layout/paginacao'); ?>

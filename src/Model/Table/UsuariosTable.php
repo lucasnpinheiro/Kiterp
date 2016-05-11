@@ -126,9 +126,9 @@ class UsuariosTable extends Table {
             'table' => 'pessoas_associacoes',
             'alias' => 'PessoasAssociacoes',
             'type' => 'INNER',
-            'conditions' => ['PessoasAssociacoes.pessoa_id = Usuarios.pessoa_id', 'PessoasAssociacoes.tipo_associacao' => 7, 'PessoasAssociacoes.status !=' => 9],
+            'conditions' => ['PessoasAssociacoes.pessoa_id = ' . $this->aliasField('pessoa_id'), 'PessoasAssociacoes.tipo_associacao' => 7, 'PessoasAssociacoes.status !=' => 9],
         ]);
-        $query->group('Usuarios.pessoa_id');
+        $query->group($this->aliasField('pessoa_id'));
     }
 
 }
