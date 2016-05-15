@@ -13,7 +13,7 @@ if (count($lista_menus)) {
         <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
             <i class="fa fa-reorder"></i>
         </button>
-        <a href="#" class="navbar-brand">Kiterp</a>
+
     </div>
     <div class="navbar-collapse collapse navbar-default" id="navbar">
         <ul class="nav navbar-nav">
@@ -47,17 +47,6 @@ if (count($lista_menus)) {
 
 
         </ul>
-        <ul class="nav navbar-top-links navbar-right">
-            <li>
-                <a href="<?php echo $this->Url->build('/usuarios/edit/' . $this->request->session()->read('Auth.User.id')) ?>">
-                    <i class="fa fa-user"></i> <?php echo $this->request->session()->read('Auth.User.username'); ?>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo $this->Url->build('/usuarios/logout/') ?>">
-                    <i class="fa fa-sign-out"></i> Sair
-                </a>
-            </li>
-        </ul>
+
     </div>
 </nav>

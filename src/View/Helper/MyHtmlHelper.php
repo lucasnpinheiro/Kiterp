@@ -299,8 +299,24 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
                         AND Menu.root ' . ($this->request->session()->read('Auth.User.root') == 1 ? 'IN(0,1)' : '= 0') . '
                         AND Menu.item_menu = 1
                 GROUP BY Menu.id ORDER BY Menu.ordem ASC, Menu.grupos ASC, Menu.titulo ASC';
-        $menus = \Cake\Datasource\ConnectionManager::get('default');
-        return $menus->execute($sql)->fetchAll('assoc');
+
+        $md5Sql = md5($sql);
+
+        if ((\Cake\Cache\Cache::read('kiterpMenusSql')) === false) {
+            \Cake\Cache\Cache::write('kiterpMenusSql', $md5Sql);
+        }
+
+        if ((\Cake\Cache\Cache::read('kiterpMenusSql')) != $md5Sql) {
+            \Cake\Cache\Cache::delete('kiterpMenus');
+        }
+
+        if ((\Cake\Cache\Cache::read('kiterpMenus')) === false) {
+            $menus = \Cake\Datasource\ConnectionManager::get('default');
+            $retorno = $menus->execute($sql)->fetchAll('assoc');
+            \Cake\Cache\Cache::write('kiterpMenus', $retorno);
+            return $retorno;
+        }
+        return \Cake\Cache\Cache::read('kiterpMenus');
     }
 
     public function linkPermissao($title, $url = null, array $options = []) {

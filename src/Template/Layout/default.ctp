@@ -54,11 +54,13 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="footer black-bg">
-                    <div class="pull-right">
-                        Versão 01.00.01
+                    <div class="text-left col-xs-12 col-md-6">
+                        Versão 01.00.01 - <strong>Kiterp</strong> Todos os direitos reservados
                     </div>
-                    <div>
-                        <strong>Kiterp</strong> Todos os direitos reservados
+                    <div class="text-right col-xs-12 col-md-6">
+                        <?php echo $this->Html->link('<i class="fa fa-user"></i> ' . $this->request->session()->read('Auth.User.nome'), '/usuarios/edit/' . $this->request->session()->read('Auth.User.id')); ?>
+                        |
+                        <?php echo $this->Html->link('<i class="fa fa-sign-out"></i> Sair', '/usuarios/logout/'); ?>
                     </div>
                 </div>
 

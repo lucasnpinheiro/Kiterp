@@ -91,7 +91,7 @@ return [
             'prefix' => 'myapp_cake_core_',
             'path' => CACHE . 'persistent/',
             'serialize' => true,
-            'duration' => '+2 minutes',
+            'duration' => '+20 minutes',
         ],
         /**
          * Configure the cache for model and datasource caches. This cache
@@ -213,7 +213,7 @@ return [
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,
-            'log' => true,
+            'log' => false,
             /**
              * Set identifier quoting to true if you are using reserved words or
              * special characters in your table or column names. Enabling this
@@ -309,6 +309,6 @@ return [
      */
     'Session' => [
         'defaults' => 'php',
-        'timeout' => '480'
+        'timeout' => '600'
     ],
 ];
