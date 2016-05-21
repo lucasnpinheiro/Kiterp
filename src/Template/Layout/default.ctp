@@ -53,7 +53,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="clearfix"></div>
-                <div class="footer black-bg">
+                <div class="footer fixed black-bg" style="background: #262626;">
                     <div class="text-left col-xs-12 col-md-6">
                         Versão 01.00.01 - <strong>Kiterp</strong> Todos os direitos reservados
                     </div>

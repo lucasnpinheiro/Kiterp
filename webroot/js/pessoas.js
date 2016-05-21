@@ -105,7 +105,7 @@ $(function () {
     cake.pessoas.clone('contatos', 'PessoasContato');
     cake.pessoas.clone('enderecos', 'PessoasEndereco');
     cake.pessoas.usuarios();
-    $('#cadastro_pessoa').submit(function (e) {
+    /*$('#cadastro_pessoa').submit(function (e) {
         if (router.params.controller != 'Empresas') {
             var total = 0;
             $('.checkbox :input').each(function (a, b) {
@@ -120,5 +120,5 @@ $(function () {
                 cake.msg.erro('Erro ao gravar os dados.', 'Não foi selecionado nenhum tipo de associação.');
             }
         }
-    });
+    });*/
 });

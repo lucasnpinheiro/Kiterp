@@ -180,7 +180,7 @@ class PedidosController extends AppController {
                     return $q->contain('Produtos')->autoFields(true);
                 }]
         ]);
-        $pedido->numero_caixa = $this->getCaixaDiario();
+        $pedido->caixas_diario_id = $this->getCaixaDiario();
         if ($this->request->is(['patch', 'post', 'put'])) {
             foreach ($this->request->data['parcelas'] as $key => $value) {
                 $this->request->data['parcelas'][$key]['data'] = implode('-', array_reverse(explode('/', $value['data'])));
@@ -192,7 +192,8 @@ class PedidosController extends AppController {
                 $this->loadModel('ContasReceber');
                 $this->loadModel('Bancos');
                 $this->loadModel('FormasPagamentos');
-                $this->loadModel('FormasPagamentos');
+                $this->loadModel('PedidosFormasPagamentos');
+
                 $banco = $this->Bancos->find()->first();
                 $parcelas = json_decode($this->request->data('parcelas'), true);
 
@@ -217,6 +218,13 @@ class PedidosController extends AppController {
                     $contasReceber->formas_pagamento_id = $formasPagamentos->id;
                     $contasReceber->parcelas = $_parcela['titulo'];
                     $this->ContasReceber->save($contasReceber);
+
+                    $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
+                    $pedidosFormasPagamentos->pedido_id = $pedido->id;
+                    $pedidosFormasPagamentos->formas_pagamento_id = $formasPagamentos->id;
+                    $pedidosFormasPagamentos->valor = $valor;
+                    $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
+
                     array_shift($parcelas);
                 }
 
@@ -227,6 +235,13 @@ class PedidosController extends AppController {
                         $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 2])->first();
                     }
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.2.valor')));
+
+                    $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
+                    $pedidosFormasPagamentos->pedido_id = $pedido->id;
+                    $pedidosFormasPagamentos->formas_pagamento_id = $formasPagamentos->id;
+                    $pedidosFormasPagamentos->valor = $valor;
+                    $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
+
                     $valor = $valor / (int) $this->request->data('opcoes.2.parcelas');
                     for ($i = 0; $i < (int) $this->request->data('opcoes.2.parcelas'); $i++) {
                         $_parcela = $this->getParcelas($parcelas);
@@ -255,6 +270,13 @@ class PedidosController extends AppController {
                     $formasPagamentos = $this->FormasPagamentos->find()->where(['id' => (int) $this->request->data('opcoes.3.tipo')])->first();
                     $taxas = json_decode($formasPagamentos->valor_taxas, true);
                     $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.3.valor')));
+
+                    $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
+                    $pedidosFormasPagamentos->pedido_id = $pedido->id;
+                    $pedidosFormasPagamentos->formas_pagamento_id = $formasPagamentos->id;
+                    $pedidosFormasPagamentos->valor = $valor;
+                    $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
+
                     $valor = $valor / (int) $this->request->data('opcoes.3.parcelas');
                     for ($i = 0; $i < (int) $this->request->data('opcoes.3.parcelas'); $i++) {
                         $_parcela = $this->getParcelas($parcelas);
@@ -292,6 +314,15 @@ class PedidosController extends AppController {
                 if (!empty($this->request->data('opcoes.4.valor'))) {
                     if (!empty($parcelas)) {
                         $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 4])->first();
+
+                        $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.4.valor')));
+
+                        $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
+                        $pedidosFormasPagamentos->pedido_id = $pedido->id;
+                        $pedidosFormasPagamentos->formas_pagamento_id = $formasPagamentos->id;
+                        $pedidosFormasPagamentos->valor = $valor;
+                        $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
+
                         foreach ($parcelas as $key => $value) {
                             $valor = (float) str_replace(',', '.', str_replace(['.', 'R$ '], '', $value['valor']));
                             if ($valor > 0) {
@@ -390,12 +421,10 @@ class PedidosController extends AppController {
         $this->loadModel('Produtos');
         $empresas = $this->Empresas->find('list');
         $produtos = $this->Produtos->find()->select(['barra'])->where(['status' => 1])->order(['nome' => 'asc'])->all();
-        $pessoas = $this->Pedidos->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
         $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list', [
             'order' => ['principal' => 'desc', 'nome' => 'asc']
         ]);
-        $vendedors = $this->Pedidos->Vendedores->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
-        $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors', 'produtos'));
+        $this->set(compact('pedido', 'empresas', 'condicaoPagamentos', 'produtos'));
         $this->set('_serialize', ['pedido']);
     }
 
@@ -428,18 +457,16 @@ class PedidosController extends AppController {
         $this->loadModel('Produtos');
         $empresas = $this->Empresas->find('list');
         $produtos = $this->Produtos->find()->select(['barra'])->where(['status' => 1])->order(['nome' => 'asc'])->all();
-        $pessoas = $this->Pedidos->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
         $condicaoPagamentos = $this->Pedidos->CondicoesPagamentos->find('list', [
             'order' => ['principal' => 'desc', 'nome' => 'asc']
         ]);
-        $vendedors = $this->Pedidos->Vendedores->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
-        $this->set(compact('pedido', 'empresas', 'pessoas', 'condicaoPagamentos', 'vendedors', 'produtos'));
+        $this->set(compact('pedido', 'empresas', 'condicaoPagamentos', 'produtos'));
         $this->set('_serialize', ['pedido']);
     }
 
     private function getCaixaDiario() {
         $this->loadModel('CaixasDiarios');
-        $find = $this->CaixasDiarios->find()->where(['data <=' => date('Y-m-d'), 'pessoa_id' => $this->request->session()->read('Auth.User.pessoa_id'), 'status' => 1, 'terminal_id' => 1])->first();
+        $find = $this->CaixasDiarios->find()->where(['data' => date('Y-m-d'), 'status' => 1, 'terminal_id' => 1])->first();
         if (!empty($find)) {
             return $find->id;
         }

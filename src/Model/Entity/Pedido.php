@@ -23,7 +23,7 @@ use Cake\ORM\Entity;
  * @property int $numero_cupom
  * @property int $nota_fiscal
  * @property string $serie
- * @property int $numero_caixa
+ * @property int $caixas_diario_id
  * @property string $cpf
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified

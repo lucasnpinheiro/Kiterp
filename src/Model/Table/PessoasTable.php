@@ -209,58 +209,53 @@ class PessoasTable extends Table {
                 }
 
                 if (count($entity->PessoasAssociacao['tipo_associacao']) > 0) {
-                    foreach ($entity->PessoasAssociacao as $key => $value) {
-                        foreach ($value as $k => $v) {
-                            $pessoa = $PessoasAssociacoes->newEntity();
-                            $pessoa->tipo_associacao = $v;
-                            $pessoa->pessoa_id = $entity->id;
-                            $pessoa->status = 1;
-                            /* $findAssociacao = $PessoasAssociacoes->find()->where(['PessoasAssociacoes.pessoa_id' => $entity->id, 'PessoasAssociacoes.tipo_associacao' => $v])->first();
-                              if (count($findAssociacao) > 0) {
-                              $pessoa->id = $findAssociacao->id;
-                              } */
-                            $PessoasAssociacoes->save($pessoa);
-                        }
-                    }
-                    if (count($entity->Usuario) > 0) {
-                        $findAssociacao = $PessoasAssociacoes->find()->where(['PessoasAssociacoes.pessoa_id' => $entity->id, 'PessoasAssociacoes.tipo_associacao' => 7])->first();
-                        if (count($findAssociacao) > 0) {
-                            if (trim($entity->Usuario['username']) != '') {
-                                $pessoa = $Usuarios->newEntity();
-                                foreach ($entity->Usuario as $key => $value) {
-                                    $pessoa->{$key} = $value;
+                    $PessoasAssociacoes->deleteAll(['pessoa_id' => $pessoa->pessoa_id, 'tipo_associacao' => $entity->PessoasAssociacao['tipo_associacao']]);
+                    $pessoa = $PessoasAssociacoes->newEntity();
+                    $pessoa->tipo_associacao = $entity->PessoasAssociacao['tipo_associacao'];
+                    $pessoa->pessoa_id = $entity->id;
+                    $pessoa->status = 1;
+                    $PessoasAssociacoes->save($pessoa);
+
+                    if (in_array($entity->PessoasAssociacao['tipo_associacao'], [4, 6])) {
+                        if (count($entity->Usuario) > 0) {
+                            $findAssociacao = $PessoasAssociacoes->find()->where(['PessoasAssociacoes.pessoa_id' => $entity->id, 'PessoasAssociacoes.tipo_associacao' => 7])->first();
+                            if (count($findAssociacao) > 0) {
+                                if (trim($entity->Usuario['username']) != '') {
+                                    $pessoa = $Usuarios->newEntity();
+                                    foreach ($entity->Usuario as $key => $value) {
+                                        $pessoa->{$key} = $value;
+                                    }
+                                    $pessoa->pessoa_id = $entity->id;
+                                    $pessoa->nome = $entity->nome;
+                                    $find = $Usuarios->find('all')->where(['Usuarios.pessoa_id' => $entity->id])->first();
+                                    if (count($find) > 0) {
+                                        $pessoa->id = $find->id;
+                                    }
+                                    $Usuarios->save($pessoa);
                                 }
-                                $pessoa->pessoa_id = $entity->id;
-                                $pessoa->nome = $entity->nome;
-                                $find = $Usuarios->find('all')->where(['Usuarios.pessoa_id' => $entity->id])->first();
-                                if (count($find) > 0) {
-                                    $pessoa->id = $find->id;
-                                }
-                                $Usuarios->save($pessoa);
                             }
                         }
                     }
                 }
             }
 
-            public function beforeFind(Event $event, Query $query, ArrayObject $options) {
-                if (stripos($query->sql(), 'PessoasAssociacoes.tipo_associacao') !== FALSE) {
-                    $query->join([
-                        'table' => 'pessoas_associacoes',
-                        'alias' => 'PessoasAssociacoes',
-                        'type' => 'INNER',
-                        'conditions' => ['PessoasAssociacoes.pessoa_id = ' . $this->alias() . '.id', 'PessoasAssociacoes.status !=' => 9],
-                    ]);
-                } else {
-                    $query->join([
-                        'table' => 'pessoas_associacoes',
-                        'alias' => 'PessoasAssociacoes',
-                        'type' => 'INNER',
-                        'conditions' => ['PessoasAssociacoes.status !=' => 9],
-                    ]);
-                }
-                $query->group($this->alias() . '.id');
-            }
-
+            /* public function beforeFind(Event $event, Query $query, ArrayObject $options) {
+              if (stripos($query->sql(), 'PessoasAssociacoes.tipo_associacao') !== FALSE) {
+              $query->join([
+              'table' => 'pessoas_associacoes',
+              'alias' => 'PessoasAssociacoes',
+              'type' => 'INNER',
+              'conditions' => ['PessoasAssociacoes.pessoa_id = ' . $this->alias() . '.id', 'PessoasAssociacoes.status !=' => 9],
+              ]);
+              } else {
+              $query->join([
+              'table' => 'pessoas_associacoes',
+              'alias' => 'PessoasAssociacoes',
+              'type' => 'INNER',
+              'conditions' => ['PessoasAssociacoes.status !=' => 9],
+              ]);
+              }
+              $query->group($this->alias() . '.id');
+              } */
         }
         

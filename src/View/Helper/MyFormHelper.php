@@ -107,7 +107,8 @@ class MyFormHelper extends BootstrapFormHelper {
             'options' => [
                 1 => __('Abertura'),
                 2 => __('Entrada'),
-                3 => __('Saída'),
+                3 => __('Retiradas'),
+                4 => __('Sangria'),
             ],
             'empty' => __('Selecionar uma Situação')
         ];
@@ -794,4 +795,25 @@ class MyFormHelper extends BootstrapFormHelper {
         return $a;
     }
 
-}
+    public function pessoas($fieldName, array $options = [], $tipo_associacao = 1) {
+        $pessoasAssociacoes = TableRegistry::get('PessoasAssociacoes');
+
+        $find = $pessoasAssociacoes->find()->where(['tipo_associacao' => $tipo_associacao])->contain(['Pessoas' => function($q) {
+                        return $q->order(['nome' => 'asc']);
+                    }])->all();
+                $_empresas = [];
+                if (!empty($find)) {
+                    foreach ($find as $key => $value) {
+                        $_empresas[$value->pessoa->id] = $value->pessoa->nome;
+                    }
+                }
+                $options += [
+                    'type' => 'select',
+                    'options' => $_empresas,
+                    'empty' => __('Selecionar uma Pessoa')
+                ];
+                return $this->input($fieldName, $options);
+            }
+
+        }
+        

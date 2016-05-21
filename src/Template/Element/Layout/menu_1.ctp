@@ -13,7 +13,6 @@ if (count($lista_menus)) {
         <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
             <i class="fa fa-reorder"></i>
         </button>
-
     </div>
     <div class="navbar-collapse collapse navbar-default" id="navbar">
         <ul class="nav navbar-nav">

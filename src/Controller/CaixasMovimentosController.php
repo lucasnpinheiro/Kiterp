@@ -58,40 +58,61 @@ class CaixasMovimentosController extends AppController {
     public function fechar($id = null) {
         $this->loadModel('CaixasDiarios');
         $this->loadModel('Pedidos');
+        $this->loadModel('PedidosFormasPagamentos');
+        $this->loadModel('FormasPagamentos');
         $caixasDiarios = $this->CaixasDiarios->get($id, ['contain' => ['Pessoas', 'Terminais']]);
         $caixasMovimentos = $this->CaixasMovimentos->find()->where(['caixas_diario_id' => $id])->all();
         $saldoInicial = $this->CaixasMovimentos->find();
-        $saldoInicial = $saldoInicial->select(['total' => $saldoInicial->func()->sum('valor')])->where(['caixas_diario_id' => $id, 'grupo_id' => 1])->first();
-        $entradas = $this->CaixasMovimentos->find();
-        $entradas = $entradas->select(['total' => $entradas->func()->sum('valor')])->where(['caixas_diario_id' => $id, 'grupo_id' => 2])->first();
-        $saidas = $this->CaixasMovimentos->find();
-        $saidas = $saidas->select(['total' => $saidas->func()->sum('valor')])->where(['caixas_diario_id' => $id, 'grupo_id' => 3])->first();
-        $sangrias = $this->CaixasMovimentos->find();
-        $sangrias = $sangrias->select(['total' => $sangrias->func()->sum('valor')])->where(['caixas_diario_id' => $id, 'grupo_id' => 4])->first();
+        $saldoInicial = $saldoInicial->select(['grupo_id', 'total' => $saldoInicial->func()->sum('valor')])->where(['caixas_diario_id' => $id])->group('grupo_id')->all();
+        $totais = [
+            1 => 0,
+            2 => 0,
+            3 => 0,
+            4 => 0,
+        ];
+        if (count($saldoInicial) > 0) {
+            foreach ($saldoInicial as $key => $value) {
+                $totais[$value->grupo_id] = $value->total;
+            }
+        }
 
-        $vendas = $this->Pedidos->find();
-        $vendas = $vendas->select(['total' => $vendas->func()->sum('valor_liquido')])->where(['caixas_diario_id' => $id, 'status' => 1])->first();
+        $vendas = $this->PedidosFormasPagamentos->find();
+        $vendas = $vendas
+                ->select(['PedidosFormasPagamentos.formas_pagamento_id', 'total' => $vendas->func()->sum('PedidosFormasPagamentos.valor')])
+                ->group('PedidosFormasPagamentos.formas_pagamento_id')
+                ->join([
+                    'Pedidos' => [
+                        'table' => 'pedidos',
+                        'type' => 'INNER',
+                        'conditions' => [
+                            'Pedidos.id = PedidosFormasPagamentos.pedido_id'
+                        ]
+                    ],
+                ])
+                ->all();
 
-        $vendasDinheiro = $this->Pedidos->find();
-        $vendasDinheiro = $vendasDinheiro->select(['total' => $vendasDinheiro->func()->sum('valor_dinheiro')])->where(['caixas_diario_id' => $id, 'status' => 1])->first();
-        $vendasCheque = $this->Pedidos->find();
-        $vendasCheque = $vendasCheque->select(['total' => $vendasCheque->func()->sum('valor_cheque')])->where(['caixas_diario_id' => $id, 'status' => 1])->first();
-        $vendasPrazo = $this->Pedidos->find();
-        $vendasPrazo = $vendasPrazo->select(['total' => $vendasPrazo->func()->sum('valor_prazo')])->where(['caixas_diario_id' => $id, 'status' => 1])->first();
-        $vendasCartao = $this->Pedidos->find();
-        $vendasCartao = $vendasCartao->select(['total' => $vendasCartao->func()->sum('valor_cartao')])->where(['caixas_diario_id' => $id, 'status' => 1])->first();
 
+        $find_formas_pagamentos = $this->FormasPagamentos->find()->all();
 
-        $this->set(compact('caixasDiarios', 'caixasMovimentos', 'saldoInicial', 'entradas', 'saidas', 'sangrias', 'vendas', 'vendasDinheiro', 'vendasCheque', 'vendasPrazo', 'vendasCartao'));
+        $pagamentos = [];
+        $pagamentos[0] = ['nome' => 'Vendas', 'valor' => 0];
+        foreach ($find_formas_pagamentos as $key => $value) {
+            $pagamentos[$value->id] = ['nome' => $value->nome, 'valor' => 0];
+        }
+
+        if (count($vendas) > 0) {
+            foreach ($vendas as $key => $value) {
+                $pagamentos[$value->formas_pagamento_id]['valor'] = $value->total;
+                $pagamentos[0]['valor'] += $value->total;
+            }
+        }
+        $this->set(compact('caixasDiarios', 'caixasMovimentos', 'totais', 'pagamentos'));
         $this->set('caixas_diario_id', $id);
         $this->set('_serialize', ['caixasMovimentos']);
 
         if ($this->request->query('imprimir') === 'S') {
             $this->viewBuilder()->layout('print');
-            $redirect = $this->request->query;
-            unset($redirect['imprimir']);
-            $redirect = array_merge($redirect, $this->request->params['pass']);
-            $this->set('redirect', \Cake\Routing\Router::url($redirect, true));
+            $this->set('redirect', \Cake\Routing\Router::url(['action' => 'fechar', $id], true));
         }
     }
 

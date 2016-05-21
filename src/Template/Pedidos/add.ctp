@@ -20,23 +20,23 @@ $this->Html->addCrumb('Cadastrar', null);
                 echo $this->Form->input('id', ['class' => 'pedido-id-registro', 'type' => 'hidden']);
                 echo $this->Form->input('pedido_id', ['class' => 'pedido-id-registro', 'type' => 'hidden']);
                 echo $this->Form->input('transportadora_id', ['type' => 'hidden', 'value' => 1]);
-                echo $this->Form->numero('numero_caixa', ['type' => 'hidden']);
+                echo $this->Form->numero('caixas_diario_id', ['type' => 'hidden']);
                 echo $this->Form->numero('status', ['type' => 'hidden', 'value' => 1]);
 
                 $count_empresas = $empresas;
                 $count_empresas = $count_empresas->toArray();
                 if (count($count_empresas) > 1) {
                     echo $this->Form->empresas('empresa_id', ['required' => true, 'class' => 'auto-select2-cake', 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                    echo $this->Form->select2Auto('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => 'Selecione um Cliente', 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                    echo $this->Form->select2Auto('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $this->Html->pessoasAssociacoes(2), 'empty' => 'Selecione um Cliente', 'div' => ['class' => 'col-xs-12 col-md-3']]);
                     echo $this->Form->select2Auto('condicao_pagamento_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                    echo $this->Form->select2Auto('vendedor_id', ['value' => $this->request->session()->read('Auth.User.id'), 'empty' => 'Selecione um vendedor', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                    echo $this->Form->select2Auto('vendedor_id', ['value' => $this->request->session()->read('Auth.User.id'), 'options' => $this->Html->pessoasAssociacoes(4), 'empty' => 'Selecione um vendedor', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-3']]);
                 } else {
                     foreach ($empresas as $key => $value) {
                         echo $this->Form->input('empresa_id', ['value' => $key, 'type' => 'hidden']);
                     }
-                    echo $this->Form->select2Auto('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $pessoas, 'empty' => 'Selecione um Cliente', 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                    echo $this->Form->select2Auto('pessoa_id', ['label' => 'Cliente', 'required' => true, 'options' => $this->Html->pessoasAssociacoes(2), 'empty' => 'Selecione um Cliente', 'div' => ['class' => 'col-xs-12 col-md-4']]);
                     echo $this->Form->select2Auto('condicao_pagamento_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
-                    echo $this->Form->select2Auto('vendedor_id', ['value' => $this->request->session()->read('Auth.User.id'), 'empty' => 'Selecione um vendedor', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
+                    echo $this->Form->select2Auto('vendedor_id', ['value' => $this->request->session()->read('Auth.User.id'), 'options' => $this->Html->pessoasAssociacoes(4), 'empty' => 'Selecione um vendedor', 'required' => true, 'div' => ['class' => 'col-xs-12 col-md-4']]);
                 }
                 echo $this->Form->cpf('cpf', ['div' => ['class' => 'col-xs-12 col-md-2']]);
                 echo $this->Form->inputStatic('data_pedido', ($pedido->data_pedido != '' ? $pedido->data_pedido->format('d/m/Y H:i:s') : date('d/m/Y H:i:s')), ['label' => 'Data do Pedido', 'div' => ['class' => 'col-xs-12 col-md-2']]);

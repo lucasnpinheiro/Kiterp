@@ -300,23 +300,13 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
                         AND Menu.item_menu = 1
                 GROUP BY Menu.id ORDER BY Menu.ordem ASC, Menu.grupos ASC, Menu.titulo ASC';
 
-        $md5Sql = md5($sql);
-
-        if ((\Cake\Cache\Cache::read('kiterpMenusSql')) === false) {
-            \Cake\Cache\Cache::write('kiterpMenusSql', $md5Sql);
-        }
-
-        if ((\Cake\Cache\Cache::read('kiterpMenusSql')) != $md5Sql) {
-            \Cake\Cache\Cache::delete('kiterpMenus');
-        }
-
-        if ((\Cake\Cache\Cache::read('kiterpMenus')) === false) {
+        if (!$this->request->session()->read('kiterpMenus')) {
             $menus = \Cake\Datasource\ConnectionManager::get('default');
             $retorno = $menus->execute($sql)->fetchAll('assoc');
-            \Cake\Cache\Cache::write('kiterpMenus', $retorno);
+            $this->request->session()->write('kiterpMenus', $retorno);
             return $retorno;
         }
-        return \Cake\Cache\Cache::read('kiterpMenus');
+        return $this->request->session()->read('kiterpMenus');
     }
 
     public function linkPermissao($title, $url = null, array $options = []) {
@@ -387,4 +377,20 @@ class MyHtmlHelper extends BootstrapHtmlHelper {
         return $r[$id];
     }
 
-}
+    public function pessoasAssociacoes($tipo_associacao = 1) {
+        $pessoasAssociacoes = \Cake\ORM\TableRegistry::get('PessoasAssociacoes');
+
+        $find = $pessoasAssociacoes->find()->where(['tipo_associacao' => $tipo_associacao])->contain(['Pessoas' => function($q) {
+                        return $q->order(['nome' => 'asc']);
+                    }])->all();
+                $_empresas = [];
+                if (!empty($find)) {
+                    foreach ($find as $key => $value) {
+                        $_empresas[$value->pessoa->id] = $value->pessoa->nome;
+                    }
+                }
+                return $_empresas;
+            }
+
+        }
+        

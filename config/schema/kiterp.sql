@@ -627,7 +627,7 @@ CREATE TABLE IF NOT EXISTS `pedidos` (
 `numero_cupom` INTEGER(11) DEFAULT NULL,
 `nota_fiscal` INTEGER(11) DEFAULT NULL,
 `serie` VARCHAR(4) DEFAULT NULL,
-`numero_caixa` INTEGER(11) DEFAULT NULL,
+`caixas_diario_id` INTEGER(11) DEFAULT NULL,
 `cpf` VARCHAR(18) DEFAULT NULL,
 `data_fechamento` DATETIME DEFAULT NULL,
 `created` DATETIME DEFAULT NULL,
@@ -694,7 +694,7 @@ DROP TABLE IF EXISTS `pessoas_associacoes`;
 CREATE TABLE IF NOT EXISTS `pessoas_associacoes` (
 `id` INTEGER(11) NOT NULL AUTO_INCREMENT,
 `pessoa_id` INTEGER(11) DEFAULT NULL,
-`tipo_associacao` INTEGER(1) DEFAULT NULL COMMENT '1 - Empresa | 2 - Cliente | 3 - Fornecedor | 4 - Vendedor | 5 - Representante | 6 - Funcionario | 7 - Usuários',
+`tipo_associacao` INTEGER(1) DEFAULT NULL COMMENT '1 - Empresas | 2 - Clientes | 3 - Fornecedores | 4 - Vendedores | 5 - Representantes | 6 - Operadores | 7 - Usuários',
 `status` INTEGER(1) DEFAULT NULL COMMENT '0 - Ativo | 1 - Inativo | 9 - Excluido',
 `created` DATETIME DEFAULT NULL,
 `modified` DATETIME DEFAULT NULL,

@@ -123,8 +123,8 @@ class PedidosTable extends Table {
                 ->allowEmpty('serie');
 
         $validator
-                ->add('numero_caixa', 'valid', ['rule' => 'numeric'])
-                ->allowEmpty('numero_caixa');
+                ->add('caixas_diario_id', 'valid', ['rule' => 'numeric'])
+                ->allowEmpty('caixas_diario_id');
 
         $validator
                 ->allowEmpty('cpf');

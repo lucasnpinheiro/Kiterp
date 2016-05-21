@@ -30,27 +30,27 @@
                     <tbody>
                         <tr>
                             <td style="width: 70%;">Saldo Inicial</td>
-                            <td style="width: 30%;" class="text-right" style="color:blue;"><?php echo $this->Html->moeda($saldoInicial->total); ?></td>
+                            <td style="width: 30%;" class="text-right" style="color:blue;"><?php echo $this->Html->moeda($totais[1]); ?></td>
                         </tr>
                         <tr>
                             <td>Entradas</td>
-                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($entradas->total); ?></td>
+                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($totais[2]); ?></td>
                         </tr>
                         <tr>
                             <td>Retiradas</td>
-                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($saidas->total); ?></td>
+                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($totais[3]); ?></td>
                         </tr>
                         <tr>
                             <td>Sangrias</td>
-                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($sangrias->total); ?></td>
+                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($totais[4]); ?></td>
                         </tr>
                         <tr>
                             <td>Vendas</td>
-                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($vendas->total); ?></td>
+                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($pagamentos[0]['valor']); ?></td>
                         </tr>
                         <tr>
                             <td>Saldo Caixa</td>
-                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda((floatval($vendas->total) + floatval($entradas->total) + floatval($saldoInicial->total)) - floatval($saidas->total)); ?></td>
+                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda((floatval($totais[1]) + floatval($totais[2]) + floatval($pagamentos[0]['valor'])) - floatval($totais[3])); ?></td>
                         </tr>
                     </tbody>
                 </table>
@@ -60,26 +60,18 @@
             <div class="table-responsive">
                 <table class="table">
                     <tbody>
-                        <tr>
-                            <td>Vendas Dinheiro</td>
-                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($vendasDinheiro->total); ?></td>
-                        </tr>
-                        <tr>
-                            <td>Vendas Cartão</td>
-                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($vendasCartao->total); ?></td>
-                        </tr>
-                        <tr>
-                            <td>Vendas Cheque</td>
-                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($vendasCheque->total); ?></td>
-                        </tr>
-                        <tr>
-                            <td>Vendas Prazo</td>
-                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($vendasPrazo->total); ?></td>
-                        </tr>
-                        <tr>
-                            <td>Vendas Total</td>
-                            <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda(floatval($vendasDinheiro->total) + floatval($vendasCartao->total) + floatval($vendasCheque->total) + floatval($vendasPrazo->total)); ?></td>
-                        </tr>
+                        <?php
+                        foreach ($pagamentos as $key => $value) {
+                            if ($key > 0) {
+                                ?>
+                                <tr>
+                                    <td><?php echo $value['nome'] ?></td>
+                                    <td class="text-right" style="color:blue;"><?php echo $this->Html->moeda($value['valor']); ?></td>
+                                </tr>
+                                <?php
+                            }
+                        }
+                        ?>
                     </tbody>
                 </table>
             </div>
@@ -107,7 +99,7 @@
                             <td style="width: 20%;">Prazo :</td>
                             <td style="width: 80%;"><div style="width: 100%;" class="borda_rodape">&nbsp;</div></td>
                         </tr>
-                        
+
                         <tr>
                             <td style="width: 20%;">Moedas :</td>
                             <td style="width: 80%;"><div style="width: 100%;" class="borda_rodape">&nbsp;</div></td>
@@ -148,7 +140,7 @@
                         <tr>
                             <td style="width:12%;">Diferença :</td>
                             <td style="width:70%;"><div style="width: 100%;" class="borda_rodape">&nbsp;</div></td>
-                            <td style="width:18%; text-align: right;">(  ) - Sobra (  ) - Falta</td>
+                            <td style="width:18%; text-align: right;">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) - Sobra (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) - Falta</td>
                         </tr>
                     </tbody>
                 </table>
