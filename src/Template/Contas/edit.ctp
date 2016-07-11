@@ -10,6 +10,8 @@ $this->Html->addCrumb('Alterar', null);
                 <h5><?= __('Alterar ' . $this->fetch('title')) . ' - ' . $tipo ?></h5>
             </div>
             <div class="ibox-content">
+                <div class="row conteudo_add">
+            <div class="col-xs-12">
                 <?= $this->Form->create($conta, ['url' => ['?' => ['tipo' => $this->request->query('tipo')]]]) ?>
                 <?php
                 echo $this->Form->input('codigo', ['type' => 'hidden']);
@@ -25,6 +27,8 @@ $this->Html->addCrumb('Alterar', null);
                 </div>
                 <div class="clearfix"></div>
                 <?= $this->Form->end() ?>
+            </div>
+            </div>
             </div>
         </div>
     </div>

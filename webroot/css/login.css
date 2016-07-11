@@ -1,14 +1,33 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
+
 .grid-login{
-    margin-top: 5%;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    padding: 0px 15px 15px 15px;
+    margin-top: 280px;
 }
 .grid-login h1{
     font-size: 500%;
 }
-@media (max-width: 750px) {
-    .grid-login{
-        margin-top: 10%;
-    }
+.fundo_login {
+    background: url(../img/topo.png) no-repeat center top;
+    font-family: 'Open Sans';
+}
+p {
+    color: #999;
+    margin-bottom: 20px;
+}
+input {
+    border-radius: 0px !important;
+}
+.form-group{
+    margin-bottom: 2px;
+}
+.btn_login {
+    background: #62707a;
+    border-radius: 0px;
+    border: 0px;
+    width: 100%;
+    padding: 10px 0px;
+}
+.btn_login:hover {
+    background: #a8977e;
 }

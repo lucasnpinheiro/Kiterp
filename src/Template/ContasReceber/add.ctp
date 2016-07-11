@@ -10,6 +10,8 @@ $this->Html->addCrumb('Cadastrar', null);
                 <h5><?= __('Cadastrar ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
+                <div class="row conteudo_add">
+            <div class="col-xs-12">
                 <?= $this->Form->create($contasReceber) ?>
                 <?php
                 echo $this->Form->empresas('empresa_id', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-12']]);
@@ -48,6 +50,8 @@ $this->Html->addCrumb('Cadastrar', null);
                 </div>
                 <div class="clearfix"></div>
                 <?= $this->Form->end() ?>
+            </div>
+            </div>
             </div>
         </div>
     </div>

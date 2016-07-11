@@ -15,7 +15,8 @@ $this->Html->addCrumb('Alterar', null);
                 </div>
             </div>
             <div class="ibox-content">
-
+<div class="row conteudo_add">
+            <div class="col-xs-12">
                 <?php
                 echo $this->Form->input('id', ['class' => 'pedido-id-registro', 'type' => 'hidden']);
                 echo $this->Form->input('pedido_id', ['class' => 'pedido-id-registro', 'type' => 'hidden']);
@@ -57,6 +58,8 @@ $this->Html->addCrumb('Alterar', null);
                 </div>
                 <div class="clearfix"></div>
 
+            </div>
+            </div>
             </div>
         </div>
     </div>

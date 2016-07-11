@@ -18,7 +18,7 @@
         <?php echo $this->fetch('css') ?>
     </head>
 
-    <body class="gray-bg">
+    <body class="gray-bg fundo_login">
 
         <?php echo $this->fetch('content') ?>
 

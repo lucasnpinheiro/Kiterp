@@ -10,6 +10,8 @@ $this->Html->addCrumb('Cadastrar/Alterar', null);
                 <h5><?= __('Cadastrar/Alterar ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
+                <div class="row conteudo_add">
+            <div class="col-xs-12">
                 <?= $this->Form->create($ncmIva) ?>
                 <?php
                 echo $this->Form->input('icms_estadual_id', ['empty' => 'Selecione um estado', 'options' => $icmsEstaduais, 'value' => $estado]);
@@ -62,6 +64,8 @@ $this->Html->addCrumb('Cadastrar/Alterar', null);
                 </div>
                 <div class="clearfix"></div>
                 <?= $this->Form->end() ?>
+            </div>
+            </div>
             </div>
         </div>
     </div>
