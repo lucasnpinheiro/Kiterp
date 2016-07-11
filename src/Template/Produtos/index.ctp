@@ -47,8 +47,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h(empty($produto->grupos_estoque->nome) ? 'Não informado' : $produto->grupos_estoque->nome) ?></td>
                                     <td><?= $this->Html->simNao($produto->produto_kit) ?></td>
                                     <td class="actions">
-                                            <?= $this->Html->link('', ['action' => 'edit', $produto->id]) ?>
-                                            <?= $this->Form->postLink('', ['action' => 'delete', $produto->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $produto->id)]) ?>
+                                        <?= $this->Html->link('', ['action' => 'edit', $produto->id]) ?>
+                                        <?= $this->Form->postLink('', ['action' => 'delete', $produto->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $produto->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

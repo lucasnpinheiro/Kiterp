@@ -11,25 +11,25 @@ $this->Html->addCrumb('Alterar', null);
             </div>
             <div class="ibox-content">
                 <div class="row conteudo_add">
-            <div class="col-xs-12">
-                <?= $this->Form->create($transportadora) ?>
-                <?php
-                echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-12']]);
-                echo $this->Form->input('contado', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->telefone('telefone1', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->telefone('telefone2', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                echo $this->Form->cnpj('cnpj', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
-                ?>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <div class="col-sm-12 text-right">
-                        <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                    <div class="col-xs-12">
+                        <?= $this->Form->create($transportadora) ?>
+                        <?php
+                        echo $this->Form->input('nome', ['required' => true, 'div' => ['class' => 'col-xs-12 col-md-12']]);
+                        echo $this->Form->input('contado', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                        echo $this->Form->telefone('telefone1', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                        echo $this->Form->telefone('telefone2', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                        echo $this->Form->cnpj('cnpj', [ 'div' => ['class' => 'col-xs-12 col-md-3']]);
+                        ?>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-12 text-right">
+                                <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <?= $this->Form->end() ?>
                     </div>
                 </div>
-                <div class="clearfix"></div>
-                <?= $this->Form->end() ?>
-            </div>
-            </div>
             </div>
         </div>
     </div>

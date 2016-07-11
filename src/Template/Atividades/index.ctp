@@ -36,8 +36,8 @@ $this->Html->addCrumb('Consultar', null);
                                 <tr>
                                     <td><?= h($atividade->nome) ?></td>
                                     <td class="actions">
-                                            <?= $this->Html->link('', ['action' => 'edit', $atividade->id]) ?>
-                                            <?= $this->Form->postLink('', ['action' => 'delete', $atividade->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $atividade->id)]) ?>
+                                        <?= $this->Html->link('', ['action' => 'edit', $atividade->id]) ?>
+                                        <?= $this->Form->postLink('', ['action' => 'delete', $atividade->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $atividade->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

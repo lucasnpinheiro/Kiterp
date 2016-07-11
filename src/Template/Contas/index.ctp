@@ -48,7 +48,7 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h(!empty($conta->sub_conta->nome) ? $conta->sub_conta->nome : 'Principal') ?></td>
                                     <td><?= h($conta->tradutora) ?></td>
                                     <td class="actions">
-                                            <?= $this->Html->link('', ['action' => 'edit', $conta->id, '?' => ['tipo' => $this->request->query('tipo')]]) ?>
+                                        <?= $this->Html->link('', ['action' => 'edit', $conta->id, '?' => ['tipo' => $this->request->query('tipo')]]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

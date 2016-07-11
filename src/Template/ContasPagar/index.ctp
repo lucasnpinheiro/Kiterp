@@ -52,9 +52,9 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->link($contasPagar->banco->nome, ['controller' => 'Bancos', 'action' => 'edit', $contasPagar->banco->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Html->statusContas($contasPagar->status) ?></td>
                                     <td class="actions">
-                                            <?= $this->Html->link('', ['action' => 'edit', $contasPagar->id, '?' => ['baixar' => 1]], ['class' => 'btn btn-info btn-xs', 'icon' => 'usd']) ?>
-                                            <?= $this->Html->link('', ['action' => 'edit', $contasPagar->id, '?' => ['baixar' => 0]]) ?>
-                                            <?= $this->Form->postLink('', ['action' => 'delete', $contasPagar->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $contasPagar->id)]) ?>
+                                        <?= $this->Html->link('', ['action' => 'edit', $contasPagar->id, '?' => ['baixar' => 1]], ['class' => 'btn btn-info btn-xs', 'icon' => 'usd']) ?>
+                                        <?= $this->Html->link('', ['action' => 'edit', $contasPagar->id, '?' => ['baixar' => 0]]) ?>
+                                        <?= $this->Form->postLink('', ['action' => 'delete', $contasPagar->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $contasPagar->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

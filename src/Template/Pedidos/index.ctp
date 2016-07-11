@@ -51,15 +51,15 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->link($pedido->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $pedido->pessoa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Html->moeda($pedido->valor_total) ?></td>
                                     <td class="actions">
-                                            <?php
-                                            if ($pedido->status == 1 OR $pedido->status == 4 OR $pedido->status == 2) {
-                                                echo $this->Html->link('', ['action' => 'edit', $pedido->id]);
-                                            }
-                                            if ($pedido->status == 2 OR $pedido->status == 7) {
-                                                echo $this->Html->link('', ['action' => 'receber', $pedido->id], ['alt' => 'Receber', 'title' => 'Receber', 'class' => ' btn-info  btn btn-xs ', 'icon' => 'money']);
-                                            }
-                                            ?>
-                                            <?= $this->Form->postLink('', ['action' => 'delete', $pedido->id], ['alt' => 'Cancelar', 'title' => 'Cancelar', 'confirm' => __('Tem certeza de que deseja o registro {0}?', $pedido->id)]) ?>
+                                        <?php
+                                        if ($pedido->status == 1 OR $pedido->status == 4 OR $pedido->status == 2) {
+                                            echo $this->Html->link('', ['action' => 'edit', $pedido->id]);
+                                        }
+                                        if ($pedido->status == 2 OR $pedido->status == 7) {
+                                            echo $this->Html->link('', ['action' => 'receber', $pedido->id], ['alt' => 'Receber', 'title' => 'Receber', 'class' => ' btn-info  btn btn-xs ', 'icon' => 'money']);
+                                        }
+                                        ?>
+                                        <?= $this->Form->postLink('', ['action' => 'delete', $pedido->id], ['alt' => 'Cancelar', 'title' => 'Cancelar', 'confirm' => __('Tem certeza de que deseja o registro {0}?', $pedido->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

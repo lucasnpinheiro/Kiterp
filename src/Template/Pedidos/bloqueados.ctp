@@ -51,11 +51,11 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->link($pedido->pessoa->nome, ['controller' => 'Pessoas', 'action' => 'edit', $pedido->pessoa->id], ['icon' => 'external-link-square']) ?></td>
                                     <td><?= $this->Html->moeda($pedido->valor_total) ?></td>
                                     <td class="actions">
-                                            <?php
-                                            echo $this->Html->link('Desbloquear', ['action' => 'desbloquear', $pedido->id], ['class' => ' btn-default btn btn-xs ', 'icon' => 'info']);
-                                            echo $this->Html->link('Receber', ['action' => 'receber', $pedido->id], ['class' => ' btn-info  btn btn-xs ', 'icon' => 'money']);
-                                            ?>
-                                            <?= $this->Form->postLink('Cancelar', ['action' => 'delete', $pedido->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $pedido->id)]) ?>
+                                        <?php
+                                        echo $this->Html->link('Desbloquear', ['action' => 'desbloquear', $pedido->id], ['class' => ' btn-default btn btn-xs ', 'icon' => 'info']);
+                                        echo $this->Html->link('Receber', ['action' => 'receber', $pedido->id], ['class' => ' btn-info  btn btn-xs ', 'icon' => 'money']);
+                                        ?>
+                                        <?= $this->Form->postLink('Cancelar', ['action' => 'delete', $pedido->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $pedido->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

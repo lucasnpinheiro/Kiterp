@@ -11,26 +11,26 @@ $this->Html->addCrumb('Alterar', null);
             </div>
             <div class="ibox-content">
                 <div class="row conteudo_add">
-            <div class="col-xs-12">
-                <?= $this->Form->create($parametro) ?>
-                <?php
-                echo $this->Form->input('nome');
-                echo $this->Form->input('chave');
-                echo $this->Form->input('valor');
-                echo $this->Form->input('tipo');
-                echo $this->Form->input('opcoes');
-                echo $this->Form->input('grupo');
-                ?>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <div class="col-sm-12 text-right">
-                        <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                    <div class="col-xs-12">
+                        <?= $this->Form->create($parametro) ?>
+                        <?php
+                        echo $this->Form->input('nome');
+                        echo $this->Form->input('chave');
+                        echo $this->Form->input('valor');
+                        echo $this->Form->input('tipo');
+                        echo $this->Form->input('opcoes');
+                        echo $this->Form->input('grupo');
+                        ?>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-12 text-right">
+                                <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <?= $this->Form->end() ?>
                     </div>
                 </div>
-                <div class="clearfix"></div>
-                <?= $this->Form->end() ?>
-            </div>
-            </div>
             </div>
         </div>
     </div>

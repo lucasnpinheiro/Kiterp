@@ -11,21 +11,25 @@ $this->Html->addCrumb('Cadastrar', null);
                 <h5><?= __('Cadastrar ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
-                <?= $this->Form->create($usuario) ?>
-                <?php
-                echo $this->Form->input('pessoa_id', ['type' => 'hidden', 'value' => $pessoa_id]);
-                echo $this->Form->input('nome');
-                echo $this->Form->input('username');
-                echo $this->Form->input('senha', ['type' => 'password', 'value' => '']);
-                ?>
-                <div class="hr-line-dashed"></div>
-                <div class="form-group">
-                    <div class="col-sm-12 text-right">
-                        <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                <div class="row conteudo_add">
+                    <div class="col-xs-12">
+                        <?= $this->Form->create($usuario) ?>
+                        <?php
+                        echo $this->Form->input('pessoa_id', ['type' => 'hidden', 'value' => $pessoa_id]);
+                        echo $this->Form->input('nome');
+                        echo $this->Form->input('username');
+                        echo $this->Form->input('senha', ['type' => 'password', 'value' => '']);
+                        ?>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-12 text-right">
+                                <?= $this->Form->button(__('Salvar', ['class' => 'btn btn-primary'])) ?>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <?= $this->Form->end() ?>
                     </div>
                 </div>
-                <div class="clearfix"></div>
-                <?= $this->Form->end() ?>
             </div>
         </div>
     </div>

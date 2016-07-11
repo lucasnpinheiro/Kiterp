@@ -45,8 +45,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= h($ncm->created) ?></td>
                                     <td><?= h($ncm->modified) ?></td>
                                     <td class="actions">
-                                            <?= $this->Html->link('', ['action' => 'edit', $ncm->id]) ?>
-                                            <?= $this->Form->postLink('', ['action' => 'delete', $ncm->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $ncm->id)]) ?>
+                                        <?= $this->Html->link('', ['action' => 'edit', $ncm->id]) ?>
+                                        <?= $this->Form->postLink('', ['action' => 'delete', $ncm->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $ncm->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

@@ -11,7 +11,7 @@ $this->Html->addCrumb('Consultar', null);
                 <h5><?= __('Lista de ' . $this->fetch('title')) ?></h5>
             </div>
             <div class="ibox-content">
-                
+
                 <div class="table-responsive">
                     <table class="table table-striped table-hover table-condensed">
                         <thead>
@@ -37,8 +37,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Html->juros($empresa->perentual_tributo) ?></td>
                                     <td><?= h($empresa->hora_tzd) ?></td>
                                     <td class="actions">
-                                            <?= $this->Html->link('', ['action' => 'edit', $empresa->id]) ?>
-                                            <?= $this->Form->postLink('', ['action' => 'delete', $empresa->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $empresa->id)]) ?>
+                                        <?= $this->Html->link('', ['action' => 'edit', $empresa->id]) ?>
+                                        <?= $this->Form->postLink('', ['action' => 'delete', $empresa->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $empresa->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

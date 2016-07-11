@@ -49,8 +49,8 @@ $this->Html->addCrumb('Consultar', null);
                                     <td><?= $this->Number->format($formasPagamento->qtde_taxas) ?></td>
                                     <td><?= $this->Html->jsonToLista($formasPagamento->valor_taxas, $formasPagamento->qtde_taxas) ?></td>
                                     <td class="actions">
-                                            <?= $this->Html->link('', ['action' => 'edit', $formasPagamento->id]) ?>
-                                            <?= $this->Form->postLink('', ['action' => 'delete', $formasPagamento->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $formasPagamento->id)]) ?>
+                                        <?= $this->Html->link('', ['action' => 'edit', $formasPagamento->id]) ?>
+                                        <?= $this->Form->postLink('', ['action' => 'delete', $formasPagamento->id], ['confirm' => __('Tem certeza de que deseja o registro {0}?', $formasPagamento->id)]) ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
