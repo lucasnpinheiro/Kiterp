@@ -18,12 +18,12 @@ $this->Html->addCrumb('Consultar', null);
                         'label' => false
                     ]);
 
-                    echo $this->Form->empresas('empresa_id', ['label' => false, 'placeholder' => 'Empresa', 'class' => 'input-sm']);
-                    echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Cliente', 'options' => $pessoas, 'empty' => 'Selecione um Cliente', 'class' => 'input-sm']);
-                    echo $this->Form->input('vendedor_id', ['label' => false, 'placeholder' => 'Vendedor', 'options' => $vendedors, 'empty' => 'Selecione um Vendedor', 'class' => 'input-sm']);
-                    echo $this->Form->statusPedido('status', ['label' => false, 'placeholder' => 'Situação', 'class' => 'input-sm']);
-                    echo $this->Form->data('data_pedido', ['label' => false, 'placeholder' => 'Data do Pedido', 'class' => 'input-sm']);
-                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search', 'class' => 'input-sm']);
+                    echo $this->Form->empresas('empresa_id', ['label' => false, 'placeholder' => 'Empresa']);
+                    echo $this->Form->statusPedido('status', ['label' => false, 'placeholder' => 'Situação']);
+                    echo $this->Form->data('data_pedido', ['label' => false, 'placeholder' => 'Data do Pedido']);
+                    echo $this->Form->input('pessoa_id', ['label' => false, 'placeholder' => 'Cliente', 'options' => $pessoas, 'empty' => 'Selecione um Cliente']);
+                    echo $this->Form->input('vendedor_id', ['label' => false, 'placeholder' => 'Vendedor', 'options' => $vendedors, 'empty' => 'Selecione um Vendedor']);
+                    echo $this->Form->button('', ['style' => 'margin-top: 5px;', 'type' => 'submit', 'icon' => 'search']);
                     echo $this->Form->end();
                     ?>
 

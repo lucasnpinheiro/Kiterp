@@ -20,6 +20,7 @@ function prde($lista_produtos_valores, $empresa, $campo) {
         <ul class="nav nav-tabs" role="tablist">
             <?php
             if (count($empresas) > 0) {
+                debug($empresas);
                 foreach ($empresas as $key => $value) {
                     echo '<li role="presentation" class="' . ($key > 0 ? '' : 'active') . '"><a href="#empresa_' . $value->id . '" aria-controls="empresa_' . $value->id . '" role="tab" data-toggle="tab">' . $value->pessoa->nome . '</a></li>';
                 }
@@ -45,7 +46,7 @@ function prde($lista_produtos_valores, $empresa, $campo) {
                         echo $this->Form->juros('ProdutosValor.' . $value->id . '.margem', ['value' => $this->Html->juros(prde($lista_produtos_valores, $value->id, 'margem'), ['after' => null]), 'disabled' => true, 'class' => 'input-lg margem', 'style' => 'color: blue; font-size: 22px;', 'div' => ['class' => 'col-xs-12 col-md-4']]);
 
                         echo $this->Form->quantidade('ProdutosValor.' . $value->id . '.estoque_minimo', ['readonly' => (isset($produto->id) and $produto->id != '' ? true : false), 'value' => $this->Html->quantidade(prde($lista_produtos_valores, $value->id, 'estoque_minimo')), 'class' => 'input-lg estoque-minimo', 'style' => 'color: blue; font-size: 22px;', 'div' => ['class' => 'col-xs-12 col-md-6']]);
-                        echo $this->Form->quantidade('ProdutosValor.' . $value->id . '.estoque_atual', ['readonly' => (isset($produto->id) and $produto->id != '' ? true : false), 'value' => $this->Html->quantidade(prde($lista_produtos_valores, $value->id, 'estoque_atual')), 'class' => 'input-lg estoque-atual', 'style' => 'color: blue; font-size: 22px;', 'div' => ['class' => 'col-xs-12 col-md-6']]);
+                        echo $this->Form->quantidade('ProdutosValor.' . $value->id . '.estoque_atual', ['value' => $this->Html->quantidade(prde($lista_produtos_valores, $value->id, 'estoque_atual')), 'class' => 'input-lg estoque-atual', 'style' => 'color: blue; font-size: 22px;', 'div' => ['class' => 'col-xs-12 col-md-6']]);
 
                         echo $this->Form->ncm('ProdutosValor.' . $value->id . '.ncm_id', ['value' => prde($lista_produtos_valores, $value->id, 'ncm_id'), 'div' => ['class' => 'col-xs-12 col-md-2']]);
                         echo $this->Form->impostos('ProdutosValor.' . $value->id . '.cst_pis', ['value' => prde($lista_produtos_valores, $value->id, 'cst_pis'), 'div' => ['class' => 'col-xs-12 col-md-2']], 4);

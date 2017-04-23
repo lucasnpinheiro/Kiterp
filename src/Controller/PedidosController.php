@@ -28,8 +28,10 @@ class PedidosController extends AppController {
         $this->loadModel('Pessoas');
         $this->loadModel('Empresas');
         $empresas = $this->Empresas->find('list');
-        $pessoas = $this->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 2]);
-        $vendedors = $this->Pessoas->find('list')->where(['PessoasAssociacoes.tipo_associacao' => 4]);
+        $pessoas = $this->Pessoas->PessoasAssociacoes->find()->select(['PessoasAssociacoes.pessoa_id'])->where(['PessoasAssociacoes.tipo_associacao' => 2, 'PessoasAssociacoes.status' => 1]);
+        $pessoas = $this->Pessoas->find('list')->where(['Pessoas.id in' => $pessoas])->group(['Pessoas.id']);
+        $vendedors = $this->Pessoas->PessoasAssociacoes->find()->select(['PessoasAssociacoes.pessoa_id'])->where(['PessoasAssociacoes.tipo_associacao' => 4, 'PessoasAssociacoes.status' => 1]);
+        $vendedors = $this->Pessoas->find('list')->where(['Pessoas.id in' => $vendedors])->group(['Pessoas.id']);
         $this->set(compact('empresas', 'pessoas', 'vendedors'));
         $this->set('pedidos', $this->paginate($query));
         $this->set('_serialize', ['pedidos']);
@@ -173,149 +175,55 @@ class PedidosController extends AppController {
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
     public function receber($id = null) {
-        $pedido = $this->Pedidos->get($id, [
+        $pedido = $this->Pedidos->get((int) $id, [
             'contain' => ['Empresas' => function($q) {
                     return $q->contain('Pessoas')->autoFields(true);
                 }, 'Pessoas', 'CondicoesPagamentos', 'Vendedores', 'Transportadoras', 'PedidosItens' => function($q) {
                     return $q->contain('Produtos')->autoFields(true);
                 }]
         ]);
-        $pedido->caixas_diario_id = $this->getCaixaDiario();
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            foreach ($this->request->data['parcelas'] as $key => $value) {
-                $this->request->data['parcelas'][$key]['data'] = implode('-', array_reverse(explode('/', $value['data'])));
-            }
-            $this->request->data['parcelas'] = json_encode($this->request->data['parcelas']);
-            $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
-            if ($this->Pedidos->save($pedido)) {
-                $numero_documento = $pedido->id;
-                $this->loadModel('ContasReceber');
-                $this->loadModel('Bancos');
-                $this->loadModel('FormasPagamentos');
-                $this->loadModel('PedidosFormasPagamentos');
 
-                $banco = $this->Bancos->find()->first();
-                $parcelas = json_decode($this->request->data('parcelas'), true);
+        $caixas_diario_id = $this->getCaixaDiario();
+        if ($caixas_diario_id > 0) {
+            $pedido->caixas_diario_id = $caixas_diario_id;
 
-                if (!empty($this->request->data('opcoes.1.valor'))) {
-                    $_parcela = $this->getParcelas($parcelas);
-                    $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 1])->first();
-                    $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.1.valor')));
-                    $contasReceber = $this->ContasReceber->newEntity();
-                    $contasReceber->empresa_id = $pedido->empresa_id;
-                    $contasReceber->numero_documento = $numero_documento;
-                    $contasReceber->data_vencimento = date('Y-m-d');
-                    $contasReceber->valor_documento = $valor;
-                    $contasReceber->pessoa_id = $pedido->pessoa_id;
-                    $contasReceber->banco_id = $banco->id;
-                    $contasReceber->tradutora_id = 2;
-                    $contasReceber->status = 2;
-                    $contasReceber->data_recebimento = date('Y-m-d');
-                    $contasReceber->valor_recebimento = $valor;
-                    $contasReceber->numero_pedido = $pedido->id;
-                    $contasReceber->valor_desconto = 0;
-                    $contasReceber->valor_liquido = $valor;
-                    $contasReceber->formas_pagamento_id = $formasPagamentos->id;
-                    $contasReceber->parcelas = $_parcela['titulo'];
-                    $this->ContasReceber->save($contasReceber);
-
-                    $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
-                    $pedidosFormasPagamentos->pedido_id = $pedido->id;
-                    $pedidosFormasPagamentos->formas_pagamento_id = $formasPagamentos->id;
-                    $pedidosFormasPagamentos->valor = $valor;
-                    $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
-
-                    array_shift($parcelas);
+            if ($this->request->is(['patch', 'post', 'put'])) {
+                foreach ($this->request->data['parcelas'] as $key => $value) {
+                    $this->request->data['parcelas'][$key]['data'] = implode('-', array_reverse(explode('/', $value['data'])));
                 }
+                $this->request->data['parcelas'] = json_encode($this->request->data['parcelas']);
+                $pedido = $this->Pedidos->patchEntity($pedido, $this->request->data);
+                if ($this->Pedidos->save($pedido)) {
+                    $numero_documento = $pedido->id;
+                    $this->loadModel('ContasReceber');
+                    $this->loadModel('Bancos');
+                    $this->loadModel('FormasPagamentos');
+                    $this->loadModel('PedidosFormasPagamentos');
 
-                if (!empty($this->request->data('opcoes.2.valor'))) {
-                    if (!empty($this->request->data('opcoes.2.tipo'))) {
-                        $formasPagamentos = $this->FormasPagamentos->find()->where(['id' => (int) $this->request->data('opcoes.2.tipo')])->first();
-                    } else {
-                        $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 2])->first();
-                    }
-                    $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.2.valor')));
+                    $banco = $this->Bancos->find()->first();
+                    $parcelas = json_decode($this->request->data('parcelas'), true);
 
-                    $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
-                    $pedidosFormasPagamentos->pedido_id = $pedido->id;
-                    $pedidosFormasPagamentos->formas_pagamento_id = $formasPagamentos->id;
-                    $pedidosFormasPagamentos->valor = $valor;
-                    $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
-
-                    $valor = $valor / (int) $this->request->data('opcoes.2.parcelas');
-                    for ($i = 0; $i < (int) $this->request->data('opcoes.2.parcelas'); $i++) {
+                    if (!empty($this->request->data('opcoes.1.valor'))) {
                         $_parcela = $this->getParcelas($parcelas);
+                        $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 1])->first();
+                        $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.1.valor')));
                         $contasReceber = $this->ContasReceber->newEntity();
                         $contasReceber->empresa_id = $pedido->empresa_id;
                         $contasReceber->numero_documento = $numero_documento;
-                        $contasReceber->data_vencimento = date('Y-m-d', mktime(0, 0, 0, date('m') + $i));
+                        $contasReceber->data_vencimento = date('Y-m-d');
                         $contasReceber->valor_documento = $valor;
                         $contasReceber->pessoa_id = $pedido->pessoa_id;
                         $contasReceber->banco_id = $banco->id;
-                        $contasReceber->tradutora_id = 4;
-                        $contasReceber->status = 1;
-                        $contasReceber->data_recebimento = null;
-                        $contasReceber->valor_recebimento = 0;
+                        $contasReceber->tradutora_id = 2;
+                        $contasReceber->status = 2;
+                        $contasReceber->data_recebimento = date('Y-m-d');
+                        $contasReceber->valor_recebimento = $valor;
                         $contasReceber->numero_pedido = $pedido->id;
                         $contasReceber->valor_desconto = 0;
                         $contasReceber->valor_liquido = $valor;
                         $contasReceber->formas_pagamento_id = $formasPagamentos->id;
                         $contasReceber->parcelas = $_parcela['titulo'];
                         $this->ContasReceber->save($contasReceber);
-                        array_shift($parcelas);
-                    }
-                }
-
-                if (!empty($this->request->data('opcoes.3.valor'))) {
-                    $formasPagamentos = $this->FormasPagamentos->find()->where(['id' => (int) $this->request->data('opcoes.3.tipo')])->first();
-                    $taxas = json_decode($formasPagamentos->valor_taxas, true);
-                    $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.3.valor')));
-
-                    $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
-                    $pedidosFormasPagamentos->pedido_id = $pedido->id;
-                    $pedidosFormasPagamentos->formas_pagamento_id = $formasPagamentos->id;
-                    $pedidosFormasPagamentos->valor = $valor;
-                    $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
-
-                    $valor = $valor / (int) $this->request->data('opcoes.3.parcelas');
-                    for ($i = 0; $i < (int) $this->request->data('opcoes.3.parcelas'); $i++) {
-                        $_parcela = $this->getParcelas($parcelas);
-                        $desconto = $valor;
-                        $diferenca = 0;
-                        if (!empty($taxas[$i])) {
-                            $desconto = (float) str_replace('%', '', $taxas[$i]);
-                            $diferenca = (float) number_format(((float) $desconto / 100) * $valor, 2);
-                            $desconto = (float) ($valor - $diferenca);
-                        }
-
-                        $contasReceber = $this->ContasReceber->newEntity();
-                        $contasReceber->empresa_id = $pedido->empresa_id;
-                        $contasReceber->numero_documento = $numero_documento;
-                        $contasReceber->data_vencimento = date('Y-m-d', mktime(0, 0, 0, date('m') + $i));
-                        $contasReceber->valor_documento = $valor;
-                        $contasReceber->pessoa_id = $pedido->pessoa_id;
-                        $contasReceber->banco_id = $banco->id;
-                        $contasReceber->tradutora_id = 5;
-                        $contasReceber->status = 1;
-                        $contasReceber->data_recebimento = null;
-                        $contasReceber->valor_recebimento = 0;
-                        $contasReceber->numero_pedido = $pedido->id;
-                        $contasReceber->valor_desconto = $diferenca;
-                        $contasReceber->valor_liquido = $desconto;
-                        $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
-                        $contasReceber->parcelas = $_parcela['titulo'];
-                        $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
-                        $contasReceber->taxa = $taxas[$i];
-                        $this->ContasReceber->save($contasReceber);
-                        array_shift($parcelas);
-                    }
-                }
-
-                if (!empty($this->request->data('opcoes.4.valor'))) {
-                    if (!empty($parcelas)) {
-                        $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 4])->first();
-
-                        $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.4.valor')));
 
                         $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
                         $pedidosFormasPagamentos->pedido_id = $pedido->id;
@@ -323,50 +231,152 @@ class PedidosController extends AppController {
                         $pedidosFormasPagamentos->valor = $valor;
                         $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
 
-                        foreach ($parcelas as $key => $value) {
-                            $valor = (float) str_replace(',', '.', str_replace(['.', 'R$ '], '', $value['valor']));
-                            if ($valor > 0) {
-                                //$_parcela = $this->getParcelas($parcelas);
-                                $contasReceber = $this->ContasReceber->newEntity();
-                                $contasReceber->empresa_id = $pedido->empresa_id;
-                                $contasReceber->numero_documento = $numero_documento;
-                                $contasReceber->data_vencimento = $value['data'];
-                                $contasReceber->valor_documento = $valor;
-                                $contasReceber->pessoa_id = $pedido->pessoa_id;
-                                $contasReceber->banco_id = $banco->id;
-                                $contasReceber->tradutora_id = 3;
-                                $contasReceber->status = 1;
-                                $contasReceber->data_recebimento = null;
-                                $contasReceber->valor_recebimento = 0;
-                                $contasReceber->numero_pedido = $pedido->id;
-                                $contasReceber->valor_desconto = 0;
-                                $contasReceber->valor_liquido = $valor;
-                                $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
-                                $contasReceber->parcelas = $value['titulo'];
-                                $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
-                                $this->ContasReceber->save($contasReceber);
+                        array_shift($parcelas);
+                    }
+
+                    if (!empty($this->request->data('opcoes.2.valor'))) {
+                        if (!empty($this->request->data('opcoes.2.tipo'))) {
+                            $formasPagamentos = $this->FormasPagamentos->find()->where(['id' => (int) $this->request->data('opcoes.2.tipo')])->first();
+                        } else {
+                            $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 2])->first();
+                        }
+                        $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.2.valor')));
+
+                        $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
+                        $pedidosFormasPagamentos->pedido_id = $pedido->id;
+                        $pedidosFormasPagamentos->formas_pagamento_id = $formasPagamentos->id;
+                        $pedidosFormasPagamentos->valor = $valor;
+                        $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
+
+                        $valor = $valor / (int) $this->request->data('opcoes.2.parcelas');
+                        for ($i = 0; $i < (int) $this->request->data('opcoes.2.parcelas'); $i++) {
+                            $_parcela = $this->getParcelas($parcelas);
+                            $contasReceber = $this->ContasReceber->newEntity();
+                            $contasReceber->empresa_id = $pedido->empresa_id;
+                            $contasReceber->numero_documento = $numero_documento;
+                            $contasReceber->data_vencimento = date('Y-m-d', mktime(0, 0, 0, date('m') + $i));
+                            $contasReceber->valor_documento = $valor;
+                            $contasReceber->pessoa_id = $pedido->pessoa_id;
+                            $contasReceber->banco_id = $banco->id;
+                            $contasReceber->tradutora_id = 4;
+                            $contasReceber->status = 1;
+                            $contasReceber->data_recebimento = null;
+                            $contasReceber->valor_recebimento = 0;
+                            $contasReceber->numero_pedido = $pedido->id;
+                            $contasReceber->valor_desconto = 0;
+                            $contasReceber->valor_liquido = $valor;
+                            $contasReceber->formas_pagamento_id = $formasPagamentos->id;
+                            $contasReceber->parcelas = $_parcela['titulo'];
+                            $this->ContasReceber->save($contasReceber);
+                            array_shift($parcelas);
+                        }
+                    }
+
+                    if (!empty($this->request->data('opcoes.3.valor'))) {
+                        $formasPagamentos = $this->FormasPagamentos->find()->where(['id' => (int) $this->request->data('opcoes.3.tipo')])->first();
+                        $taxas = json_decode($formasPagamentos->valor_taxas, true);
+                        $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.3.valor')));
+
+                        $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
+                        $pedidosFormasPagamentos->pedido_id = $pedido->id;
+                        $pedidosFormasPagamentos->formas_pagamento_id = $formasPagamentos->id;
+                        $pedidosFormasPagamentos->valor = $valor;
+                        $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
+
+                        $valor = $valor / (int) $this->request->data('opcoes.3.parcelas');
+                        for ($i = 0; $i < (int) $this->request->data('opcoes.3.parcelas'); $i++) {
+                            $_parcela = $this->getParcelas($parcelas);
+                            $desconto = $valor;
+                            $diferenca = 0;
+                            if (!empty($taxas[$i])) {
+                                $desconto = (float) str_replace('%', '', $taxas[$i]);
+                                $diferenca = (float) number_format(((float) $desconto / 100) * $valor, 2);
+                                $desconto = (float) ($valor - $diferenca);
+                            }
+
+                            $contasReceber = $this->ContasReceber->newEntity();
+                            $contasReceber->empresa_id = $pedido->empresa_id;
+                            $contasReceber->numero_documento = $numero_documento;
+                            $contasReceber->data_vencimento = date('Y-m-d', mktime(0, 0, 0, date('m') + $i));
+                            $contasReceber->valor_documento = $valor;
+                            $contasReceber->pessoa_id = $pedido->pessoa_id;
+                            $contasReceber->banco_id = $banco->id;
+                            $contasReceber->tradutora_id = 5;
+                            $contasReceber->status = 1;
+                            $contasReceber->data_recebimento = null;
+                            $contasReceber->valor_recebimento = 0;
+                            $contasReceber->numero_pedido = $pedido->id;
+                            $contasReceber->valor_desconto = $diferenca;
+                            $contasReceber->valor_liquido = $desconto;
+                            $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
+                            $contasReceber->parcelas = $_parcela['titulo'];
+                            $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
+                            $contasReceber->taxa = $taxas[$i];
+                            $this->ContasReceber->save($contasReceber);
+                            array_shift($parcelas);
+                        }
+                    }
+
+                    if (!empty($this->request->data('opcoes.4.valor'))) {
+                        if (!empty($parcelas)) {
+                            $formasPagamentos = $this->FormasPagamentos->find()->where(['grupo' => 4])->first();
+
+                            $valor = (float) str_replace(',', '.', str_replace('.', '', $this->request->data('opcoes.4.valor')));
+
+                            $pedidosFormasPagamentos = $this->PedidosFormasPagamentos->newEntity();
+                            $pedidosFormasPagamentos->pedido_id = $pedido->id;
+                            $pedidosFormasPagamentos->formas_pagamento_id = $formasPagamentos->id;
+                            $pedidosFormasPagamentos->valor = $valor;
+                            $this->PedidosFormasPagamentos->save($pedidosFormasPagamentos);
+
+                            foreach ($parcelas as $key => $value) {
+                                $valor = (float) str_replace(',', '.', str_replace(['.', 'R$ '], '', $value['valor']));
+                                if ($valor > 0) {
+                                    //$_parcela = $this->getParcelas($parcelas);
+                                    $contasReceber = $this->ContasReceber->newEntity();
+                                    $contasReceber->empresa_id = $pedido->empresa_id;
+                                    $contasReceber->numero_documento = $numero_documento;
+                                    $contasReceber->data_vencimento = $value['data'];
+                                    $contasReceber->valor_documento = $valor;
+                                    $contasReceber->pessoa_id = $pedido->pessoa_id;
+                                    $contasReceber->banco_id = $banco->id;
+                                    $contasReceber->tradutora_id = 3;
+                                    $contasReceber->status = 1;
+                                    $contasReceber->data_recebimento = null;
+                                    $contasReceber->valor_recebimento = 0;
+                                    $contasReceber->numero_pedido = $pedido->id;
+                                    $contasReceber->valor_desconto = 0;
+                                    $contasReceber->valor_liquido = $valor;
+                                    $contasReceber->formas_pagamento_id = (int) $formasPagamentos->id;
+                                    $contasReceber->parcelas = $value['titulo'];
+                                    $contasReceber->dias = (int) $formasPagamentos->qtde_dias;
+                                    $this->ContasReceber->save($contasReceber);
+                                }
                             }
                         }
                     }
-                }
-                $this->Flash->success(__('Registro Salvo com Sucesso.'));
-                if (\Cake\Core\Configure::read('Parametros.PTelaPedido') == 1) {
-                    return $this->redirect(['action' => 'add']);
+                    $this->Flash->success(__('Registro Salvo com Sucesso.'));
+                    if (\Cake\Core\Configure::read('Parametros.PTelaPedido') == 1) {
+                        return $this->redirect(['action' => 'add']);
+                    } else {
+                        return $this->redirect(['action' => 'index', '?' => ['status' => [2, 7]]]);
+                    }
                 } else {
-                    return $this->redirect(['action' => 'index', '?' => ['status' => [2, 7]]]);
+                    $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
                 }
             } else {
-                $this->Flash->error(__('Erro ao Salvar o Registro. Tente Novamente.'));
+                $pedido = $this->Pedidos->patchEntity($pedido, ['status' => 7]);
+                $this->Pedidos->save($pedido);
             }
+            $this->loadModel('FormasPagamentos');
+            $formasPagamentos = $this->FormasPagamentos->find()->order(['nome' => 'asc'])->all();
+            $this->set('pedido', $pedido);
+            $this->set('formasPagamentos', $formasPagamentos);
+            $this->set('_serialize', ['pedido']);
         } else {
-            $pedido = $this->Pedidos->patchEntity($pedido, ['status' => 7]);
-            $this->Pedidos->save($pedido);
+            $this->Flash->error(__('Não foi localizado nenhum caixa aberto.'));
+            return $this->redirect(['controller' => 'CaixasDiarios', 'action' => 'add']);
         }
-        $this->loadModel('FormasPagamentos');
-        $formasPagamentos = $this->FormasPagamentos->find()->order(['nome' => 'asc'])->all();
-        $this->set('pedido', $pedido);
-        $this->set('formasPagamentos', $formasPagamentos);
-        $this->set('_serialize', ['pedido']);
     }
 
     private function getParcelas($parcelas) {
@@ -467,11 +477,10 @@ class PedidosController extends AppController {
     private function getCaixaDiario() {
         $this->loadModel('CaixasDiarios');
         $find = $this->CaixasDiarios->find()->where(['data' => date('Y-m-d'), 'status' => 1, 'terminal_id' => 1])->first();
-        if (!empty($find)) {
+        if (!is_null($find)) {
             return $find->id;
         }
-        $this->Flash->error(__('Não foi localizado nenhum caixa aberto.'));
-        return $this->redirect(['action' => 'index']);
+        return 0;
     }
 
     /**
@@ -520,29 +529,28 @@ class PedidosController extends AppController {
                                                         'PessoasContatos' => function($q) {
                                                             return $q->where(['PessoasContatos.tipos_contato_id' => 2])->contain('TiposContatos');
                                                         },
-                                                                'PessoasFisicas',
-                                                                'PessoasJuridicas'
-                                                            ]
-                                            );
-                                        }]);
-                                },
-                                        'Pessoas' => function($q) {
-                                    return $q->contain('PessoasEnderecos');
-                                },
-                                    ]
-                                ]);
-                                $this->set(compact('pedido'));
-                                $this->set('_serialize', ['pedido']);
-                            }
+                                                        'PessoasFisicas',
+                                                        'PessoasJuridicas'
+                                                    ]
+                                    );
+                                }]);
+                },
+                'Pessoas' => function($q) {
+                    return $q->contain('PessoasEnderecos');
+                },
+            ]
+        ]);
+        $this->set(compact('pedido'));
+        $this->set('_serialize', ['pedido']);
+    }
 
-                            public function redireciona($id = null) {
-                                if (\Cake\Core\Configure::read('Parametros.PTelaPagamento') == 1) {
-                                    return $this->redirect(['action' => 'receber', $id]);
-                                } else {
-                                    return $this->redirect(['action' => 'add']);
-                                }
-                                exit;
-                            }
+    public function redireciona($id = null) {
+        if (\Cake\Core\Configure::read('Parametros.PTelaPagamento') == 1) {
+            return $this->redirect(['action' => 'receber', $id]);
+        } else {
+            return $this->redirect(['action' => 'add']);
+        }
+        exit;
+    }
 
-                        }
-                        
+}
